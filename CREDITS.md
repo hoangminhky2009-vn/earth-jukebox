@@ -1,6 +1,6 @@
 # Credits and references
 
-Everything we used, including open-source and free resources (required by the submission form). Fill in versions on Nov 14–15.
+Everything we used, including open-source and free resources (required by the submission form). Versions as used on Nov 14.
 
 ## NASA data and resources
 - NASA Scientific Visualization Studio (SVS), "Seasonal Global Precipitation Variation from the Global Precipitation Measurement Constellation", SVS 4897 — IMERG rain-anomaly frames. https://svs.gsfc.nasa.gov/4897
@@ -14,13 +14,15 @@ Everything we used, including open-source and free resources (required by the su
 | Name | Licence | Used for |
 |---|---|---|
 | Web Audio API (built into the browser) | — | All music synthesis and timing (`docs/js/audio.js`); no audio library |
-| FFmpeg | LGPL-2.1+ | Cutting and compressing the field recordings (`tools/make_ambience.py`, not shipped) |
-| Pillow | HPND | Reading PNG frames |
-| NumPy | BSD-3-Clause | Colour maths |
-| requests | Apache-2.0 | Downloading frames |
-| pytest | MIT | Python tests |
-| Node.js test runner | MIT | JavaScript tests |
+| FFmpeg 9.0.2 | LGPL-2.1+ or GPL (depends on the build) | Cutting and compressing the field recordings (`tools/make_ambience.py`, not shipped) |
+| Pillow 12.2.0 | HPND | Reading PNG frames |
+| NumPy 2.2.6 | BSD-3-Clause | Colour maths |
+| requests 2.34.2 | Apache-2.0 | Downloading frames |
+| pytest 9.2.0 | MIT | Python tests |
+| Node.js 24 test runner | MIT | JavaScript tests |
 | Claude (Anthropic) | — | SI assistant, see `AI_USE.md` |
+| OpenAI Codex | — | SI assistant for the data pipeline (Sabik), see `AI_USE.md` |
+| Natural Earth (1:110m land) | Public domain | Only to check the map position of the NASA frames (`pipeline/verify_geography.py`); the file stays in the uncommitted cache |
 
 ## Fonts, sounds, images
 - Pixelify Sans (Stefie Justprince), loaded from Google Fonts: the only typeface on the page. Licence: SIL Open Font License 1.1. https://fonts.google.com/specimen/Pixelify+Sans

@@ -336,7 +336,7 @@ export function createScene(store, opts) {
   // Page switch: a real button above the tray, only when there is more than one page.
   // A tab on the left side of the console, with vertical text.
   const pageBtn = document.createElement('button'); pageBtn.type = 'button'; pageBtn.className = 'hit page-btn';
-  pos(pageBtn, 1, 122, 12, 124);
+  pos(pageBtn, 1, 122, 18, 124);   // the painted tab is 12 px wide; the hit area reaches over the box's wooden edge (a touch target of about 24 px on a phone held sideways)
   pageBtn.hidden = pages.length < 2;
   pageBtn.addEventListener('click', () => {
     page = (page + 1) % pages.length; setShelf(); syncHits();
