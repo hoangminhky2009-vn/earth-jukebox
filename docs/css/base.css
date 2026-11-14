@@ -1,0 +1,69 @@
+/* Written by Ky with help from Claude (SI). See AI_USE.md. */
+/* Generic accessible dark theme with a glow accent. No challenge-specific styles. */
+:root {
+  --bg: #070b14;
+  --surface: rgba(20, 30, 50, 0.6);
+  --surface-solid: #141e32;
+  --text: #eef3ff;          /* ~17:1 on --bg */
+  --text-muted: #b8c4dd;    /* ~10:1 on --bg */
+  --accent: #4fe3ff;
+  --accent-2: #b78cff;
+  --focus: #ffd84f;
+  --glow: 0 0 12px rgba(79, 227, 255, 0.55);
+  --radius: 12px;
+  --font: system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top, #10203c 0%, var(--bg) 60%);
+  background-color: var(--bg);
+  color: var(--text);
+  font: 1rem/1.5 var(--font);
+}
+
+.bar { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; padding: 1rem; }
+.title { margin: 0; font-size: 1.5rem; letter-spacing: 0.08em; text-shadow: var(--glow); }
+.settings { display: flex; gap: 1rem; color: var(--text-muted); }
+
+main { padding: 1rem; max-width: 1100px; margin: 0 auto; }
+.panel {
+  background: var(--surface-solid);
+  border: 1px solid rgba(79, 227, 255, 0.35);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--glow);
+}
+@supports (backdrop-filter: blur(8px)) {
+  .panel { background: var(--surface); backdrop-filter: blur(8px); }
+}
+
+.btn {
+  font: inherit; color: var(--bg); background: var(--accent);
+  border: 0; border-radius: 999px; padding: 0.6rem 1.2rem; cursor: pointer;
+  box-shadow: var(--glow);
+}
+.btn:hover { background: #8aeeff; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+.skip-link { position: absolute; left: -9999px; top: 0; }
+.skip-link:focus { left: 1rem; top: 1rem; background: var(--focus); color: #000; padding: 0.5rem 1rem; z-index: 10; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* High contrast: no glow, solid borders, pure colours */
+.high-contrast { --surface: #000; --surface-solid: #000; --text: #fff; --text-muted: #fff; --accent: #ffff00; --glow: none; }
+.high-contrast body, body.high-contrast { background: #000; }
+.high-contrast .panel { border: 2px solid #fff; backdrop-filter: none; }
+
+/* Reduced motion: system setting or user toggle */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after { animation: none !important; transition: none !important; }

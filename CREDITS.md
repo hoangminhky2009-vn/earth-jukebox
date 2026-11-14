@@ -1,0 +1,27 @@
+# Credits and references
+
+Everything we used, including open-source and free resources (required by the submission form). Fill in versions on Nov 14–15.
+
+## NASA data and resources
+- NASA Scientific Visualization Studio (SVS), "Seasonal Global Precipitation Variation from the Global Precipitation Measurement Constellation", SVS 4897 — IMERG rain-anomaly frames. https://svs.gsfc.nasa.gov/4897
+  Credits on the page: Horace Mitchell, Alex Kekesi, George Huffman, Gail Skofronick Jackson, Dalia B Kirschbaum, Ryan Fitzgibbons.
+- NASA SVS, "Near Real-Time Normalized Difference Vegetation Index (NDVI)", SVS 5544 — VIIRS (Suomi NPP) NDVI frames, Earth Information Center. https://svs.gsfc.nasa.gov/5544 — data visualizer: Alex Kekesi.
+- NASA Earth Information Center content database. https://svs.gsfc.nasa.gov/gallery/earth-information-center/
+- Inspiration for sonification: NASA SVS, "Data Sonification: Caldwell 73". https://svs.gsfc.nasa.gov/13786/
+- NASA Space Apps Challenge 2026, challenge statement "The Earth Information Jukebox".
+
+## Software
+| Name | Licence | Used for |
+|---|---|---|
+| Tone.js [version] | MIT | Sound synthesis and timing in the browser (vendored in `docs/vendor/`) |
+| Pillow | HPND | Reading PNG frames |
+| NumPy | BSD-3-Clause | Colour maths |
+| requests | Apache-2.0 | Downloading frames |
+| pytest | MIT | Python tests |
+| Node.js test runner | MIT | JavaScript tests |
+| Claude (Anthropic) | — | SI assistant, see `AI_USE.md` |
+
+## Fonts, sounds, images
+- [Only CC0 / CC-BY / MIT / Apache-2.0. Add each one here with its link and licence.]
+
+NASA imagery is generally free of copyright; we credit "NASA's Scientific Visualization Studio" and link each page. We do not use NASA logos.
