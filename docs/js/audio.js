@@ -43,10 +43,10 @@ let ambCut;    // field-recording bed (also cut by a skip)
 // field recordings 0.22. Only the melody and a little of the chord go to the reverb; the beat stays dry.
 const BED_LEVEL = 0.5;
 const BEAT_LEVEL = 0.65;
-const AMB_LEVEL = 0.22;
+const AMB_LEVEL = 0.16;
 let verbIn;    // reverb input (sends only)
 let ambDuck;   // field recordings dip a little under each data note
-const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 1.0, 'snow-howl': 0.4 };   // evens out the recordings
+const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 0.6, 'snow-howl': 0.3 };   // evens out the recordings
 const ambBufs = {};
 let ambLoading = null;
 let amb = null;   // { layer: { src, g } } while playing
@@ -82,8 +82,8 @@ function ensure() {
   music = gainNode(1);
   fxOut = gainNode(1);
   const verb = ac.createConvolver();
-  verb.buffer = impulse(1.6);
-  const wet = gainNode(0.22);
+  verb.buffer = impulse(1.0);
+  const wet = gainNode(0.15);
   verbIn = gainNode(1); verbIn.connect(verb);
   // lofi colour: warm low-pass -> slow tape wobble (modulated delay)
   warm = ac.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200; warm.Q.value = 0.5;
@@ -94,15 +94,9 @@ function ensure() {
   const pre = gainNode(0.75);   // headroom
   music.connect(pre); pre.connect(warm); warm.connect(wobble); wobble.connect(duckGain);   // no waveshaper: it aliased into fizz
   verb.connect(wet); wet.connect(duckGain);   // nothing reaches the reverb except the sends below
-  // melody echo (3 steps, dark, fading) and a longer room, so single notes bloom instead of beeping
+  // melody send: a short room only (an echo used to sit here; it stacked with the reverb and the tails)
   leadSend = gainNode(1);
-  const echo = ac.createDelay(1); echo.delayTime.value = 3 * STEP;
-  const echoLP = ac.createBiquadFilter(); echoLP.type = 'lowpass'; echoLP.frequency.value = 1800;
-  const fb = gainNode(0.2);
-  const echoOut = gainNode(0.07);
-  leadSend.connect(echo); echo.connect(echoLP); echoLP.connect(fb); fb.connect(echo);
-  echoLP.connect(echoOut); echoOut.connect(music);
-  const roomSend = gainNode(0.5);   // the melody's share of the one reverb
+  const roomSend = gainNode(0.35);   // the melody's share of the one reverb
   vibrato = ac.createOscillator(); vibrato.frequency.value = 5.2; vibrato.start();
   leadSend.connect(roomSend); roomSend.connect(verbIn);
   fxOut.connect(duckGain);
@@ -120,7 +114,7 @@ function gainNode(v) { const g = ac.createGain(); g.gain.value = v; return g; }
 function newSession() {
   const g = gainNode(1); g.connect(music);
   g.bed = gainNode(BED_LEVEL); g.bed.connect(g);
-  const bedVerb = gainNode(0.35); g.bed.connect(bedVerb); bedVerb.connect(verbIn);
+  const bedVerb = gainNode(0.15); g.bed.connect(bedVerb); bedVerb.connect(verbIn);
   g.beat = gainNode(BEAT_LEVEL); g.beat.connect(g);
   return g;
 }
@@ -231,9 +225,9 @@ function pluck(midi, t, vel, out, dur, pan = 0) {
   const g = ac.createGain();
   g.gain.setValueAtTime(0.42 * vel, t);
   g.gain.setValueAtTime(0.42 * vel, t + Math.max(0.15, dur));
-  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.15, dur) + 1.2);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.15, dur) + 0.5);
   src.connect(lp); lp.connect(g); g.connect(leadOut(out, pan));
-  src.start(t); src.stop(t + Math.max(0.15, dur) + 1.25);
+  src.start(t); src.stop(t + Math.max(0.15, dur) + 0.55);
   track(src, t);
 }
 
@@ -256,7 +250,7 @@ function flute(midi, t, vel, out, dur, pan = 0) {
   g.gain.setValueAtTime(0.0001, t);
   g.gain.linearRampToValueAtTime(0.13 * vel, t + 0.07);
   g.gain.setValueAtTime(0.13 * vel, t + len);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.45);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.22);
   const breath = ac.createBufferSource(); breath.buffer = noise();
   const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = Math.min(8000, f * 1.5); bp.Q.value = 1.6;
   const gb = ac.createGain();
@@ -264,11 +258,11 @@ function flute(midi, t, vel, out, dur, pan = 0) {
   gb.gain.linearRampToValueAtTime(0.06 * vel, t + 0.03);           // breathy onset ("chiff")
   gb.gain.linearRampToValueAtTime(0.025 * vel, t + 0.12);          // then air under the tone
   gb.gain.setValueAtTime(0.025 * vel, t + len);
-  gb.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.35);
+  gb.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.18);
   const outG = leadOut(out, pan);
   o.connect(tone); tone.connect(g); g.connect(outG);
   breath.connect(bp); bp.connect(gb); gb.connect(outG);
-  const end = t + len + 0.5;
+  const end = t + len + 0.26;
   o.start(t); o.stop(end);
   o.addEventListener('ended', () => depth.disconnect());   // free the shared LFO's fan-out
   breath.start(t, Math.random()); breath.stop(end);
@@ -353,9 +347,9 @@ function oud(midi, t, vel, out, dur, pan = 0) {
   const body = ac.createBiquadFilter(); body.type = 'lowpass'; body.frequency.value = 1500; body.Q.value = 1.4;
   const g = ac.createGain();
   g.gain.setValueAtTime(0.48 * vel, t);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.2, dur) + 0.8);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.2, dur) + 0.45);
   src.connect(body); body.connect(g); g.connect(leadOut(out, pan));
-  src.start(t); src.stop(t + Math.max(0.2, dur) + 0.85);
+  src.start(t); src.stop(t + Math.max(0.2, dur) + 0.5);
   track(src, t);
 }
 
@@ -369,8 +363,8 @@ function bell(midi, t, vel, out, dur, pan = 0) {
   const car = ac.createOscillator(); car.type = 'sine'; car.frequency.value = f;
   mod.connect(idx); idx.connect(car.frequency);
   const g = ac.createGain();
-  const end = t + Math.max(0.6, dur) + 1.6;
-  env(g, t, 0.1 * vel, 0.003, end);
+  const end = t + Math.max(0.5, dur) + 0.8;
+  env(g, t, 0.14 * vel, 0.003, end);
   car.connect(g); g.connect(leadOut(out, pan));
   for (const o of [mod, car]) { o.start(t); o.stop(end + 0.05); track(o, t); }
 }
@@ -550,9 +544,9 @@ function harmonium(midi, t, vel, out) {
   const g = ac.createGain();
   const end = t + BAR - 0.05;
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.linearRampToValueAtTime(0.03 * vel, t + 0.18);
-  g.gain.linearRampToValueAtTime(0.024 * vel, t + 1.0);
-  g.gain.linearRampToValueAtTime(0.0001, end + 0.25);
+  g.gain.linearRampToValueAtTime(0.026 * vel, t + 0.15);
+  g.gain.linearRampToValueAtTime(0.01 * vel, t + 1.1);
+  g.gain.linearRampToValueAtTime(0.0001, end + 0.1);
   for (const [type, det] of [['square', -6], ['sawtooth', 6]]) {
     const o = ac.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = det;
     o.connect(lp); o.start(t); o.stop(end + 0.3); track(o, t);
@@ -566,13 +560,13 @@ function air(midi, t, vel, out) {
   const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1400;
   const g = ac.createGain();
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.linearRampToValueAtTime(0.04 * vel, t + 0.8);
-  g.gain.linearRampToValueAtTime(0.0001, t + BAR + 0.8);
+  g.gain.linearRampToValueAtTime(0.022 * vel, t + 0.5);
+  g.gain.linearRampToValueAtTime(0.0001, t + BAR + 0.1);   // fades through the month, leaving room
   const o1 = ac.createOscillator(); o1.type = 'sine'; o1.frequency.value = f;
   const o2 = ac.createOscillator(); o2.type = 'triangle'; o2.frequency.value = f * 2; o2.detune.value = 5;
   const g2 = gainNode(0.25);
   o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(out);
-  for (const o of [o1, o2]) { o.start(t); o.stop(t + BAR + 0.85); track(o, t); }
+  for (const o of [o1, o2]) { o.start(t); o.stop(t + BAR + 0.25); track(o, t); }
 }
 
 /** How each style plays its chord (the bed notes at step 0): stab, harp arpeggio, reed pad, oud strum, or air. */
@@ -591,7 +585,7 @@ function playBed(n, t, out) {
   } else if (curStyle === 'snow') {
     air(n.pitch + 12, t, v, out);
   } else {
-    keys(n.pitch, t, v, out, 1.8);
+    keys(n.pitch, t, v, out, 1.2);
   }
 }
 
@@ -600,7 +594,7 @@ const LEAD = {
   'south-asia': flute,
   desert: oud,
   snow: bell,
-  other: (m, t, v, out, dur, pan) => keys(m, t, v * 1.3, out, dur + 1.0, pan, noteSend),
+  other: (m, t, v, out, dur, pan) => keys(m, t, v * 1.3, out, dur + 0.4, pan, noteSend),
 };
 
 function sound(n, t, out) {
@@ -755,7 +749,7 @@ function rebuild() {
   // legato: each drop lasts until the next drop of the bar (the last one until the bar ends), at most 0.9 s
   for (const bar of notesByBar) {
     const drops = bar.filter((n) => n.kind === 'data' && n.voice === 0).sort((a, b) => a.step - b.step);
-    drops.forEach((n, i) => { n.len = Math.min(1.2, ((drops[i + 1]?.step ?? 16) - n.step) * STEP * 1.3); n.busy = drops.length >= 6; });   // overlaps a little: legato
+    drops.forEach((n, i) => { n.len = Math.min(0.8, ((drops[i + 1]?.step ?? 16) - n.step) * STEP * 0.9); n.busy = drops.length >= 6; });   // ends just before the next drop
     for (const n of bar) if (n.kind === 'data' && n.voice !== 0) { n.len = drops.find((d) => d.step === n.step)?.len ?? 0.3; n.busy = true; }
   }
   if (ac && mode === 'music' && ['sea', 'desert'].includes(styleOf(place))) {
