@@ -22,6 +22,8 @@ const STEP = BAR / 16;
 const AHEAD = BAR + 0.25;   // how far ahead of the audio clock notes are scheduled
 const SWING = 0.55 * STEP;  // the off-beat sixteenths of the half-time feel land late
 const swing = (step) => (step % 4 === 2 ? SWING : 0);
+// Each region in its own key (semitones from C) with its own groove; the data rules do not change.
+const TRANSPOSE = { other: 0, sea: 2, 'south-asia': -2 };
 
 let ac = null;
 let master;    // volume
@@ -317,23 +319,102 @@ function bass(midi, t, vel, out, dur) {
   for (const o of [o1, o2]) { o.start(t); o.stop(t + dur + 0.02); track(o, t); }
 }
 
-/** Beat, bass and a light chord re-strike for one bar; silent in missing months and science mode. */
+/** Hand drum (Southeast Asia groove): a short pitched thump with a little slap. */
+function tom(t, vel, out, hz) {
+  const o = ac.createOscillator(); o.type = 'sine';
+  o.frequency.setValueAtTime(hz * 1.3, t);
+  o.frequency.exponentialRampToValueAtTime(hz, t + 0.06);
+  const g = ac.createGain();
+  env(g, t, 0.28 * vel, 0.003, t + 0.28);
+  o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.3); track(o, t);
+}
+
+/** Shaker: soft band of noise. */
+function shaker(t, vel, out) {
+  const n = ac.createBufferSource(); n.buffer = noise();
+  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 6000; bp.Q.value = 1.2;
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.03 * vel, t + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+  n.connect(bp); bp.connect(g); g.connect(out);
+  n.start(t, Math.random()); n.stop(t + 0.09); track(n, t);
+}
+
+/** Low hand drum with the upward pitch bend of a pressed drum head (South Asia groove, tabla-like). */
+function bayan(t, vel, out) {
+  const o = ac.createOscillator(); o.type = 'sine';
+  o.frequency.setValueAtTime(80, t);
+  o.frequency.exponentialRampToValueAtTime(112, t + 0.18);
+  const g = ac.createGain();
+  env(g, t, 0.36 * vel, 0.004, t + 0.5);
+  o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.52); track(o, t);
+}
+
+/** Ringing tuned stroke on the small drum, pitched to the tonic. */
+function tin(t, vel, out, hz) {
+  const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = hz;
+  const o2 = ac.createOscillator(); o2.type = 'sine'; o2.frequency.value = hz * 2.76;   // inharmonic overtone of a drum head
+  const g = ac.createGain();
+  env(g, t, 0.09 * vel, 0.002, t + 0.22);
+  const g2 = gainNode(0.25);
+  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(out);
+  for (const x of [o, o2]) { x.start(t); x.stop(t + 0.24); track(x, t); }
+}
+
+/** Drone on the tonic and fifth for one bar, overlapping the next (tanpura-like). */
+function drone(t0, out, tonic) {
+  for (const [m, det] of [[tonic, 0], [tonic + 7, 4], [tonic + 12, -4]]) {
+    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = midiHz(m); o.detune.value = det;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 650; lp.Q.value = 0.7;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(m === tonic ? 0.022 : 0.014, t0 + 0.5);
+    g.gain.setValueAtTime(m === tonic ? 0.022 : 0.014, t0 + BAR - 0.1);
+    g.gain.linearRampToValueAtTime(0.0001, t0 + BAR + 0.5);
+    o.connect(lp); lp.connect(g); g.connect(out);
+    o.start(t0); o.stop(t0 + BAR + 0.55); track(o, t0);
+  }
+}
+
+/** Beat, bass (and in South Asia a drone) for one bar; a groove per region; silent in missing months and science mode. */
 function groove(b, t0, from, out) {
   const notes = notesByBar[b];
   if (mode !== 'music' || !notes.some((n) => n.kind === 'data' || n.kind === 'bed')) return;
   const at = (step) => t0 + step * STEP + swing(step);
   const hit = (step, fn) => { const t = at(step); if (t >= from) fn(t); };
-  hit(0, (t) => kick(t, 1, out));
-  hit(10, (t) => kick(t, 0.75, out));
-  hit(8, (t) => snare(t, 1, out));
-  if (b % 4 === 3) { hit(7, (t) => kick(t, 0.4, out)); hit(14, (t) => snare(t, 0.3, out)); }   // small fill before the loop turns
-  for (const s of [2, 6, 10, 14]) hit(s, (t) => hat(t, 1, out));
-  const chord = notes.filter((n) => n.kind === 'bed' && n.step === 0);
-  if (!chord.length) return;
-  const root = Math.min(...chord.map((n) => n.pitch));
-  const low = 36 + ((((root - 36) % 12) + 12) % 12);   // bass in the octave above C2
-  hit(0, (t) => bass(low, t, 1, out, 1.1));
-  hit(10, (t) => bass(low, t, 0.7, out, 0.5));
+  const region = place?.region in TRANSPOSE ? place.region : 'other';
+  const tonic = 48 + TRANSPOSE[region];
+  if (region === 'sea') {
+    // light hand percussion: one soft kick, three tuned hand-drum strokes, a shaker on the eighths
+    hit(0, (t) => kick(t, 0.6, out));
+    hit(6, (t) => tom(t, 0.7, out, 196));
+    hit(10, (t) => tom(t, 1, out, 165));
+    hit(14, (t) => tom(t, 0.6, out, 147));
+    if (b % 4 === 3) hit(12, (t) => tom(t, 0.5, out, 220));
+    for (let s = 0; s < 16; s += 2) hit(s, (t) => shaker(t, s % 4 === 2 ? 1 : 0.5, out));
+  } else if (region === 'south-asia') {
+    // tabla-like cycle over a drone on the tonic and fifth
+    if (from <= t0) drone(t0, out, tonic);
+    hit(0, (t) => bayan(t, 1, out));
+    hit(6, (t) => bayan(t, 0.55, out));
+    hit(10, (t) => bayan(t, 0.8, out));
+    const tinHz = midiHz(tonic + 24);
+    for (const s of [4, 8, 12, 14]) hit(s, (t) => tin(t, s === 8 ? 1 : 0.6, out, tinHz));
+    if (b % 4 === 3) hit(15, (t) => tin(t, 0.4, out, tinHz));
+  } else {
+    // lofi kit
+    hit(0, (t) => kick(t, 1, out));
+    hit(10, (t) => kick(t, 0.75, out));
+    hit(8, (t) => snare(t, 1, out));
+    if (b % 4 === 3) { hit(7, (t) => kick(t, 0.4, out)); hit(14, (t) => snare(t, 0.3, out)); }   // small fill before the loop turns
+    for (const s of [2, 6, 10, 14]) hit(s, (t) => hat(t, 1, out));
+  }
+  const root = notes.find((n) => n.kind === 'bed' && n.step === 0 && n.voice === 0);
+  if (!root) return;
+  const low = 36 + ((((root.pitch - 36) % 12) + 12) % 12);   // bass in the octave above C2, on the chord root
+  hit(0, (t) => bass(low, t, region === 'south-asia' ? 0.6 : 1, out, 1.1));
+  if (region !== 'south-asia') hit(10, (t) => bass(low, t, 0.7, out, 0.5));
 }
 
 function beep(midi, t, vel, out) {
@@ -520,7 +601,11 @@ function rebuild() {
     warm.frequency.setTargetAtTime(rain ? 2200 : 3200, ac.currentTime, 0.1);
     ambSoft.frequency.setTargetAtTime(rain ? 2600 : 4500, ac.currentTime, 0.1);
   }
-  for (const n of schedule(disc, place, mode)) notesByBar[n.bar].push(n);
+  const tr = mode === 'music' ? (TRANSPOSE[place?.region] ?? 0) : 0;   // each region in its own key
+  for (const n of schedule(disc, place, mode)) {
+    if (tr && (n.kind === 'data' || n.kind === 'bed')) n.pitch += tr;
+    notesByBar[n.bar].push(n);
+  }
   // legato: each drop lasts until the next drop of the bar (the last one until the bar ends), at most 0.9 s
   for (const bar of notesByBar) {
     const drops = bar.filter((n) => n.kind === 'data' && n.voice === 0).sort((a, b) => a.step - b.step);

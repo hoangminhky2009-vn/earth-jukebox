@@ -12,8 +12,13 @@ export const SCALES = {
   other: [0, 2, 4, 6, 7, 9, 11],        // lydian
 };
 
-// Scale degree each bar's chord starts on: a 4-bar loop (3 times a year) in the lofi habit of ii - V - I - vi.
-const CHORD_ROOTS = [1, 4, 0, 5];
+// Scale degree each bar's chord starts on: a 4-bar loop (3 times a year), one per region so places sound different
+// (accompaniment only: the data rules are the same everywhere).
+const CHORD_LOOPS = {
+  other: [1, 4, 0, 5],          // lydian, the lofi habit of ii - V - I - vi
+  sea: [0, 2, 3, 1],            // pentatonic, gentle and open
+  'south-asia': [0, 3, 0, 6],   // dorian modal vamp: i - IV - i - bVII, close to the drone
+};
 // Raindrop melody: four shapes of chord tones (offsets from the chord root, one per drop slot). The change from the
 // month before picks the shape: wetter than last month = the tune climbs, drier = it falls, same = it alternates.
 // The data itself lives in how many drops fall (n) and in which register; the shape only makes it a tune.
@@ -51,6 +56,7 @@ const isMissing = (v) => v === null || v === undefined;
  */
 export function schedule(disc, place, mode = 'music') {
   const scale = SCALES[place?.region] ?? SCALES.other;
+  const loop = CHORD_LOOPS[place?.region] ?? CHORD_LOOPS.other;
   const breaks = new Set(disc.breaks ?? []);
   const notes = [];
   const add = (bar, step, voice, pitch, velocity, kind) => notes.push({ bar, step, voice, pitch, velocity, kind });
@@ -59,7 +65,7 @@ export function schedule(disc, place, mode = 'music') {
   let prevLast = null;    // last drop of the month before (smooth joins)
   for (let bar = 0; bar < 12; bar++) {
     const level = disc.levels[bar];
-    const chord = CHORD_ROOTS[bar % 4];
+    const chord = loop[bar % 4];
 
     if (isMissing(level)) {
       // No data this month: crackle only, no chord and no data notes.
