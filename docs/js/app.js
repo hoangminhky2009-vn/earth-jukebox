@@ -5,6 +5,7 @@ import { validate } from './validate.js';
 import { createStore } from './store.js';
 import { initPlaceList } from './ui-list.js';
 import { initA11y, announce } from './a11y.js';
+import { initJukebox } from './ui-jukebox.js';
 
 const DATA_URL = 'data/discs.sample.json'; // K5 switches this to data/discs.json
 
@@ -88,6 +89,8 @@ async function main() {
     canPlay: () => started,
     onBlocked: announce,
   });
+
+  initJukebox(store, { datasets: data.datasets, announce, isStarted: () => started });
 
   // Settings toggles (persisted per browser).
   function bindToggle(inputId, key, fallback, apply) {

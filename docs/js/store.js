@@ -1,10 +1,10 @@
 // Written by Ky with help from Claude (SI). See AI_USE.md.
 // The single source of truth for page state. Pure logic, no DOM. Only this module changes state;
 // every action emits the event named in the design notes (place:focus, place:select, disc:record,
-// disc:load, play, pause, stop, seek, flip, mode, settings, tick).
+// disc:load, play, pause, stop, seek, flip, mode, settings, tick, eject).
 
 const EVENTS = ['place:focus', 'place:select', 'disc:record', 'disc:load', 'play', 'pause', 'stop',
-  'seek', 'flip', 'mode', 'settings', 'tick'];
+  'seek', 'flip', 'mode', 'settings', 'tick', 'eject'];
 
 /** @param {{places:object[], discs:object[], datasets?:object}} data parsed discs.json */
 export function createStore(data) {
@@ -126,6 +126,18 @@ export function createStore(data) {
       state.position = 0;
       emit('flip', { changed: true, side: other.side, disc: other, place: getPlace(other.place) });
       return { ok: true, disc: other };
+    },
+    /** Take the disc out of the jukebox. Stops playback first (emits stop), then eject. */
+    eject() {
+      const discId = state.loadedDisc;
+      if (!discId) return fail('No disc loaded');
+      state.loadedDisc = null;
+      state.playing = false;
+      state.position = 0;
+      state.side = 'A';
+      emit('stop', {});
+      emit('eject', { discId, disc: getDisc(discId) });
+      return { ok: true };
     },
     setMode(mode) {
       if (mode !== 'music' && mode !== 'science') return fail(`Unknown mode "${mode}"`);

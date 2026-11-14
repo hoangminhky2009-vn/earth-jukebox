@@ -26,7 +26,7 @@ body {
 
 .bar { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; padding: 1rem; }
 .title { margin: 0; font-size: 1.5rem; letter-spacing: 0.08em; text-shadow: var(--glow); }
-.settings { display: flex; gap: 1rem; color: var(--text-muted); }
+.settings { display: flex; flex-direction: column; gap: 1rem; color: var(--text); }
 
 main { padding: 1rem; max-width: 1100px; margin: 0 auto; }
 .panel {
@@ -58,7 +58,7 @@ main { padding: 1rem; max-width: 1100px; margin: 0 auto; }
 }
 
 /* High contrast: no glow, solid borders, pure colours */
-.high-contrast { --surface: #000; --surface-solid: #000; --text: #fff; --text-muted: #fff; --accent: #ffff00; --glow: none; }
+.high-contrast { --bg: #000; --surface: #000; --surface-solid: #000; --text: #fff; --text-muted: #fff; --accent: #ffff00; --accent-2: #ffff00; --focus: #00ffff; --glow: none; }
 .high-contrast body, body.high-contrast { background: #000; }
 .high-contrast .panel { border: 2px solid #fff; backdrop-filter: none; }
 

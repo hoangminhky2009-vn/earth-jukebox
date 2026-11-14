@@ -1,0 +1,80 @@
+/* Written by Ky with help from Claude (SI). See AI_USE.md. */
+/* Player, disc, dialogs, footer. Colours come from the :root variables in base.css. */
+
+.btn-ghost { background: transparent; color: var(--accent); border: 2px solid var(--accent); box-shadow: none; }
+.btn-ghost:hover { background: rgba(79, 227, 255, 0.15); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn[aria-pressed="true"] { background: var(--accent-2); box-shadow: 0 0 12px rgba(183, 140, 255, 0.7); }
+.btn[aria-pressed="true"]::before { content: "\2713\00a0"; } /* a check mark, so "on" is not only a colour */
+
+main { display: grid; gap: 1rem; }
+h2 { margin: 0 0 0.5rem; font-size: 1.15rem; letter-spacing: 0.05em; color: var(--accent); }
+.title { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; filter: drop-shadow(0 0 8px rgba(79, 227, 255, 0.5)); }
+@media (forced-colors: active) { .title { color: CanvasText; background: none; } }
+
+.player:focus { outline: none; }
+.player:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.player-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .player-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; } }
+
+.player-visual { display: grid; gap: 1rem; justify-items: center; }
+.frame-box { position: relative; width: 100%; max-width: 420px; aspect-ratio: 2 / 1; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(183, 140, 255, 0.5); background: var(--surface-solid); }
+.frame-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Missing image: keep it in the accessibility tree (alt text) but make it invisible, no broken icon. */
+.frame-img.is-missing { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.frame-ph { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; text-align: center; padding: 0.5rem; color: var(--text-muted); border: 2px dashed var(--text-muted); border-radius: var(--radius); }
+.frame-ph[hidden] { display: none; }
+
+.disc { width: min(60vw, 220px); height: auto; filter: drop-shadow(0 0 10px rgba(79, 227, 255, 0.55)); }
+.disc-spin { transform-origin: 100px 100px; animation: spin 6s linear infinite; animation-play-state: paused; }
+.is-playing .disc-spin { animation-play-state: running; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.disc-body { fill: #0b1426; stroke: var(--accent); stroke-width: 2; }
+.disc-groove { fill: none; stroke: rgba(183, 140, 255, 0.4); stroke-width: 1; }
+.disc-label-bg { fill: var(--surface-solid); stroke: var(--accent-2); stroke-width: 2; }
+.disc-hole { fill: var(--bg); stroke: var(--accent); stroke-width: 1; }
+.disc-shine { fill: none; stroke: rgba(255, 255, 255, 0.25); stroke-width: 3; stroke-linecap: round; }
+
+.condition { display: inline-block; margin: 0 0 0.75rem; padding: 0.25rem 0.8rem; border: 2px solid var(--accent); border-radius: 999px; font-weight: 700; letter-spacing: 0.04em; }
+.condition[data-condition="scratched"] { border-style: dashed; border-color: var(--accent-2); }
+.condition[data-condition="skips"] { border-style: dotted; border-color: var(--focus); }
+.condition[hidden] { display: none; }
+.readout { margin: 0 0 1rem; font-size: 1.1rem; min-height: 3.2em; }
+.buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hint { color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0 0; }
+
+dialog { color: var(--text); background: var(--surface-solid); border: 2px solid var(--accent); border-radius: var(--radius); padding: 0; width: min(92vw, 34rem); max-height: 88vh; overflow: auto; box-shadow: var(--glow); }
+dialog::backdrop { background: rgba(2, 5, 12, 0.8); }
+@supports (backdrop-filter: blur(6px)) { dialog::backdrop { background: rgba(2, 5, 12, 0.6); backdrop-filter: blur(6px); } }
+.dialog-inner { padding: 1.25rem; }
+.details-list { margin: 0 0 1rem; display: grid; grid-template-columns: 1fr; gap: 0.15rem; }
+.details-list dt { color: var(--accent); font-weight: 700; margin-top: 0.5rem; }
+.details-list dd { margin: 0; }
+.details-links { display: flex; flex-direction: column; gap: 0.4rem; margin: 0 0 1rem; }
+a { color: var(--accent); }
+
+.foot { max-width: 1100px; margin: 1rem auto 0; padding: 1rem; color: var(--text-muted); font-size: 0.9rem; }
+.foot p { margin: 0; }
+
+.bar { padding-bottom: 0.5rem; }
+.skip-link:focus { color: #000; }
+
+/* High contrast: no glow, solid borders, white on black */
+.high-contrast .btn, .high-contrast .btn-ghost { box-shadow: none; border: 2px solid #fff; }
+.high-contrast .btn:not(.btn-ghost) { color: #000; }
+.high-contrast .btn-ghost { color: #fff; background: #000; }
+.high-contrast .btn[aria-pressed="true"] { background: #fff; color: #000; }
+.high-contrast .title { background: none; color: #fff; filter: none; text-shadow: none; }
+.high-contrast h2, .high-contrast .details-list dt, .high-contrast a { color: #fff; }
+.high-contrast .disc, .high-contrast dialog { filter: none; box-shadow: none; }
+.high-contrast dialog { border: 3px solid #fff; background: #000; }
+.high-contrast dialog::backdrop { backdrop-filter: none; background: #000; }
+.high-contrast .frame-box, .high-contrast .condition { border-color: #fff; }
+.high-contrast .disc-body, .high-contrast .disc-label-bg, .high-contrast .disc-hole { fill: #000; stroke: #fff; }
+.high-contrast .disc-groove, .high-contrast .disc-shine { stroke: #fff; }
+.high-contrast .frame-ph { border-color: #fff; }
+
+@media (max-width: 480px) {
+  .btn { padding: 0.6rem 1rem; }
+  .buttons .btn { flex: 1 1 40%; }
+}

@@ -1,27 +1,22 @@
 <!doctype html>
 <!-- Written by Ky with help from Claude (SI). See AI_USE.md. -->
-<!-- Generic accessible page template, written before the event. Contains no challenge logic. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Earth Jukebox</title>
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/jukebox.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#player">Skip to player</a>
 
   <header class="bar">
     <h1 class="title">Earth Jukebox</h1>
-    <div class="settings" role="group" aria-label="Display settings">
-      <label><input type="checkbox" id="opt-contrast"> High contrast</label>
-      <label><input type="checkbox" id="opt-motion"> Reduce motion</label>
-      <label><input type="checkbox" id="opt-preview"> Preview on focus</label>
-      <label>Volume <input type="range" id="opt-volume" min="0" max="1" step="0.05"></label>
-    </div>
+    <button type="button" class="btn btn-ghost" id="settings-btn" aria-haspopup="dialog">Settings</button>
   </header>
 
-  <main id="main" tabindex="-1">
+  <main id="main">
     <p id="load-error" role="alert" hidden></p>
     <section class="panel" aria-labelledby="start-h">
       <h2 id="start-h">Start</h2>
@@ -31,7 +26,72 @@
     <nav class="panel" id="places" aria-labelledby="places-h">
       <h2 id="places-h">Places</h2>
     </nav>
+
+    <section class="panel player" id="player" tabindex="-1" aria-labelledby="player-h">
+      <h2 id="player-h">Player</h2>
+      <div class="player-grid">
+        <div class="player-visual">
+          <div class="frame-box" id="frame-box">
+            <img id="frame-img" class="frame-img" alt="" hidden>
+            <p class="frame-ph" id="frame-ph" aria-hidden="true">No disc loaded</p>
+          </div>
+          <svg class="disc" id="disc" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <defs><clipPath id="disc-label-clip"><circle cx="100" cy="100" r="34"/></clipPath></defs>
+            <g class="disc-spin" id="disc-spin">
+              <circle class="disc-body" cx="100" cy="100" r="96"/>
+              <circle class="disc-groove" cx="100" cy="100" r="86"/>
+              <circle class="disc-groove" cx="100" cy="100" r="74"/>
+              <circle class="disc-groove" cx="100" cy="100" r="62"/>
+              <circle class="disc-groove" cx="100" cy="100" r="50"/>
+              <circle class="disc-label-bg" cx="100" cy="100" r="36"/>
+              <image id="disc-label" href="" x="66" y="66" width="68" height="68" clip-path="url(#disc-label-clip)" preserveAspectRatio="xMidYMid slice"/>
+              <circle class="disc-hole" cx="100" cy="100" r="5"/>
+              <path class="disc-shine" d="M100 8 A92 92 0 0 1 192 100" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="player-controls">
+          <p class="condition" id="condition" hidden></p>
+          <p class="readout" id="readout">No disc loaded. Pick a place, press Enter to record its disc, then Enter again to play it.</p>
+          <div class="buttons" role="group" aria-label="Player controls">
+            <button type="button" class="btn" id="btn-play">Play</button>
+            <button type="button" class="btn" id="btn-stop">Stop</button>
+            <button type="button" class="btn" id="btn-flip">Flip</button>
+            <button type="button" class="btn" id="btn-mode" aria-pressed="false">Science mode</button>
+            <button type="button" class="btn" id="btn-eject">Eject</button>
+            <button type="button" class="btn btn-ghost" id="details-btn" aria-haspopup="dialog">Details</button>
+          </div>
+          <p class="hint">Keys: Space play or pause, left and right arrows change month, F flip, M mode, I details, Esc stop.</p>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="foot">
+    <p>Made by team Earth Jukebox with help from Claude (SI) &mdash; see <a href="https://github.com/hoangminhky2009-vn/earth-jukebox/blob/main/AI_USE.md">AI_USE.md</a>. Data: NASA Scientific Visualization Studio (Earth Information Center).</p>
+  </footer>
+
+  <dialog id="details-dialog" aria-labelledby="details-h">
+    <div class="dialog-inner">
+      <h2 id="details-h">Disc details</h2>
+      <div id="details-body"></div>
+      <button type="button" class="btn" id="details-close">Close</button>
+    </div>
+  </dialog>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-h">
+    <div class="dialog-inner">
+      <h2 id="settings-h">Settings</h2>
+      <div class="settings">
+        <label><input type="checkbox" id="opt-contrast"> High contrast</label>
+        <label><input type="checkbox" id="opt-motion"> Reduce motion</label>
+        <label><input type="checkbox" id="opt-preview"> Preview on focus</label>
+        <label>Volume <input type="range" id="opt-volume" min="0" max="1" step="0.05"></label>
+      </div>
+      <button type="button" class="btn" id="settings-close">Close</button>
+    </div>
+  </dialog>
 
   <!-- Screen-reader announcements: call announce("text") from app.js -->
   <div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>

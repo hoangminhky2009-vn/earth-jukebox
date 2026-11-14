@@ -71,3 +71,16 @@ test('play/pause/stop and mode emit their events and change state', () => {
 test('play with no disc loaded is an error, not a crash', () => {
   assert.equal(fresh().play().ok, false);
 });
+
+test('eject empties the jukebox, stops playback and emits stop then eject', () => {
+  const s = loaded('dhaka-rain-2025');
+  s.play();
+  const seen = [];
+  s.on('stop', () => seen.push('stop'));
+  s.on('eject', (p) => seen.push(`eject:${p.discId}`));
+  assert.equal(s.eject().ok, true);
+  assert.deepEqual(seen, ['stop', 'eject:dhaka-rain-2025']);
+  assert.equal(s.state.loadedDisc, null);
+  assert.equal(s.state.playing, false);
+  assert.equal(s.eject().ok, false);
+});
