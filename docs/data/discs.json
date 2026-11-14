@@ -1,0 +1,208 @@
+{
+  "version": 1,
+  "generated": "2026-11-14T04:53:36.560250+00:00",
+  "provenance": {
+    "source": "Colours read from NASA SVS frames (Earth Information Center). Rain values are colour-bin representatives, not exact measurements; NDVI values are colourbar positions, not measured NDVI.",
+    "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md"
+  },
+  "datasets": {
+    "rain": {
+      "label": "Rain: wetter or drier than normal",
+      "unit": "mm/day compared with normal, smoothed over ~3 months",
+      "svs": "4897",
+      "svs_url": "https://svs.gsfc.nasa.gov/4897",
+      "levels": [
+        {
+          "level": -4,
+          "min": null,
+          "max": -15,
+          "value": -17.5,
+          "label": "15+ mm/day drier than normal"
+        },
+        {
+          "level": -3,
+          "min": -15,
+          "max": -10,
+          "value": -12.5,
+          "label": "10 to 15 mm/day drier"
+        },
+        {
+          "level": -2,
+          "min": -10,
+          "max": -5,
+          "value": -7.5,
+          "label": "5 to 10 mm/day drier"
+        },
+        {
+          "level": -1,
+          "min": -5,
+          "max": -2,
+          "value": -3.5,
+          "label": "2 to 5 mm/day drier"
+        },
+        {
+          "level": 0,
+          "min": -2,
+          "max": 2,
+          "value": 0,
+          "label": "near normal (within 2 mm/day)"
+        },
+        {
+          "level": 1,
+          "min": 2,
+          "max": 5,
+          "value": 3.5,
+          "label": "2 to 5 mm/day wetter"
+        },
+        {
+          "level": 2,
+          "min": 5,
+          "max": 10,
+          "value": 7.5,
+          "label": "5 to 10 mm/day wetter"
+        },
+        {
+          "level": 3,
+          "min": 10,
+          "max": 15,
+          "value": 12.5,
+          "label": "10 to 15 mm/day wetter"
+        },
+        {
+          "level": 4,
+          "min": 15,
+          "max": null,
+          "value": 17.5,
+          "label": "15+ mm/day wetter than normal"
+        }
+      ]
+    },
+    "ndvi": {
+      "label": "Vegetation greenness: low to high",
+      "unit": "position on the image's colour scale (0 = low, 1 = high); the scale has no NDVI numbers",
+      "svs": "5544",
+      "svs_url": "https://svs.gsfc.nasa.gov/5544",
+      "levels": [
+        {
+          "level": 1,
+          "min": 0.0,
+          "max": 0.25,
+          "label": "low greenness"
+        },
+        {
+          "level": 2,
+          "min": 0.25,
+          "max": 0.5,
+          "label": "low to medium greenness"
+        },
+        {
+          "level": 3,
+          "min": 0.5,
+          "max": 0.75,
+          "label": "medium to high greenness"
+        },
+        {
+          "level": 4,
+          "min": 0.75,
+          "max": 1.0,
+          "label": "high greenness"
+        }
+      ]
+    }
+  },
+  "places": [
+    {
+      "id": "dhaka",
+      "name": "Dhaka, Bangladesh",
+      "lat": 23.81,
+      "lon": 90.41,
+      "biome": "monsoon-delta",
+      "region": "south-asia",
+      "story": ""
+    }
+  ],
+  "discs": [
+    {
+      "id": "dhaka-rain-2025",
+      "place": "dhaka",
+      "dataset": "rain",
+      "year": 2025,
+      "side": "A",
+      "levels": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        2,
+        2,
+        1,
+        1
+      ],
+      "values": [
+        3.5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -3.5,
+        0,
+        7.5,
+        7.5,
+        3.5,
+        3.5
+      ],
+      "saturated": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "frames_used": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "match_pct": 100.0,
+      "median_de": 0.0,
+      "condition": "mint",
+      "breaks": [],
+      "frame": "data/frames/dhaka-rain-2025.png",
+      "source": {
+        "svs": "4897",
+        "svs_url": "https://svs.gsfc.nasa.gov/4897",
+        "frames": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatalpha/",
+        "sample_days": [
+          1,
+          8,
+          15,
+          22,
+          28
+        ]
+      },
+      "description": "",
+      "check": null
+    }
+  ]
+}
