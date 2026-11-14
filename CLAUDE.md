@@ -13,7 +13,7 @@ Copy this file to the repo root as `CLAUDE.md` on Nov 14. Written before the eve
 ## Who owns which files — never edit the other person's files
 | Sabik | Ky |
 |---|---|
-| `pipeline/**`, `docs/data/discs.json`, `docs/data/frames/**`, `docs/js/schedule.js`, `docs/js/schedule.test.mjs`, `docs/js/audio.js`, `docs/audio-test.html`, `docs/vendor/**` | `docs/index.html`, `docs/css/**`, `docs/js/{app,store,ui-list,ui-jukebox,roll,a11y,validate,audio-stub}.js` + their `*.test.mjs`, `docs/js/{contrast,roundtrip}.test.mjs`, `docs/js/roll.fixture.js`, `docs/data/discs.sample.json`, `package.json`, `README.md`, `HOW_IT_WORKS.md`, `AI_USE.md`, `CREDITS.md` |
+| `pipeline/**`, `docs/data/discs.json`, `docs/data/frames/**`, `docs/js/schedule.js`, `docs/js/schedule.test.mjs`, `docs/js/audio.js`, `docs/audio-test.html`, `docs/vendor/**` | `docs/index.html`, `docs/css/**`, `docs/js/{app,store,ui-jukebox,roll,a11y,validate,audio-stub,scene,foley,viz}.js` + their `*.test.mjs`, `docs/js/{contrast,roundtrip}.test.mjs`, `docs/js/roll.fixture.js`, `docs/data/discs.sample.json`, `package.json`, `README.md`, `HOW_IT_WORKS.md`, `AI_USE.md`, `CREDITS.md` |
 The contract between the two halves is `notes/03_json.md` plus the audio interface in `notes/05_music.md`. Only **add** fields; tell the other person.
 
 ## Hard rules

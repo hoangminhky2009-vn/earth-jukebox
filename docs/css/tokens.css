@@ -1,124 +1,60 @@
 /* Written by Ky with help from Claude (SI). See AI_USE.md. */
-/* Design tokens of the "Terminal x Neon + Modern Pixel UI" system (names copied from the owner's delphi-game).
-   Radius tokens are all 0: pixel UI has steps, not curves. Components use var(--...) only. */
+/* Design tokens of the "chill pixel console" look: cream, warm wood, slate and a night-sky page.
+   Colours are the same ones painted on the canvas (see scene.js). Components use var(--...) only. */
 :root {
-  /* Page and surfaces */
-  --bg-page: #04070d;
-  --bg-page-glow:
-    radial-gradient(1000px 560px at 50% -12%, rgba(34, 211, 238, 0.09), rgba(0, 0, 0, 0)),
-    radial-gradient(800px 500px at 90% 45%, rgba(139, 92, 246, 0.07), rgba(0, 0, 0, 0));
-  /* Light layer on the page: a very faint cyan pixel grid plus scanlines. Off in high contrast and reduced motion. */
-  --bg-grid:
-    repeating-linear-gradient(0deg, rgba(34, 211, 238, 0.035) 0 1px, rgba(0, 0, 0, 0) 1px 24px),
-    repeating-linear-gradient(90deg, rgba(34, 211, 238, 0.035) 0 1px, rgba(0, 0, 0, 0) 1px 24px),
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
-  --surface-card: linear-gradient(178deg, #081120 0%, #050a14 60%);
-  --surface-panel: linear-gradient(178deg, #0a1524, #060c17);
-  --surface-inset: rgba(255, 255, 255, 0.04);
-  --surface-idle: rgba(255, 255, 255, 0.03);
-  --surface-track: rgba(93, 114, 144, 0.14);
-  /* Solid stand-ins of the lightest end of each surface: used for the contrast test and as a fallback. */
-  --bg-panel-solid: #081120;
-  --surface-inset-solid: #141e2d;
-  --accent-wash-solid: #0d3040;
+  /* Surfaces */
+  --bg-page: #0d0b18;
+  --bg-panel-solid: #2a1c1b;       /* dark wood: dialogs and tables */
+  --surface-inset-solid: #1b120f;  /* darkest wood: inset boxes, chart background */
+  --accent-wash-solid: #3a4752;    /* slate: raised buttons on hover */
+  --wood-edge: #5a3a30;
+  --wood-line: #1b120f;
+  --lcd-bg: #14251a;
+  --btn-face: #e8d9b5;             /* the cream console buttons */
+  --btn-text: #3b2418;
 
   /* Text */
-  --text-bright: #e8f6ff;
-  --text-title: #eef6ff;
-  --text-max: #f2f8ff;
-  --text-body: #e8f2fc;
-  --text-muted: #93aac8;
-  --text-dim: #bfd1e6;
+  --text-body: #f4ead2;   /* cream */
+  --text-max: #fff6e0;
+  --text-bright: #fff6e0;
+  --text-muted: #d2c4a4;
+  --lcd-fg: #9be7a5;
 
-  /* Semantic colours */
-  --accent: #22d3ee;
-  --accent-bright: #67e8f9;
-  --accent-soft: #a5f3fc;
-  --win: #4ade80;
-  --win-on: #03140a;
-  --win-soft: #bbf7d0;
-  --lose: #f87171;
-  --violet: #8b5cf6;
-  --violet-soft: #a78bfa;
-  --gold: #fde047;
-  --gold-amber: #fbbf24;
-  --gold-flame: #fb923c;
-  --focus: #22d3ee;
+  /* Accents */
+  --accent: #f6d27a;      /* gold */
+  --accent-bright: #ffe39a;
+  --win: #7fd8a8;
+  --gold-flame: #e8834a;  /* warm orange: drier, scratched */
+  --teal: #4fd6e0;        /* wetter */
+  --violet-soft: #b9a3f0;
+  --focus: #f6d27a;
 
-  /* Borders */
-  --border-idle: rgba(93, 114, 144, 0.3);
-  --border-idle-strong: rgba(93, 114, 144, 0.35);
-  --border-accent-soft: rgba(34, 211, 238, 0.25);
-  --border-accent: rgba(34, 211, 238, 0.4);
-  --border-accent-strong: rgba(34, 211, 238, 0.5);
-  --border-gold: rgba(251, 191, 36, 0.45);
-
-  /* Signature gradient (call-to-action wash) and glows (light, offset 0) */
-  --grad-cta: linear-gradient(90deg, rgba(34, 211, 238, 0.16), rgba(74, 222, 128, 0.14));
-  --glow-accent-bar: 0 0 4px rgba(34, 211, 238, 0.5);
-  --glow-win-bar: 0 0 18px rgba(74, 222, 128, 0.8);
-  --glow-cursor: 0 0 8px rgba(34, 211, 238, 0.8);
-  --glow-soft: 0 0 16px rgba(34, 211, 238, 0.35);
-
-  /* Radius: all 0 */
-  --radius-card: 0px;
-  --radius-panel: 0px;
-  --radius-chip: 0px;
-  --radius-pill: 0px;
-
-  /* Fonts: mono for labels, numbers, buttons, codes; Space Grotesk for titles and place names */
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --font-title: 'Space Grotesk', system-ui, 'Segoe UI', Roboto, sans-serif;
-
-  /* Type scale and spacing */
-  --fs-label: 10.5px;
-  --fs-meta: 11px;
-  --fs-stat: 14px;
-  --gap-item: 10px;
-  --gap-group: 18px;
+  --font-pixel: 'Pixelify Sans', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-body: 15px;
+  --fs-small: 13px;
 }
 
-/* High contrast: no glows, no gradients, solid white on black. Still notched (the clip-path stays). */
+/* High contrast: solid white on black, no soft tones. The painted scene keeps its colours; every button, dialog and label becomes plain. */
 .high-contrast {
   --bg-page: #000000;
-  --bg-page-glow: none;
-  --bg-grid: none;
-  --surface-card: #000000;
-  --surface-panel: #000000;
-  --surface-inset: #000000;
-  --surface-idle: #000000;
-  --surface-track: #333333;
   --bg-panel-solid: #000000;
   --surface-inset-solid: #000000;
   --accent-wash-solid: #000000;
-  --text-bright: #ffffff;
-  --text-title: #ffffff;
-  --text-max: #ffffff;
+  --wood-edge: #ffffff;
+  --wood-line: #ffffff;
+  --lcd-bg: #000000;
+  --btn-face: #ffffff;
+  --btn-text: #000000;
   --text-body: #ffffff;
+  --text-max: #ffffff;
+  --text-bright: #ffffff;
   --text-muted: #ffffff;
-  --text-dim: #ffffff;
+  --lcd-fg: #ffffff;
   --accent: #ffffff;
   --accent-bright: #ffffff;
-  --accent-soft: #ffffff;
   --win: #ffffff;
-  --win-on: #000000;
-  --win-soft: #ffffff;
-  --lose: #ffffff;
-  --violet: #ffffff;
-  --violet-soft: #ffffff;
-  --gold: #ffffff;
-  --gold-amber: #ffffff;
   --gold-flame: #ffffff;
+  --teal: #ffffff;
+  --violet-soft: #ffffff;
   --focus: #00ffff;
-  --border-idle: #ffffff;
-  --border-idle-strong: #ffffff;
-  --border-accent-soft: #ffffff;
-  --border-accent: #ffffff;
-  --border-accent-strong: #ffffff;
-  --border-gold: #ffffff;
-  --grad-cta: #000000;
-  --glow-accent-bar: none;
-  --glow-win-bar: none;
-  --glow-cursor: none;
-  --glow-soft: none;
 }

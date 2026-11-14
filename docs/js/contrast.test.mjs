@@ -32,13 +32,14 @@ export function ratio(a, b) {
 
 // [foreground variable, background variable, minimum ratio]: main text 7:1, other text 4.5:1.
 const PAIRS = [
-  // main text: 7:1 on the page, the panel and the inset rows (solid stand-ins of the lightest end of each surface)
+  // main text: 7:1 on the page, the dark-wood dialog, the inset boxes and the slate hover face
   ['text-body', 'bg-page', 7], ['text-body', 'bg-panel-solid', 7], ['text-body', 'surface-inset-solid', 7],
   ['text-max', 'bg-panel-solid', 7], ['text-max', 'surface-inset-solid', 7], ['text-bright', 'accent-wash-solid', 7],
+  ['btn-text', 'btn-face', 7], ['lcd-fg', 'lcd-bg', 7],
   // other text: 4.5:1
   ['text-muted', 'bg-page', 4.5], ['text-muted', 'bg-panel-solid', 4.5], ['text-muted', 'surface-inset-solid', 4.5],
-  ['accent', 'bg-panel-solid', 4.5], ['accent-bright', 'bg-panel-solid', 4.5],
-  ['win', 'bg-panel-solid', 4.5], ['gold-flame', 'bg-panel-solid', 4.5], ['gold-amber', 'bg-panel-solid', 4.5],
+  ['accent', 'bg-page', 4.5], ['accent', 'bg-panel-solid', 4.5], ['accent', 'surface-inset-solid', 4.5], ['accent-bright', 'bg-panel-solid', 4.5],
+  ['win', 'bg-panel-solid', 4.5], ['gold-flame', 'bg-panel-solid', 4.5], ['teal', 'bg-panel-solid', 4.5],
   ['violet-soft', 'bg-panel-solid', 4.5], ['focus', 'bg-page', 4.5], ['focus', 'bg-panel-solid', 4.5],
 ];
 

@@ -1,6 +1,8 @@
 // Written by Ky with help from Claude (SI). See AI_USE.md.
-// The Player section (frame, spinning disc, five buttons, month readout), the Details dialog
-// and the Settings dialog. Text builders are pure so they can run under node --test.
+// The Details dialog (facts, 12-month chart, month table, piano roll) and the Settings dialog.
+// Text builders are pure so they can run under node --test; the console itself is drawn by scene.js.
+
+import { monthBars } from './viz.js';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
@@ -112,6 +114,73 @@ function el(tag, props = {}, ...kids) {
   return e;
 }
 
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function svg(tag, attrs = {}, ...kids) {
+  const e = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, String(v));
+  e.append(...kids);
+  return e;
+}
+
+// Chart geometry (SVG units). Each column is 24 wide; a block is one level (rain) or one quarter (greenness).
+const COL = 24; const BLOCK = 11; const PITCH = 12; const RAIN_ZERO = 70; const NDVI_BASE = 120;
+
+/**
+ * The 12-month chart (for the eye: the table under it carries the same facts for screen readers).
+ * Rain: pixel bars up (wetter, ▲) or down (drier, ▼) from a zero line, with the mm/day label.
+ * Greenness: quarter blocks filled from the bottom. Missing months: a grey checker cell labelled "no data".
+ */
+export function renderMonthChart(bars, dataset) {
+  const rain = dataset === 'rain';
+  const root = svg('svg', { class: 'chart-svg', viewBox: `0 0 ${COL * 12} 150`, 'aria-hidden': 'true', focusable: 'false' });
+  root.append(svg('defs', {}, svg('pattern', { id: 'chart-checker', width: 4, height: 4, patternUnits: 'userSpaceOnUse' },
+    svg('rect', { width: 4, height: 4, fill: '#6b6577' }), svg('rect', { width: 2, height: 2, fill: '#2d2836' }), svg('rect', { x: 2, y: 2, width: 2, height: 2, fill: '#2d2836' }))));
+  root.append(svg('rect', { class: 'chart-zero', x: 0, y: rain ? RAIN_ZERO : NDVI_BASE + 1, width: COL * 12, height: 1 }));
+  for (const b of bars) {
+    const x = b.month * COL + 3; const w = COL - 6; const cx = b.month * COL + COL / 2;
+    const text = (y, t) => svg('text', { x: cx, y, 'text-anchor': 'middle', 'font-size': 7.5 }, t);
+    if (b.kind === 'missing') {
+      root.append(svg('rect', { x, y: rain ? RAIN_ZERO - 24 : NDVI_BASE - 48, width: w, height: 48, fill: 'url(#chart-checker)' }));
+      const ty = rain ? RAIN_ZERO - 34 : NDVI_BASE + 9; // two short lines, so neighbouring labels do not touch
+      root.append(text(ty, 'no'), text(ty + 7, 'data'));
+    } else if (rain) {
+      if (b.steps === 0) root.append(svg('rect', { class: 'c-bar', x, y: RAIN_ZERO - 2, width: w, height: 3, fill: b.color }));
+      for (let i = 0; i < b.steps; i++) {
+        const y = b.dir === 'up' ? RAIN_ZERO - PITCH * (i + 1) : RAIN_ZERO + 2 + PITCH * i;
+        root.append(svg('rect', { class: 'c-bar', x, y, width: w, height: BLOCK, fill: b.color }));
+      }
+      const above = RAIN_ZERO - (b.dir === 'up' ? PITCH * b.steps : 0) - 5;
+      const below = RAIN_ZERO + 2 + (b.dir === 'down' ? PITCH * b.steps : 0) + 8;
+      root.append(text(b.dir === 'down' ? below : above, b.short));
+    } else {
+      for (let i = 0; i < b.of; i++) {
+        const y = NDVI_BASE - PITCH * (i + 1) + 1;
+        root.append(i < b.steps
+          ? svg('rect', { class: 'c-bar', x, y, width: w, height: BLOCK, fill: b.color })
+          : svg('rect', { class: 'chart-empty', x: x + 0.5, y: y + 0.5, width: w - 1, height: BLOCK - 1 }));
+      }
+      root.append(text(NDVI_BASE + 10, b.short));
+    }
+    root.append(svg('text', { class: 'c-month', x: cx, y: 145, 'text-anchor': 'middle', 'font-size': 7.5 }, b.label));
+  }
+  return root;
+}
+
+/** A real table of the same twelve months: month, level, value text. */
+export function renderMonthTable(bars, disc) {
+  const table = el('table', { className: 'month-table' });
+  table.append(el('caption', {}, `Month by month, ${disc.year} (side ${disc.side})`));
+  table.append(el('thead', {}, el('tr', {}, ...['Month', 'Level', 'Value'].map((h) => el('th', { scope: 'col' }, h)))));
+  const body = el('tbody');
+  for (const b of bars) {
+    const tr = el('tr', {}, el('th', { scope: 'row' }, b.name), el('td', {}, b.levelText), el('td', {}, b.text));
+    tr.dataset.kind = b.kind;
+    body.append(tr);
+  }
+  table.append(body);
+  return table;
+}
+
 /** Wire a modal dialog: Close button, backdrop click and Esc all close it and return focus to the opener. */
 function wireDialog(dialog, opener, closeBtn) {
   let from = opener;
@@ -121,131 +190,41 @@ function wireDialog(dialog, opener, closeBtn) {
   dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
   return (trigger) => {
     from = trigger ?? opener;
-    if (!dialog.open) dialog.showModal();
+    if (!dialog.open) { dialog.showModal(); dialog.querySelector('h2')?.focus(); dialog.scrollTop = 0; } // start at the top, with the title read first
   };
 }
 
 /**
+ * The Details dialog (Details button or I key) and the Settings dialog. The console buttons live in scene.js.
  * @param {ReturnType<import('./store.js').createStore>} store
- * @param {{datasets: object, announce: (t:string)=>void, isStarted?: ()=>boolean}} opts
+ * @param {{datasets: object, announce: (t:string)=>void}} opts
  */
-export function initJukebox(store, opts) {
+export function initDialogs(store, opts) {
   const { datasets, announce } = opts;
   const $ = (id) => document.getElementById(id);
-  const player = $('player');
-  const img = $('frame-img');
-  const ph = $('frame-ph');
-  const discLabel = $('disc-label');
-  const readout = $('readout');
-  const condition = $('condition');
-  const trend = $('readout-trend');
-  const playBtn = $('btn-play');
-  const modeBtn = $('btn-mode');
   const current = () => store.getDisc(store.state.loadedDisc);
 
-  // --- frame image, with a text box in its place when the file is missing
-  function showFrame(disc) {
-    if (!disc) {
-      img.hidden = true; img.removeAttribute('src'); img.alt = '';
-      ph.textContent = 'No disc loaded'; ph.hidden = false;
-      discLabel.removeAttribute('href');
-      return;
-    }
-    ph.textContent = 'Frame image not available yet';
-    img.alt = disc.description ?? '';
-    img.classList.remove('is-missing');
-    ph.hidden = true;
-    img.hidden = false;
-    img.removeAttribute('src');
-    discLabel.removeAttribute('href'); // set again only once the <img> has loaded
-    img.src = disc.frame;
-  }
-  // A failed load keeps the <img> (its alt text stays for screen readers) but hides its icon.
-  img.addEventListener('error', () => {
-    if (!img.getAttribute('src')) return;
-    img.classList.add('is-missing');
-    ph.hidden = false;
-    discLabel.removeAttribute('href'); // the disc label falls back to its plain circle too
-  });
-  img.addEventListener('load', () => {
-    img.classList.remove('is-missing'); ph.hidden = true;
-    discLabel.setAttribute('href', img.getAttribute('src'));
-  });
-
-  function render() {
-    const disc = current();
-    const loaded = Boolean(disc);
-    player.classList.toggle('is-playing', loaded && store.state.playing);
-    player.classList.toggle('is-loaded', loaded);
-    playBtn.textContent = store.state.playing ? 'Pause' : 'Play';
-    modeBtn.setAttribute('aria-pressed', String(store.state.mode === 'science'));
-    $('meta-line').textContent = metaText(disc, datasets);
-    $('discs-chip').textContent = `Discs ${store.state.collected.size}/${store.state.discs.length}`;
-    if (!loaded) {
-      readout.textContent = 'No disc loaded. Pick a place, press Enter to record its disc, then Enter again to play it.';
-      trend.textContent = '';
-      for (const id of ['stat-month', 'stat-level', 'stat-match', 'stat-frames']) $(id).textContent = '—';
-      condition.textContent = '—';
-      delete condition.dataset.condition;
-      return;
-    }
-    const m = Math.min(11, Math.max(0, Math.floor(store.state.position)));
-    readout.textContent = readoutText(disc, store.state.position, datasets);
-    const lv = levelInfo(disc, store.state.position, datasets);
-    trend.textContent = lv.glyph && lv.dir !== 'flat' ? lv.glyph : ''; // decoration only, the sentence carries the meaning
-    trend.className = `trend ${lv.dir}`;
-    $('stat-month').textContent = `${MONTHS[m]} ${disc.year}`;
-    const levelEl = $('stat-level');
-    levelEl.textContent = lv.text;
-    levelEl.className = lv.dir;
-    $('stat-match').textContent = `${Math.round(disc.match_pct)}%`;
-    $('stat-frames').textContent = framesShort(disc);
-    condition.textContent = conditionLabel(disc.condition);
-    condition.dataset.condition = disc.condition;
-  }
-  let shown = null;
-  function sync() {
-    const id = store.state.loadedDisc;
-    if (id !== shown) { shown = id; showFrame(current()); }
-    render();
-  }
-  for (const ev of ['disc:load', 'play', 'pause', 'stop', 'seek', 'flip', 'mode', 'tick', 'eject', 'disc:record']) store.on(ev, sync);
-  sync();
-
-  // --- the five buttons
-  const guard = () => {
-    if (opts.isStarted && !opts.isStarted()) { announce('Press the Start button first'); return false; }
-    return true;
-  };
-  playBtn.addEventListener('click', () => {
-    if (!guard()) return;
-    const r = store.state.playing ? store.pause() : store.play();
-    if (!r.ok) announce(r.error);
-  });
-  $('btn-stop').addEventListener('click', () => { if (guard()) store.stop(); });
-  $('btn-flip').addEventListener('click', () => { store.flip(); }); // flip announces its own message
-  modeBtn.addEventListener('click', () => { store.setMode(store.state.mode === 'music' ? 'science' : 'music'); });
-  $('btn-eject').addEventListener('click', () => {
-    const disc = current();
-    const r = store.eject();
-    announce(r.ok ? `Ejected: ${disc.id.replaceAll('-', ' ')}` : r.error);
-  });
-
-  // --- details dialog (button or I key)
   const detailsDialog = $('details-dialog');
   const detailsBtn = $('details-btn');
   const openDetails = wireDialog(detailsDialog, detailsBtn, $('details-close'));
   function fillDetails(disc) {
     const d = detailRows(disc, datasets);
+    const bars = monthBars(disc, datasets);
+    $('details-meta').textContent = metaText(disc, datasets);
     const body = $('details-body');
     body.replaceChildren();
+    body.append(el('h3', {}, 'Twelve months'));
+    body.append(el('div', { className: 'chart' }, renderMonthChart(bars, disc.dataset)));
+    body.append(el('p', { className: 'chart-note' }, disc.dataset === 'rain'
+      ? 'Bars up (▲) are wetter than normal, bars down (▼) are drier, in mm/day. Each number is the middle of its band. A grey checker cell means no data.'
+      : 'Four blocks = the greenness scale split in quarters (low to high). A grey checker cell means no data.'));
+    body.append(renderMonthTable(bars, disc));
+    body.append(el('h3', {}, 'About this disc'));
     const dl = el('dl', { className: 'details-list' });
     for (const [term, value] of d.rows) dl.append(el('dt', {}, term), el('dd', {}, value));
     body.append(dl);
     const links = el('p', { className: 'details-links' });
-    if (d.svsUrl) {
-      links.append(el('a', { href: d.svsUrl, target: '_blank', rel: 'noopener' }, `NASA SVS ${d.svsId ?? ''} page (opens in a new tab)`));
-    }
+    if (d.svsUrl) links.append(el('a', { href: d.svsUrl, target: '_blank', rel: 'noopener' }, `NASA SVS ${d.svsId ?? ''} page (opens in a new tab)`));
     links.append(el('a', { href: d.creditsUrl, target: '_blank', rel: 'noopener' }, 'CREDITS.md (opens in a new tab)'));
     body.append(links);
   }
@@ -262,7 +241,8 @@ export function initJukebox(store, opts) {
     if (['INPUT', 'SELECT', 'TEXTAREA'].includes(t?.tagName) || t?.isContentEditable) return;
     if (document.querySelector('dialog[open]')) return;
     e.preventDefault();
-    showDetails(document.activeElement instanceof HTMLElement ? document.activeElement : detailsBtn);
+    const a = document.activeElement;
+    showDetails(a instanceof HTMLElement && a !== document.body ? a : detailsBtn);
   });
 
   // --- settings dialog (the inputs keep their ids; app.js binds them)

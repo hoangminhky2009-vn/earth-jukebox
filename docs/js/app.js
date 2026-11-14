@@ -1,11 +1,12 @@
 // Written by Ky with help from Claude (SI). See AI_USE.md.
-// Page wiring: loads data, creates the store, connects audio, list, announcements and settings.
+// Page wiring: loads data, creates the store, connects audio, the pixel scene, announcements and settings.
 
 import { validate } from './validate.js';
 import { createStore } from './store.js';
-import { initPlaceList } from './ui-list.js';
 import { initA11y, announce } from './a11y.js';
-import { initJukebox } from './ui-jukebox.js';
+import { initDialogs } from './ui-jukebox.js';
+import { createScene } from './scene.js';
+import * as foley from './foley.js';
 import { initRoll } from './roll.js';
 
 const DATA_URL = 'data/discs.sample.json'; // K5 switches this to data/discs.json
@@ -44,7 +45,22 @@ function saveSetting(key, on) {
   try { localStorage.setItem(key, on ? '1' : '0'); } catch { /* storage blocked: ignore */ }
 }
 
+// Browsers only allow audio after a user gesture: the first click or key press starts everything (no "Press to start" button).
 let started = false;
+let audioEngine = null;
+let volumeNow = 0.8;
+function kickAudio() {
+  if (!audioEngine) return;
+  audioEngine.start().then(() => audioEngine.setVolume(volumeNow)).catch((err) => { console.error(err); announce('Sound could not start'); });
+}
+function firstGesture() {
+  if (started) return;
+  started = true;
+  foley.unlock();
+  kickAudio();
+}
+addEventListener('pointerdown', firstGesture, { capture: true, once: true });
+addEventListener('keydown', firstGesture, { capture: true, once: true });
 
 async function main() {
   let data;
@@ -63,6 +79,7 @@ async function main() {
   }
 
   const audio = await loadAudio();
+  audioEngine = audio;
   const schedule = await loadSchedule();
   const store = createStore(data);
 
@@ -97,13 +114,15 @@ async function main() {
   };
 
   initA11y(store, { datasets: data.datasets, duck: audio.duck, isStarted: () => started, preview });
-  initPlaceList(document.getElementById('places'), store, {
-    canPlay: () => started,
-    onBlocked: announce,
+  createScene(store, { datasets: data.datasets, announce });
+  // After a disc lands on the deck, say so (a11y.js joins it to a "Recorded: ..." sentence spoken a moment before).
+  store.on('disc:load', ({ disc }) => {
+    const p = place(disc);
+    announce(`On the deck: ${p.name.split(',')[0]}, ${disc.dataset === 'rain' ? 'rain' : 'greenness'} ${disc.year}, side ${disc.side}. Press Space to play.`);
   });
 
   initRoll(store, { container: document.getElementById('roll-box'), svgHost: document.getElementById('roll'), getSchedule: () => schedule });
-  initJukebox(store, { datasets: data.datasets, announce, isStarted: () => started });
+  initDialogs(store, { datasets: data.datasets, announce });
 
   // Settings toggles (persisted per browser).
   function bindToggle(inputId, key, fallback, apply) {
@@ -129,19 +148,11 @@ async function main() {
   const volume = document.getElementById('opt-volume');
   volume.value = store.state.settings.volume;
   volume.addEventListener('input', () => store.updateSettings({ volume: Number(volume.value) }));
+  volumeNow = store.state.settings.volume;
+  foley.setVolume(volumeNow);
+  store.on('settings', (st) => { volumeNow = st.volume; });
 
-  // Browsers only allow audio after a user gesture: start everything from this button.
-  document.getElementById('start-btn').addEventListener('click', async () => {
-    try {
-      await audio.start();
-      started = true;
-      audio.setVolume(store.state.settings.volume);
-      announce('Started');
-    } catch (err) {
-      console.error(err);
-      announce('Sound could not start');
-    }
-  });
+  if (started) kickAudio(); // a gesture came in while the data was still loading
 }
 
 main();

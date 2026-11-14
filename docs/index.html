@@ -7,113 +7,59 @@
   <title>Earth Jukebox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/pixel.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/jukebox.css">
 </head>
 <body>
-  <a class="skip-link" href="#player">Skip to player</a>
-
-  <header class="bar">
-    <div class="logo">
-      <span class="logo-dot" aria-hidden="true"></span>
-      <h1 class="title" aria-label="Earth Jukebox"><span aria-hidden="true">Earth</span><span class="t-sep" aria-hidden="true">://</span><span class="t-end" aria-hidden="true">Jukebox</span></h1>
-    </div>
-    <span class="chip chip-on px-notch" id="discs-chip">Discs 0/0</span>
-    <button type="button" class="btn px-frame" id="settings-btn" aria-haspopup="dialog">Settings</button>
-    <p class="meta" id="meta-line">&gt;_ no disc loaded &middot; pick a place</p>
-  </header>
+  <a class="skip-link" href="#hits">Skip to the console</a>
+  <h1 class="sr-only">Earth Jukebox</h1>
 
   <main id="main">
-    <p id="load-error" role="alert" hidden></p>
-    <section class="panel px-frame" aria-labelledby="start-h">
-      <h2 id="start-h">Start</h2>
-      <button type="button" id="start-btn" class="btn btn-primary px-frame">Press to start</button>
-    </section>
-
-    <nav class="panel px-frame" id="places" aria-labelledby="places-h">
-      <h2 id="places-h">Places</h2>
-    </nav>
-
-    <section class="panel player px-frame" id="player" tabindex="-1" aria-labelledby="player-h">
-      <h2 id="player-h">Player</h2>
-      <div class="player-grid">
-        <div class="player-visual">
-          <div class="frame-box inset px-notch" id="frame-box">
-            <img id="frame-img" class="frame-img" alt="" hidden>
-            <p class="frame-ph" id="frame-ph" aria-hidden="true">No disc loaded</p>
-          </div>
-          <div class="disc-panel inset px-notch">
-            <svg class="disc" id="disc" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-              <defs><clipPath id="disc-label-clip"><circle cx="100" cy="100" r="34"/></clipPath></defs>
-              <g class="disc-spin" id="disc-spin">
-                <circle class="disc-body" cx="100" cy="100" r="96"/>
-                <circle class="disc-groove" cx="100" cy="100" r="86"/>
-                <circle class="disc-groove" cx="100" cy="100" r="74"/>
-                <circle class="disc-groove" cx="100" cy="100" r="62"/>
-                <circle class="disc-groove" cx="100" cy="100" r="50"/>
-                <circle class="disc-label-bg" cx="100" cy="100" r="36"/>
-                <image id="disc-label" href="" x="66" y="66" width="68" height="68" clip-path="url(#disc-label-clip)" preserveAspectRatio="xMidYMid slice"/>
-                <circle class="disc-hole" cx="100" cy="100" r="5"/>
-                <path class="disc-shine" d="M100 8 A92 92 0 0 1 192 100" />
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        <div class="player-controls">
-          <div class="term px-notch">
-            <span class="term-prompt" aria-hidden="true">svs@jukebox:~$</span><span class="trend" id="readout-trend" aria-hidden="true"></span><p class="readout" id="readout">No disc loaded. Pick a place, press Enter to record its disc, then Enter again to play it.</p>
-          </div>
-          <dl class="stats inset px-notch">
-            <div class="stat-row"><dt>Month</dt><dd id="stat-month">&mdash;</dd></div>
-            <div class="stat-row"><dt>Level</dt><dd id="stat-level">&mdash;</dd></div>
-            <div class="stat-row"><dt>Colour match</dt><dd id="stat-match">&mdash;</dd></div>
-            <div class="stat-row"><dt>Frames used</dt><dd id="stat-frames">&mdash;</dd></div>
-            <div class="stat-row"><dt>Condition</dt><dd id="condition">&mdash;</dd></div>
-          </dl>
-          <div class="buttons" role="group" aria-label="Player controls">
-            <button type="button" class="btn btn-primary px-frame" id="btn-play">Play</button>
-            <button type="button" class="btn px-frame" id="btn-stop">Stop</button>
-            <button type="button" class="btn px-frame" id="btn-flip">Flip</button>
-            <button type="button" class="btn px-frame" id="btn-mode" aria-pressed="false">Science mode</button>
-            <button type="button" class="btn px-frame" id="btn-eject">Eject</button>
-            <button type="button" class="btn px-frame" id="details-btn" aria-haspopup="dialog">Details</button>
-          </div>
-          <p class="hint">Keys: Space play or pause, left and right arrows change month, F flip, M mode, I details, Esc stop.</p>
-        </div>
+    <div class="screen" id="screen">
+      <canvas id="cv" width="480" height="270" aria-hidden="true"></canvas>
+      <div class="logo" aria-hidden="true">EARTH JUKEBOX</div>
+      <div class="coords" id="coords" aria-hidden="true"></div>
+      <div class="lcd" id="lcd" aria-hidden="true"></div>
+      <div id="hits" role="group" aria-label="Jukebox console: disc shelf and player controls"></div>
+      <div class="top-btns">
+        <button type="button" class="tbtn" id="details-btn" aria-haspopup="dialog">Details</button>
+        <button type="button" class="tbtn" id="settings-btn" aria-haspopup="dialog">Settings</button>
       </div>
-      <div class="roll-box inset px-notch" id="roll-box" hidden>
-        <div id="roll"></div>
-        <p class="roll-legend">Dots: raindrops or data notes. Faint long bars: chord layers. Slashes over a whole month: missing data (crackle). Cut cell with a cross: skip.</p>
-      </div>
-    </section>
+      <p id="load-error" role="alert" hidden></p>
+    </div>
   </main>
 
   <footer class="foot">
     <p>Made by team Earth Jukebox with help from Claude (SI) &mdash; see <a href="https://github.com/hoangminhky2009-vn/earth-jukebox/blob/main/AI_USE.md">AI_USE.md</a>. Data: NASA Scientific Visualization Studio (Earth Information Center).</p>
   </footer>
 
-  <dialog id="details-dialog" class="dlg px-frame" aria-labelledby="details-h">
+  <dialog id="details-dialog" class="dlg" aria-labelledby="details-h">
     <div class="dialog-inner">
-      <h2 id="details-h">Disc details</h2>
+      <h2 id="details-h" tabindex="-1">Disc details</h2>
+      <p class="mono" id="details-meta"></p>
       <div id="details-body"></div>
-      <button type="button" class="btn px-frame" id="details-close">Close</button>
+      <div class="roll-box" id="roll-box" hidden>
+        <h3 id="roll-h">Piano roll</h3>
+        <div id="roll"></div>
+        <p class="roll-legend">Dots: raindrops or data notes. Faint long bars: chord layers. Slashes over a whole month: missing data (crackle). Cut cell with a cross: skip.</p>
+      </div>
+      <button type="button" class="btn" id="details-close">Close</button>
     </div>
   </dialog>
 
-  <dialog id="settings-dialog" class="dlg px-frame" aria-labelledby="settings-h">
+  <dialog id="settings-dialog" class="dlg" aria-labelledby="settings-h">
     <div class="dialog-inner">
-      <h2 id="settings-h">Settings</h2>
+      <h2 id="settings-h" tabindex="-1">Settings</h2>
       <div class="settings">
         <label><input type="checkbox" id="opt-contrast"> High contrast</label>
         <label><input type="checkbox" id="opt-motion"> Reduce motion</label>
         <label><input type="checkbox" id="opt-preview"> Preview on focus</label>
         <label>Volume <input type="range" id="opt-volume" min="0" max="1" step="0.05"></label>
       </div>
-      <button type="button" class="btn px-frame" id="settings-close">Close</button>
+      <p class="hint">Keys: Tab to a disc slot and press Enter to put it on the deck. Space play or pause, left and right arrows change month, F flip, M mode, I details, Esc stop.</p>
+      <button type="button" class="btn" id="settings-close">Close</button>
     </div>
   </dialog>
 

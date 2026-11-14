@@ -1,123 +1,76 @@
 /* Written by Ky with help from Claude (SI). See AI_USE.md. */
-/* Player, terminal readout, stats, disc, piano roll, dialogs. Colours from tokens.css, shapes from pixel.css. */
+/* The scaled pixel screen and its overlays, then the Details dialog (chart, table, piano roll). */
 
-.player:focus { outline: none; }
-.player:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
-.player-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
-@media (min-width: 640px) { .player-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; } }
+/* ---- the screen: a 480x270 canvas scaled by --s (set by scene.js to fit the window, never scrolls) ---- */
+.screen { position: relative; width: calc(480px * var(--s, 1)); height: calc(270px * var(--s, 1)); }
+.screen canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+.screen #load-error { position: absolute; left: 10%; right: 10%; top: 40%; z-index: 5; }
+.logo { position: absolute; left: calc(var(--s, 1) * 8px); top: calc(var(--s, 1) * 4px); font-size: calc(var(--s, 1) * 7px); letter-spacing: 1px; color: var(--text-body); opacity: 0.9; pointer-events: none; }
+.coords { position: absolute; font-size: calc(var(--s, 1) * 5px); color: var(--accent); white-space: nowrap; pointer-events: none; text-shadow: calc(var(--s, 1) * 0.5px) calc(var(--s, 1) * 0.5px) 0 var(--bg-page); }
+.lcd {
+  position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;
+  font-size: calc(var(--s, 1) * 6px); letter-spacing: 0.5px; color: var(--lcd-fg); text-shadow: 0 0 calc(var(--s, 1) * 2px) rgba(155, 231, 165, 0.6);
+}
+.high-contrast .lcd { background: #000; text-shadow: none; font-weight: 600; }
+.high-contrast .coords { color: #fff; text-shadow: none; background: #000; }
+.high-contrast .logo { color: #fff; opacity: 1; background: #000; }
 
-/* Start section */
-.start-note { margin: 0 0 12px; color: var(--text-muted); font: 400 var(--fs-meta)/1.6 var(--font-mono); }
-#start-btn::before { content: "\25B6\00a0"; content: "\25B6\00a0" / ""; }
+/* Details and Settings: small cream buttons in the top-right corner of the sky */
+.top-btns { position: absolute; right: calc(var(--s, 1) * 6px); top: calc(var(--s, 1) * 4px); display: flex; gap: calc(var(--s, 1) * 4px); }
+.tbtn { padding: calc(var(--s, 1) * 1.5px) calc(var(--s, 1) * 5px); font-size: max(13px, calc(var(--s, 1) * 6px)); box-shadow: 0 2px 0 #120b0a, inset 0 1px 0 #fff6e0, inset 0 -1px 0 #b9a888; }
 
-/* Frame image box and disc graphic, each in an inset pixel panel */
-.player-visual { display: grid; gap: 14px; }
-.frame-box { position: relative; width: 100%; aspect-ratio: 2 / 1; overflow: hidden; padding: 0; }
-.frame-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* Missing image: keep it in the accessibility tree (alt text) but make it invisible, no broken icon. */
-.frame-img.is-missing { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
-.frame-ph { position: absolute; inset: 6px; margin: 0; display: grid; place-items: center; text-align: center; padding: 0.5rem; color: var(--text-muted); border: 1px dashed var(--border-idle-strong); font: 600 var(--fs-meta)/1.4 var(--font-mono); letter-spacing: 1px; text-transform: uppercase; }
-.frame-ph[hidden] { display: none; }
+/* ---- accessible hit areas laid over the painting ---- */
+.hit { position: absolute; background: transparent; border: 0; padding: 0; margin: 0; cursor: pointer; color: inherit; font: inherit; touch-action: none; }
+.hit:disabled { cursor: default; }
+.hit:focus-visible { outline: max(2px, calc(var(--s, 1) * 1px)) solid var(--focus); outline-offset: max(1px, calc(var(--s, 1) * 1px)); }
+.slot .name {
+  position: absolute; left: 0; right: 0; bottom: calc(var(--s, 1) * 1px); text-align: center; pointer-events: none;
+  font-size: calc(var(--s, 1) * 5.5px); letter-spacing: 0.5px; color: var(--text-body); text-shadow: calc(var(--s, 1) * 0.5px) calc(var(--s, 1) * 0.5px) 0 var(--wood-line);
+}
+.compact .slot .name { font-size: calc(var(--s, 1) * 4.5px); }
+.name .yr { display: none; color: var(--accent); }
+.slot:hover .name .yr, .slot:focus-visible .name .yr { display: inline; }
+.high-contrast .slot .name { color: #fff; background: #000; }
+.hit-led { position: absolute; pointer-events: none; }
+.led-years { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; font-size: calc(var(--s, 1) * 4px); letter-spacing: 0.3px; color: var(--text-body); white-space: nowrap; text-shadow: calc(var(--s, 1) * 0.5px) calc(var(--s, 1) * 0.5px) 0 var(--wood-line); }
+.high-contrast .led-years { color: #fff; background: #000; }
 
-.disc-panel { position: relative; display: grid; place-items: center; padding: 14px; }
-.disc-panel::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; box-shadow: inset 0 0 22px rgba(74, 222, 128, 0.35); }
-.is-playing .disc-panel::after { opacity: 1; animation: glow 2.4s ease-in-out infinite alternate; }
-@keyframes glow { from { opacity: 0.3; } to { opacity: 1; } }
-.disc { width: min(52vw, 190px); height: auto; shape-rendering: crispEdges; }
-.disc-spin { transform-origin: 100px 100px; animation: spin 6s linear infinite; animation-play-state: paused; }
-.is-playing .disc-spin { animation-play-state: running; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.disc-body { fill: #060c17; stroke: var(--accent); stroke-width: 2; }
-.disc-groove { fill: none; stroke: rgba(167, 139, 250, 0.4); stroke-width: 1; }
-.disc-label-bg { fill: var(--bg-panel-solid); stroke: var(--violet-soft); stroke-width: 2; }
-.disc-hole { fill: var(--bg-page); stroke: var(--accent); stroke-width: 1; }
-.disc-shine { fill: none; stroke: rgba(255, 255, 255, 0.25); stroke-width: 3; stroke-linecap: butt; }
+/* ---- Details dialog: 12-month chart (A), table, piano roll ---- */
+.chart { margin: 4px 0 0; padding: 8px; background: var(--surface-inset-solid); border: 2px solid var(--wood-edge); }
+.chart-svg { display: block; width: 100%; height: auto; shape-rendering: crispEdges; }
+.chart-svg text { fill: var(--text-body); font-family: var(--font-pixel); }
+.chart-svg .c-month { fill: var(--text-muted); }
+.chart-zero { fill: var(--text-muted); }
+.chart-empty { fill: none; stroke: var(--wood-edge); stroke-width: 1; }
+.chart-note { margin: 6px 0 0; color: var(--text-muted); font: 400 var(--fs-small)/1.5 var(--font-pixel); }
+.high-contrast .chart-svg rect.c-bar { stroke: #fff; stroke-width: 1; }
 
-/* Terminal readout line */
-.term { margin: 0 0 12px; padding: 10px 12px; min-height: 4.6em; border: 1px solid var(--border-accent-soft); background: rgba(34, 211, 238, 0.05); font: 600 14px/1.55 var(--font-mono); color: var(--text-max); overflow-wrap: anywhere; }
-.term-prompt { color: var(--accent); font-weight: 700; margin-right: 8px; white-space: nowrap; }
-.is-playing .term-prompt { text-shadow: 0 0 8px rgba(34, 211, 238, 0.8); }
-.trend { margin-right: 6px; }
-.readout { display: inline; margin: 0; font: inherit; }
-.readout::after { content: ""; display: inline-block; width: 0.55em; height: 1.05em; margin-left: 4px; vertical-align: text-bottom; background: var(--accent); animation: blink 1.2s steps(1, end) infinite; }
-@keyframes blink { 50% { opacity: 0; } } /* under 1 blink per second */
-.up { color: var(--win); }
-.down { color: var(--gold-flame); }
-.flat { color: var(--text-dim); }
+.month-table { width: 100%; margin-top: 12px; border-collapse: collapse; font: 400 var(--fs-small)/1.4 var(--font-pixel); }
+.month-table caption { text-align: left; padding: 0 0 6px; color: var(--text-muted); }
+.month-table th, .month-table td { padding: 4px 8px; text-align: left; border: 1px solid var(--wood-edge); vertical-align: top; }
+.month-table thead th { background: var(--surface-inset-solid); color: var(--text-max); }
+.month-table tbody th { font-weight: 600; color: var(--text-body); white-space: nowrap; }
+.month-table tr[data-kind="missing"] td { color: var(--text-muted); font-style: italic; }
 
-/* Stats block */
-.stats { margin: 0 0 14px; padding: 4px 12px; }
-.stat-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 7px 0; border-bottom: 1px dashed var(--border-idle); }
-.stat-row:last-child { border-bottom: 0; }
-.stats dt { font: 600 var(--fs-meta)/1.3 var(--font-mono); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
-.stats dd { margin: 0; text-align: right; font: 600 var(--fs-stat)/1.3 var(--font-mono); color: var(--text-max); font-variant-numeric: tabular-nums; }
-#condition[data-condition="scratched"] { color: var(--gold-amber); }
-#condition[data-condition="skips"] { color: var(--gold-flame); }
-#condition[data-condition="mint"] { color: var(--win-soft); }
+.details-list { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 8px 0 0; }
+.details-list dt { color: var(--accent); }
+.details-list dd { margin: 0; overflow-wrap: anywhere; }
+.details-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 14px 0 0; }
 
-/* Buttons: Play/Pause is the primary one, the rest are small pixel buttons */
-.buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; padding: 0 3px 3px 0; }
-.buttons > #btn-play { grid-column: 1 / -1; }
-.buttons > .btn:last-child { grid-column: 1 / -1; }
-#btn-play::before { content: "\25B6\00a0"; content: "\25B6\00a0" / ""; }
-.is-playing #btn-play::before { content: "\275A\275A\00a0"; content: "\275A\275A\00a0" / ""; }
-.is-playing #btn-play { border-color: var(--win); box-shadow: var(--px-vien-trong), var(--px-bong), inset 0 0 14px rgba(74, 222, 128, 0.3); }
-
-/* Piano roll */
-.roll-box { margin-top: 14px; padding: 10px; }
+.roll-box { margin-top: 6px; }
 .roll-box[hidden] { display: none; }
-#roll { overflow-x: auto; }
+#roll { overflow-x: auto; padding: 8px; background: var(--surface-inset-solid); border: 2px solid var(--wood-edge); }
 .roll-svg { display: block; width: 100%; min-width: 560px; height: auto; shape-rendering: crispEdges; }
 .roll-bg { fill: rgba(0, 0, 0, 0.35); }
-.roll-barline { stroke: rgba(147, 170, 200, 0.3); stroke-width: 0.6; }
-.roll-month { fill: var(--text-muted); font: 8px var(--font-mono); }
+.roll-barline { stroke: var(--wood-edge); stroke-width: 0.6; }
+.roll-month { fill: var(--text-muted); font: 8px var(--font-pixel); }
 .roll-dot { fill: var(--accent); }
 .roll-bed { fill: var(--violet-soft); opacity: 0.45; }
-.roll-crackle-bg { fill: rgba(251, 146, 60, 0.08); }
+.roll-crackle-bg { fill: rgba(232, 131, 74, 0.1); }
 .roll-crackle { fill: none; stroke: var(--gold-flame); stroke-width: 0.9; stroke-linecap: butt; }
-.roll-skip-bg { fill: rgba(4, 7, 13, 0.85); stroke: var(--gold-flame); stroke-width: 1; stroke-dasharray: 3 2; }
+.roll-skip-bg { fill: rgba(13, 11, 24, 0.85); stroke: var(--gold-flame); stroke-width: 1; stroke-dasharray: 3 2; }
 .roll-skip { fill: none; stroke: var(--gold-flame); stroke-width: 2; stroke-linecap: butt; }
 .roll-playhead { stroke: var(--text-max); stroke-width: 1.6; }
-.roll-legend { margin: 8px 0 0; color: var(--text-muted); font: 400 var(--fs-label)/1.6 var(--font-mono); }
-
-/* Dialogs: pixel panels with a hard shadow */
-/* Hard shadow room of a dialog is twice the thickness (it is lifted). */
-.dlg { --px-s: calc(var(--px-do-day) * 2); }
-dialog { color: var(--text-body); width: min(92vw, 34rem); max-height: 88vh; overflow: auto; padding: 0; margin: auto; border: 1px solid var(--border-accent); background: var(--surface-card); background-color: var(--bg-panel-solid); box-shadow: var(--px-vien-trong), var(--px-bong-cao), inset 0 0 18px rgba(34, 211, 238, 0.12); }
-dialog::backdrop { background: rgba(2, 4, 9, 0.8); }
-.dialog-inner { padding: 16px; }
-.dialog-inner .btn { width: 100%; }
-.details-list { margin: 0 0 12px; display: grid; gap: 0; }
-.details-list dt { margin-top: 10px; font: 600 var(--fs-meta)/1.3 var(--font-mono); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
-.details-list dd { margin: 2px 0 0; padding-bottom: 8px; border-bottom: 1px dashed var(--border-idle); font: 400 13px/1.55 var(--font-title); color: var(--text-max); }
-.details-links { display: flex; flex-direction: column; gap: 6px; margin: 0 0 14px; font: 400 12px/1.5 var(--font-mono); }
-.settings label { display: flex; align-items: center; gap: 12px; min-height: 44px; font: 600 12px/1.2 var(--font-mono); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); }
-.settings input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; margin: 0; flex: none; display: grid; place-items: center; border: 1px solid var(--border-accent); background: var(--surface-inset); cursor: pointer; }
-.settings input[type="checkbox"]:checked { border-color: var(--accent); }
-.settings input[type="checkbox"]:checked::after { content: "\2713"; color: var(--accent-bright); font: 700 14px/1 var(--font-mono); }
-.settings input[type="range"] { flex: 1; min-width: 0; height: 44px; margin: 0; accent-color: var(--accent); background: transparent; cursor: pointer; }
-
-@media (forced-colors: active) { .title { color: CanvasText; } }
-
-/* High contrast: no glows, solid white on black, still notched */
-.high-contrast .disc-panel::after { display: none; }
-.high-contrast .disc-body, .high-contrast .disc-label-bg, .high-contrast .disc-hole { fill: #000; stroke: #fff; }
-.high-contrast .disc-groove, .high-contrast .disc-shine { stroke: #fff; }
-.high-contrast .term { background: #000; border: 2px solid #fff; }
-.high-contrast .term-prompt { text-shadow: none; }
-.high-contrast .readout::after { background: #fff; }
-.high-contrast .is-playing #btn-play { box-shadow: none; }
-.high-contrast dialog { border: 3px solid #fff; box-shadow: none; background: #000; }
-.high-contrast dialog::backdrop { background: #000; }
-.high-contrast .frame-ph { border-color: #fff; }
-.high-contrast .settings input[type="checkbox"] { border: 2px solid #fff; background: #000; }
-.high-contrast .settings input[type="checkbox"]:checked::after { color: #fff; }
+.roll-legend { margin: 8px 0 0; color: var(--text-muted); font: 400 var(--fs-small)/1.6 var(--font-pixel); }
 .high-contrast .roll-bg, .high-contrast .roll-crackle-bg, .high-contrast .roll-skip-bg { fill: #000; }
-.high-contrast .roll-dot { fill: #fff; }
 .high-contrast .roll-bed { fill: #fff; opacity: 0.6; }
-.high-contrast .roll-barline, .high-contrast .roll-crackle, .high-contrast .roll-skip, .high-contrast .roll-skip-bg, .high-contrast .roll-playhead { stroke: #fff; }
-.high-contrast .roll-month { fill: #fff; }
-.high-contrast .stat-row, .high-contrast .details-list dd { border-color: #fff; }
-
-/* Reduced motion: no disc spin, no cursor blink (the block stays, solid) */
-@media (prefers-reduced-motion: reduce) { .disc-spin, .readout::after, .disc-panel::after { animation: none !important; } }

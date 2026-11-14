@@ -156,6 +156,7 @@ export function initRoll(store, opts) {
   function frame(now) {
     raf = null;
     if (!store.state.playing || !head) return;
+    if (container.getClientRects().length === 0) { raf = requestAnimationFrame(frame); return; } // hidden (dialog closed): skip the drawing
     moveTo(playheadX(anchor.bar, now - anchor.t, reduced()));
     raf = requestAnimationFrame(frame);
   }

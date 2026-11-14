@@ -56,16 +56,26 @@ export const messages = {
   mode: (store, { mode }) => (mode === 'science' ? 'Science mode' : 'Music mode'),
 };
 
-/** Say something through the polite live region, and duck the music so the reader is heard. */
+let lastSaid = { text: '', at: 0, joined: false };
+
+/**
+ * Say something through the polite live region, and duck the music so the reader is heard.
+ * Two sentences sent within 150 ms (e.g. "Recorded: ..." then "On the deck: ...") are joined, so the second does not cut off the first.
+ * Only pairs are joined: a held key (many messages in a row) still says just the latest one.
+ */
 export function announce(text) {
   hooks.duck(-12, 1500);
   if (hooks.write) { hooks.write(text); return; }
   if (typeof document === 'undefined') return;
   const live = document.getElementById('live');
   if (!live) return;
+  const now = Date.now();
+  const join = now - lastSaid.at < 150 && !lastSaid.joined;
+  const joined = join ? `${lastSaid.text} ${text}` : text;
+  lastSaid = { text: joined, at: now, joined: join };
   live.textContent = '';
   // Small delay so repeated identical messages are still announced.
-  setTimeout(() => { live.textContent = text; }, 50);
+  setTimeout(() => { live.textContent = joined; }, 50);
 }
 
 /** Keys that should not trigger shortcuts: typing in a field, or a dialog is open. */
@@ -83,7 +93,7 @@ function blocked(e) {
  * @param {object} [opts]
  * @param {(db:number, ms:number)=>void} [opts.duck] audio.duck
  * @param {(text:string)=>void} [opts.write] replaces the live-region write (tests)
- * @param {()=>boolean} [opts.isStarted] false before "Press to start": shortcuts stay silent
+ * @param {()=>boolean} [opts.isStarted] false before the first click or key press: shortcuts stay silent
  * @param {{start:(place:object)=>void, stop:()=>void, canStart?:()=>boolean}} [opts.preview]
  * @returns {{onKeyDown:(e:{key:string,target?:any,preventDefault?:()=>void})=>void}}
  */
@@ -120,7 +130,7 @@ export function initA11y(store, opts = {}) {
   // Moving focus out of the list altogether also cancels (the list sends no event for that).
   if (typeof document !== 'undefined') {
     document.addEventListener('focusin', (e) => {
-      if (!e.target.closest?.('.place-btn')) cancelPreview();
+      if (!e.target.closest?.('.slot')) cancelPreview();
     });
   }
 
@@ -128,7 +138,7 @@ export function initA11y(store, opts = {}) {
     if (e.ctrlKey || e.metaKey || e.altKey || blocked(e)) return;
     if (opts.isStarted && !opts.isStarted()) return;
     const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    const onOtherButton = e.target?.tagName === 'BUTTON' && !e.target.closest?.('.place-list');
+    const onOtherButton = e.target?.tagName === 'BUTTON' && !e.target.closest?.('.place-list, .slot');
     const act = (fn) => { e.preventDefault?.(); fn(); };
     const noDisc = () => announce('No disc loaded');
     switch (key) {
