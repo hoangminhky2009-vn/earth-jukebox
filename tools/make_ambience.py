@@ -1,8 +1,8 @@
 # Written by Ky with help from Claude (SI). See AI_USE.md.
 """Turn the CC0 field recordings (see CREDITS.md) into short seamless loops for the page.
 
-Usage: python tools/make_ambience.py <folder with rain_2.ogg rain_4.ogg birds.wav wind.wav>
-Writes docs/audio/ambience/{rain-heavy,rain-light,birds,wind}.mp3 (stereo, 44.1 kHz, 96 kbps).
+Usage: python tools/make_ambience.py <folder with rain_2.ogg rain_4.ogg birds.wav wind.wav hill.ogg howl.ogg>
+Writes docs/audio/ambience/{rain-heavy,rain-light,birds,wind,snow-wind,snow-howl}.mp3 (stereo, 44.1 kHz, 96 kbps).
 Each loop: cut a segment, blend its tail into its head over 2 s (so it repeats without a click),
 and set the loudness to the same RMS so audio.js can mix them with plain gains. Needs ffmpeg and numpy.
 """
@@ -23,6 +23,8 @@ JOBS = {
     "rain-light": ("rain_4.ogg", 2.0, 30.0),
     "birds": ("birds.wav", 3.0, 30.0),
     "wind": ("wind.wav", 1.0, 22.0),
+    "snow-wind": ("hill.ogg", 12.0, 30.0),    # Killiney Hill storm, gusty wind on an exposed hill
+    "snow-howl": ("howl.ogg", 20.0, 30.0),    # howling wind (skips the silent start)
 }
 
 

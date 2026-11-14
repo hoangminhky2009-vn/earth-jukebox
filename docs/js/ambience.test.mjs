@@ -7,9 +7,10 @@ const rain = (k) => ({ dataset: 'rain', levels: [k, null, 0, 0, 0, 0, 0, 0, 0, 0
 const ndvi = (q) => ({ dataset: 'ndvi', levels: [q, null, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] });
 const total = (m) => LAYERS.reduce((a, k) => a + m[k], 0);
 
+const Z = { 'snow-wind': 0, 'snow-howl': 0 };
 test('rain: normal = light rain only; wetter adds heavy rain; drier fades into wind; -4 = wind only', () => {
-  assert.deepEqual(ambienceMix(rain(0), 0), { wind: 0, 'rain-light': 0.5, 'rain-heavy': 0, birds: 0 });
-  assert.deepEqual(ambienceMix(rain(-4), 0), { wind: 0.8, 'rain-light': 0, 'rain-heavy': 0, birds: 0 });
+  assert.deepEqual(ambienceMix(rain(0), 0), { wind: 0, 'rain-light': 0.5, 'rain-heavy': 0, birds: 0, ...Z });
+  assert.deepEqual(ambienceMix(rain(-4), 0), { wind: 0.8, 'rain-light': 0, 'rain-heavy': 0, birds: 0, ...Z });
   assert.equal(ambienceMix(rain(4), 0)['rain-heavy'], 1);
   for (let k = -3; k <= 4; k++) assert.ok(ambienceMix(rain(k), 0)['rain-heavy'] >= ambienceMix(rain(k - 1), 0)['rain-heavy']);
   for (let k = -3; k <= 4; k++) assert.ok(ambienceMix(rain(k), 0).wind <= ambienceMix(rain(k - 1), 0).wind);
@@ -36,14 +37,15 @@ test('missing month and science mode are silent', () => {
   assert.equal(total(ambienceMix(rain(2), 0, 'science')), 0);
 });
 
-test('snow or ice places: no rain sound, the precipitation becomes wind', () => {
+test('snow or ice places: no rain or park wind; hill wind always, the howl only in snowier months', () => {
   const snow = { biome: 'snow-mountain' };
   for (let k = -4; k <= 4; k++) {
     const m = ambienceMix(rain(k), 0, 'music', snow);
-    assert.equal(m['rain-light'] + m['rain-heavy'], 0);
-    assert.ok(m.wind > 0 && m.wind <= 1);
+    assert.equal(m['rain-light'] + m['rain-heavy'] + m.wind + m.birds, 0);
+    assert.ok(m['snow-wind'] > 0 && m['snow-wind'] <= 1);
+    assert.equal(m['snow-howl'] > 0, k > 0);
   }
-  assert.ok(ambienceMix(rain(4), 0, 'music', snow).wind > ambienceMix(rain(0), 0, 'music', snow).wind);
+  assert.ok(ambienceMix(rain(4), 0, 'music', snow)['snow-howl'] > ambienceMix(rain(1), 0, 'music', snow)['snow-howl']);
 });
 
 test('desert: a normal month is dry wind, no rain; rain only when wetter than normal; no birds when bare', () => {

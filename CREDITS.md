@@ -28,6 +28,8 @@ Everything we used, including open-source and free resources (required by the su
 - Field recordings under the music (`docs/audio/ambience/`, cut into loops and loudness-matched by `tools/make_ambience.py`):
   - `rain-heavy.mp3`, `rain-light.mp3`: "Rain loopable" by Ylmir, CC0. https://opengameart.org/content/rain-loopable (files 2.ogg and 4.ogg)
   - `birds.mp3`, `wind.mp3`: "Park ambiences" by Thimras, CC0. https://opengameart.org/content/park-ambiences (first 30 s of park_ambience_birds.wav and park_ambience_wind.wav)
+  - `snow-wind.mp3`: "Killiney Hill Storm Floris 20250804 1537" by Karlunun, CC0 (Wikimedia Commons). https://commons.wikimedia.org/wiki/File:Killiney_Hill_Storm_Floris_20250804_1537.ogg (30 s from 0:12)
+  - `snow-howl.mp3`: "Howling wind" by Tvabutzku1234, CC0 (Wikimedia Commons). https://commons.wikimedia.org/wiki/File:Howling_wind.ogg (30 s from 0:20)
 - [Only CC0 / CC-BY / MIT / Apache-2.0 / OFL. Add each further font, sound or image here with its link and licence.]
 
 NASA imagery is generally free of copyright; we credit "NASA's Scientific Visualization Studio" and link each page. We do not use NASA logos.

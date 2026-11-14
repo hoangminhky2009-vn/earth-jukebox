@@ -21,11 +21,11 @@ test('euclid: exactly n hits, gaps differ by at most 1, n = 0 and n = 16', () =>
   }
 });
 
-test('rain: n = 8 + 2k data notes for every k, 4 bed notes (seventh chord), steps and bars in range', () => {
+test('rain: n = 4 + k data notes for every k, 4 bed notes (seventh chord), steps and bars in range', () => {
   for (let k = -4; k <= 4; k++) {
     const notes = schedule(rain(k), SEA, 'music');
     const b = bar(notes, 3);
-    assert.equal(b.filter((n) => n.kind === 'data').length, 8 + 2 * k, `k=${k}`);
+    assert.equal(b.filter((n) => n.kind === 'data').length, 4 + k, `k=${k}`);
     assert.equal(b.filter((n) => n.kind === 'bed').length, 4);
     for (const n of notes) {
       assert.ok(n.bar >= 0 && n.bar <= 11 && n.step >= 0 && n.step <= 15);
@@ -62,7 +62,7 @@ test('null month: crackle only; break month: normal notes + exactly one skip at 
   const skips = b3.filter((n) => n.kind === 'skip');
   assert.equal(skips.length, 1);
   assert.equal(skips[0].step, SKIP_STEP);
-  assert.equal(b3.filter((n) => n.kind === 'data').length, 12);
+  assert.equal(b3.filter((n) => n.kind === 'data').length, 6);
   assert.equal(notes.filter((n) => n.kind === 'skip').length, 1);
 });
 
