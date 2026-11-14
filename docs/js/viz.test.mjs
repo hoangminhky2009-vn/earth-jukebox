@@ -18,10 +18,10 @@ test('biome picks the disc art and the weather', () => {
 
 test('shelf: one slot per place + dataset pair, side A shown, west to east', () => {
   const slots = shelfSlots(data.discs, data.places);
-  assert.deepEqual(slots.map((s) => s.discId), ['sahara-rain-2025', 'sahara-ndvi-2024', 'dhaka-rain-2025', 'mekong-ndvi-2024']);
+  assert.deepEqual(slots.map((s) => s.discId), ['sahara-rain-2025', 'sahara-ndvi-2024', 'ladakh-rain-2025', 'dhaka-rain-2025', 'mekong-ndvi-2024']);
   const dhaka = slots.find((s) => s.placeId === 'dhaka');
   assert.deepEqual(dhaka.discIds, ['dhaka-rain-2025', 'dhaka-rain-2026']);
-  assert.equal(slots.length, 4); // the other 2 of 6 slots are the locked "???" ones
+  assert.equal(slots.length, 5); // the 6th slot is the locked "???" one
 });
 
 test('tray layout: 6 slots up to 6 pairs, 12 compact slots beyond', () => {

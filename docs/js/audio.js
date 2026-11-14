@@ -32,7 +32,7 @@ let vibrato;   // one shared 5.2 Hz LFO for the flute
 let noteSend = 1;   // echo send of the note being played (lower in busy months)
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
-const AMB_LEVEL = 0.22;   // field recordings sit well under the music
+const AMB_LEVEL = 0.3;    // field recordings sit well under the music
 const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9 };   // evens out the recordings
 const ambBufs = {};
 let ambLoading = null;
@@ -328,6 +328,7 @@ function groove(b, t0, from, out) {
   hit(0, (t) => kick(t, 1, out));
   hit(10, (t) => kick(t, 0.75, out));
   hit(8, (t) => snare(t, 1, out));
+  if (b % 4 === 3) { hit(7, (t) => kick(t, 0.4, out)); hit(14, (t) => snare(t, 0.3, out)); }   // small fill before the loop turns
   for (const s of [2, 6, 10, 14]) hit(s, (t) => hat(t, 1, out));
   const chord = notes.filter((n) => n.kind === 'bed' && n.step === 0);
   if (!chord.length) return;
@@ -433,7 +434,7 @@ function startAmbience() {
 
 function setAmbience(b, t) {
   if (!amb) return;
-  const mix = ambienceMix(disc, b, mode);
+  const mix = ambienceMix(disc, b, mode, place);
   for (const name of LAYERS) amb[name].g.gain.setTargetAtTime(mix[name] * AMB_TRIM[name], Math.max(t, ac.currentTime), 0.4);
 }
 

@@ -253,7 +253,8 @@ export function createScene(store, opts) {
   shelf.forEach((s, i) => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'hit slot'; pos(b, SLOT(i).x, SLOT(i).y, SLOT(i).w, SLOT(i).h);
     const name = document.createElement('span'); name.className = 'name'; const main = document.createTextNode(''); const yr = document.createElement('span'); yr.className = 'yr';
-    name.append(main, yr); b.append(name);
+    const ds = document.createElement('span'); ds.className = 'ds'; ds.setAttribute('aria-hidden', 'true');
+    name.append(ds, main, yr); b.append(name);
     if (!s) {
       b.disabled = true; b.setAttribute('aria-label', 'Empty slot, not recorded yet'); main.nodeValue = '???';
     } else {
@@ -283,7 +284,7 @@ export function createScene(store, opts) {
       });
       b.addEventListener('blur', () => { hoverId = null; });
     }
-    slotEls.push({ b, main, yr });
+    slotEls.push({ b, main, yr, ds });
     hits.append(b);
   });
   const doPress = (key) => { pressed = key; pressedT = 5; };
@@ -315,11 +316,12 @@ export function createScene(store, opts) {
     const d = loadedDisc(); const deck = Boolean(d);
     shelf.forEach((s, i) => {
       if (!s) return;
-      const { b, main, yr } = slotEls[i]; const first = store.getDisc(s.discId); const inDeck = slotInDeck(s);
+      const { b, main, yr, ds } = slotEls[i]; const first = store.getDisc(s.discId); const inDeck = slotInDeck(s);
       b.setAttribute('aria-label', inDeck ? `${slotName(s)}, ${DS_LONG[s.dataset] ?? s.dataset}, on the deck`
         : `${slotName(s)}, ${DS_LONG[s.dataset] ?? s.dataset} ${first.year}, side ${first.side}, ${COND_TEXT[first.condition] ?? first.condition}. Press to put it on the deck.`);
       main.nodeValue = inDeck ? 'IN DECK' : slotName(s).toUpperCase();
       yr.textContent = ` · ${slotYr(s)}`;
+      ds.textContent = inDeck ? '' : (DS_SHORT[s.dataset] ?? s.dataset.toUpperCase());   // same place twice: say which dataset
     });
     const label = { play: store.state.playing ? 'Pause' : 'Play', stop: 'Stop', flip: 'Flip to the other side', sci: 'Science mode', eject: 'Eject' };
     for (const key of Object.keys(btnEls)) {
