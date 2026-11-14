@@ -1,0 +1,104 @@
+{
+  "provenance": {
+    "made_with": "Written by Sabik with help from OpenAI Codex (SI). See AI_USE.md.",
+    "method": "Visual inspection of the original NASA frame, supported by pixel-boundary checks; no image modification."
+  },
+  "checked_at": "2026-11-14T05:00:52.310078+00:00",
+  "source": {
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+    "sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+    "date": "2025-07-15",
+    "bytes": 5031403,
+    "width": 4096,
+    "height": 2048,
+    "mode": "RGBA"
+  },
+  "date_panel": {
+    "observed_approximate_bounds_half_open": [
+      0,
+      1852,
+      676,
+      2048
+    ],
+    "conservative_exclusion_bounds_half_open": [
+      0,
+      1840,
+      700,
+      2048
+    ],
+    "boundary_observations": "Left-edge pixels first change from blue at row 1852. Bottom row changes from the shaded panel at x 676. Rounded panel corner means not every pixel inside the bounding rectangle is covered."
+  },
+  "places": [
+    {
+      "name": "Dhaka, Bangladesh",
+      "latitude": 23.81,
+      "longitude": 90.41,
+      "pixel": [
+        3076,
+        753
+      ],
+      "window_inclusive": [
+        3074,
+        751,
+        3078,
+        755
+      ],
+      "clear_of_conservative_date_panel": true
+    },
+    {
+      "name": "Sylhet and surroundings, Bangladesh",
+      "latitude": 24.9,
+      "longitude": 91.87,
+      "pixel": [
+        3093,
+        740
+      ],
+      "window_inclusive": [
+        3091,
+        738,
+        3095,
+        742
+      ],
+      "clear_of_conservative_date_panel": true
+    },
+    {
+      "name": "Tonle Sap, Cambodia",
+      "latitude": 12.88,
+      "longitude": 104.07,
+      "pixel": [
+        3232,
+        877
+      ],
+      "window_inclusive": [
+        3230,
+        875,
+        3234,
+        879
+      ],
+      "clear_of_conservative_date_panel": true
+    },
+    {
+      "name": "Hue and surroundings, Vietnam",
+      "latitude": 16.46,
+      "longitude": 107.59,
+      "pixel": [
+        3272,
+        836
+      ],
+      "window_inclusive": [
+        3270,
+        834,
+        3274,
+        838
+      ],
+      "clear_of_conservative_date_panel": true
+    }
+  ],
+  "decision": "Ky-supplied coordinates are clear of the previously inspected date panel. All 72 NDVI source frames also pass the exporter dimension and sample-window guards.",
+  "limitations": [
+    "Only this one frame was visually inspected; this does not verify the layout of every historical frame.",
+    "Layout clearance does not validate physical NDVI values; the pipeline extracts relative colourbar positions only.",
+    "Recheck any added location or changed source layout before export."
+  ],
+  "coordinates_rechecked_at": "2026-11-14T05:57:02.949659+00:00"
+}

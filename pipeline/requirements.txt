@@ -1,0 +1,5 @@
+# Written by Sabik with help from OpenAI Codex (SI). See AI_USE.md.
+Pillow>=10,<14
+numpy>=1.26,<3
+requests>=2.31,<3
+pytest>=8,<10

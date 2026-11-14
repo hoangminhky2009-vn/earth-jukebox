@@ -9,7 +9,8 @@ import { createScene } from './scene.js';
 import * as foley from './foley.js';
 import { initRoll } from './roll.js';
 
-const DATA_URL = 'data/discs.sample.json'; // K5 switches this to data/discs.json
+// Real NASA-derived discs; add ?sample to the address to load the hand-made sample (it has a desert and a snow place).
+const DATA_URL = new URLSearchParams(location.search).has('sample') ? 'data/discs.sample.json' : 'data/discs.json';
 
 function showError(text) {
   const el = document.getElementById('load-error');

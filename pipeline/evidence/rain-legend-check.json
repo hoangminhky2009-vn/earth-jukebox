@@ -1,0 +1,226 @@
+{
+  "provenance": {
+    "made_with": "Written by Sabik with help from OpenAI Codex (SI). See AI_USE.md.",
+    "method": "Read original PNG pixels using Pillow and the team colour reader. Visual inspection confirms labelled segments. No external numeric rainfall measurements used."
+  },
+  "checked_at": "2026-11-14T05:40:03.433038+00:00",
+  "legend": {
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/1920x1080_16x9_15p/flatcomposite/imergvar_composite.2025.07.15.png",
+    "sha256": "66679492b71caea9adf3a68bacc9118d96b25d58178b9c51eed8f5c2556cc006",
+    "width": 1920,
+    "height": 1080,
+    "sample_row": 47,
+    "sample_x_range_inclusive": [
+      768,
+      1151
+    ],
+    "nonzero_segments": [
+      {
+        "level": -4,
+        "pixel": [
+          789,
+          47
+        ],
+        "observed_rgb": [
+          242,
+          226,
+          185
+        ],
+        "contract_rgb": [
+          242,
+          226,
+          185
+        ],
+        "exact_match": true,
+        "delta_e_cie76": 0.0
+      },
+      {
+        "level": -3,
+        "pixel": [
+          832,
+          47
+        ],
+        "observed_rgb": [
+          211,
+          170,
+          94
+        ],
+        "contract_rgb": [
+          211,
+          170,
+          94
+        ],
+        "exact_match": true,
+        "delta_e_cie76": 0.0
+      },
+      {
+        "level": -2,
+        "pixel": [
+          874,
+          47
+        ],
+        "observed_rgb": [
+          161,
+          103,
+          18
+        ],
+        "contract_rgb": [
+          161,
+          103,
+          18
+        ],
+        "exact_match": true,
+        "delta_e_cie76": 0.0
+      },
+      {
+        "level": -1,
+        "pixel": [
+          917,
+          47
+        ],
+        "observed_rgb": [
+          95,
+          54,
+          3
+        ],
+        "contract_rgb": [
+          84,
+          48,
+          2
+        ],
+        "exact_match": false,
+        "delta_e_cie76": 4.944725307909359
+      },
+      {
+        "level": 1,
+        "pixel": [
+          1002,
+          47
+        ],
+        "observed_rgb": [
+          0,
+          69,
+          56
+        ],
+        "contract_rgb": [
+          0,
+          69,
+          56
+        ],
+        "exact_match": true,
+        "delta_e_cie76": 0.0
+      },
+      {
+        "level": 2,
+        "pixel": [
+          1045,
+          47
+        ],
+        "observed_rgb": [
+          11,
+          125,
+          118
+        ],
+        "contract_rgb": [
+          11,
+          125,
+          118
+        ],
+        "exact_match": true,
+        "delta_e_cie76": 0.0
+      },
+      {
+        "level": 3,
+        "pixel": [
+          1088,
+          47
+        ],
+        "observed_rgb": [
+          102,
+          187,
+          177
+        ],
+        "contract_rgb": [
+          102,
+          187,
+          177
+        ],
+        "exact_match": true,
+        "delta_e_cie76": 0.0
+      },
+      {
+        "level": 4,
+        "pixel": [
+          1130,
+          47
+        ],
+        "observed_rgb": [
+          189,
+          230,
+          225
+        ],
+        "contract_rgb": [
+          189,
+          230,
+          225
+        ],
+        "exact_match": true,
+        "delta_e_cie76": 0.0
+      }
+    ],
+    "centre_segment_rgb": [
+      0,
+      0,
+      0
+    ]
+  },
+  "data_frame": {
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatalpha/imergvar_alpha.2025.07.15.png",
+    "sha256": "b32da79f2343443786ce5156b8aeb10ed34f01e71596629a9fc77596c3328640",
+    "place_checks": {
+      "Dhaka": {
+        "lat": 23.81,
+        "lon": 90.41,
+        "level": -1,
+        "value": -3.5,
+        "saturated": false,
+        "sampled_pixels": 25,
+        "matched_pixels": 25,
+        "invalid_pixels": 0,
+        "transparent_pixels": 0,
+        "match_pct": 100.0,
+        "median_de": 4.944725307909359,
+        "centre_pixel": [
+          704,
+          661
+        ],
+        "west_lon": 20.0
+      },
+      "Can Tho": {
+        "lat": 10.03,
+        "lon": 105.78,
+        "level": 0,
+        "value": 0,
+        "saturated": false,
+        "sampled_pixels": 25,
+        "matched_pixels": 25,
+        "invalid_pixels": 0,
+        "transparent_pixels": 21,
+        "match_pct": 100.0,
+        "median_de": 0.0,
+        "centre_pixel": [
+          857,
+          799
+        ],
+        "west_lon": 20.0
+      }
+    }
+  },
+  "discrepancy": "Level -1 interior is RGB (95,54,3). Contract RGB (84,48,2) occurs once along the sampled row at a segment boundary, consistent with antialiasing. The contract remains unchanged; the interior is within the specified Delta-E limit of 10 and gives the same level.",
+  "limitations": [
+    "This checks colour decoding, not independent physical rainfall accuracy.",
+    "Rain values are colour-bin representatives, not exact measurements.",
+    "The transparent=near-normal interpretation applies only to the selected SVS 4897 flatalpha product and follows the team specification."
+  ],
+  "correction": "Recomputed after fixing rain west_lon from -180 to 20. Earlier named-place checks sampled the wrong longitude and are superseded. Dhaka July happens to remain -1; see geography-check.json for independent location validation."
+}
