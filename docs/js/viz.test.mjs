@@ -14,6 +14,13 @@ test('biome picks the disc art and the weather', () => {
   assert.deepEqual(biomeLook('forest'), { art: 'forest', weather: 'forest' });
   for (const b of ['ice', 'polar', 'snow', 'ice-sheet']) assert.deepEqual(biomeLook(b), { art: 'ice', weather: 'snow' });
   for (const b of ['savanna', '', undefined, null, 'delta']) assert.deepEqual(biomeLook(b), { art: 'delta', weather: 'none' });
+  // each real river place gets its own water landscape; a specific biome in the data wins
+  assert.deepEqual(biomeLook('monsoon-delta', 'tonle-sap'), { art: 'lake', weather: 'rain' });
+  assert.deepEqual(biomeLook('monsoon-delta', 'hue'), { art: 'coast', weather: 'rain' });
+  assert.deepEqual(biomeLook('monsoon-delta', 'sylhet'), { art: 'wetland', weather: 'rain' });
+  assert.deepEqual(biomeLook('monsoon-delta', 'dhaka'), { art: 'city', weather: 'rain' });
+  assert.deepEqual(biomeLook('monsoon-delta', 'mekong'), { art: 'delta', weather: 'rain' });
+  assert.deepEqual(biomeLook('monsoon-lake', 'dhaka'), { art: 'lake', weather: 'rain' });
 });
 
 test('shelf: one slot per place + dataset pair, side A shown, west to east', () => {

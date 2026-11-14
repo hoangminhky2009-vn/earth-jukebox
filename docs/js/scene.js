@@ -51,6 +51,48 @@ const MAPS = {
     if (best < 0.17) { const s = (bx + by) / 0.17; return s < -0.5 ? '#9ad27a' : s < 0.35 ? '#5aa152' : '#3a7340'; }
     return dith(x, y, fbm(u * 4, v * 4, 2)) ? '#26492e' : '#1e3b25';
   },
+  // Dhaka: delta channels with a grey city of blocks in the middle
+  city(u, v, x, y) {
+    const base = MAPS.delta(u, v, x, y);
+    if (base === '#a7d8e8' || base === '#5fa8c8') return base;                 // keep the rivers
+    if (Math.hypot(u + 0.05, v + 0.05) < 0.55) {
+      const bx = Math.floor((u + 2) * 7); const by = Math.floor((v + 2) * 7);
+      if ((u * 7 + 20) % 1 < 0.18 || (v * 7 + 20) % 1 < 0.18) return '#3b3a40';  // streets
+      const h = h2(bx, by, 9); return h > 0.66 ? '#d8d2c4' : h > 0.33 ? '#a9a39a' : '#7d7a78';
+    }
+    return base;
+  },
+  // Sylhet: green hills (dark ridges) and many round wetland ponds (haor)
+  wetland(u, v, x, y) {
+    const n = fbm(u * 2.5 + 3, v * 2.5 + 8, 21);
+    const g = 0.42; const cx = Math.floor(u / g); const cy = Math.floor(v / g);
+    const px = (cx + 0.25 + 0.5 * h2(cx, cy, 31)) * g; const py = (cy + 0.25 + 0.5 * h2(cx, cy, 37)) * g;
+    const pr = 0.07 + 0.08 * h2(cx, cy, 41);
+    if (h2(cx, cy, 43) > 0.3 && Math.hypot(u - px, v - py) < pr) return Math.hypot(u - px, v - py) < pr * 0.6 ? '#9fd4e6' : '#5fa8c8';
+    if (n > 0.62) return dith(x, y, (n - 0.62) / 0.38) ? '#2f6a3a' : '#3d7f45';      // hills
+    return dith(x, y, n) ? '#6fb15c' : '#5c9e4f';
+  },
+  // Tonle Sap: a big lake with a sandy shore, floating villages, rice fields around
+  lake(u, v, x, y) {
+    const e = Math.hypot(u * 0.85 + 0.05, v * 1.15 - 0.05) + (fbm(u * 3, v * 3, 51) - 0.5) * 0.25;
+    if (e < 0.62) {
+      if (h2(Math.floor(u * 14), Math.floor(v * 14), 53) > 0.94) return '#7a4b2a';   // stilt houses / boats
+      return dith(x, y, vnoise(u * 6, v * 6, 55)) ? '#4f97bd' : '#3f86ad';
+    }
+    if (e < 0.7) return '#d9c48e';                                                   // shore
+    return ((Math.floor((u + v) * 9) & 1) ? '#7fbf5e' : '#6aa94f');                 // paddies
+  },
+  // Hue: land, a river winding to a lagoon and the sea with wave crests
+  coast(u, v, x, y) {
+    const shore = v + 0.35 * u - 0.15 + (fbm(u * 3, v * 3, 61) - 0.5) * 0.2;
+    if (shore > 0.12) {
+      const crest = Math.sin((u * 9 + v * 5)) > 0.93;
+      return crest ? '#d6eef6' : dith(x, y, 0.5 + shore * 0.4) ? '#2f6f9a' : '#3a80aa';   // sea
+    }
+    if (shore > 0.0) return dith(x, y, 0.5) ? '#8fcfd8' : '#7cc1cf';                       // lagoon
+    if (Math.abs(v - (0.25 * Math.sin(u * 3.2) - 0.25 + 0.3 * u)) < 0.06) return '#5fa8c8'; // river
+    return dith(x, y, fbm(u * 3, v * 3, 63)) ? '#5c9e4f' : '#4a8443';
+  },
   ice(u, v, x, y) {
     const n = fbm(u * 3, v * 3, 13);
     if (Math.abs(vnoise(u * 5, v * 5, 17) - 0.5) < 0.03) return '#7fa6c9';
@@ -158,7 +200,7 @@ export function createScene(store, opts) {
   const shelf = Array.from({ length: L.count }, (_, i) => slots[i] ?? null);
   const slotOfDisc = (id) => shelf.findIndex((s) => s && s.discIds.includes(id));
   const placeOf = (d) => store.getPlace(d.place);
-  const look = (d) => biomeLook(placeOf(d)?.biome);
+  const look = (d) => biomeLook(placeOf(d)?.biome, d.place);
   const art = new Map();   // disc id -> { small, big }, painted when first needed
   const getArt = (id, size) => {
     const d = store.getDisc(id);

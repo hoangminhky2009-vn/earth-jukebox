@@ -19,14 +19,22 @@ const isMissing = (v) => v === null || v === undefined;
 // ------------------------------------------------------------------ biome → disc art + weather
 
 /** Biome text from the place (e.g. "monsoon-delta") → centre art and weather. Anything unknown: delta art, no weather. */
-export function biomeLook(biome) {
+// The water landscape of each real place, used when its biome is the generic "monsoon-delta"
+// (a more specific biome in the data, e.g. "monsoon-lake", always wins).
+const PLACE_ART = { dhaka: 'city', sylhet: 'wetland', 'tonle-sap': 'lake', hue: 'coast' };
+
+export function biomeLook(biome, placeId) {
   const t = String(biome ?? '').toLowerCase().split(/[\s_-]+/);
   const has = (...w) => w.some((x) => t.includes(x));
   if (has('desert')) return { art: 'desert', weather: 'sand' };
   if (has('rainforest', 'forest')) return { art: 'forest', weather: 'forest' };
   if (has('ice', 'polar', 'snow')) return { art: 'ice', weather: 'snow' };
-  if (has('monsoon')) return { art: 'delta', weather: 'rain' };
-  return { art: 'delta', weather: 'none' };
+  const rain = has('monsoon') ? 'rain' : 'none';
+  if (has('lake')) return { art: 'lake', weather: rain };
+  if (has('coast', 'lagoon')) return { art: 'coast', weather: rain };
+  if (has('wetland', 'haor', 'hills')) return { art: 'wetland', weather: rain };
+  if (has('city')) return { art: 'city', weather: rain };
+  return { art: PLACE_ART[placeId] ?? 'delta', weather: rain };
 }
 
 // ------------------------------------------------------------------ shelf
