@@ -11,6 +11,8 @@ The place names and introduction text come from Bormey's [live team document, pl
 
 Each rain window is 5 × 5 pixels (about 0.5° wide). Light NDVI windows are 5 × 5 pixels (about 0.44° wide). They are nearest-palette estimates from displayed images, not administrative-area statistics or direct station observations. Tonle Sap's window can include water and flooded land. We retain invalid/missing results according to the fixed reader rules rather than moving the point to force a desired greenness value.
 
+Geographic correction on 14 November: the rain source map starts at 20 E; the NDVI source starts at 180 W. The first rain export incorrectly treated both alike and was replaced. `pipeline/evidence/geography-check.json` records independent coastline registration. The 256-pixel rain preview spans 25.6 degrees and is much broader than the 5-pixel sampling window. In the corrected Dhaka preview, Dhaka is at the centre; the bounds are 77.6–103.2 E and 11.1–36.7 N. The image is a regional context view, not a city boundary or a whole-region data average.
+
 The light NDVI timestamp is in the far southwest of the global image, outside all selected windows. The pipeline checks the inspected image dimensions and excludes the timestamp rectangle. Layout inspection evidence is in `evidence/ndvi-light-layout.json`.
 
 Background sources for the introduction text:

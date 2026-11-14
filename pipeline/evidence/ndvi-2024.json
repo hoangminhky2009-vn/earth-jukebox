@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-14T05:03:19.395365+00:00",
+  "generated": "2026-11-14T05:37:15.556946+00:00",
   "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md",
   "cutoff": "2026-11-14",
   "listing_latest": "2026-06-13",
@@ -104,7 +104,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.875464978299748
+            "median_de": 9.875464978299748,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-15": {
@@ -121,7 +126,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.694898610631265
+            "median_de": 9.694898610631265,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-25": {
@@ -138,7 +148,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.854828867734078
+            "median_de": 9.854828867734078,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-05": {
@@ -155,7 +170,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.846525518063984
+            "median_de": 9.846525518063984,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-15": {
@@ -172,7 +192,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.87492127800178
+            "median_de": 9.87492127800178,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-25": {
@@ -189,7 +214,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.949964603797806
+            "median_de": 9.949964603797806,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-05": {
@@ -206,7 +236,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.496986129166988
+            "median_de": 8.496986129166988,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-15": {
@@ -223,7 +258,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.175539263510961
+            "median_de": 8.175539263510961,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-25": {
@@ -240,7 +280,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.036038060014171
+            "median_de": 8.036038060014171,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-05": {
@@ -257,7 +302,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.854825266283916
+            "median_de": 7.854825266283916,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-15": {
@@ -274,7 +324,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.518972674651522
+            "median_de": 8.518972674651522,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-25": {
@@ -291,7 +346,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.20086059267341
+            "median_de": 8.20086059267341,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-05": {
@@ -308,7 +368,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.143155288273714
+            "median_de": 8.143155288273714,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-15": {
@@ -325,7 +390,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.993002943709206
+            "median_de": 7.993002943709206,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-25": {
@@ -342,7 +412,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.41297141730473
+            "median_de": 8.41297141730473,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-05": {
@@ -359,7 +434,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.433366974881773
+            "median_de": 8.433366974881773,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-15": {
@@ -376,7 +456,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.443571213931591
+            "median_de": 9.443571213931591,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-25": {
@@ -393,7 +478,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.705136854948211
+            "median_de": 9.705136854948211,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-05": {
@@ -410,7 +500,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.729956830055064
+            "median_de": 9.729956830055064,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-15": {
@@ -427,7 +522,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.875464978299748
+            "median_de": 9.875464978299748,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-25": {
@@ -444,7 +544,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.636268899982348
+            "median_de": 9.636268899982348,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-05": {
@@ -461,7 +566,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 10.088166391509667
+            "median_de": 10.088166391509667,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-15": {
@@ -478,7 +588,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.792674355987378
+            "median_de": 9.792674355987378,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-25": {
@@ -495,7 +610,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.785872555835123
+            "median_de": 9.785872555835123,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-05": {
@@ -512,7 +632,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.88464889730376
+            "median_de": 9.88464889730376,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-15": {
@@ -529,7 +654,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 10.080160491758349
+            "median_de": 10.080160491758349,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-25": {
@@ -546,7 +676,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.398777366659171
+            "median_de": 8.398777366659171,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-05": {
@@ -563,7 +698,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.611383185241207
+            "median_de": 8.611383185241207,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-15": {
@@ -580,7 +720,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.511926748745969
+            "median_de": 9.511926748745969,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-25": {
@@ -597,7 +742,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 10.078205570518747
+            "median_de": 10.078205570518747,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-05": {
@@ -614,7 +764,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.855928782715658
+            "median_de": 9.855928782715658,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-15": {
@@ -631,7 +786,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.440285546019387
+            "median_de": 8.440285546019387,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-25": {
@@ -648,7 +808,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.015775926830676
+            "median_de": 8.015775926830676,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-05": {
@@ -665,7 +830,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.698178903544192
+            "median_de": 7.698178903544192,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-15": {
@@ -682,7 +852,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.164729189437233
+            "median_de": 8.164729189437233,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-25": {
@@ -699,7 +874,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.561340084580507
+            "median_de": 8.561340084580507,
+            "centre_pixel": [
+              3076,
+              753
+            ],
+            "west_lon": -180.0
           }
         }
       },
@@ -716,6 +896,13 @@
           3076,
           753
         ],
+        "west_lon": -180.0,
+        "bounds": {
+          "west": 79.101562,
+          "east": 101.601562,
+          "north": 35.068359,
+          "south": 12.568359
+        },
         "note": "A single dated regional image, not a picture of the annual aggregate."
       }
     },
@@ -818,7 +1005,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 5.958144747370529
+            "median_de": 5.958144747370529,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-15": {
@@ -835,7 +1027,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 6.598619823174753
+            "median_de": 6.598619823174753,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-25": {
@@ -852,7 +1049,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.664088920899363
+            "median_de": 7.664088920899363,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-05": {
@@ -869,7 +1071,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.264778350820274
+            "median_de": 9.264778350820274,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-15": {
@@ -886,7 +1093,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.168588252742277
+            "median_de": 9.168588252742277,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-25": {
@@ -903,7 +1115,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 10.27079548518596
+            "median_de": 10.27079548518596,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-05": {
@@ -920,7 +1137,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.530795206609112
+            "median_de": 8.530795206609112,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-15": {
@@ -937,7 +1159,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.785902086377969
+            "median_de": 7.785902086377969,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-25": {
@@ -954,7 +1181,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.875863916426538
+            "median_de": 7.875863916426538,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-05": {
@@ -971,7 +1203,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.911263494811799
+            "median_de": 7.911263494811799,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-15": {
@@ -988,7 +1225,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 10.224573497712921
+            "median_de": 10.224573497712921,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-25": {
@@ -1005,7 +1247,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.253457857681498
+            "median_de": 9.253457857681498,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-05": {
@@ -1022,7 +1269,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.145642289960714
+            "median_de": 8.145642289960714,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-15": {
@@ -1039,7 +1291,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.08533190825817
+            "median_de": 8.08533190825817,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-25": {
@@ -1056,7 +1313,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.963531683266343
+            "median_de": 7.963531683266343,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-05": {
@@ -1073,7 +1335,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 6.766675935383071
+            "median_de": 6.766675935383071,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-15": {
@@ -1090,7 +1357,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.155419756828158
+            "median_de": 8.155419756828158,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-25": {
@@ -1107,7 +1379,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.814562716707195
+            "median_de": 9.814562716707195,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-05": {
@@ -1124,7 +1401,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 5.896868720210931
+            "median_de": 5.896868720210931,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-15": {
@@ -1141,7 +1423,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.435248071006365
+            "median_de": 8.435248071006365,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-25": {
@@ -1158,7 +1445,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.405104950972689
+            "median_de": 9.405104950972689,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-05": {
@@ -1175,7 +1467,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.626252632789374
+            "median_de": 9.626252632789374,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-15": {
@@ -1192,7 +1489,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.728254538252864
+            "median_de": 9.728254538252864,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-25": {
@@ -1209,7 +1511,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.63210295659371
+            "median_de": 9.63210295659371,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-05": {
@@ -1226,7 +1533,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.84414538767865
+            "median_de": 9.84414538767865,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-15": {
@@ -1243,7 +1555,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.656288803940564
+            "median_de": 8.656288803940564,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-25": {
@@ -1260,7 +1577,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 6.035373103224781
+            "median_de": 6.035373103224781,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-05": {
@@ -1277,7 +1599,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.059838154598665
+            "median_de": 8.059838154598665,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-15": {
@@ -1294,7 +1621,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.574374564067298
+            "median_de": 9.574374564067298,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-25": {
@@ -1311,7 +1643,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.67258294436152
+            "median_de": 9.67258294436152,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-05": {
@@ -1328,7 +1665,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 8.125888260016362
+            "median_de": 8.125888260016362,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-15": {
@@ -1345,7 +1687,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.410619354569036
+            "median_de": 9.410619354569036,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-25": {
@@ -1362,7 +1709,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.741599421251381
+            "median_de": 9.741599421251381,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-05": {
@@ -1379,7 +1731,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 10.700254881286574
+            "median_de": 10.700254881286574,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-15": {
@@ -1396,7 +1753,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 9.60186875322245
+            "median_de": 9.60186875322245,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-25": {
@@ -1413,7 +1775,12 @@
             "invalid_pixels": 0,
             "transparent_pixels": 0,
             "match_pct": 100.0,
-            "median_de": 7.397015016264518
+            "median_de": 7.397015016264518,
+            "centre_pixel": [
+              3093,
+              740
+            ],
+            "west_lon": -180.0
           }
         }
       },
@@ -1430,6 +1797,13 @@
           3093,
           740
         ],
+        "west_lon": -180.0,
+        "bounds": {
+          "west": 80.595703,
+          "east": 103.095703,
+          "north": 36.210938,
+          "south": 13.710938
+        },
         "note": "A single dated regional image, not a picture of the annual aggregate."
       }
     },
@@ -1532,7 +1906,12 @@
             "invalid_pixels": 7,
             "transparent_pixels": 0,
             "match_pct": 72.0,
-            "median_de": 9.526729758373731
+            "median_de": 9.526729758373731,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-15": {
@@ -1549,7 +1928,12 @@
             "invalid_pixels": 6,
             "transparent_pixels": 0,
             "match_pct": 76.0,
-            "median_de": 9.237958554489223
+            "median_de": 9.237958554489223,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-25": {
@@ -1566,7 +1950,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 8.086141596659811
+            "median_de": 8.086141596659811,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-05": {
@@ -1583,7 +1972,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 8.462574634444909
+            "median_de": 8.462574634444909,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-15": {
@@ -1600,7 +1994,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 8.213065073977287
+            "median_de": 8.213065073977287,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-25": {
@@ -1617,7 +2016,12 @@
             "invalid_pixels": 6,
             "transparent_pixels": 0,
             "match_pct": 76.0,
-            "median_de": 7.95652641053168
+            "median_de": 7.95652641053168,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-05": {
@@ -1634,7 +2038,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 8.165470164750854
+            "median_de": 8.165470164750854,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-15": {
@@ -1651,7 +2060,12 @@
             "invalid_pixels": 6,
             "transparent_pixels": 0,
             "match_pct": 76.0,
-            "median_de": 8.082161787389548
+            "median_de": 8.082161787389548,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-25": {
@@ -1668,7 +2082,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 9.429395022634827
+            "median_de": 9.429395022634827,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-05": {
@@ -1685,7 +2104,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 8.902062491137706
+            "median_de": 8.902062491137706,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-15": {
@@ -1702,7 +2126,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 9.294876177785639
+            "median_de": 9.294876177785639,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-25": {
@@ -1719,7 +2148,12 @@
             "invalid_pixels": 6,
             "transparent_pixels": 0,
             "match_pct": 76.0,
-            "median_de": 8.981306903261624
+            "median_de": 8.981306903261624,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-05": {
@@ -1736,7 +2170,12 @@
             "invalid_pixels": 6,
             "transparent_pixels": 0,
             "match_pct": 76.0,
-            "median_de": 8.96483177444744
+            "median_de": 8.96483177444744,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-15": {
@@ -1753,7 +2192,12 @@
             "invalid_pixels": 4,
             "transparent_pixels": 0,
             "match_pct": 84.0,
-            "median_de": 8.967265648662856
+            "median_de": 8.967265648662856,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-25": {
@@ -1770,7 +2214,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 9.306688448072507
+            "median_de": 9.306688448072507,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-05": {
@@ -1787,7 +2236,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 9.124344092449643
+            "median_de": 9.124344092449643,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-15": {
@@ -1804,7 +2258,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 8.702267856057986
+            "median_de": 8.702267856057986,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-25": {
@@ -1821,7 +2280,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 8.530564769491907
+            "median_de": 8.530564769491907,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-05": {
@@ -1838,7 +2302,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 9.156829931200374
+            "median_de": 9.156829931200374,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-15": {
@@ -1855,7 +2324,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 9.643116165067022
+            "median_de": 9.643116165067022,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-25": {
@@ -1872,7 +2346,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 9.475224061348278
+            "median_de": 9.475224061348278,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-05": {
@@ -1889,7 +2368,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 9.750005727280147
+            "median_de": 9.750005727280147,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-15": {
@@ -1906,7 +2390,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 9.630098906504479
+            "median_de": 9.630098906504479,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-25": {
@@ -1923,7 +2412,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 7.867904363409833
+            "median_de": 7.867904363409833,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-05": {
@@ -1940,7 +2434,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 8.025231148613697
+            "median_de": 8.025231148613697,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-15": {
@@ -1957,7 +2456,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 7.929317166860162
+            "median_de": 7.929317166860162,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-25": {
@@ -1974,7 +2478,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 10.201034274410215
+            "median_de": 10.201034274410215,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-05": {
@@ -1991,7 +2500,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 10.230374350788168
+            "median_de": 10.230374350788168,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-15": {
@@ -2008,7 +2522,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 9.672477156722536
+            "median_de": 9.672477156722536,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-25": {
@@ -2025,7 +2544,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 9.362580402578565
+            "median_de": 9.362580402578565,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-05": {
@@ -2042,7 +2566,12 @@
             "invalid_pixels": 5,
             "transparent_pixels": 0,
             "match_pct": 80.0,
-            "median_de": 9.279075396711642
+            "median_de": 9.279075396711642,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-15": {
@@ -2059,7 +2588,12 @@
             "invalid_pixels": 4,
             "transparent_pixels": 0,
             "match_pct": 84.0,
-            "median_de": 9.372735461265592
+            "median_de": 9.372735461265592,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-25": {
@@ -2076,7 +2610,12 @@
             "invalid_pixels": 4,
             "transparent_pixels": 0,
             "match_pct": 84.0,
-            "median_de": 7.554706161101766
+            "median_de": 7.554706161101766,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-05": {
@@ -2093,7 +2632,12 @@
             "invalid_pixels": 4,
             "transparent_pixels": 0,
             "match_pct": 84.0,
-            "median_de": 7.596778777871053
+            "median_de": 7.596778777871053,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-15": {
@@ -2110,7 +2654,12 @@
             "invalid_pixels": 4,
             "transparent_pixels": 0,
             "match_pct": 84.0,
-            "median_de": 6.726449304761071
+            "median_de": 6.726449304761071,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-25": {
@@ -2127,7 +2676,12 @@
             "invalid_pixels": 3,
             "transparent_pixels": 0,
             "match_pct": 88.0,
-            "median_de": 7.680001194211637
+            "median_de": 7.680001194211637,
+            "centre_pixel": [
+              3229,
+              872
+            ],
+            "west_lon": -180.0
           }
         }
       },
@@ -2144,6 +2698,13 @@
           3229,
           872
         ],
+        "west_lon": -180.0,
+        "bounds": {
+          "west": 92.548828,
+          "east": 115.048828,
+          "north": 24.609375,
+          "south": 2.109375
+        },
         "note": "A single dated regional image, not a picture of the annual aggregate."
       }
     },
@@ -2246,7 +2807,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.602876289301639
+            "median_de": 9.602876289301639,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-15": {
@@ -2263,7 +2829,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.902102993413235
+            "median_de": 9.902102993413235,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-01-25": {
@@ -2280,7 +2851,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 10.02884281005003
+            "median_de": 10.02884281005003,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-05": {
@@ -2297,7 +2873,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 8.67969167960905
+            "median_de": 8.67969167960905,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-15": {
@@ -2314,7 +2895,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.767529057082179
+            "median_de": 9.767529057082179,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-02-25": {
@@ -2331,7 +2917,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 10.027275570694824
+            "median_de": 10.027275570694824,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-05": {
@@ -2348,7 +2939,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 10.260688232731322
+            "median_de": 10.260688232731322,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-15": {
@@ -2365,7 +2961,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 10.13277926642853
+            "median_de": 10.13277926642853,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-03-25": {
@@ -2382,7 +2983,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 10.1512854061817
+            "median_de": 10.1512854061817,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-05": {
@@ -2399,7 +3005,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 8.255400769058557
+            "median_de": 8.255400769058557,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-15": {
@@ -2416,7 +3027,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 5.42292042569544
+            "median_de": 5.42292042569544,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-04-25": {
@@ -2433,7 +3049,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 8.457485946161855
+            "median_de": 8.457485946161855,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-05": {
@@ -2450,7 +3071,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 8.147693596878625
+            "median_de": 8.147693596878625,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-15": {
@@ -2467,7 +3093,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.194110977369267
+            "median_de": 9.194110977369267,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-05-25": {
@@ -2484,7 +3115,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 7.236745500617345
+            "median_de": 7.236745500617345,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-05": {
@@ -2501,7 +3137,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.724864993533695
+            "median_de": 9.724864993533695,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-15": {
@@ -2518,7 +3159,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.511926748745969
+            "median_de": 9.511926748745969,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-06-25": {
@@ -2535,7 +3181,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 8.895913483372784
+            "median_de": 8.895913483372784,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-05": {
@@ -2552,7 +3203,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 7.819380259308477
+            "median_de": 7.819380259308477,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-15": {
@@ -2569,7 +3225,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.204802532409522
+            "median_de": 9.204802532409522,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-07-25": {
@@ -2586,7 +3247,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 8.42414880515305
+            "median_de": 8.42414880515305,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-05": {
@@ -2603,7 +3269,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 6.793078152473983
+            "median_de": 6.793078152473983,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-15": {
@@ -2620,7 +3291,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 8.265733419027564
+            "median_de": 8.265733419027564,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-08-25": {
@@ -2637,7 +3313,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 7.759516871556828
+            "median_de": 7.759516871556828,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-05": {
@@ -2654,7 +3335,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 10.125563780002361
+            "median_de": 10.125563780002361,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-15": {
@@ -2671,7 +3357,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 7.698178903544192
+            "median_de": 7.698178903544192,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-09-25": {
@@ -2688,7 +3379,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.28100201754799
+            "median_de": 9.28100201754799,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-05": {
@@ -2705,7 +3401,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.727996801674502
+            "median_de": 9.727996801674502,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-15": {
@@ -2722,7 +3423,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.721188818907637
+            "median_de": 9.721188818907637,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-10-25": {
@@ -2739,7 +3445,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.85120377924001
+            "median_de": 9.85120377924001,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-05": {
@@ -2756,7 +3467,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.808560266638363
+            "median_de": 9.808560266638363,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-15": {
@@ -2773,7 +3489,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 10.161097439418079
+            "median_de": 10.161097439418079,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-11-25": {
@@ -2790,7 +3511,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.78062060958492
+            "median_de": 9.78062060958492,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-05": {
@@ -2807,7 +3533,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.595812255960531
+            "median_de": 9.595812255960531,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-15": {
@@ -2824,7 +3555,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 9.837784575028246
+            "median_de": 9.837784575028246,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         },
         "2024-12-25": {
@@ -2841,7 +3577,12 @@
             "invalid_pixels": 2,
             "transparent_pixels": 0,
             "match_pct": 92.0,
-            "median_de": 6.644010580542431
+            "median_de": 6.644010580542431,
+            "centre_pixel": [
+              3271,
+              836
+            ],
+            "west_lon": -180.0
           }
         }
       },
@@ -2858,6 +3599,13 @@
           3271,
           836
         ],
+        "west_lon": -180.0,
+        "bounds": {
+          "west": 96.240234,
+          "east": 118.740234,
+          "north": 27.773438,
+          "south": 5.273438
+        },
         "note": "A single dated regional image, not a picture of the annual aggregate."
       }
     }

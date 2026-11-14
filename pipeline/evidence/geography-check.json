@@ -1,0 +1,78 @@
+{
+  "made_with": "Written by Sabik with help from OpenAI Codex (SI).",
+  "checked_at": "2026-11-14T05:38:48.120911+00:00",
+  "reference": {
+    "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson",
+    "sha256": "9e0729ee253ca7d7a5c4ae9395fb1902264c5377c52e224d13dd85010e2835d9",
+    "licence": "Natural Earth public domain; https://www.naturalearthdata.com/about/terms-of-use/"
+  },
+  "method": "Rasterize independently georeferenced Natural Earth land polygons on a standard -180..180 grid. Search all horizontal circular shifts against uncoloured rain basemap or NDVI land/ocean pixels between 60 S and 60 N, every fourth image row.",
+  "checks": [
+    {
+      "dataset": "rain",
+      "source_file": "imergvar_composite.2025.07.15.png",
+      "sha256": "960cf009728b761980080e6f36736b426a2aa5ca5f96996da37a44a042ae552a",
+      "size": [
+        3600,
+        1800
+      ],
+      "best_reference_roll_pixels": 1600,
+      "inferred_west_lon": 20.0,
+      "configured_west_lon": 20.0,
+      "land_ocean_agreement_pct": 99.225,
+      "valid_comparison_pixels": 957585,
+      "alpha_sha256": "b32da79f2343443786ce5156b8aeb10ed34f01e71596629a9fc77596c3328640",
+      "opaque_alpha_composite_agreement_pct": 100.0
+    },
+    {
+      "dataset": "rain",
+      "source_file": "imergvar_composite.2026.07.15.png",
+      "sha256": "9439213b0733c5d19e186bf8309f169b04eb5e378ef12a6a70e95f6787809b30",
+      "size": [
+        3600,
+        1800
+      ],
+      "best_reference_roll_pixels": 1600,
+      "inferred_west_lon": 20.0,
+      "configured_west_lon": 20.0,
+      "land_ocean_agreement_pct": 99.2554,
+      "valid_comparison_pixels": 964364,
+      "alpha_sha256": "c24dfd8b1fcdba4bbb767bdd8888727cce5c133989a55ba868d579c83dd4da2b",
+      "opaque_alpha_composite_agreement_pct": 100.0
+    },
+    {
+      "dataset": "ndvi",
+      "source_file": "SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png",
+      "sha256": "097d831b377fdca5c2476ccec16e32b2e8498be2322a3f1c0f7f34b91f23d810",
+      "size": [
+        4096,
+        2048
+      ],
+      "best_reference_roll_pixels": 0,
+      "inferred_west_lon": -180.0,
+      "configured_west_lon": -180.0,
+      "land_ocean_agreement_pct": 96.8318,
+      "valid_comparison_pixels": 1400832
+    },
+    {
+      "dataset": "ndvi",
+      "source_file": "SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+      "sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+      "size": [
+        4096,
+        2048
+      ],
+      "best_reference_roll_pixels": 0,
+      "inferred_west_lon": -180.0,
+      "configured_west_lon": -180.0,
+      "land_ocean_agreement_pct": 96.8126,
+      "valid_comparison_pixels": 1400832
+    }
+  ],
+  "limitations": [
+    "Coarse 110m coastlines, lakes, snow and raster edges cause some disagreement.",
+    "Checks four dated frames, not every archive image.",
+    "Geographic placement check only; not independent physical-data validation."
+  ],
+  "correction": "Earlier exports used -180 for rain and sampled the wrong longitude. SVS 4897 requires west_lon=20. SVS 5544 keeps west_lon=-180. All eight rain discs and crops were regenerated."
+}

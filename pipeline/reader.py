@@ -7,12 +7,17 @@ from .colour import srgb_to_lab, delta_e
 from .months import ndvi_level, round_position
 
 
-def coordinates_to_pixel(lon, lat, width, height):
+FRAME_WEST_LONGITUDE = {'rain': 20.0, 'ndvi': -180.0}
+
+
+def coordinates_to_pixel(lon, lat, width, height, *, west_lon=-180.0):
     if not (np.isfinite(lon) and np.isfinite(lat) and -180 <= lon <= 180 and -90 <= lat <= 90):
         raise ValueError('Longitude/latitude must be finite and within -180..180/-90..90')
     if width < 1 or height < 1:
         raise ValueError('Image dimensions must be positive')
-    x = math.floor((lon + 180) / 360 * width) % width
+    if not np.isfinite(west_lon) or not -180 <= west_lon <= 180:
+        raise ValueError('The western longitude must be finite and within -180..180')
+    x = math.floor(((lon - west_lon) % 360) / 360 * width) % width
     y = min(height - 1, math.floor((90 - lat) / 180 * height))
     return x, y
 
@@ -95,13 +100,18 @@ def read_frame(image_or_path, dataset, lat, lon, *, ndvi_bar=None, window_size=N
     if image.ndim != 3 or image.shape[1] != image.shape[0] * 2:
         raise ValueError('Frame must be a plain 2:1 equirectangular RGB/RGBA image')
     height, width = image.shape[:2]
-    x, y = coordinates_to_pixel(lon, lat, width, height)
+    if dataset not in FRAME_WEST_LONGITUDE:
+        raise ValueError('Dataset must be rain or ndvi')
+    west_lon = FRAME_WEST_LONGITUDE[dataset]
+    x, y = coordinates_to_pixel(lon, lat, width, height, west_lon=west_lon)
     size = window_size if window_size is not None else (11 if dataset == 'ndvi' and width >= 8000 else 5)
     if not isinstance(size, int) or size < 1 or size % 2 != 1:
         raise ValueError('window_size must be a positive odd integer')
     radius = size // 2
-    # Longitude wraps at the date line; latitude is clipped at the poles.
+    # Longitude wraps at this product's map seam; latitude is clipped at the poles.
     xs = np.arange(x-radius, x+radius+1) % width
     ys = np.arange(max(0,y-radius), min(height,y+radius+1))
     window = image[np.ix_(ys, xs)]
-    return read_window(window, dataset, ndvi_bar=ndvi_bar)
+    result = read_window(window, dataset, ndvi_bar=ndvi_bar)
+    result.update(centre_pixel=[x,y], west_lon=west_lon)
+    return result

@@ -5,7 +5,7 @@ import pytest
 from pipeline.bars import sample_ndvi_bar
 from pipeline.colour import srgb_to_lab
 from pipeline.months import monthly_value, ndvi_level
-from pipeline.reader import coordinates_to_pixel, read_window
+from pipeline.reader import coordinates_to_pixel, read_window, read_frame
 
 
 def rain_window(colour):
@@ -22,6 +22,29 @@ def vegetation_bar():
 def test_01_coordinates():
     assert coordinates_to_pixel(105, 10, 360, 180) == (285, 80)
     assert coordinates_to_pixel(90.41, 23.81, 3600, 1800) == (2704, 661)
+
+
+def test_rain_longitude_origin_places_dhaka_in_bangladesh():
+    # SVS 4897 is Pacific-centred: its western edge is 20 E, not 180 W.
+    # Independently checked against the Natural Earth coastline (see evidence).
+    assert coordinates_to_pixel(90.41, 23.81, 3600, 1800, west_lon=20) == (704, 661)
+    assert coordinates_to_pixel(0, 0, 3600, 1800, west_lon=20) == (3400, 900)
+    assert coordinates_to_pixel(20, 0, 3600, 1800, west_lon=20) == (0, 900)
+
+
+def test_rain_reader_does_not_sample_the_caribbean_for_dhaka():
+    pixels = np.zeros((1800, 3600, 4), dtype=np.uint8)
+    pixels[659:664, 702:707] = [102, 187, 177, 255]
+    pixels[659:664, 2702:2707] = [84, 48, 2, 255]
+    assert read_frame(pixels, 'rain', 23.81, 90.41)['level'] == 3
+
+
+def test_ndvi_keeps_its_standard_longitude_origin():
+    bar = vegetation_bar()
+    pixels = np.full((180, 360, 3), [8,123,176], dtype=np.uint8)
+    pixels[64:69,268:273] = bar[200]
+    result = read_frame(pixels, 'ndvi', 23.81, 90.41, ndvi_bar=bar)
+    assert result['level'] == 4
 
 
 def test_02_transparent_is_normal_despite_leftover_rgb():

@@ -78,3 +78,26 @@ def test_ndvi_light_overlay_is_never_sampled_as_vegetation():
         assert_light_window_clear(-80,-170,4096,2048)
     with pytest.raises(ValueError,match='dimensions'):
         assert_light_window_clear(23.81,90.41,2048,1024)
+
+
+def test_rain_crop_uses_the_verified_geographic_origin(tmp_path, monkeypatch):
+    import pipeline.run as run
+    pixels = np.zeros((1800,3600,3),dtype=np.uint8)
+    pixels[659:664,702:707] = [102,187,177]
+    pixels[659:664,2702:2707] = [84,48,2]
+    source = tmp_path/'source.png'
+    Image.fromarray(pixels).save(source)
+    monkeypatch.setattr(run,'ROOT',tmp_path)
+    monkeypatch.setattr(run,'CACHE',tmp_path/'cache')
+    listing = tmp_path/'cache/listings/rain-composite.html'
+    listing.parent.mkdir(parents=True)
+    listing.write_text('<a href="imergvar_composite.2025.07.15.png">frame</a>')
+    monkeypatch.setattr(run,'download',lambda url,path:{'path':str(source),'url':url,'sha256':'test'})
+    manifest = {'frames':{'2025-07-15':{'status':'ok'}}}
+    disc = {'id':'dhaka-rain-2025','dataset':'rain','year':2025,'frame':'data/frames/test.png'}
+    evidence = run.make_crop(manifest,PLACE,disc)
+    with Image.open(tmp_path/'docs/data/frames/test.png') as crop:
+        assert crop.getpixel((128,128)) == (102,187,177)
+    assert evidence['centre_pixel'] == [704,661]
+    assert evidence['west_lon'] == 20
+    assert evidence['bounds'] == {'west':77.6,'east':103.2,'north':36.7,'south':11.1}

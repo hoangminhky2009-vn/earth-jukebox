@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-11-14T05:03:34.041974+00:00",
+  "generated": "2026-11-14T05:37:22.916502+00:00",
   "provenance": {
     "source": "Colours read from NASA SVS frames (Earth Information Center). Rain values are colour-bin representatives, not exact measurements; NDVI values are colourbar positions, not measured NDVI.",
     "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md"
@@ -156,32 +156,32 @@
       "year": 2025,
       "side": "A",
       "levels": [
-        1,
         0,
         0,
         0,
         0,
         0,
         -1,
+        -1,
         0,
-        2,
-        2,
-        1,
-        1
+        0,
+        0,
+        0,
+        0
       ],
       "values": [
-        3.5,
         0,
         0,
         0,
         0,
         0,
         -3.5,
+        -3.5,
         0,
-        7.5,
-        7.5,
-        3.5,
-        3.5
+        0,
+        0,
+        0,
+        0
       ],
       "saturated": [
         false,
@@ -212,7 +212,7 @@
         5
       ],
       "match_pct": 100.0,
-      "median_de": 0.0,
+      "median_de": 4.9447,
       "condition": "mint",
       "breaks": [],
       "frame": "data/frames/dhaka-rain-2025.png",
@@ -226,7 +226,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -238,28 +239,28 @@
       "year": 2025,
       "side": "A",
       "levels": [
-        1,
-        0,
         0,
         0,
         0,
         -1,
         -1,
         0,
+        -1,
+        -2,
         0,
         0,
         0,
         0
       ],
       "values": [
-        3.5,
-        0,
         0,
         0,
         0,
         -3.5,
         -3.5,
         0,
+        -3.5,
+        -7.5,
         0,
         0,
         0,
@@ -308,7 +309,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -329,9 +331,9 @@
         0,
         0,
         0,
-        0,
-        0,
-        0
+        1,
+        1,
+        1
       ],
       "values": [
         0,
@@ -343,9 +345,9 @@
         0,
         0,
         0,
-        0,
-        0,
-        0
+        3.5,
+        3.5,
+        3.5
       ],
       "saturated": [
         false,
@@ -376,7 +378,7 @@
         5
       ],
       "match_pct": 100.0,
-      "median_de": 4.9447,
+      "median_de": 0.0,
       "condition": "mint",
       "breaks": [],
       "frame": "data/frames/tonle-sap-rain-2025.png",
@@ -390,7 +392,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -407,13 +410,13 @@
         0,
         0,
         0,
-        0,
-        0,
+        2,
         1,
         1,
-        0,
-        0,
-        0
+        1,
+        1,
+        4,
+        3
       ],
       "values": [
         0,
@@ -421,13 +424,13 @@
         0,
         0,
         0,
-        0,
-        0,
+        7.5,
         3.5,
         3.5,
-        0,
-        0,
-        0
+        3.5,
+        3.5,
+        17.5,
+        12.5
       ],
       "saturated": [
         false,
@@ -440,7 +443,7 @@
         false,
         false,
         false,
-        false,
+        true,
         false
       ],
       "frames_used": [
@@ -472,7 +475,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -484,30 +488,30 @@
       "year": 2026,
       "side": "B",
       "levels": [
-        1,
-        0,
-        0,
-        1,
         0,
         0,
         0,
         0,
         0,
-        0,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
         null,
         null
       ],
       "values": [
-        3.5,
-        0,
-        0,
-        3.5,
         0,
         0,
         0,
         0,
         0,
-        0,
+        -3.5,
+        -3.5,
+        -3.5,
+        -3.5,
+        -3.5,
         null,
         null
       ],
@@ -540,7 +544,7 @@
         0
       ],
       "match_pct": 100.0,
-      "median_de": 0.0,
+      "median_de": 4.9447,
       "condition": "scratched",
       "breaks": [],
       "frame": "data/frames/dhaka-rain-2026.png",
@@ -554,7 +558,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -566,30 +571,30 @@
       "year": 2026,
       "side": "B",
       "levels": [
-        1,
-        0,
-        0,
-        2,
-        1,
-        1,
         0,
         0,
         0,
         0,
+        0,
+        -2,
+        -2,
+        -2,
+        -2,
+        -2,
         null,
         null
       ],
       "values": [
-        3.5,
-        0,
-        0,
-        7.5,
-        3.5,
-        3.5,
         0,
         0,
         0,
         0,
+        0,
+        -7.5,
+        -7.5,
+        -7.5,
+        -7.5,
+        -7.5,
         null,
         null
       ],
@@ -636,7 +641,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -655,9 +661,9 @@
         0,
         0,
         0,
-        0,
-        0,
-        0,
+        -1,
+        -1,
+        -1,
         null,
         null
       ],
@@ -669,9 +675,9 @@
         0,
         0,
         0,
-        0,
-        0,
-        0,
+        -3.5,
+        -3.5,
+        -3.5,
         null,
         null
       ],
@@ -704,7 +710,7 @@
         0
       ],
       "match_pct": 100.0,
-      "median_de": 0,
+      "median_de": 4.9447,
       "condition": "scratched",
       "breaks": [],
       "frame": "data/frames/tonle-sap-rain-2026.png",
@@ -718,7 +724,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -730,30 +737,30 @@
       "year": 2026,
       "side": "B",
       "levels": [
+        2,
         0,
         0,
         0,
         0,
         0,
         0,
+        -1,
         0,
-        0,
-        0,
-        0,
+        1,
         null,
         null
       ],
       "values": [
+        7.5,
         0,
         0,
         0,
         0,
         0,
         0,
+        -3.5,
         0,
-        0,
-        0,
-        0,
+        3.5,
         null,
         null
       ],
@@ -786,7 +793,7 @@
         0
       ],
       "match_pct": 100.0,
-      "median_de": 0,
+      "median_de": 0.0,
       "condition": "scratched",
       "breaks": [],
       "frame": "data/frames/hue-rain-2026.png",
@@ -800,7 +807,8 @@
           15,
           22,
           28
-        ]
+        ],
+        "west_lon": 20.0
       },
       "description": "",
       "check": null
@@ -880,7 +888,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null
@@ -960,7 +969,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null
@@ -1040,7 +1050,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null
@@ -1120,7 +1131,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null
@@ -1200,7 +1212,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null
@@ -1280,7 +1293,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null
@@ -1360,7 +1374,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null
@@ -1440,7 +1455,8 @@
           5,
           15,
           25
-        ]
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null

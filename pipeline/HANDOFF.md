@@ -2,14 +2,22 @@
 
 Written by Sabik with help from OpenAI Codex (SI). Ky owns the top-level project documentation; the suggested additions below are for him to integrate.
 
+## Geographic correction — replaces the earlier rain export
+
+The first rain export used the wrong longitude origin. SVS 4897's Pacific-centred map starts at **20 E**, not 180 W. The old Dhaka sample at x=2704 was near 69.6 W in the Caribbean. The correct Dhaka pixel is **x=704, y=661**. All eight rain discs, crops and evidence have been regenerated. Do not use the earlier rain values or images; all NDVI monthly values and crops are unchanged.
+
+`python -m pipeline.verify_geography` independently registers the NASA coastlines against Natural Earth land polygons. Both inspected rain years select 20 E (over 99% land/ocean agreement); both NDVI years select -180 (over 96%). Rain alpha and composite opaque pixels agree 100%. See `evidence/geography-check.json`. This checks geographic placement, not physical rainfall accuracy. Additive `source.west_lon` records the layout in the JSON.
+
+Ky: the x=2704 Dhaka example in `notes/00_start_here.md` and the generic formula in `notes/02_pipeline.md` need correction for rain. The original tests and note-to-data checks repeated the same incorrect assumption. The new regression tests check the longitude origin, sampling and image crop separately. July's Dhaka category happens to remain -1; that coincidence did not validate the earlier geography.
+
 ## What is ready
 
 - `docs/data/discs.json`: **16 real discs** for Dhaka, Sylhet, Tonle Sap near Phnom Krom, and Hue; rain 2025/2026 and greenness 2024/2025. No fake observations. The three added sampling points are documented implementation choices for team review in `pipeline/PLACES.md`.
 - **184 distinct source frames** were read and reused for all four places: rain 60 in 2025 and 52 in 2026, plus 36 greenness frames in each year. Source URLs, file hashes and readings are in `pipeline/evidence/`.
-- The original Dhaka rain-2025 result is unchanged: January–December levels `[1,0,0,0,0,0,-1,0,2,2,1,1]`, five valid frames each month, all 1,500 sampled pixels classified. This is colour-decoding success, not proof of rainfall accuracy.
+- Corrected Dhaka rain-2025 January–December levels: `[0,0,0,0,0,-1,-1,0,0,0,0,0]`, five valid frames each month, all 1,500 sampled pixels classified. This is colour-decoding success, not proof of rainfall accuracy.
 - Rain 2026 has only two sampled November dates at the cutoff, 14 November. November fails the three-frame minimum and December is future; both stay null in every 2026 rain disc. There are no archive breaks in the requested dates. The four rain-2026 discs are `scratched`; the other twelve are `mint`.
 - All 16 crops are 256 × 256. Each is a **15 July** reference image from the disc's year, not an annual average or an image synchronized to each playing month. The original Dhaka rain crop uses the 15 July 2025 NASA composite.
-- Tonle Sap rain remains in the near-normal bin throughout the valid sampled months. Do not replace this with a more dramatic series. Its greenness window includes invalid pixels (about 83% colour match); these are excluded under the same fixed rules used everywhere.
+- Corrected Tonle Sap rain-2025 is near normal January–September and wetter in October–December. Its greenness window includes invalid pixels (about 83% colour match); these are excluded under the same fixed rules used everywhere.
 - Ky's new upstream commit `a46be20` supplies the score and native Web Audio engine and moves music ownership to Ky. This branch keeps his implementation. Sabik's separate Tone.js prototype is preserved locally outside the repository and is not part of this handoff.
 
 ## Ky: integration
@@ -31,7 +39,7 @@ node --test
 python -m http.server 8000 -d docs
 ```
 
-After Ky switches the data URL, open `http://localhost:8000/`, collect the Dhaka disc and press Play. Each month lasts two seconds, so a year loops in 24 seconds. July has a drier category and September a wetter category. The encoded notes represent image categories; any added field recordings are illustrative, not recordings captured in Dhaka by NASA.
+After Ky switches the data URL, open `http://localhost:8000/`, collect the Dhaka disc and press Play. June and July 2025 have a drier category; the other months are near normal. The encoded notes represent image categories; any added field recordings are illustrative, not recordings captured in Dhaka by NASA.
 
 Downloads are cached outside the published website in `cache/` and never committed. Use `--refresh` to update NASA listings and retry failed downloads. A network failure stops an export; it does not become a scientific missing observation. Future and not-yet-published dates remain missing, with no invented values. Only holes inside the listed archive become `breaks`. The clarified condition rule is implemented and tested: breaks win as `skips`, otherwise a null month means `scratched`, otherwise `mint`. Saturation is checked as well.
 
@@ -57,6 +65,7 @@ Source hashes, frame counts and colour-match evidence make the image decoding re
 
 - NASA's Scientific Visualization Studio: SVS 4897 precipitation images and crop; SVS 5544 vegetation images and colourbar when included. Preserve the attribution listed on each source page and link [NASA's media usage guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/). These NASA materials are not being relicensed as CC0 by this project.
 - Sabik used OpenAI Codex to help implement and test the Python pipeline. The new authored files and real-data provenance identify that assistance truthfully. A separately tested music prototype was not included after Ky took over music. Existing Claude-assisted team work remains separately credited.
+- Natural Earth, public-domain 1:110m land geometry, is used only to verify geographic registration: https://www.naturalearthdata.com/about/terms-of-use/ . Source URL and SHA256 are recorded in `pipeline/evidence/geography-check.json`; the external file stays in the uncommitted cache.
 
 ## Remaining team checks
 

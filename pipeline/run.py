@@ -16,7 +16,7 @@ import requests
 from .bars import RAIN_LEVELS, image_array, sample_ndvi_bar
 from .fetch import ROOT, CACHE, HEADERS, RAIN_COMPOSITE, NDVI_BAR, fetch_year, download
 from .months import monthly_value
-from .reader import read_frame, coordinates_to_pixel
+from .reader import read_frame, coordinates_to_pixel, FRAME_WEST_LONGITUDE
 from .validate import write_validated
 
 
@@ -84,7 +84,8 @@ def build_discs(manifest, places, *, ndvi_bar=None):
                       'condition':'skips' if breaks else 'scratched' if None in levels else 'mint',
                       'breaks':breaks,'frame':f'data/frames/{ident}.png',
                       'source':{'svs':svs,'svs_url':f'https://svs.gsfc.nasa.gov/{svs}',
-                                'frames':manifest['folder'],'sample_days':manifest['sample_days']},
+                                'frames':manifest['folder'],'sample_days':manifest['sample_days'],
+                                'west_lon':FRAME_WEST_LONGITUDE[dataset]},
                       'description':'','check':None})
         # The readable evidence omits every individual colour distance; totals and
         # medians remain available, and source hashes allow exact reproduction.
@@ -156,7 +157,8 @@ def make_crop(manifest, place, disc):
         source = source.convert('RGB')
         if source.width != 2*source.height:
             raise ValueError('Crop requires a plain 2:1 equirectangular source')
-        x,y = coordinates_to_pixel(place['lon'],place['lat'],source.width,source.height)
+        west_lon = FRAME_WEST_LONGITUDE[disc['dataset']]
+        x,y = coordinates_to_pixel(place['lon'],place['lat'],source.width,source.height,west_lon=west_lon)
         pixels = np.asarray(source)
         xs = np.arange(x-128,x+128) % source.width
         ys = np.clip(np.arange(y-128,y+128),0,source.height-1)
@@ -166,6 +168,11 @@ def make_crop(manifest, place, disc):
         crop.save(destination)
     return {'date':day,'source_url':record['url'],'source_sha256':record.get('sha256'),
             'output':disc['frame'],'size':[256,256],'centre_pixel':[x,y],
+            'west_lon':west_lon,
+            'bounds':{'west':round(((x-128)/source.width*360+west_lon+180)%360-180,6),
+                      'east':round(((x+128)/source.width*360+west_lon+180)%360-180,6),
+                      'north':round(90-max(0,y-128)/source.height*180,6),
+                      'south':round(90-min(source.height,y+128)/source.height*180,6)},
             'note':'A single dated regional image, not a picture of the annual aggregate.'}
 
 
