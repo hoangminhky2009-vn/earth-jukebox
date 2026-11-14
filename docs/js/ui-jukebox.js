@@ -111,7 +111,7 @@ export function detailRows(disc, datasets) {
  */
 export function frameFigure(disc, place) {
   if (!disc?.frame) return null;
-  const where = String(place?.name ?? disc.place).split(',')[0].replace(/\s+and surroundings$/i, '');
+  const where = String(place?.name ?? disc.place).split(',')[0].replace(/\s+(and surroundings|near .*)$/i, '');
   const date = `15 July ${disc.year}`;
   const what = disc.dataset === 'rain'
     ? 'rain compared with normal (brown = drier, green and turquoise = wetter)'

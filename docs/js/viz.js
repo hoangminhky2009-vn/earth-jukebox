@@ -179,7 +179,7 @@ function lcdLevel(disc, level, ds) {
 
 /** The green LCD line while a month plays, e.g. "DHAKA // MAR ▼ 2-5mm drier". */
 export function lcdText(disc, placeName, month, datasets) {
-  const name = String(placeName).split(',')[0].replace(/\s+and surroundings$/i, '').toUpperCase();
+  const name = String(placeName).split(',')[0].replace(/\s+(and surroundings|near .*)$/i, '').toUpperCase();
   const level = disc.levels[month];
   if (isMissing(level)) return `${name} // ${MONTH_ABBR[month]} ░ NO DATA`;
   const glyph = disc.dataset === 'rain' ? (level < 0 ? '▼ ' : level > 0 ? '▲ ' : '• ') : '';

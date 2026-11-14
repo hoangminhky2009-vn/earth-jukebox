@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-14T05:55:35.027714+00:00",
+  "generated": "2026-11-14T14:40:57.118345+00:00",
   "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md",
   "cutoff": "2026-11-14",
   "listing_latest": "2026-06-13",
@@ -94,7 +94,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4123943,
-          "sha256": "2115d84f660d6d523b3b74a9c78c2e8bc3f521f0573a69cf6d35e4ae6e964e7c",
+          "sha256": "06284d978e0b53bb292ba9d20defe9d9ef8d8b8158324f7fabd1c5330ad7d8ee",
           "reading": {
             "level": 2,
             "value": 0.4588235294117647,
@@ -116,7 +116,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4073844,
-          "sha256": "8af4aa43fa1500b9de9c41e8f2b0388e3c818adec3c0d3a420d7113612d7f635",
+          "sha256": "f81533f74af2af106deb58fc8f17a560819f23fbce5da5de9b357f3f17c0a606",
           "reading": {
             "level": 2,
             "value": 0.43529411764705883,
@@ -138,7 +138,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4101285,
-          "sha256": "41bda9b99f06ef0b438ad714764a46b14b85d9017cb3b13f9b178d57512f64e9",
+          "sha256": "5ff07d0614cd854a7d6b7773357226d4f71c721a4073c64e926b0c3b7cc66912",
           "reading": {
             "level": 2,
             "value": 0.403921568627451,
@@ -160,7 +160,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4110020,
-          "sha256": "0dcfdaa0773661e3742b70997b66aad6349d293ddbafede390cd896fe83c92b6",
+          "sha256": "3f78fc1d72f71e5bcc11551aaf37a3acfc2f056c8bf305d72035d52e4d4abeda",
           "reading": {
             "level": 2,
             "value": 0.39215686274509803,
@@ -182,7 +182,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4066728,
-          "sha256": "5f951244e747e3961503d5ac5ddec5832af3712c3eef0fa3e397c409afa9bbb5",
+          "sha256": "1cbd6dec58887981482f7dba6041046a8f9db7774f7038412c130713c8b5ded6",
           "reading": {
             "level": 2,
             "value": 0.4392156862745098,
@@ -204,7 +204,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4049844,
-          "sha256": "d284d9bbf70a6b3a161c3d5c1464d56dbcd2b01c7db0f02b08367a6f2c2cbd59",
+          "sha256": "ee26c43c1c515a0490433aa1162d5c665bfdc85813089e5305fc15dccd156a3a",
           "reading": {
             "level": 2,
             "value": 0.44313725490196076,
@@ -226,7 +226,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250305.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4100707,
-          "sha256": "a1bf65c19032b1a1341cdcda1d7635331bf6fbbb048e57475947928474820de6",
+          "sha256": "a7aabfad387e03589f3aa82acc8f863e349e8e9eb96ec20b20a8f04a002ad6ab",
           "reading": {
             "level": 3,
             "value": 0.596078431372549,
@@ -248,7 +248,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4194073,
-          "sha256": "7a329b8aebd3c1084eaa64cad4cfce141097488e0e6bdfb9ea11e87318f5e236",
+          "sha256": "28bb7617ee6888eb4c4f4e3c59baaa84fe03e3fa7c51e48ed2ef7b85e93a1416",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -270,7 +270,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250325.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4282081,
-          "sha256": "51f697249f6754f87a94114bb0d5670ff1fc4acd9b75cb3dd859f0b0d9f74b62",
+          "sha256": "f4d885e69a4a1579592b294ea2649b01394765b1c3e74e933bbfe62eaef88676",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -292,7 +292,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250405.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4372280,
-          "sha256": "b0ab027fdb2478fdfe282bc7f077e696f03ee1b41b04554fea854139598ca340",
+          "sha256": "213afed7594078fc9ff2c0ebfb8b9a757728372e0a0dbea087f1ba28d24ce03f",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -314,7 +314,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4466123,
-          "sha256": "cd269f4144e8dfe24c0b0b8563a870972aec013be73100acbbaeec3decc8ac9b",
+          "sha256": "cde16a73dd0756f428f293c024072978ac5b5274ac56891388336e7c5ab5fbd0",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -336,7 +336,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250425.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4549037,
-          "sha256": "fbfd945d2eafff5888df9bbd3041ec982036eeb8acf0e7cecb48765fba938c86",
+          "sha256": "814435b8de380485ad463c46a5a13c1501ce8f08fbd30f356cc2e5e4fdcc4714",
           "reading": {
             "level": 3,
             "value": 0.5843137254901961,
@@ -358,7 +358,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250505.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4641376,
-          "sha256": "41fdabd7ce41fceb162290ac19215a7d83eab963761ddcf8b3eb9375cffcd09e",
+          "sha256": "59c5e228f031a7846ce3c5ea5402e6d2d2522e61cda6aa3338998b5dee91cb75",
           "reading": {
             "level": 3,
             "value": 0.5137254901960784,
@@ -380,7 +380,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4788859,
-          "sha256": "407fb14220133cdb943563ad11e9585e0e32bad911d75735f778221e2823c97b",
+          "sha256": "bf63dc12a4c63c97a73fc28654b2de395052bd837b5eb0c1ac338b278539e525",
           "reading": {
             "level": 2,
             "value": 0.4196078431372549,
@@ -402,7 +402,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250525.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4917820,
-          "sha256": "e06dcd36bde8dc69e347a9de959b9cf1279d005c527f623774b775aa66384419",
+          "sha256": "494763ea342f9f5d66cc47e7b8da4808e0f57618c9f29b2533d93dad5123896d",
           "reading": {
             "level": 2,
             "value": 0.3843137254901961,
@@ -424,7 +424,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250605.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5010033,
-          "sha256": "c35eccbba4bb67cf0039eee4c958d4a3539074198d0438d98bd12c01dc089c3f",
+          "sha256": "a476451ac42f88c7fa1458b2400e6655b149752c27940bccb1ba7b58068ae6b2",
           "reading": {
             "level": 2,
             "value": 0.35294117647058826,
@@ -446,7 +446,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5054922,
-          "sha256": "f00483d29f144d9cf8996764f0afcacac89e2a4ecc61adc88a69b7769c6edd7e",
+          "sha256": "c584dc9662fba158051c52853f620d82f6fa96a701613d7e3f4d617200231c32",
           "reading": {
             "level": 2,
             "value": 0.35294117647058826,
@@ -468,7 +468,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250625.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059629,
-          "sha256": "c038e8359f9e8c1ec66780d0886a01d3d6112091466e2baff9b96c2addfe76fb",
+          "sha256": "4dadc10611abfe5d335b191dc905e283187458784c73db0f47799c907d39c6bf",
           "reading": {
             "level": 2,
             "value": 0.39215686274509803,
@@ -490,7 +490,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250705.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059428,
-          "sha256": "ebcea807290b146ad0ac07fba2a21aabc75f1a74d590298f1b9660411461c5a5",
+          "sha256": "9b048f63e7cef2174116ca9e0fb9082d6371d52f67eeba37077acafd10cc2143",
           "reading": {
             "level": 2,
             "value": 0.43529411764705883,
@@ -512,7 +512,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5031403,
-          "sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+          "sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
           "reading": {
             "level": 2,
             "value": 0.3607843137254902,
@@ -534,7 +534,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250725.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5027290,
-          "sha256": "1023056eb5662f7382a421d1ea4e470210d3ef5804f4d01417d4dfec38ae6628",
+          "sha256": "eabd0ef639b36f92a55725ff2b3a89768eac32a12dda2415b0cc282b4fb2e492",
           "reading": {
             "level": 2,
             "value": 0.3607843137254902,
@@ -556,7 +556,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250805.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5024835,
-          "sha256": "2c897215cd3553baeeaaf8b4ba5d002a8227038b8d56624bbbe39ff25f005906",
+          "sha256": "504a369affed0e354092fdc84ca88539c79e2be81f36bb7776d323e09bb60fc9",
           "reading": {
             "level": 2,
             "value": 0.27450980392156865,
@@ -578,7 +578,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5029072,
-          "sha256": "98163ee1e2a342efaf91c668e23edfb849d4d0110068cdf6953f5472da8669c6",
+          "sha256": "e5af428344bcc1ed848b8184be892df825f4e8fe5840435fba079698d3706b6d",
           "reading": {
             "level": 2,
             "value": 0.27450980392156865,
@@ -600,7 +600,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250825.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5039116,
-          "sha256": "dc1e85eac1ff897a2ec16b3e751b51a77689a4ca05559ff02886b6c374d22089",
+          "sha256": "5c0de19fea4f02b1e9c39e2abd85dc1547227e46d0496ee62f64ff9889ad56a1",
           "reading": {
             "level": 2,
             "value": 0.35294117647058826,
@@ -622,7 +622,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250905.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5049282,
-          "sha256": "b37c7372d97195d745c1d97bbb5752d7539ce7e5742b4053543247d7e69192fe",
+          "sha256": "8d82b972bf9af7a469138decc15a80acc640f3d44f7a2db7fcc15b359d9b71d8",
           "reading": {
             "level": 3,
             "value": 0.5411764705882353,
@@ -644,7 +644,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5063845,
-          "sha256": "2af61fda833ffa92cffebe8c3a3cd96eb3f3639677e972f5e0d840a9f625ddac",
+          "sha256": "957bc295b212f974f5429db428c4cc22775e907f184f3a333b99e28881be10b9",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -666,7 +666,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250925.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5081770,
-          "sha256": "5289477072181ce04ca6e4fa8bfaa65423718ba8a31f94483996fed7c750e4f2",
+          "sha256": "a177c44bd31fd7a79def3571b7174cc95552b0b1834bf6d19dcc084847b7bc6e",
           "reading": {
             "level": 3,
             "value": 0.5607843137254902,
@@ -688,7 +688,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251005.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5089223,
-          "sha256": "bcdc73b36fccb96714942208032e83040c630a515c7fa68a1cad61e5607c811c",
+          "sha256": "7656f62548a765c1bfc607fb1755272693a854b9543dae1e950e81fd66e7f1c5",
           "reading": {
             "level": 2,
             "value": 0.4392156862745098,
@@ -710,7 +710,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5009607,
-          "sha256": "c605afaf43bf006dbd09f95754019f48c170808f1f157ae91a6bc849ca3010e5",
+          "sha256": "347a2e0db5a7ec865aa3de629335ba4946f479a7bf488f55c1738c450dd3573f",
           "reading": {
             "level": 2,
             "value": 0.3843137254901961,
@@ -732,7 +732,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251025.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4911689,
-          "sha256": "d3f63acf27a62bfce27469917846d731bfc773987534abe1b6937438ce9c3e6a",
+          "sha256": "02f65b6bf46a2d54fdb0fc430a810497f9e17b2203e9feed651b9ffe125659d6",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -754,7 +754,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4762058,
-          "sha256": "97a7c0d98d85281285776883eb7f2f2c350987024773a86f7858c77705c0dba7",
+          "sha256": "7aa4f1b258128af01aab34ae54bfb42693f0a5d0d399443541840895d9f675e5",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -776,7 +776,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4548181,
-          "sha256": "9be9843b43a9e9ef60217776adf7cedd7bcf1f17ac1b589d384d87a5139ddd5a",
+          "sha256": "668e7982f2afe7e5dade82ce5bc6acbf3bf96e42fab903fe97891456bc6c00c9",
           "reading": {
             "level": 4,
             "value": 0.7529411764705882,
@@ -798,7 +798,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4450481,
-          "sha256": "d4705ae559e51093ead8c71b42b09c25dc9c458200ec4a2de33b342386439a16",
+          "sha256": "9bb4f691888f47406ab8f5f69680e2b90a05b3071de70ae22e7956f10132a3cb",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -820,7 +820,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4320973,
-          "sha256": "a2022356110eea34cb11b95bdb0a3a218643274adba080a8f0a5757d47327f64",
+          "sha256": "2215460a0a3f4c5c486b3c08b8442ab5622015313303ecc4af463ed7ccc67d1b",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -842,7 +842,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4208484,
-          "sha256": "0a27c8ab61c2063e19865c9006195927ce782ee498627b93eaed7e9e020fcf9e",
+          "sha256": "9dbb89e6b8e81d5492bf2afb6e37f38f2f2feba213c010cd53f1db448459f178",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -864,7 +864,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4169498,
-          "sha256": "c6a3d6f3acf23f30cee4cf73451a3f51205763fb91825f9b626152edadad8062",
+          "sha256": "90c2a1e4f3c84f166209adaf395d53888e7b26ce92a85a8a2eb2359a98fc6a04",
           "reading": {
             "level": 3,
             "value": 0.5764705882352941,
@@ -886,7 +886,7 @@
       "crop": {
         "date": "2025-07-15",
         "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
-        "source_sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+        "source_sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
         "output": "data/frames/dhaka-ndvi-2025.png",
         "size": [
           256,
@@ -995,7 +995,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4123943,
-          "sha256": "2115d84f660d6d523b3b74a9c78c2e8bc3f521f0573a69cf6d35e4ae6e964e7c",
+          "sha256": "06284d978e0b53bb292ba9d20defe9d9ef8d8b8158324f7fabd1c5330ad7d8ee",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -1017,7 +1017,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4073844,
-          "sha256": "8af4aa43fa1500b9de9c41e8f2b0388e3c818adec3c0d3a420d7113612d7f635",
+          "sha256": "f81533f74af2af106deb58fc8f17a560819f23fbce5da5de9b357f3f17c0a606",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -1039,7 +1039,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4101285,
-          "sha256": "41bda9b99f06ef0b438ad714764a46b14b85d9017cb3b13f9b178d57512f64e9",
+          "sha256": "5ff07d0614cd854a7d6b7773357226d4f71c721a4073c64e926b0c3b7cc66912",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -1061,7 +1061,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4110020,
-          "sha256": "0dcfdaa0773661e3742b70997b66aad6349d293ddbafede390cd896fe83c92b6",
+          "sha256": "3f78fc1d72f71e5bcc11551aaf37a3acfc2f056c8bf305d72035d52e4d4abeda",
           "reading": {
             "level": 2,
             "value": 0.4588235294117647,
@@ -1083,7 +1083,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4066728,
-          "sha256": "5f951244e747e3961503d5ac5ddec5832af3712c3eef0fa3e397c409afa9bbb5",
+          "sha256": "1cbd6dec58887981482f7dba6041046a8f9db7774f7038412c130713c8b5ded6",
           "reading": {
             "level": 2,
             "value": 0.4392156862745098,
@@ -1105,7 +1105,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4049844,
-          "sha256": "d284d9bbf70a6b3a161c3d5c1464d56dbcd2b01c7db0f02b08367a6f2c2cbd59",
+          "sha256": "ee26c43c1c515a0490433aa1162d5c665bfdc85813089e5305fc15dccd156a3a",
           "reading": {
             "level": 3,
             "value": 0.5137254901960784,
@@ -1127,7 +1127,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250305.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4100707,
-          "sha256": "a1bf65c19032b1a1341cdcda1d7635331bf6fbbb048e57475947928474820de6",
+          "sha256": "a7aabfad387e03589f3aa82acc8f863e349e8e9eb96ec20b20a8f04a002ad6ab",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -1149,7 +1149,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4194073,
-          "sha256": "7a329b8aebd3c1084eaa64cad4cfce141097488e0e6bdfb9ea11e87318f5e236",
+          "sha256": "28bb7617ee6888eb4c4f4e3c59baaa84fe03e3fa7c51e48ed2ef7b85e93a1416",
           "reading": {
             "level": 3,
             "value": 0.7058823529411765,
@@ -1171,7 +1171,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250325.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4282081,
-          "sha256": "51f697249f6754f87a94114bb0d5670ff1fc4acd9b75cb3dd859f0b0d9f74b62",
+          "sha256": "f4d885e69a4a1579592b294ea2649b01394765b1c3e74e933bbfe62eaef88676",
           "reading": {
             "level": 3,
             "value": 0.6549019607843137,
@@ -1193,7 +1193,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250405.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4372280,
-          "sha256": "b0ab027fdb2478fdfe282bc7f077e696f03ee1b41b04554fea854139598ca340",
+          "sha256": "213afed7594078fc9ff2c0ebfb8b9a757728372e0a0dbea087f1ba28d24ce03f",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -1215,7 +1215,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4466123,
-          "sha256": "cd269f4144e8dfe24c0b0b8563a870972aec013be73100acbbaeec3decc8ac9b",
+          "sha256": "cde16a73dd0756f428f293c024072978ac5b5274ac56891388336e7c5ab5fbd0",
           "reading": {
             "level": 3,
             "value": 0.6549019607843137,
@@ -1237,7 +1237,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250425.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4549037,
-          "sha256": "fbfd945d2eafff5888df9bbd3041ec982036eeb8acf0e7cecb48765fba938c86",
+          "sha256": "814435b8de380485ad463c46a5a13c1501ce8f08fbd30f356cc2e5e4fdcc4714",
           "reading": {
             "level": 3,
             "value": 0.7058823529411765,
@@ -1259,7 +1259,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250505.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4641376,
-          "sha256": "41fdabd7ce41fceb162290ac19215a7d83eab963761ddcf8b3eb9375cffcd09e",
+          "sha256": "59c5e228f031a7846ce3c5ea5402e6d2d2522e61cda6aa3338998b5dee91cb75",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -1281,7 +1281,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4788859,
-          "sha256": "407fb14220133cdb943563ad11e9585e0e32bad911d75735f778221e2823c97b",
+          "sha256": "bf63dc12a4c63c97a73fc28654b2de395052bd837b5eb0c1ac338b278539e525",
           "reading": {
             "level": 3,
             "value": 0.5607843137254902,
@@ -1303,7 +1303,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250525.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4917820,
-          "sha256": "e06dcd36bde8dc69e347a9de959b9cf1279d005c527f623774b775aa66384419",
+          "sha256": "494763ea342f9f5d66cc47e7b8da4808e0f57618c9f29b2533d93dad5123896d",
           "reading": {
             "level": 3,
             "value": 0.5137254901960784,
@@ -1325,7 +1325,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250605.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5010033,
-          "sha256": "c35eccbba4bb67cf0039eee4c958d4a3539074198d0438d98bd12c01dc089c3f",
+          "sha256": "a476451ac42f88c7fa1458b2400e6655b149752c27940bccb1ba7b58068ae6b2",
           "reading": {
             "level": 2,
             "value": 0.4196078431372549,
@@ -1347,7 +1347,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5054922,
-          "sha256": "f00483d29f144d9cf8996764f0afcacac89e2a4ecc61adc88a69b7769c6edd7e",
+          "sha256": "c584dc9662fba158051c52853f620d82f6fa96a701613d7e3f4d617200231c32",
           "reading": {
             "level": 3,
             "value": 0.5411764705882353,
@@ -1369,7 +1369,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250625.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059629,
-          "sha256": "c038e8359f9e8c1ec66780d0886a01d3d6112091466e2baff9b96c2addfe76fb",
+          "sha256": "4dadc10611abfe5d335b191dc905e283187458784c73db0f47799c907d39c6bf",
           "reading": {
             "level": 2,
             "value": 0.4196078431372549,
@@ -1391,7 +1391,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250705.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059428,
-          "sha256": "ebcea807290b146ad0ac07fba2a21aabc75f1a74d590298f1b9660411461c5a5",
+          "sha256": "9b048f63e7cef2174116ca9e0fb9082d6371d52f67eeba37077acafd10cc2143",
           "reading": {
             "level": 2,
             "value": 0.4392156862745098,
@@ -1413,7 +1413,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5031403,
-          "sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+          "sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
           "reading": {
             "level": 2,
             "value": 0.3843137254901961,
@@ -1435,7 +1435,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250725.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5027290,
-          "sha256": "1023056eb5662f7382a421d1ea4e470210d3ef5804f4d01417d4dfec38ae6628",
+          "sha256": "eabd0ef639b36f92a55725ff2b3a89768eac32a12dda2415b0cc282b4fb2e492",
           "reading": {
             "level": 2,
             "value": 0.403921568627451,
@@ -1457,7 +1457,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250805.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5024835,
-          "sha256": "2c897215cd3553baeeaaf8b4ba5d002a8227038b8d56624bbbe39ff25f005906",
+          "sha256": "504a369affed0e354092fdc84ca88539c79e2be81f36bb7776d323e09bb60fc9",
           "reading": {
             "level": 2,
             "value": 0.35294117647058826,
@@ -1479,7 +1479,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5029072,
-          "sha256": "98163ee1e2a342efaf91c668e23edfb849d4d0110068cdf6953f5472da8669c6",
+          "sha256": "e5af428344bcc1ed848b8184be892df825f4e8fe5840435fba079698d3706b6d",
           "reading": {
             "level": 2,
             "value": 0.3058823529411765,
@@ -1501,7 +1501,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250825.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5039116,
-          "sha256": "dc1e85eac1ff897a2ec16b3e751b51a77689a4ca05559ff02886b6c374d22089",
+          "sha256": "5c0de19fea4f02b1e9c39e2abd85dc1547227e46d0496ee62f64ff9889ad56a1",
           "reading": {
             "level": 2,
             "value": 0.3254901960784314,
@@ -1523,7 +1523,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250905.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5049282,
-          "sha256": "b37c7372d97195d745c1d97bbb5752d7539ce7e5742b4053543247d7e69192fe",
+          "sha256": "8d82b972bf9af7a469138decc15a80acc640f3d44f7a2db7fcc15b359d9b71d8",
           "reading": {
             "level": 2,
             "value": 0.43529411764705883,
@@ -1545,7 +1545,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5063845,
-          "sha256": "2af61fda833ffa92cffebe8c3a3cd96eb3f3639677e972f5e0d840a9f625ddac",
+          "sha256": "957bc295b212f974f5429db428c4cc22775e907f184f3a333b99e28881be10b9",
           "reading": {
             "level": 3,
             "value": 0.5686274509803921,
@@ -1567,7 +1567,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250925.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5081770,
-          "sha256": "5289477072181ce04ca6e4fa8bfaa65423718ba8a31f94483996fed7c750e4f2",
+          "sha256": "a177c44bd31fd7a79def3571b7174cc95552b0b1834bf6d19dcc084847b7bc6e",
           "reading": {
             "level": 3,
             "value": 0.5764705882352941,
@@ -1589,7 +1589,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251005.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5089223,
-          "sha256": "bcdc73b36fccb96714942208032e83040c630a515c7fa68a1cad61e5607c811c",
+          "sha256": "7656f62548a765c1bfc607fb1755272693a854b9543dae1e950e81fd66e7f1c5",
           "reading": {
             "level": 3,
             "value": 0.6549019607843137,
@@ -1611,7 +1611,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5009607,
-          "sha256": "c605afaf43bf006dbd09f95754019f48c170808f1f157ae91a6bc849ca3010e5",
+          "sha256": "347a2e0db5a7ec865aa3de629335ba4946f479a7bf488f55c1738c450dd3573f",
           "reading": {
             "level": 3,
             "value": 0.7333333333333333,
@@ -1633,7 +1633,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251025.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4911689,
-          "sha256": "d3f63acf27a62bfce27469917846d731bfc773987534abe1b6937438ce9c3e6a",
+          "sha256": "02f65b6bf46a2d54fdb0fc430a810497f9e17b2203e9feed651b9ffe125659d6",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1655,7 +1655,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4762058,
-          "sha256": "97a7c0d98d85281285776883eb7f2f2c350987024773a86f7858c77705c0dba7",
+          "sha256": "7aa4f1b258128af01aab34ae54bfb42693f0a5d0d399443541840895d9f675e5",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1677,7 +1677,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4548181,
-          "sha256": "9be9843b43a9e9ef60217776adf7cedd7bcf1f17ac1b589d384d87a5139ddd5a",
+          "sha256": "668e7982f2afe7e5dade82ce5bc6acbf3bf96e42fab903fe97891456bc6c00c9",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1699,7 +1699,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4450481,
-          "sha256": "d4705ae559e51093ead8c71b42b09c25dc9c458200ec4a2de33b342386439a16",
+          "sha256": "9bb4f691888f47406ab8f5f69680e2b90a05b3071de70ae22e7956f10132a3cb",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1721,7 +1721,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4320973,
-          "sha256": "a2022356110eea34cb11b95bdb0a3a218643274adba080a8f0a5757d47327f64",
+          "sha256": "2215460a0a3f4c5c486b3c08b8442ab5622015313303ecc4af463ed7ccc67d1b",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1743,7 +1743,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4208484,
-          "sha256": "0a27c8ab61c2063e19865c9006195927ce782ee498627b93eaed7e9e020fcf9e",
+          "sha256": "9dbb89e6b8e81d5492bf2afb6e37f38f2f2feba213c010cd53f1db448459f178",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1765,7 +1765,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4169498,
-          "sha256": "c6a3d6f3acf23f30cee4cf73451a3f51205763fb91825f9b626152edadad8062",
+          "sha256": "90c2a1e4f3c84f166209adaf395d53888e7b26ce92a85a8a2eb2359a98fc6a04",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1787,7 +1787,7 @@
       "crop": {
         "date": "2025-07-15",
         "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
-        "source_sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+        "source_sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
         "output": "data/frames/sylhet-ndvi-2025.png",
         "size": [
           256,
@@ -1896,7 +1896,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4123943,
-          "sha256": "2115d84f660d6d523b3b74a9c78c2e8bc3f521f0573a69cf6d35e4ae6e964e7c",
+          "sha256": "06284d978e0b53bb292ba9d20defe9d9ef8d8b8158324f7fabd1c5330ad7d8ee",
           "reading": {
             "level": 4,
             "value": 0.7647058823529411,
@@ -1918,7 +1918,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4073844,
-          "sha256": "8af4aa43fa1500b9de9c41e8f2b0388e3c818adec3c0d3a420d7113612d7f635",
+          "sha256": "f81533f74af2af106deb58fc8f17a560819f23fbce5da5de9b357f3f17c0a606",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1940,7 +1940,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4101285,
-          "sha256": "41bda9b99f06ef0b438ad714764a46b14b85d9017cb3b13f9b178d57512f64e9",
+          "sha256": "5ff07d0614cd854a7d6b7773357226d4f71c721a4073c64e926b0c3b7cc66912",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1962,7 +1962,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4110020,
-          "sha256": "0dcfdaa0773661e3742b70997b66aad6349d293ddbafede390cd896fe83c92b6",
+          "sha256": "3f78fc1d72f71e5bcc11551aaf37a3acfc2f056c8bf305d72035d52e4d4abeda",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -1984,7 +1984,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4066728,
-          "sha256": "5f951244e747e3961503d5ac5ddec5832af3712c3eef0fa3e397c409afa9bbb5",
+          "sha256": "1cbd6dec58887981482f7dba6041046a8f9db7774f7038412c130713c8b5ded6",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -2006,7 +2006,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4049844,
-          "sha256": "d284d9bbf70a6b3a161c3d5c1464d56dbcd2b01c7db0f02b08367a6f2c2cbd59",
+          "sha256": "ee26c43c1c515a0490433aa1162d5c665bfdc85813089e5305fc15dccd156a3a",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -2028,7 +2028,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250305.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4100707,
-          "sha256": "a1bf65c19032b1a1341cdcda1d7635331bf6fbbb048e57475947928474820de6",
+          "sha256": "a7aabfad387e03589f3aa82acc8f863e349e8e9eb96ec20b20a8f04a002ad6ab",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -2050,7 +2050,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4194073,
-          "sha256": "7a329b8aebd3c1084eaa64cad4cfce141097488e0e6bdfb9ea11e87318f5e236",
+          "sha256": "28bb7617ee6888eb4c4f4e3c59baaa84fe03e3fa7c51e48ed2ef7b85e93a1416",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -2072,7 +2072,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250325.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4282081,
-          "sha256": "51f697249f6754f87a94114bb0d5670ff1fc4acd9b75cb3dd859f0b0d9f74b62",
+          "sha256": "f4d885e69a4a1579592b294ea2649b01394765b1c3e74e933bbfe62eaef88676",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -2094,7 +2094,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250405.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4372280,
-          "sha256": "b0ab027fdb2478fdfe282bc7f077e696f03ee1b41b04554fea854139598ca340",
+          "sha256": "213afed7594078fc9ff2c0ebfb8b9a757728372e0a0dbea087f1ba28d24ce03f",
           "reading": {
             "level": 4,
             "value": 0.8,
@@ -2116,7 +2116,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4466123,
-          "sha256": "cd269f4144e8dfe24c0b0b8563a870972aec013be73100acbbaeec3decc8ac9b",
+          "sha256": "cde16a73dd0756f428f293c024072978ac5b5274ac56891388336e7c5ab5fbd0",
           "reading": {
             "level": 4,
             "value": 0.8,
@@ -2138,7 +2138,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250425.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4549037,
-          "sha256": "fbfd945d2eafff5888df9bbd3041ec982036eeb8acf0e7cecb48765fba938c86",
+          "sha256": "814435b8de380485ad463c46a5a13c1501ce8f08fbd30f356cc2e5e4fdcc4714",
           "reading": {
             "level": 4,
             "value": 0.9627450980392157,
@@ -2160,7 +2160,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250505.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4641376,
-          "sha256": "41fdabd7ce41fceb162290ac19215a7d83eab963761ddcf8b3eb9375cffcd09e",
+          "sha256": "59c5e228f031a7846ce3c5ea5402e6d2d2522e61cda6aa3338998b5dee91cb75",
           "reading": {
             "level": 4,
             "value": 0.8313725490196079,
@@ -2182,7 +2182,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4788859,
-          "sha256": "407fb14220133cdb943563ad11e9585e0e32bad911d75735f778221e2823c97b",
+          "sha256": "bf63dc12a4c63c97a73fc28654b2de395052bd837b5eb0c1ac338b278539e525",
           "reading": {
             "level": 4,
             "value": 1.0,
@@ -2204,7 +2204,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250525.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4917820,
-          "sha256": "e06dcd36bde8dc69e347a9de959b9cf1279d005c527f623774b775aa66384419",
+          "sha256": "494763ea342f9f5d66cc47e7b8da4808e0f57618c9f29b2533d93dad5123896d",
           "reading": {
             "level": 4,
             "value": 0.8,
@@ -2226,7 +2226,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250605.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5010033,
-          "sha256": "c35eccbba4bb67cf0039eee4c958d4a3539074198d0438d98bd12c01dc089c3f",
+          "sha256": "a476451ac42f88c7fa1458b2400e6655b149752c27940bccb1ba7b58068ae6b2",
           "reading": {
             "level": 4,
             "value": 0.7647058823529411,
@@ -2248,7 +2248,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5054922,
-          "sha256": "f00483d29f144d9cf8996764f0afcacac89e2a4ecc61adc88a69b7769c6edd7e",
+          "sha256": "c584dc9662fba158051c52853f620d82f6fa96a701613d7e3f4d617200231c32",
           "reading": {
             "level": 3,
             "value": 0.6352941176470588,
@@ -2270,7 +2270,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250625.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059629,
-          "sha256": "c038e8359f9e8c1ec66780d0886a01d3d6112091466e2baff9b96c2addfe76fb",
+          "sha256": "4dadc10611abfe5d335b191dc905e283187458784c73db0f47799c907d39c6bf",
           "reading": {
             "level": 3,
             "value": 0.6745098039215687,
@@ -2292,7 +2292,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250705.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059428,
-          "sha256": "ebcea807290b146ad0ac07fba2a21aabc75f1a74d590298f1b9660411461c5a5",
+          "sha256": "9b048f63e7cef2174116ca9e0fb9082d6371d52f67eeba37077acafd10cc2143",
           "reading": {
             "level": 3,
             "value": 0.6549019607843137,
@@ -2314,7 +2314,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5031403,
-          "sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+          "sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
           "reading": {
             "level": 3,
             "value": 0.6647058823529413,
@@ -2336,7 +2336,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250725.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5027290,
-          "sha256": "1023056eb5662f7382a421d1ea4e470210d3ef5804f4d01417d4dfec38ae6628",
+          "sha256": "eabd0ef639b36f92a55725ff2b3a89768eac32a12dda2415b0cc282b4fb2e492",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -2358,7 +2358,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250805.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5024835,
-          "sha256": "2c897215cd3553baeeaaf8b4ba5d002a8227038b8d56624bbbe39ff25f005906",
+          "sha256": "504a369affed0e354092fdc84ca88539c79e2be81f36bb7776d323e09bb60fc9",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -2380,7 +2380,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5029072,
-          "sha256": "98163ee1e2a342efaf91c668e23edfb849d4d0110068cdf6953f5472da8669c6",
+          "sha256": "e5af428344bcc1ed848b8184be892df825f4e8fe5840435fba079698d3706b6d",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -2402,7 +2402,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250825.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5039116,
-          "sha256": "dc1e85eac1ff897a2ec16b3e751b51a77689a4ca05559ff02886b6c374d22089",
+          "sha256": "5c0de19fea4f02b1e9c39e2abd85dc1547227e46d0496ee62f64ff9889ad56a1",
           "reading": {
             "level": 3,
             "value": 0.6392156862745098,
@@ -2424,7 +2424,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250905.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5049282,
-          "sha256": "b37c7372d97195d745c1d97bbb5752d7539ce7e5742b4053543247d7e69192fe",
+          "sha256": "8d82b972bf9af7a469138decc15a80acc640f3d44f7a2db7fcc15b359d9b71d8",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -2446,7 +2446,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5063845,
-          "sha256": "2af61fda833ffa92cffebe8c3a3cd96eb3f3639677e972f5e0d840a9f625ddac",
+          "sha256": "957bc295b212f974f5429db428c4cc22775e907f184f3a333b99e28881be10b9",
           "reading": {
             "level": 2,
             "value": 0.4196078431372549,
@@ -2468,7 +2468,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250925.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5081770,
-          "sha256": "5289477072181ce04ca6e4fa8bfaa65423718ba8a31f94483996fed7c750e4f2",
+          "sha256": "a177c44bd31fd7a79def3571b7174cc95552b0b1834bf6d19dcc084847b7bc6e",
           "reading": {
             "level": 2,
             "value": 0.39019607843137255,
@@ -2490,7 +2490,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251005.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5089223,
-          "sha256": "bcdc73b36fccb96714942208032e83040c630a515c7fa68a1cad61e5607c811c",
+          "sha256": "7656f62548a765c1bfc607fb1755272693a854b9543dae1e950e81fd66e7f1c5",
           "reading": {
             "level": 2,
             "value": 0.39215686274509803,
@@ -2512,7 +2512,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5009607,
-          "sha256": "c605afaf43bf006dbd09f95754019f48c170808f1f157ae91a6bc849ca3010e5",
+          "sha256": "347a2e0db5a7ec865aa3de629335ba4946f479a7bf488f55c1738c450dd3573f",
           "reading": {
             "level": 2,
             "value": 0.3607843137254902,
@@ -2534,7 +2534,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251025.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4911689,
-          "sha256": "d3f63acf27a62bfce27469917846d731bfc773987534abe1b6937438ce9c3e6a",
+          "sha256": "02f65b6bf46a2d54fdb0fc430a810497f9e17b2203e9feed651b9ffe125659d6",
           "reading": {
             "level": 2,
             "value": 0.4019607843137255,
@@ -2556,7 +2556,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4762058,
-          "sha256": "97a7c0d98d85281285776883eb7f2f2c350987024773a86f7858c77705c0dba7",
+          "sha256": "7aa4f1b258128af01aab34ae54bfb42693f0a5d0d399443541840895d9f675e5",
           "reading": {
             "level": 2,
             "value": 0.40980392156862744,
@@ -2578,7 +2578,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4548181,
-          "sha256": "9be9843b43a9e9ef60217776adf7cedd7bcf1f17ac1b589d384d87a5139ddd5a",
+          "sha256": "668e7982f2afe7e5dade82ce5bc6acbf3bf96e42fab903fe97891456bc6c00c9",
           "reading": {
             "level": 2,
             "value": 0.41568627450980394,
@@ -2600,7 +2600,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4450481,
-          "sha256": "d4705ae559e51093ead8c71b42b09c25dc9c458200ec4a2de33b342386439a16",
+          "sha256": "9bb4f691888f47406ab8f5f69680e2b90a05b3071de70ae22e7956f10132a3cb",
           "reading": {
             "level": 2,
             "value": 0.3607843137254902,
@@ -2622,7 +2622,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4320973,
-          "sha256": "a2022356110eea34cb11b95bdb0a3a218643274adba080a8f0a5757d47327f64",
+          "sha256": "2215460a0a3f4c5c486b3c08b8442ab5622015313303ecc4af463ed7ccc67d1b",
           "reading": {
             "level": 2,
             "value": 0.44313725490196076,
@@ -2644,7 +2644,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4208484,
-          "sha256": "0a27c8ab61c2063e19865c9006195927ce782ee498627b93eaed7e9e020fcf9e",
+          "sha256": "9dbb89e6b8e81d5492bf2afb6e37f38f2f2feba213c010cd53f1db448459f178",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -2666,7 +2666,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4169498,
-          "sha256": "c6a3d6f3acf23f30cee4cf73451a3f51205763fb91825f9b626152edadad8062",
+          "sha256": "90c2a1e4f3c84f166209adaf395d53888e7b26ce92a85a8a2eb2359a98fc6a04",
           "reading": {
             "level": 4,
             "value": 0.7647058823529411,
@@ -2688,7 +2688,7 @@
       "crop": {
         "date": "2025-07-15",
         "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
-        "source_sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+        "source_sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
         "output": "data/frames/tonle-sap-ndvi-2025.png",
         "size": [
           256,
@@ -2797,7 +2797,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4123943,
-          "sha256": "2115d84f660d6d523b3b74a9c78c2e8bc3f521f0573a69cf6d35e4ae6e964e7c",
+          "sha256": "06284d978e0b53bb292ba9d20defe9d9ef8d8b8158324f7fabd1c5330ad7d8ee",
           "reading": {
             "level": 1,
             "value": 0.15294117647058825,
@@ -2819,7 +2819,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4073844,
-          "sha256": "8af4aa43fa1500b9de9c41e8f2b0388e3c818adec3c0d3a420d7113612d7f635",
+          "sha256": "f81533f74af2af106deb58fc8f17a560819f23fbce5da5de9b357f3f17c0a606",
           "reading": {
             "level": 1,
             "value": 0.16470588235294117,
@@ -2841,7 +2841,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4101285,
-          "sha256": "41bda9b99f06ef0b438ad714764a46b14b85d9017cb3b13f9b178d57512f64e9",
+          "sha256": "5ff07d0614cd854a7d6b7773357226d4f71c721a4073c64e926b0c3b7cc66912",
           "reading": {
             "level": 1,
             "value": 0.22745098039215686,
@@ -2863,7 +2863,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4110020,
-          "sha256": "0dcfdaa0773661e3742b70997b66aad6349d293ddbafede390cd896fe83c92b6",
+          "sha256": "3f78fc1d72f71e5bcc11551aaf37a3acfc2f056c8bf305d72035d52e4d4abeda",
           "reading": {
             "level": 2,
             "value": 0.35294117647058826,
@@ -2885,7 +2885,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4066728,
-          "sha256": "5f951244e747e3961503d5ac5ddec5832af3712c3eef0fa3e397c409afa9bbb5",
+          "sha256": "1cbd6dec58887981482f7dba6041046a8f9db7774f7038412c130713c8b5ded6",
           "reading": {
             "level": 2,
             "value": 0.28627450980392155,
@@ -2907,7 +2907,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4049844,
-          "sha256": "d284d9bbf70a6b3a161c3d5c1464d56dbcd2b01c7db0f02b08367a6f2c2cbd59",
+          "sha256": "ee26c43c1c515a0490433aa1162d5c665bfdc85813089e5305fc15dccd156a3a",
           "reading": {
             "level": 2,
             "value": 0.3058823529411765,
@@ -2929,7 +2929,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250305.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4100707,
-          "sha256": "a1bf65c19032b1a1341cdcda1d7635331bf6fbbb048e57475947928474820de6",
+          "sha256": "a7aabfad387e03589f3aa82acc8f863e349e8e9eb96ec20b20a8f04a002ad6ab",
           "reading": {
             "level": 2,
             "value": 0.3843137254901961,
@@ -2951,7 +2951,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4194073,
-          "sha256": "7a329b8aebd3c1084eaa64cad4cfce141097488e0e6bdfb9ea11e87318f5e236",
+          "sha256": "28bb7617ee6888eb4c4f4e3c59baaa84fe03e3fa7c51e48ed2ef7b85e93a1416",
           "reading": {
             "level": 2,
             "value": 0.3058823529411765,
@@ -2973,7 +2973,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250325.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4282081,
-          "sha256": "51f697249f6754f87a94114bb0d5670ff1fc4acd9b75cb3dd859f0b0d9f74b62",
+          "sha256": "f4d885e69a4a1579592b294ea2649b01394765b1c3e74e933bbfe62eaef88676",
           "reading": {
             "level": 2,
             "value": 0.3254901960784314,
@@ -2995,7 +2995,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250405.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4372280,
-          "sha256": "b0ab027fdb2478fdfe282bc7f077e696f03ee1b41b04554fea854139598ca340",
+          "sha256": "213afed7594078fc9ff2c0ebfb8b9a757728372e0a0dbea087f1ba28d24ce03f",
           "reading": {
             "level": 2,
             "value": 0.3333333333333333,
@@ -3017,7 +3017,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4466123,
-          "sha256": "cd269f4144e8dfe24c0b0b8563a870972aec013be73100acbbaeec3decc8ac9b",
+          "sha256": "cde16a73dd0756f428f293c024072978ac5b5274ac56891388336e7c5ab5fbd0",
           "reading": {
             "level": 2,
             "value": 0.3607843137254902,
@@ -3039,7 +3039,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250425.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4549037,
-          "sha256": "fbfd945d2eafff5888df9bbd3041ec982036eeb8acf0e7cecb48765fba938c86",
+          "sha256": "814435b8de380485ad463c46a5a13c1501ce8f08fbd30f356cc2e5e4fdcc4714",
           "reading": {
             "level": 3,
             "value": 0.5686274509803921,
@@ -3061,7 +3061,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250505.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4641376,
-          "sha256": "41fdabd7ce41fceb162290ac19215a7d83eab963761ddcf8b3eb9375cffcd09e",
+          "sha256": "59c5e228f031a7846ce3c5ea5402e6d2d2522e61cda6aa3338998b5dee91cb75",
           "reading": {
             "level": 3,
             "value": 0.6549019607843137,
@@ -3083,7 +3083,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4788859,
-          "sha256": "407fb14220133cdb943563ad11e9585e0e32bad911d75735f778221e2823c97b",
+          "sha256": "bf63dc12a4c63c97a73fc28654b2de395052bd837b5eb0c1ac338b278539e525",
           "reading": {
             "level": 3,
             "value": 0.7215686274509804,
@@ -3105,7 +3105,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250525.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4917820,
-          "sha256": "e06dcd36bde8dc69e347a9de959b9cf1279d005c527f623774b775aa66384419",
+          "sha256": "494763ea342f9f5d66cc47e7b8da4808e0f57618c9f29b2533d93dad5123896d",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -3127,7 +3127,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250605.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5010033,
-          "sha256": "c35eccbba4bb67cf0039eee4c958d4a3539074198d0438d98bd12c01dc089c3f",
+          "sha256": "a476451ac42f88c7fa1458b2400e6655b149752c27940bccb1ba7b58068ae6b2",
           "reading": {
             "level": 3,
             "value": 0.6549019607843137,
@@ -3149,7 +3149,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5054922,
-          "sha256": "f00483d29f144d9cf8996764f0afcacac89e2a4ecc61adc88a69b7769c6edd7e",
+          "sha256": "c584dc9662fba158051c52853f620d82f6fa96a701613d7e3f4d617200231c32",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -3171,7 +3171,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250625.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059629,
-          "sha256": "c038e8359f9e8c1ec66780d0886a01d3d6112091466e2baff9b96c2addfe76fb",
+          "sha256": "4dadc10611abfe5d335b191dc905e283187458784c73db0f47799c907d39c6bf",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -3193,7 +3193,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250705.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5059428,
-          "sha256": "ebcea807290b146ad0ac07fba2a21aabc75f1a74d590298f1b9660411461c5a5",
+          "sha256": "9b048f63e7cef2174116ca9e0fb9082d6371d52f67eeba37077acafd10cc2143",
           "reading": {
             "level": 3,
             "value": 0.5607843137254902,
@@ -3215,7 +3215,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5031403,
-          "sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+          "sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -3237,7 +3237,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250725.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5027290,
-          "sha256": "1023056eb5662f7382a421d1ea4e470210d3ef5804f4d01417d4dfec38ae6628",
+          "sha256": "eabd0ef639b36f92a55725ff2b3a89768eac32a12dda2415b0cc282b4fb2e492",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -3259,7 +3259,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250805.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5024835,
-          "sha256": "2c897215cd3553baeeaaf8b4ba5d002a8227038b8d56624bbbe39ff25f005906",
+          "sha256": "504a369affed0e354092fdc84ca88539c79e2be81f36bb7776d323e09bb60fc9",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -3281,7 +3281,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5029072,
-          "sha256": "98163ee1e2a342efaf91c668e23edfb849d4d0110068cdf6953f5472da8669c6",
+          "sha256": "e5af428344bcc1ed848b8184be892df825f4e8fe5840435fba079698d3706b6d",
           "reading": {
             "level": 4,
             "value": 0.7647058823529411,
@@ -3303,7 +3303,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250825.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5039116,
-          "sha256": "dc1e85eac1ff897a2ec16b3e751b51a77689a4ca05559ff02886b6c374d22089",
+          "sha256": "5c0de19fea4f02b1e9c39e2abd85dc1547227e46d0496ee62f64ff9889ad56a1",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -3325,7 +3325,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250905.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5049282,
-          "sha256": "b37c7372d97195d745c1d97bbb5752d7539ce7e5742b4053543247d7e69192fe",
+          "sha256": "8d82b972bf9af7a469138decc15a80acc640f3d44f7a2db7fcc15b359d9b71d8",
           "reading": {
             "level": 3,
             "value": 0.7411764705882353,
@@ -3347,7 +3347,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5063845,
-          "sha256": "2af61fda833ffa92cffebe8c3a3cd96eb3f3639677e972f5e0d840a9f625ddac",
+          "sha256": "957bc295b212f974f5429db428c4cc22775e907f184f3a333b99e28881be10b9",
           "reading": {
             "level": 3,
             "value": 0.6078431372549019,
@@ -3369,7 +3369,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250925.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5081770,
-          "sha256": "5289477072181ce04ca6e4fa8bfaa65423718ba8a31f94483996fed7c750e4f2",
+          "sha256": "a177c44bd31fd7a79def3571b7174cc95552b0b1834bf6d19dcc084847b7bc6e",
           "reading": {
             "level": 3,
             "value": 0.5137254901960784,
@@ -3391,7 +3391,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251005.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5089223,
-          "sha256": "bcdc73b36fccb96714942208032e83040c630a515c7fa68a1cad61e5607c811c",
+          "sha256": "7656f62548a765c1bfc607fb1755272693a854b9543dae1e950e81fd66e7f1c5",
           "reading": {
             "level": 3,
             "value": 0.5137254901960784,
@@ -3413,7 +3413,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 5009607,
-          "sha256": "c605afaf43bf006dbd09f95754019f48c170808f1f157ae91a6bc849ca3010e5",
+          "sha256": "347a2e0db5a7ec865aa3de629335ba4946f479a7bf488f55c1738c450dd3573f",
           "reading": {
             "level": 2,
             "value": 0.4392156862745098,
@@ -3435,7 +3435,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251025.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4911689,
-          "sha256": "d3f63acf27a62bfce27469917846d731bfc773987534abe1b6937438ce9c3e6a",
+          "sha256": "02f65b6bf46a2d54fdb0fc430a810497f9e17b2203e9feed651b9ffe125659d6",
           "reading": {
             "level": 2,
             "value": 0.3843137254901961,
@@ -3457,7 +3457,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251105.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4762058,
-          "sha256": "97a7c0d98d85281285776883eb7f2f2c350987024773a86f7858c77705c0dba7",
+          "sha256": "7aa4f1b258128af01aab34ae54bfb42693f0a5d0d399443541840895d9f675e5",
           "reading": {
             "level": 2,
             "value": 0.3254901960784314,
@@ -3479,7 +3479,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4548181,
-          "sha256": "9be9843b43a9e9ef60217776adf7cedd7bcf1f17ac1b589d384d87a5139ddd5a",
+          "sha256": "668e7982f2afe7e5dade82ce5bc6acbf3bf96e42fab903fe97891456bc6c00c9",
           "reading": {
             "level": 2,
             "value": 0.2549019607843137,
@@ -3501,7 +3501,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251125.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4450481,
-          "sha256": "d4705ae559e51093ead8c71b42b09c25dc9c458200ec4a2de33b342386439a16",
+          "sha256": "9bb4f691888f47406ab8f5f69680e2b90a05b3071de70ae22e7956f10132a3cb",
           "reading": {
             "level": 1,
             "value": 0.16470588235294117,
@@ -3523,7 +3523,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251205.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4320973,
-          "sha256": "a2022356110eea34cb11b95bdb0a3a218643274adba080a8f0a5757d47327f64",
+          "sha256": "2215460a0a3f4c5c486b3c08b8442ab5622015313303ecc4af463ed7ccc67d1b",
           "reading": {
             "level": 1,
             "value": 0.1803921568627451,
@@ -3545,7 +3545,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4208484,
-          "sha256": "0a27c8ab61c2063e19865c9006195927ce782ee498627b93eaed7e9e020fcf9e",
+          "sha256": "9dbb89e6b8e81d5492bf2afb6e37f38f2f2feba213c010cd53f1db448459f178",
           "reading": {
             "level": 1,
             "value": 0.10980392156862745,
@@ -3567,7 +3567,7 @@
           "status": "ok",
           "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251225.ndvi_w_snow.oceanblue.annotated.png",
           "bytes": 4169498,
-          "sha256": "c6a3d6f3acf23f30cee4cf73451a3f51205763fb91825f9b626152edadad8062",
+          "sha256": "90c2a1e4f3c84f166209adaf395d53888e7b26ce92a85a8a2eb2359a98fc6a04",
           "reading": {
             "level": 1,
             "value": 0.1803921568627451,
@@ -3589,7 +3589,7 @@
       "crop": {
         "date": "2025-07-15",
         "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
-        "source_sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+        "source_sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
         "output": "data/frames/hue-ndvi-2025.png",
         "size": [
           256,
@@ -3605,6 +3605,2709 @@
           "east": 118.828125,
           "north": 27.773438,
           "south": 5.273438
+        },
+        "note": "A single dated regional image, not a picture of the annual aggregate."
+      }
+    },
+    "amazon": {
+      "quality": {
+        "sampled_pixels": 900,
+        "matched_pixels": 892,
+        "opaque_matched_pixels": 892,
+        "transparent_pixels": 0,
+        "match_pct": 99.11,
+        "median_de": 8.6388,
+        "median_de_note": "Transparent rain pixels count as classified, but have no colour distance. If there are no opaque matched pixels, the required numeric median_de field uses 0; it is not a measured distance."
+      },
+      "months": [
+        {
+          "level": 2,
+          "value": 0.4,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 3,
+          "value": 0.54,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 2,
+          "value": 0.46,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 3,
+          "value": 0.5,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 3,
+          "value": 0.61,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 3,
+          "value": 0.72,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 4,
+          "value": 1.0,
+          "saturated": true,
+          "frames_used": 3
+        },
+        {
+          "level": 4,
+          "value": 1.0,
+          "saturated": true,
+          "frames_used": 3
+        },
+        {
+          "level": 4,
+          "value": 1.0,
+          "saturated": true,
+          "frames_used": 3
+        },
+        {
+          "level": 3,
+          "value": 0.61,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 3,
+          "value": 0.72,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 3,
+          "value": 0.65,
+          "saturated": false,
+          "frames_used": 3
+        }
+      ],
+      "frames": {
+        "2025-01-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250105.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4123943,
+          "sha256": "06284d978e0b53bb292ba9d20defe9d9ef8d8b8158324f7fabd1c5330ad7d8ee",
+          "reading": {
+            "level": 2,
+            "value": 0.403921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.999731073720291,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-01-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4073844,
+          "sha256": "f81533f74af2af106deb58fc8f17a560819f23fbce5da5de9b357f3f17c0a606",
+          "reading": {
+            "level": 2,
+            "value": 0.35294117647058826,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.716470939760177,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-01-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250125.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4101285,
+          "sha256": "5ff07d0614cd854a7d6b7773357226d4f71c721a4073c64e926b0c3b7cc66912",
+          "reading": {
+            "level": 2,
+            "value": 0.43529411764705883,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 10.030145889914342,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250205.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4110020,
+          "sha256": "3f78fc1d72f71e5bcc11551aaf37a3acfc2f056c8bf305d72035d52e4d4abeda",
+          "reading": {
+            "level": 3,
+            "value": 0.5411764705882353,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.004084386806687,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4066728,
+          "sha256": "1cbd6dec58887981482f7dba6041046a8f9db7774f7038412c130713c8b5ded6",
+          "reading": {
+            "level": 3,
+            "value": 0.5607843137254902,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.471455069058846,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250225.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4049844,
+          "sha256": "ee26c43c1c515a0490433aa1162d5c665bfdc85813089e5305fc15dccd156a3a",
+          "reading": {
+            "level": 2,
+            "value": 0.44313725490196076,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 10.031048625096208,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250305.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4100707,
+          "sha256": "a7aabfad387e03589f3aa82acc8f863e349e8e9eb96ec20b20a8f04a002ad6ab",
+          "reading": {
+            "level": 2,
+            "value": 0.43529411764705883,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.84842985209012,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4194073,
+          "sha256": "28bb7617ee6888eb4c4f4e3c59baaa84fe03e3fa7c51e48ed2ef7b85e93a1416",
+          "reading": {
+            "level": 2,
+            "value": 0.4588235294117647,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.927430118420592,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250325.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4282081,
+          "sha256": "f4d885e69a4a1579592b294ea2649b01394765b1c3e74e933bbfe62eaef88676",
+          "reading": {
+            "level": 3,
+            "value": 0.5764705882352941,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.145642289960714,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250405.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4372280,
+          "sha256": "213afed7594078fc9ff2c0ebfb8b9a757728372e0a0dbea087f1ba28d24ce03f",
+          "reading": {
+            "level": 2,
+            "value": 0.4588235294117647,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 10.104302360268889,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4466123,
+          "sha256": "cde16a73dd0756f428f293c024072978ac5b5274ac56891388336e7c5ab5fbd0",
+          "reading": {
+            "level": 3,
+            "value": 0.4980392156862745,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.664961973059562,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250425.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4549037,
+          "sha256": "814435b8de380485ad463c46a5a13c1501ce8f08fbd30f356cc2e5e4fdcc4714",
+          "reading": {
+            "level": 3,
+            "value": 0.5607843137254902,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.899739712035625,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250505.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4641376,
+          "sha256": "59c5e228f031a7846ce3c5ea5402e6d2d2522e61cda6aa3338998b5dee91cb75",
+          "reading": {
+            "level": 3,
+            "value": 0.6078431372549019,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.750425195534395,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4788859,
+          "sha256": "bf63dc12a4c63c97a73fc28654b2de395052bd837b5eb0c1ac338b278539e525",
+          "reading": {
+            "level": 3,
+            "value": 0.6078431372549019,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.629094043503628,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250525.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4917820,
+          "sha256": "494763ea342f9f5d66cc47e7b8da4808e0f57618c9f29b2533d93dad5123896d",
+          "reading": {
+            "level": 3,
+            "value": 0.5686274509803921,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.797062058310205,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250605.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5010033,
+          "sha256": "a476451ac42f88c7fa1458b2400e6655b149752c27940bccb1ba7b58068ae6b2",
+          "reading": {
+            "level": 3,
+            "value": 0.6549019607843137,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.968902860707023,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5054922,
+          "sha256": "c584dc9662fba158051c52853f620d82f6fa96a701613d7e3f4d617200231c32",
+          "reading": {
+            "level": 3,
+            "value": 0.7215686274509804,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.8843652338838375,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250625.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5059629,
+          "sha256": "4dadc10611abfe5d335b191dc905e283187458784c73db0f47799c907d39c6bf",
+          "reading": {
+            "level": 4,
+            "value": 0.7647058823529411,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.641981339226743,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250705.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5059428,
+          "sha256": "9b048f63e7cef2174116ca9e0fb9082d6371d52f67eeba37077acafd10cc2143",
+          "reading": {
+            "level": 4,
+            "value": 0.8,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 7.9867260526786765,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5031403,
+          "sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
+          "reading": {
+            "level": 4,
+            "value": 1.0,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 9.114562110805327,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250725.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5027290,
+          "sha256": "eabd0ef639b36f92a55725ff2b3a89768eac32a12dda2415b0cc282b4fb2e492",
+          "reading": {
+            "level": 4,
+            "value": 1.0,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 7.892912526264006,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250805.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5024835,
+          "sha256": "504a369affed0e354092fdc84ca88539c79e2be81f36bb7776d323e09bb60fc9",
+          "reading": {
+            "level": 4,
+            "value": 1.0,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 23,
+            "invalid_pixels": 2,
+            "transparent_pixels": 0,
+            "match_pct": 92.0,
+            "median_de": 9.679018782084913,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5029072,
+          "sha256": "e5af428344bcc1ed848b8184be892df825f4e8fe5840435fba079698d3706b6d",
+          "reading": {
+            "level": 4,
+            "value": 1.0,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 9.068380951837163,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250825.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5039116,
+          "sha256": "5c0de19fea4f02b1e9c39e2abd85dc1547227e46d0496ee62f64ff9889ad56a1",
+          "reading": {
+            "level": 4,
+            "value": 1.0,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 23,
+            "invalid_pixels": 2,
+            "transparent_pixels": 0,
+            "match_pct": 92.0,
+            "median_de": 9.818426384626056,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250905.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5049282,
+          "sha256": "8d82b972bf9af7a469138decc15a80acc640f3d44f7a2db7fcc15b359d9b71d8",
+          "reading": {
+            "level": 4,
+            "value": 1.0,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.236640501202704,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5063845,
+          "sha256": "957bc295b212f974f5429db428c4cc22775e907f184f3a333b99e28881be10b9",
+          "reading": {
+            "level": 4,
+            "value": 1.0,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.515559273074716,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250925.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5081770,
+          "sha256": "a177c44bd31fd7a79def3571b7174cc95552b0b1834bf6d19dcc084847b7bc6e",
+          "reading": {
+            "level": 4,
+            "value": 0.8,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.694061570774664,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251005.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5089223,
+          "sha256": "7656f62548a765c1bfc607fb1755272693a854b9543dae1e950e81fd66e7f1c5",
+          "reading": {
+            "level": 3,
+            "value": 0.7058823529411765,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.9829694090653005,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5009607,
+          "sha256": "347a2e0db5a7ec865aa3de629335ba4946f479a7bf488f55c1738c450dd3573f",
+          "reading": {
+            "level": 3,
+            "value": 0.6078431372549019,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.125888260016362,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251025.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4911689,
+          "sha256": "02f65b6bf46a2d54fdb0fc430a810497f9e17b2203e9feed651b9ffe125659d6",
+          "reading": {
+            "level": 3,
+            "value": 0.6078431372549019,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.066361787890957,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251105.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4762058,
+          "sha256": "7aa4f1b258128af01aab34ae54bfb42693f0a5d0d399443541840895d9f675e5",
+          "reading": {
+            "level": 3,
+            "value": 0.6078431372549019,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.758458020200987,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4548181,
+          "sha256": "668e7982f2afe7e5dade82ce5bc6acbf3bf96e42fab903fe97891456bc6c00c9",
+          "reading": {
+            "level": 3,
+            "value": 0.7176470588235294,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.296451611342044,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251125.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4450481,
+          "sha256": "9bb4f691888f47406ab8f5f69680e2b90a05b3071de70ae22e7956f10132a3cb",
+          "reading": {
+            "level": 3,
+            "value": 0.7176470588235294,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.751085302091037,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251205.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4320973,
+          "sha256": "2215460a0a3f4c5c486b3c08b8442ab5622015313303ecc4af463ed7ccc67d1b",
+          "reading": {
+            "level": 3,
+            "value": 0.6549019607843137,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.216641227678762,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4208484,
+          "sha256": "9dbb89e6b8e81d5492bf2afb6e37f38f2f2feba213c010cd53f1db448459f178",
+          "reading": {
+            "level": 3,
+            "value": 0.7411764705882353,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.177570926704451,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251225.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4169498,
+          "sha256": "90c2a1e4f3c84f166209adaf395d53888e7b26ce92a85a8a2eb2359a98fc6a04",
+          "reading": {
+            "level": 3,
+            "value": 0.6078431372549019,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.846414922913413,
+            "centre_pixel": [
+              1365,
+              1059
+            ],
+            "west_lon": -180.0
+          }
+        }
+      },
+      "crop": {
+        "date": "2025-07-15",
+        "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+        "source_sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
+        "output": "data/frames/amazon-ndvi-2025.png",
+        "size": [
+          256,
+          256
+        ],
+        "centre_pixel": [
+          1365,
+          1059
+        ],
+        "west_lon": -180.0,
+        "bounds": {
+          "west": -71.279297,
+          "east": -48.779297,
+          "north": 8.173828,
+          "south": -14.326172
+        },
+        "note": "A single dated regional image, not a picture of the annual aggregate."
+      }
+    },
+    "zagora": {
+      "quality": {
+        "sampled_pixels": 900,
+        "matched_pixels": 900,
+        "opaque_matched_pixels": 900,
+        "transparent_pixels": 0,
+        "match_pct": 100.0,
+        "median_de": 6.9656,
+        "median_de_note": "Transparent rain pixels count as classified, but have no colour distance. If there are no opaque matched pixels, the required numeric median_de field uses 0; it is not a measured distance."
+      },
+      "months": [
+        {
+          "level": 2,
+          "value": 0.25,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 2,
+          "value": 0.25,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.21,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.21,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.19,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.18,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.17,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.16,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.16,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.18,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.18,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.18,
+          "saturated": false,
+          "frames_used": 3
+        }
+      ],
+      "frames": {
+        "2025-01-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250105.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4123943,
+          "sha256": "06284d978e0b53bb292ba9d20defe9d9ef8d8b8158324f7fabd1c5330ad7d8ee",
+          "reading": {
+            "level": 2,
+            "value": 0.2549019607843137,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.79586346998266,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-01-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4073844,
+          "sha256": "f81533f74af2af106deb58fc8f17a560819f23fbce5da5de9b357f3f17c0a606",
+          "reading": {
+            "level": 2,
+            "value": 0.2549019607843137,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.929496578252412,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-01-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250125.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4101285,
+          "sha256": "5ff07d0614cd854a7d6b7773357226d4f71c721a4073c64e926b0c3b7cc66912",
+          "reading": {
+            "level": 2,
+            "value": 0.27450980392156865,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.83160899372692,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250205.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4110020,
+          "sha256": "3f78fc1d72f71e5bcc11551aaf37a3acfc2f056c8bf305d72035d52e4d4abeda",
+          "reading": {
+            "level": 2,
+            "value": 0.24705882352941178,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.902102993413235,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4066728,
+          "sha256": "1cbd6dec58887981482f7dba6041046a8f9db7774f7038412c130713c8b5ded6",
+          "reading": {
+            "level": 2,
+            "value": 0.24705882352941178,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.569605111782657,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250225.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4049844,
+          "sha256": "ee26c43c1c515a0490433aa1162d5c665bfdc85813089e5305fc15dccd156a3a",
+          "reading": {
+            "level": 1,
+            "value": 0.23137254901960785,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.503753564442917,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250305.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4100707,
+          "sha256": "a7aabfad387e03589f3aa82acc8f863e349e8e9eb96ec20b20a8f04a002ad6ab",
+          "reading": {
+            "level": 1,
+            "value": 0.22745098039215686,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 9.21120727881203,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4194073,
+          "sha256": "28bb7617ee6888eb4c4f4e3c59baaa84fe03e3fa7c51e48ed2ef7b85e93a1416",
+          "reading": {
+            "level": 1,
+            "value": 0.21176470588235294,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.619205280367183,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250325.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4282081,
+          "sha256": "f4d885e69a4a1579592b294ea2649b01394765b1c3e74e933bbfe62eaef88676",
+          "reading": {
+            "level": 1,
+            "value": 0.21176470588235294,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.497835835293316,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250405.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4372280,
+          "sha256": "213afed7594078fc9ff2c0ebfb8b9a757728372e0a0dbea087f1ba28d24ce03f",
+          "reading": {
+            "level": 1,
+            "value": 0.21176470588235294,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.410270180493475,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4466123,
+          "sha256": "cde16a73dd0756f428f293c024072978ac5b5274ac56891388336e7c5ab5fbd0",
+          "reading": {
+            "level": 1,
+            "value": 0.21176470588235294,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.901053653753259,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250425.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4549037,
+          "sha256": "814435b8de380485ad463c46a5a13c1501ce8f08fbd30f356cc2e5e4fdcc4714",
+          "reading": {
+            "level": 1,
+            "value": 0.2,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.242453004237442,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250505.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4641376,
+          "sha256": "59c5e228f031a7846ce3c5ea5402e6d2d2522e61cda6aa3338998b5dee91cb75",
+          "reading": {
+            "level": 1,
+            "value": 0.18823529411764706,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.627811027474385,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4788859,
+          "sha256": "bf63dc12a4c63c97a73fc28654b2de395052bd837b5eb0c1ac338b278539e525",
+          "reading": {
+            "level": 1,
+            "value": 0.18823529411764706,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.8219290392740985,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250525.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4917820,
+          "sha256": "494763ea342f9f5d66cc47e7b8da4808e0f57618c9f29b2533d93dad5123896d",
+          "reading": {
+            "level": 1,
+            "value": 0.18823529411764706,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.314395631544825,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250605.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5010033,
+          "sha256": "a476451ac42f88c7fa1458b2400e6655b149752c27940bccb1ba7b58068ae6b2",
+          "reading": {
+            "level": 1,
+            "value": 0.18823529411764706,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.314395631544825,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5054922,
+          "sha256": "c584dc9662fba158051c52853f620d82f6fa96a701613d7e3f4d617200231c32",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.109752281713155,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250625.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5059629,
+          "sha256": "4dadc10611abfe5d335b191dc905e283187458784c73db0f47799c907d39c6bf",
+          "reading": {
+            "level": 1,
+            "value": 0.17254901960784313,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.9161256726908045,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250705.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5059428,
+          "sha256": "9b048f63e7cef2174116ca9e0fb9082d6371d52f67eeba37077acafd10cc2143",
+          "reading": {
+            "level": 1,
+            "value": 0.17254901960784313,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.338653781912953,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5031403,
+          "sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
+          "reading": {
+            "level": 1,
+            "value": 0.17254901960784313,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.3298814581007905,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250725.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5027290,
+          "sha256": "eabd0ef639b36f92a55725ff2b3a89768eac32a12dda2415b0cc282b4fb2e492",
+          "reading": {
+            "level": 1,
+            "value": 0.17254901960784313,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.425003808466813,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250805.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5024835,
+          "sha256": "504a369affed0e354092fdc84ca88539c79e2be81f36bb7776d323e09bb60fc9",
+          "reading": {
+            "level": 1,
+            "value": 0.16470588235294117,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.343179097988831,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5029072,
+          "sha256": "e5af428344bcc1ed848b8184be892df825f4e8fe5840435fba079698d3706b6d",
+          "reading": {
+            "level": 1,
+            "value": 0.16470588235294117,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.343179097988831,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250825.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5039116,
+          "sha256": "5c0de19fea4f02b1e9c39e2abd85dc1547227e46d0496ee62f64ff9889ad56a1",
+          "reading": {
+            "level": 1,
+            "value": 0.17254901960784313,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.257931981844229,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250905.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5049282,
+          "sha256": "8d82b972bf9af7a469138decc15a80acc640f3d44f7a2db7fcc15b359d9b71d8",
+          "reading": {
+            "level": 1,
+            "value": 0.17254901960784313,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.733672975850463,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5063845,
+          "sha256": "957bc295b212f974f5429db428c4cc22775e907f184f3a333b99e28881be10b9",
+          "reading": {
+            "level": 1,
+            "value": 0.16470588235294117,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.147287492092404,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250925.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5081770,
+          "sha256": "a177c44bd31fd7a79def3571b7174cc95552b0b1834bf6d19dcc084847b7bc6e",
+          "reading": {
+            "level": 1,
+            "value": 0.16470588235294117,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.799432781465074,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251005.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5089223,
+          "sha256": "7656f62548a765c1bfc607fb1755272693a854b9543dae1e950e81fd66e7f1c5",
+          "reading": {
+            "level": 1,
+            "value": 0.16470588235294117,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.799432781465074,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5009607,
+          "sha256": "347a2e0db5a7ec865aa3de629335ba4946f479a7bf488f55c1738c450dd3573f",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.1526227466881505,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251025.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4911689,
+          "sha256": "02f65b6bf46a2d54fdb0fc430a810497f9e17b2203e9feed651b9ffe125659d6",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.345431779756368,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251105.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4762058,
+          "sha256": "7aa4f1b258128af01aab34ae54bfb42693f0a5d0d399443541840895d9f675e5",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.940337703490474,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4548181,
+          "sha256": "668e7982f2afe7e5dade82ce5bc6acbf3bf96e42fab903fe97891456bc6c00c9",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.955715584016738,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251125.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4450481,
+          "sha256": "9bb4f691888f47406ab8f5f69680e2b90a05b3071de70ae22e7956f10132a3cb",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.8712757076714155,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251205.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4320973,
+          "sha256": "2215460a0a3f4c5c486b3c08b8442ab5622015313303ecc4af463ed7ccc67d1b",
+          "reading": {
+            "level": 1,
+            "value": 0.18823529411764706,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.56028496145298,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4208484,
+          "sha256": "9dbb89e6b8e81d5492bf2afb6e37f38f2f2feba213c010cd53f1db448459f178",
+          "reading": {
+            "level": 1,
+            "value": 0.17254901960784313,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 5.688552804161353,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251225.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4169498,
+          "sha256": "90c2a1e4f3c84f166209adaf395d53888e7b26ce92a85a8a2eb2359a98fc6a04",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 6.39678964521757,
+            "centre_pixel": [
+              1981,
+              678
+            ],
+            "west_lon": -180.0
+          }
+        }
+      },
+      "crop": {
+        "date": "2025-07-15",
+        "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+        "source_sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
+        "output": "data/frames/zagora-ndvi-2025.png",
+        "size": [
+          256,
+          256
+        ],
+        "centre_pixel": [
+          1981,
+          678
+        ],
+        "west_lon": -180.0,
+        "bounds": {
+          "west": -17.138672,
+          "east": 5.361328,
+          "north": 41.660156,
+          "south": 19.160156
+        },
+        "note": "A single dated regional image, not a picture of the annual aggregate."
+      }
+    },
+    "leh": {
+      "quality": {
+        "sampled_pixels": 900,
+        "matched_pixels": 712,
+        "opaque_matched_pixels": 712,
+        "transparent_pixels": 0,
+        "match_pct": 79.11,
+        "median_de": 5.3373,
+        "median_de_note": "Transparent rain pixels count as classified, but have no colour distance. If there are no opaque matched pixels, the required numeric median_de field uses 0; it is not a measured distance."
+      },
+      "months": [
+        {
+          "level": 1,
+          "value": 0.05,
+          "saturated": false,
+          "frames_used": 2
+        },
+        {
+          "level": 1,
+          "value": 0.06,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": null,
+          "value": null,
+          "saturated": false,
+          "frames_used": 1
+        },
+        {
+          "level": 1,
+          "value": 0.06,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.08,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.11,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.21,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.2,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.16,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.17,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.14,
+          "saturated": false,
+          "frames_used": 3
+        },
+        {
+          "level": 1,
+          "value": 0.13,
+          "saturated": false,
+          "frames_used": 3
+        }
+      ],
+      "frames": {
+        "2025-01-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250105.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4123943,
+          "sha256": "06284d978e0b53bb292ba9d20defe9d9ef8d8b8158324f7fabd1c5330ad7d8ee",
+          "reading": {
+            "level": null,
+            "value": null,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 12,
+            "invalid_pixels": 13,
+            "transparent_pixels": 0,
+            "match_pct": 48.0,
+            "median_de": 4.114441378839791,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-01-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4073844,
+          "sha256": "f81533f74af2af106deb58fc8f17a560819f23fbce5da5de9b357f3f17c0a606",
+          "reading": {
+            "level": 1,
+            "value": 0.08627450980392157,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 15,
+            "invalid_pixels": 10,
+            "transparent_pixels": 0,
+            "match_pct": 60.0,
+            "median_de": 2.8108618598037167,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-01-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250125.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4101285,
+          "sha256": "5ff07d0614cd854a7d6b7773357226d4f71c721a4073c64e926b0c3b7cc66912",
+          "reading": {
+            "level": 1,
+            "value": 0.011764705882352941,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 16,
+            "invalid_pixels": 9,
+            "transparent_pixels": 0,
+            "match_pct": 64.0,
+            "median_de": 3.747413754739246,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250205.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4110020,
+          "sha256": "3f78fc1d72f71e5bcc11551aaf37a3acfc2f056c8bf305d72035d52e4d4abeda",
+          "reading": {
+            "level": 1,
+            "value": 0.09411764705882353,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 15,
+            "invalid_pixels": 10,
+            "transparent_pixels": 0,
+            "match_pct": 60.0,
+            "median_de": 2.9392560608127782,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4066728,
+          "sha256": "1cbd6dec58887981482f7dba6041046a8f9db7774f7038412c130713c8b5ded6",
+          "reading": {
+            "level": 1,
+            "value": 0.058823529411764705,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 13,
+            "invalid_pixels": 12,
+            "transparent_pixels": 0,
+            "match_pct": 52.0,
+            "median_de": 1.8318976307643364,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-02-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250225.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4049844,
+          "sha256": "ee26c43c1c515a0490433aa1162d5c665bfdc85813089e5305fc15dccd156a3a",
+          "reading": {
+            "level": 1,
+            "value": 0.043137254901960784,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 17,
+            "invalid_pixels": 8,
+            "transparent_pixels": 0,
+            "match_pct": 68.0,
+            "median_de": 3.2293008461651405,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250305.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4100707,
+          "sha256": "a7aabfad387e03589f3aa82acc8f863e349e8e9eb96ec20b20a8f04a002ad6ab",
+          "reading": {
+            "level": 1,
+            "value": 0.011764705882352941,
+            "saturated": true,
+            "sampled_pixels": 25,
+            "matched_pixels": 15,
+            "invalid_pixels": 10,
+            "transparent_pixels": 0,
+            "match_pct": 60.0,
+            "median_de": 2.296485423215028,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4194073,
+          "sha256": "28bb7617ee6888eb4c4f4e3c59baaa84fe03e3fa7c51e48ed2ef7b85e93a1416",
+          "reading": {
+            "level": null,
+            "value": null,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 0,
+            "invalid_pixels": 25,
+            "transparent_pixels": 0,
+            "match_pct": 0.0,
+            "median_de": null,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-03-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250325.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4282081,
+          "sha256": "f4d885e69a4a1579592b294ea2649b01394765b1c3e74e933bbfe62eaef88676",
+          "reading": {
+            "level": null,
+            "value": null,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 12,
+            "invalid_pixels": 13,
+            "transparent_pixels": 0,
+            "match_pct": 48.0,
+            "median_de": 2.15451751551102,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250405.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4372280,
+          "sha256": "213afed7594078fc9ff2c0ebfb8b9a757728372e0a0dbea087f1ba28d24ce03f",
+          "reading": {
+            "level": 1,
+            "value": 0.058823529411764705,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 13,
+            "invalid_pixels": 12,
+            "transparent_pixels": 0,
+            "match_pct": 52.0,
+            "median_de": 2.6503028621759084,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4466123,
+          "sha256": "cde16a73dd0756f428f293c024072978ac5b5274ac56891388336e7c5ab5fbd0",
+          "reading": {
+            "level": 1,
+            "value": 0.07058823529411765,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 15,
+            "invalid_pixels": 10,
+            "transparent_pixels": 0,
+            "match_pct": 60.0,
+            "median_de": 2.840957839410696,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-04-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250425.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4549037,
+          "sha256": "814435b8de380485ad463c46a5a13c1501ce8f08fbd30f356cc2e5e4fdcc4714",
+          "reading": {
+            "level": 1,
+            "value": 0.03333333333333333,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 18,
+            "invalid_pixels": 7,
+            "transparent_pixels": 0,
+            "match_pct": 72.0,
+            "median_de": 3.8853123992495817,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250505.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4641376,
+          "sha256": "59c5e228f031a7846ce3c5ea5402e6d2d2522e61cda6aa3338998b5dee91cb75",
+          "reading": {
+            "level": 1,
+            "value": 0.049019607843137254,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 16,
+            "invalid_pixels": 9,
+            "transparent_pixels": 0,
+            "match_pct": 64.0,
+            "median_de": 3.3375615028200256,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4788859,
+          "sha256": "bf63dc12a4c63c97a73fc28654b2de395052bd837b5eb0c1ac338b278539e525",
+          "reading": {
+            "level": 1,
+            "value": 0.08235294117647059,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 19,
+            "invalid_pixels": 6,
+            "transparent_pixels": 0,
+            "match_pct": 76.0,
+            "median_de": 3.452127756782363,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-05-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250525.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4917820,
+          "sha256": "494763ea342f9f5d66cc47e7b8da4808e0f57618c9f29b2533d93dad5123896d",
+          "reading": {
+            "level": 1,
+            "value": 0.08627450980392157,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 21,
+            "invalid_pixels": 4,
+            "transparent_pixels": 0,
+            "match_pct": 84.0,
+            "median_de": 4.7565566859127415,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250605.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5010033,
+          "sha256": "a476451ac42f88c7fa1458b2400e6655b149752c27940bccb1ba7b58068ae6b2",
+          "reading": {
+            "level": 1,
+            "value": 0.08235294117647059,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 23,
+            "invalid_pixels": 2,
+            "transparent_pixels": 0,
+            "match_pct": 92.0,
+            "median_de": 3.3254517802856998,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5054922,
+          "sha256": "c584dc9662fba158051c52853f620d82f6fa96a701613d7e3f4d617200231c32",
+          "reading": {
+            "level": 1,
+            "value": 0.10980392156862745,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 23,
+            "invalid_pixels": 2,
+            "transparent_pixels": 0,
+            "match_pct": 92.0,
+            "median_de": 3.806598560641894,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-06-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250625.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5059629,
+          "sha256": "4dadc10611abfe5d335b191dc905e283187458784c73db0f47799c907d39c6bf",
+          "reading": {
+            "level": 1,
+            "value": 0.1411764705882353,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 5.262434236134618,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250705.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5059428,
+          "sha256": "9b048f63e7cef2174116ca9e0fb9082d6371d52f67eeba37077acafd10cc2143",
+          "reading": {
+            "level": 1,
+            "value": 0.1843137254901961,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 6.017724727107682,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5031403,
+          "sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
+          "reading": {
+            "level": 1,
+            "value": 0.20588235294117646,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 7.752328401489665,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-07-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250725.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5027290,
+          "sha256": "eabd0ef639b36f92a55725ff2b3a89768eac32a12dda2415b0cc282b4fb2e492",
+          "reading": {
+            "level": 1,
+            "value": 0.21176470588235294,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.196906362051593,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250805.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5024835,
+          "sha256": "504a369affed0e354092fdc84ca88539c79e2be81f36bb7776d323e09bb60fc9",
+          "reading": {
+            "level": 1,
+            "value": 0.18823529411764706,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 7.984154123499904,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5029072,
+          "sha256": "e5af428344bcc1ed848b8184be892df825f4e8fe5840435fba079698d3706b6d",
+          "reading": {
+            "level": 1,
+            "value": 0.2,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.260068031695061,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-08-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250825.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5039116,
+          "sha256": "5c0de19fea4f02b1e9c39e2abd85dc1547227e46d0496ee62f64ff9889ad56a1",
+          "reading": {
+            "level": 1,
+            "value": 0.2,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 25,
+            "invalid_pixels": 0,
+            "transparent_pixels": 0,
+            "match_pct": 100.0,
+            "median_de": 8.471380960187554,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250905.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5049282,
+          "sha256": "8d82b972bf9af7a469138decc15a80acc640f3d44f7a2db7fcc15b359d9b71d8",
+          "reading": {
+            "level": 1,
+            "value": 0.16078431372549018,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 7.0573292546190185,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5063845,
+          "sha256": "957bc295b212f974f5429db428c4cc22775e907f184f3a333b99e28881be10b9",
+          "reading": {
+            "level": 1,
+            "value": 0.1588235294117647,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 6.73863113938132,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-09-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250925.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5081770,
+          "sha256": "a177c44bd31fd7a79def3571b7174cc95552b0b1834bf6d19dcc084847b7bc6e",
+          "reading": {
+            "level": 1,
+            "value": 0.16862745098039217,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 5.725487841834494,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251005.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5089223,
+          "sha256": "7656f62548a765c1bfc607fb1755272693a854b9543dae1e950e81fd66e7f1c5",
+          "reading": {
+            "level": 1,
+            "value": 0.16862745098039217,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 6.471220078466047,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 5009607,
+          "sha256": "347a2e0db5a7ec865aa3de629335ba4946f479a7bf488f55c1738c450dd3573f",
+          "reading": {
+            "level": 1,
+            "value": 0.1803921568627451,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 21,
+            "invalid_pixels": 4,
+            "transparent_pixels": 0,
+            "match_pct": 84.0,
+            "median_de": 7.8268509632197985,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-10-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251025.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4911689,
+          "sha256": "02f65b6bf46a2d54fdb0fc430a810497f9e17b2203e9feed651b9ffe125659d6",
+          "reading": {
+            "level": 1,
+            "value": 0.1411764705882353,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 23,
+            "invalid_pixels": 2,
+            "transparent_pixels": 0,
+            "match_pct": 92.0,
+            "median_de": 6.245005899653018,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251105.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4762058,
+          "sha256": "7aa4f1b258128af01aab34ae54bfb42693f0a5d0d399443541840895d9f675e5",
+          "reading": {
+            "level": 1,
+            "value": 0.13333333333333333,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 20,
+            "invalid_pixels": 5,
+            "transparent_pixels": 0,
+            "match_pct": 80.0,
+            "median_de": 5.417090801383781,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4548181,
+          "sha256": "668e7982f2afe7e5dade82ce5bc6acbf3bf96e42fab903fe97891456bc6c00c9",
+          "reading": {
+            "level": 1,
+            "value": 0.1568627450980392,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 21,
+            "invalid_pixels": 4,
+            "transparent_pixels": 0,
+            "match_pct": 84.0,
+            "median_de": 5.670359241409353,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-11-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251125.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4450481,
+          "sha256": "9bb4f691888f47406ab8f5f69680e2b90a05b3071de70ae22e7956f10132a3cb",
+          "reading": {
+            "level": 1,
+            "value": 0.1411764705882353,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 4.65336778918511,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-05": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251205.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4320973,
+          "sha256": "2215460a0a3f4c5c486b3c08b8442ab5622015313303ecc4af463ed7ccc67d1b",
+          "reading": {
+            "level": 1,
+            "value": 0.13725490196078433,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 4.051368328026891,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-15": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4208484,
+          "sha256": "9dbb89e6b8e81d5492bf2afb6e37f38f2f2feba213c010cd53f1db448459f178",
+          "reading": {
+            "level": 1,
+            "value": 0.13333333333333333,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 4.454617363027348,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        },
+        "2025-12-25": {
+          "status": "ok",
+          "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251225.ndvi_w_snow.oceanblue.annotated.png",
+          "bytes": 4169498,
+          "sha256": "90c2a1e4f3c84f166209adaf395d53888e7b26ce92a85a8a2eb2359a98fc6a04",
+          "reading": {
+            "level": 1,
+            "value": 0.10588235294117647,
+            "saturated": false,
+            "sampled_pixels": 25,
+            "matched_pixels": 24,
+            "invalid_pixels": 1,
+            "transparent_pixels": 0,
+            "match_pct": 96.0,
+            "median_de": 4.063725727507348,
+            "centre_pixel": [
+              2930,
+              635
+            ],
+            "west_lon": -180.0
+          }
+        }
+      },
+      "crop": {
+        "date": "2025-07-15",
+        "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+        "source_sha256": "4cdfbd4dad10981e1960150cab33e086b54006b097496330325f82652b74c6f9",
+        "output": "data/frames/leh-ndvi-2025.png",
+        "size": [
+          256,
+          256
+        ],
+        "centre_pixel": [
+          2930,
+          635
+        ],
+        "west_lon": -180.0,
+        "bounds": {
+          "west": 66.269531,
+          "east": 88.769531,
+          "north": 45.439453,
+          "south": 22.939453
         },
         "note": "A single dated regional image, not a picture of the annual aggregate."
       }
