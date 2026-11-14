@@ -21,12 +21,12 @@ test('euclid: exactly n hits, gaps differ by at most 1, n = 0 and n = 16', () =>
   }
 });
 
-test('rain: n = 8 + 2k data notes for every k, 3 bed notes, steps and bars in range', () => {
+test('rain: n = 8 + 2k data notes for every k, 4 bed notes (seventh chord), steps and bars in range', () => {
   for (let k = -4; k <= 4; k++) {
     const notes = schedule(rain(k), SEA, 'music');
     const b = bar(notes, 3);
     assert.equal(b.filter((n) => n.kind === 'data').length, 8 + 2 * k, `k=${k}`);
-    assert.equal(b.filter((n) => n.kind === 'bed').length, 3);
+    assert.equal(b.filter((n) => n.kind === 'bed').length, 4);
     for (const n of notes) {
       assert.ok(n.bar >= 0 && n.bar <= 11 && n.step >= 0 && n.step <= 15);
       assert.ok(Number.isInteger(n.pitch) && n.pitch >= 21 && n.pitch <= 108, `pitch ${n.pitch}`);

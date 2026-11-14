@@ -2,8 +2,11 @@
 // Music engine: plays the note schedule from schedule.js with the Web Audio API (no library, every sound synthesized).
 // Exports exactly the interface in notes/05_music.md, the same as audio-stub.js:
 //   start, load, play, pause, stop, seek, setMode, duck, setVolume, onTick.
-// One month = one bar = 2 s (120 BPM, 16 steps). A place changes only the instrument:
-//   sea = plucked string (Karplus-Strong), south-asia = breathy flute, other = bright synth.
+// One month = one bar = 2 s (120 BPM, 16 steps), played as lofi: a half-time beat (feels like 60 BPM), swing,
+// electric-piano seventh chords, a soft bass, and the whole mix through a warm low-pass, light tape wobble and saturation.
+// The beat and bass are accompaniment only (they carry no data and stop in missing months and science mode).
+// A place changes only the lead instrument: sea = plucked string (Karplus-Strong), south-asia = breathy flute,
+// other = electric piano.
 // Notes are scheduled about one bar ahead on the audio clock, so timing holds even when timers are throttled.
 // Under the music runs a bed of real field recordings (CC0, see CREDITS.md) that follows the data month by month:
 // rain discs blend wind → light rain → heavy rain with the level; greenness discs blend wind → birds with q;
@@ -16,6 +19,8 @@ import { ambienceMix, LAYERS } from './ambience.js';
 const BAR = 2;
 const STEP = BAR / 16;
 const AHEAD = BAR + 0.25;   // how far ahead of the audio clock notes are scheduled
+const SWING = 0.55 * STEP;  // the off-beat sixteenths of the half-time feel land late
+const swing = (step) => (step % 4 === 2 ? SWING : 0);
 
 let ac = null;
 let master;    // volume
@@ -24,7 +29,7 @@ let music;     // cut by a "skip" in a break month
 let fxOut;     // skip warning sound (not cut by the skip itself)
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
-const AMB_LEVEL = 0.55;
+const AMB_LEVEL = 0.22;   // field recordings sit well under the music
 const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9 };   // evens out the recordings
 const ambBufs = {};
 let ambLoading = null;
@@ -62,12 +67,23 @@ function ensure() {
   fxOut = gainNode(1);
   const verb = ac.createConvolver();
   verb.buffer = impulse(1.8);
-  const wet = gainNode(0.22);
-  music.connect(duckGain);
+  const wet = gainNode(0.18);
+  // lofi colour: warm low-pass -> slow tape wobble (modulated delay) -> soft saturation
+  const warm = ac.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200; warm.Q.value = 0.5;
+  const wobble = ac.createDelay(0.05); wobble.delayTime.value = 0.012;
+  const lfo = ac.createOscillator(); lfo.frequency.value = 0.55;
+  const lfoDepth = gainNode(0.0016);
+  lfo.connect(lfoDepth); lfoDepth.connect(wobble.delayTime); lfo.start();
+  const sat = ac.createWaveShaper();
+  const curve = new Float32Array(1024);
+  for (let i = 0; i < 1024; i++) { const x = (i / 1023) * 2 - 1; curve[i] = Math.tanh(1.6 * x) / Math.tanh(1.6); }
+  sat.curve = curve;
+  music.connect(warm); warm.connect(wobble); wobble.connect(sat); sat.connect(duckGain);
   music.connect(verb); verb.connect(wet); wet.connect(duckGain);
   fxOut.connect(duckGain);
   ambCut = gainNode(AMB_LEVEL);
-  ambCut.connect(duckGain);
+  const ambSoft = ac.createBiquadFilter(); ambSoft.type = 'lowpass'; ambSoft.frequency.value = 4500;
+  ambCut.connect(ambSoft); ambSoft.connect(duckGain);
   duckGain.connect(master); master.connect(comp); comp.connect(ac.destination);
   session = newSession();
   return ac;
@@ -179,36 +195,89 @@ function flute(midi, t, vel, out, dur = 0.3) {
   track(o1, t); track(o2, t); track(lfo, t); track(breath, t);
 }
 
-function synth(midi, t, vel, out, dur = 0.35) {
+/** Electric piano (two-operator FM, Rhodes-like): bright attack that mellows as it rings. */
+function keys(midi, t, vel, out, dur = 1.6) {
   const f = midiHz(midi);
-  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 2;
-  lp.frequency.setValueAtTime(3200, t);
-  lp.frequency.exponentialRampToValueAtTime(800, t + dur);
+  const car = ac.createOscillator(); car.type = 'sine'; car.frequency.value = f;
+  const mod = ac.createOscillator(); mod.type = 'sine'; mod.frequency.value = f;
+  const idx = ac.createGain();
+  idx.gain.setValueAtTime(f * 1.4 * vel, t);
+  idx.gain.exponentialRampToValueAtTime(f * 0.12 + 1, t + 0.5);
+  mod.connect(idx); idx.connect(car.frequency);
   const g = ac.createGain();
-  env(g, t, 0.07 * vel, 0.006, t + dur + 0.05);
-  const end = t + dur + 0.08;
-  for (const det of [-7, 7]) {
-    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = det;
-    o.connect(lp); o.start(t); o.stop(end); track(o, t);
-  }
-  lp.connect(g); g.connect(out);
+  env(g, t, 0.1 * vel, 0.005, t + dur);
+  car.connect(g); g.connect(out);
+  for (const o of [car, mod]) { o.start(t); o.stop(t + dur + 0.05); track(o, t); }
 }
 
-/** Sustained soft chord tone for the whole bar. Higher layers are a little brighter. */
-function pad(midi, t, vel, out, layer = 0) {
-  const f = midiHz(midi);
-  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900 + 500 * layer;
+// ---------- half-time beat and bass (accompaniment, no data) ----------
+
+function kick(t, vel, out) {
+  const o = ac.createOscillator(); o.type = 'sine';
+  o.frequency.setValueAtTime(120, t);
+  o.frequency.exponentialRampToValueAtTime(46, t + 0.12);
   const g = ac.createGain();
-  const end = t + BAR - 0.02;
+  env(g, t, 0.5 * vel, 0.004, t + 0.38);
+  o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.4); track(o, t);
+}
+
+function snare(t, vel, out) {
+  const n = ac.createBufferSource(); n.buffer = noise();
+  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1700; bp.Q.value = 0.7;
+  const g = ac.createGain();
+  env(g, t, 0.16 * vel, 0.003, t + 0.2);
+  n.connect(bp); bp.connect(g); g.connect(out);
+  const o = ac.createOscillator(); o.type = 'triangle'; o.frequency.value = 185;
+  const go = ac.createGain();
+  env(go, t, 0.07 * vel, 0.002, t + 0.09);
+  o.connect(go); go.connect(out);
+  n.start(t, Math.random()); n.stop(t + 0.22); o.start(t); o.stop(t + 0.1);
+  track(n, t); track(o, t);
+}
+
+function hat(t, vel, out) {
+  const n = ac.createBufferSource(); n.buffer = noise();
+  const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 7000;
+  const g = ac.createGain();
+  env(g, t, 0.045 * vel, 0.001, t + 0.045);
+  n.connect(hp); hp.connect(g); g.connect(out);
+  n.start(t, Math.random()); n.stop(t + 0.05); track(n, t);
+}
+
+function bass(midi, t, vel, out, dur) {
+  const f = midiHz(midi);
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420;
+  const g = ac.createGain();
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(0.06 * vel * (midi < 48 ? 1.4 : 1), t + 0.35);
-  g.gain.setValueAtTime(0.06 * vel * (midi < 48 ? 1.4 : 1), end - 0.4);
-  g.gain.exponentialRampToValueAtTime(0.0001, end);
-  const o1 = ac.createOscillator(); o1.type = 'triangle'; o1.frequency.value = f;
-  const o2 = ac.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 2;
-  const g2 = gainNode(0.3);
+  g.gain.exponentialRampToValueAtTime(0.2 * vel, t + 0.015);
+  g.gain.setValueAtTime(0.2 * vel, t + dur * 0.6);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  const o1 = ac.createOscillator(); o1.type = 'sine'; o1.frequency.value = f;
+  const o2 = ac.createOscillator(); o2.type = 'triangle'; o2.frequency.value = f;
+  const g2 = gainNode(0.35);
   o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(out);
-  for (const o of [o1, o2]) { o.start(t); o.stop(end + 0.02); track(o, t); }
+  for (const o of [o1, o2]) { o.start(t); o.stop(t + dur + 0.02); track(o, t); }
+}
+
+/** Beat, bass and a light chord re-strike for one bar; silent in missing months and science mode. */
+function groove(b, t0, from, out) {
+  const notes = notesByBar[b];
+  if (mode !== 'music' || !notes.some((n) => n.kind === 'data' || n.kind === 'bed')) return;
+  const at = (step) => t0 + step * STEP + swing(step);
+  const hit = (step, fn) => { const t = at(step); if (t >= from) fn(t); };
+  hit(0, (t) => kick(t, 1, out));
+  hit(3, (t) => kick(t, 0.35, out));
+  hit(10, (t) => kick(t, 0.75, out));
+  hit(8, (t) => snare(t, 1, out));
+  for (let s = 0; s < 16; s += 2) hit(s, (t) => hat(t, s % 4 === 0 ? 0.6 : 1, out));
+  const chord = notes.filter((n) => n.kind === 'bed' && n.step === 0);
+  if (!chord.length) return;
+  const root = Math.min(...chord.map((n) => n.pitch));
+  const low = 36 + ((((root - 36) % 12) + 12) % 12);   // bass in the octave above C2
+  hit(0, (t) => bass(low, t, 1, out, 1.1));
+  hit(10, (t) => bass(low, t, 0.7, out, 0.5));
+  hit(14, (t) => bass(low + 7, t, 0.5, out, 0.25));
+  hit(10, (t) => chord.forEach((n) => keys(n.pitch, t, 0.35, out, 0.7)));   // soft re-strike on the and-of-3
 }
 
 function beep(midi, t, vel, out) {
@@ -249,16 +318,16 @@ function skip(t) {
   track(o, t); track(n, t);
 }
 
-const LEAD = { sea: pluck, 'south-asia': flute, other: synth };
+const LEAD = { sea: pluck, 'south-asia': flute, other: (m, t, v, out) => keys(m, t, v * 1.3, out, 0.8) };
 
 function sound(n, t, out) {
   if (n.kind === 'crackle') { if (n.step === 0) crackle(t, out); pop(t, n.velocity, out); return; }
   if (n.kind === 'skip') { skip(t); return; }
   if (mode === 'science') { beep(n.pitch, t, n.velocity, out); return; }
-  const lead = LEAD[place?.region] ?? synth;
-  if (n.kind === 'data') { lead(n.pitch, t, n.velocity * 0.6, out); return; }   // kept under the field recordings
-  // bed: sustained chord tones at step 0; the greenness pulse (voice 0, 4 a bar) in the place's instrument
-  if (n.step === 0) pad(n.pitch, t, n.velocity, out, n.voice);
+  const lead = LEAD[place?.region] ?? LEAD.other;
+  if (n.kind === 'data') { lead(n.pitch, t, n.velocity * 0.75, out); return; }
+  // bed: electric-piano chord at step 0; the greenness pulse (voice 0, 4 a bar) in the place's instrument
+  if (n.step === 0) keys(n.pitch, t, n.velocity * (n.pitch < 48 ? 1.3 : 1), out, 1.8);
   if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out);
 }
 
@@ -318,10 +387,11 @@ function scheduleBar(b, t0, from = -Infinity) {
   if (from < 0) setAmbience(b, t0);
   const out = session;
   for (const n of notesByBar[b]) {
-    const t = t0 + n.step * STEP;
+    const t = t0 + n.step * STEP + (n.kind === 'skip' ? 0 : swing(n.step));
     if (t < from) continue;
     sound(n, t, out);
   }
+  groove(b, t0, from, out);
   if (from === -Infinity) {
     barStarts.push([b, t0]);
     if (barStarts.length > 4) barStarts.shift();

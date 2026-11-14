@@ -12,5 +12,5 @@
 
 ## Music
 - `docs/js/schedule.js` turns a disc into notes, one bar (2 s) per month: a rain level k gives 8 + 2k raindrop notes spread evenly (drier = fewer and lower, wetter = more and higher); a greenness level q gives q layers in the chord bed; a missing month is crackle only; a break in the source makes the record skip.
-- `docs/js/audio.js` plays those notes with the Web Audio API (plucked string for Southeast Asia, flute for South Asia, bright synth elsewhere). Under it runs a bed of real CC0 field recordings that follows the same month: wind, light rain, heavy rain, birds (`docs/js/ambience.js`).
+- `docs/js/audio.js` plays those notes with the Web Audio API in a lofi style: electric-piano seventh chords (ii-V-I-vi loop), a half-time beat with swing and a soft bass (accompaniment only, silent in missing months), a warm low-pass and a light tape wobble. The lead changes with the place: plucked string for Southeast Asia, flute for South Asia, electric piano elsewhere. Quietly underneath runs a bed of real CC0 field recordings that follows the same month: wind, light rain, heavy rain, birds (`docs/js/ambience.js`).
 - Round trip: reading the levels back from the notes gives 72 of 72 months exactly on the sample data; in science mode NDVI comes back within 0.020 (limit 1/48). `node --test` checks this.

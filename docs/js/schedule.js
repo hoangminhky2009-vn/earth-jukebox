@@ -12,7 +12,8 @@ export const SCALES = {
   other: [0, 2, 4, 6, 7, 9, 11],        // lydian
 };
 
-const CHORD_ROOTS = [0, 3, 4, 1];      // scale degree each bar's chord starts on (4-bar loop, 3 times a year)
+// Scale degree each bar's chord starts on: a 4-bar loop (3 times a year) in the lofi habit of ii - V - I - vi.
+const CHORD_ROOTS = [1, 4, 0, 5];
 // Raindrop melody: scale-degree offsets from the chord root, walked in order. It only shapes the tune;
 // the data lives in how many drops fall (n) and in which octave.
 const DROP_WALK = [0, 2, 4, 7, 4, 2, 4, 9, 7, 4, 2, 4, 7, 9, 11, 7];
@@ -66,9 +67,9 @@ export function schedule(disc, place, mode = 'music') {
       const saturated = Math.abs(level) === 4;
       euclid(n).forEach((s, i) => {
         const vel = saturated ? 1 : (s % 4 === 0 ? 0.75 : 0.6);
-        add(bar, s, 0, degree(scale, chord + DROP_WALK[i], ROOT + octave), vel, 'data');
+        add(bar, s, 0, degree(scale, (chord + DROP_WALK[i]) % (2 * scale.length), ROOT + octave), vel, 'data');   // within 2 octaves
       });
-      [0, 2, 4].forEach((d, v) => add(bar, 0, v, degree(scale, chord + d, ROOT - 12), 0.5, 'bed'));
+      [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, degree(scale, chord + d, ROOT - 12), 0.5, 'bed'));   // seventh chord
     } else {
       // Greenness: q layers in the chord bed, each its own voice and octave, plus a steady pulse of 4 on voice 0.
       for (let v = 0; v < level; v++) add(bar, 0, v, degree(scale, chord + 2 * v, ROOT - 24 + 12 * v), 0.5, 'bed');
