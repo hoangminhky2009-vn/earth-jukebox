@@ -54,7 +54,9 @@ The music uses `levels` (integers); Science mode and the detail card use `values
 ## Validation rules (the pipeline runs them before writing; the web app runs them on load)
 - Monthly arrays have exactly 12 items. `place` exists. `id`s are unique.
 - Rain: `levels[i]` ∈ −4…4 and `values[i]` equals that level's `value`. NDVI: `values[i]` ∈ [0, 1] and `levels[i]` matches its quarter.
-- A `null` month: `levels` and `values` both `null`, `saturated` false. Any `null` month ⇔ `condition` ≠ `mint`.
+- A `null` month: `levels` and `values` both `null`, `saturated` false.
+- `condition`: `breaks` not empty ⇒ `skips`; else any `null` month ⇒ `scratched`; else `mint`.
+- `saturated` matches the Disc table rule (rain |level| = 4; NDVI value ≤ 0.02 or ≥ 0.98).
 - An A/B pair with the same `place` + `dataset` has different `year`s.
 - Invalid ⇒ the pipeline stops; the web app shows a text error (no blank page).
 
