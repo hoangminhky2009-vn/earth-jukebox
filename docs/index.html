@@ -5,25 +5,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>App</title>
+  <title>Earth Jukebox</title>
   <link rel="stylesheet" href="css/base.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="bar">
-    <h1 class="title">App</h1>
+    <h1 class="title">Earth Jukebox</h1>
     <div class="settings" role="group" aria-label="Display settings">
       <label><input type="checkbox" id="opt-contrast"> High contrast</label>
       <label><input type="checkbox" id="opt-motion"> Reduce motion</label>
+      <label><input type="checkbox" id="opt-preview"> Preview on focus</label>
+      <label>Volume <input type="range" id="opt-volume" min="0" max="1" step="0.05"></label>
     </div>
   </header>
 
   <main id="main" tabindex="-1">
+    <p id="load-error" role="alert" hidden></p>
     <section class="panel" aria-labelledby="start-h">
       <h2 id="start-h">Start</h2>
       <button type="button" id="start-btn" class="btn">Press to start</button>
     </section>
+
+    <nav class="panel" id="places" aria-labelledby="places-h">
+      <h2 id="places-h">Places</h2>
+    </nav>
   </main>
 
   <!-- Screen-reader announcements: call announce("text") from app.js -->
