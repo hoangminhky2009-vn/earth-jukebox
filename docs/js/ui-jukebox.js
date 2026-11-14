@@ -98,11 +98,27 @@ export function detailRows(disc, datasets) {
       ['Frames used', framesText(disc)],
       ['Limits', LIMITS[disc.dataset] ?? 'See the unit above.'],
       ['Description', disc.description ?? ''],
-    ],
+    ].filter(([, value]) => String(value).trim() !== ''),   // no empty rows (descriptions are still being written)
     svsUrl: ds.svs_url ?? disc.source?.svs_url ?? null,
     svsId: ds.svs ?? disc.source?.svs ?? null,
     creditsUrl: CREDITS_URL,
   };
+}
+
+/**
+ * The NASA frame shown in Details: every frame is the 15 July image of the disc's year, cut to 256 x 256 px around
+ * the place (pipeline/run.py). Alt text = the reviewed description when there is one, else a plain factual one.
+ */
+export function frameFigure(disc, place) {
+  if (!disc?.frame) return null;
+  const where = String(place?.name ?? disc.place).split(',')[0].replace(/\s+and surroundings$/i, '');
+  const date = `15 July ${disc.year}`;
+  const what = disc.dataset === 'rain'
+    ? 'rain compared with normal (brown = drier, green and turquoise = wetter)'
+    : 'vegetation greenness (pale = bare, deep green = dense plants)';
+  const alt = String(disc.description ?? '').trim() || `NASA map of ${what}, ${date}, centred on ${where}.`;
+  const caption = `NASA Scientific Visualization Studio frame, ${date}, centred on ${where}: ${what}. One day's picture for this disc; the music uses all 12 months.`;
+  return { src: disc.frame, alt, caption };
 }
 
 // ---------------------------------------------------------------- DOM part (browser only)
@@ -219,6 +235,13 @@ export function initDialogs(store, opts) {
       ? 'Bars up (▲) are wetter than normal, bars down (▼) are drier, in mm/day. Each number is the middle of its band. A grey checker cell means no data.'
       : 'Four blocks = the greenness scale split in quarters (low to high). A grey checker cell means no data.'));
     body.append(renderMonthTable(bars, disc));
+    const fig = frameFigure(disc, store.getPlace(disc.place));
+    if (fig) {
+      body.append(el('h3', {}, 'The NASA image'));
+      body.append(el('figure', { className: 'frame-fig' },
+        el('img', { src: fig.src, alt: fig.alt, width: 256, height: 256, loading: 'lazy' }),
+        el('figcaption', {}, fig.caption)));
+    }
     body.append(el('h3', {}, 'About this disc'));
     const dl = el('dl', { className: 'details-list' });
     for (const [term, value] of d.rows) dl.append(el('dt', {}, term), el('dd', {}, value));

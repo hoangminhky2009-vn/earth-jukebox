@@ -51,9 +51,11 @@ export function shelfSlots(discs, places) {
 }
 
 /** Tray geometry in internal pixels: 6 big slots (3×2), or 12 compact ones (4×3) when there are more pairs. */
+/** Tray grid for n place+dataset pairs. Exactly n slots (no empty "???" fillers); discs as big as the grid allows. */
 export function slotLayout(n) {
-  if (n <= 6) return { count: 6, cols: 3, rows: 2, w: 70, h: 64, stepX: 72, stepY: 66, discR: 22, cy: 27, compact: false };
-  return { count: 12, cols: 4, rows: 3, w: 54, h: 42, stepX: 55, stepY: 43, discR: 15, cy: 17, compact: true };
+  if (n <= 6) return { count: n, cols: 3, rows: 2, w: 70, h: 64, stepX: 72, stepY: 66, discR: 22, cy: 27, compact: false };
+  if (n <= 8) return { count: n, cols: 4, rows: 2, w: 54, h: 64, stepX: 55, stepY: 66, discR: 22, cy: 27, compact: false };
+  return { count: Math.min(n, 12), cols: 4, rows: 3, w: 54, h: 42, stepX: 55, stepY: 43, discR: 15, cy: 17, compact: true };
 }
 
 // ------------------------------------------------------------------ A: month bars
@@ -142,7 +144,7 @@ function lcdLevel(disc, level, ds) {
 
 /** The green LCD line while a month plays, e.g. "DHAKA // MAR ▼ 2-5mm drier". */
 export function lcdText(disc, placeName, month, datasets) {
-  const name = String(placeName).split(',')[0].toUpperCase();
+  const name = String(placeName).split(',')[0].replace(/\s+and surroundings$/i, '').toUpperCase();
   const level = disc.levels[month];
   if (isMissing(level)) return `${name} // ${MONTH_ABBR[month]} ░ NO DATA`;
   const glyph = disc.dataset === 'rain' ? (level < 0 ? '▼ ' : level > 0 ? '▲ ' : '• ') : '';

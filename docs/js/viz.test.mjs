@@ -21,16 +21,19 @@ test('shelf: one slot per place + dataset pair, side A shown, west to east', () 
   assert.deepEqual(slots.map((s) => s.discId), ['sahara-rain-2025', 'sahara-ndvi-2024', 'ladakh-rain-2025', 'dhaka-rain-2025', 'mekong-ndvi-2024']);
   const dhaka = slots.find((s) => s.placeId === 'dhaka');
   assert.deepEqual(dhaka.discIds, ['dhaka-rain-2025', 'dhaka-rain-2026']);
-  assert.equal(slots.length, 5); // the 6th slot is the locked "???" one
+  assert.equal(slots.length, 5);
 });
 
-test('tray layout: 6 slots up to 6 pairs, 12 compact slots beyond', () => {
-  assert.equal(slotLayout(4).count, 6);
+test('tray layout: exactly one slot per pair (no empty fillers), big discs up to 8 pairs, compact beyond', () => {
+  assert.equal(slotLayout(4).count, 4);
   assert.equal(slotLayout(6).cols, 3);
-  const c = slotLayout(7);
-  assert.equal(c.count, 12);
-  assert.ok(c.compact && c.cols * c.rows === 12);
-  assert.ok(24 + 3 * c.stepX + c.w <= 244 && 118 + 2 * c.stepY + c.h <= 248); // last slot stays inside the tray
+  const m = slotLayout(8);
+  assert.ok(m.count === 8 && m.cols === 4 && m.rows === 2 && m.discR === 22 && !m.compact);
+  assert.ok(24 + 3 * m.stepX + m.w <= 244 && 118 + m.stepY + m.h <= 248);   // last slot stays inside the tray
+  assert.ok(m.discR * 2 <= m.w - 4);                                           // disc fits its slot
+  const c = slotLayout(10);
+  assert.ok(c.compact && c.count === 10 && c.cols * c.rows === 12);
+  assert.ok(24 + 3 * c.stepX + c.w <= 244 && 118 + 2 * c.stepY + c.h <= 248);
 });
 
 test('month bars: rain goes up or down from zero, with mm/day labels', () => {

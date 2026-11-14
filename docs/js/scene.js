@@ -126,7 +126,8 @@ const COND_TEXT = { mint: 'mint', scratched: 'scratched, some months missing', s
 const COND_COLOR = { mint: '#7fd8a8', scratched: '#e8834a', skips: '#f6d27a' };
 const DS_SHORT = { rain: 'RAIN', ndvi: 'GREEN' };
 const DS_LONG = { rain: 'Rain', ndvi: 'Greenness' };
-const shortName = (place) => String(place?.name ?? '').split(',')[0];
+// Tray / LCD label: the place without its country and without "and surroundings" ("Sylhet and surroundings, Bangladesh" -> "Sylhet").
+const shortName = (place) => String(place?.name ?? '').split(',')[0].replace(/\s+and surroundings$/i, '');
 
 /**
  * Build the scene inside #screen and wire it to the store.

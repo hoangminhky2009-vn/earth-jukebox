@@ -57,6 +57,9 @@
 .details-list dt { color: var(--accent); }
 .details-list dd { margin: 0; overflow-wrap: anywhere; }
 .details-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 14px 0 0; }
+.frame-fig { margin: 8px 0 0; display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+.frame-fig img { width: 256px; max-width: 100%; height: auto; image-rendering: pixelated; border: 2px solid var(--wood-line, #3a2a20); }
+.frame-fig figcaption { flex: 1 1 200px; color: var(--text-body); }
 
 .roll-box { margin-top: 6px; }
 .roll-box[hidden] { display: none; }

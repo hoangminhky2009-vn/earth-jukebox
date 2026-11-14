@@ -51,3 +51,14 @@ test('frames short form', () => {
   assert.equal(framesShort({ frames_used: [3, 5] }), '3-5/month · 8 total');
   assert.equal(framesShort({ frames_used: [] }), 'not recorded');
 });
+
+test('frame figure: 15 July image of the year, place name without "and surroundings", factual alt when no description', async () => {
+  const { frameFigure } = await import('./ui-jukebox.js');
+  const f = frameFigure({ id: 'hue-rain-2025', place: 'hue', dataset: 'rain', year: 2025, frame: 'data/frames/hue-rain-2025.png', description: '' },
+    { name: 'Hue and surroundings, Vietnam' });
+  assert.equal(f.src, 'data/frames/hue-rain-2025.png');
+  assert.match(f.caption, /15 July 2025, centred on Hue:/);
+  assert.match(f.alt, /^NASA map of rain compared with normal/);
+  assert.equal(frameFigure({ frame: 'x.png', dataset: 'ndvi', year: 2024, description: 'Reviewed text.' }, { name: 'X' }).alt, 'Reviewed text.');
+  assert.equal(frameFigure({ dataset: 'rain' }, null), null);
+});
