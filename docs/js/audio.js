@@ -43,7 +43,7 @@ let ambCut;    // field-recording bed (also cut by a skip)
 // field recordings 0.22. Only the melody and a little of the chord go to the reverb; the beat stays dry.
 const BED_LEVEL = 0.5;
 const BEAT_LEVEL = 0.65;
-const AMB_LEVEL = 0.16;
+const AMB_LEVEL = 0.22;
 let verbIn;    // reverb input (sends only)
 let ambDuck;   // field recordings dip a little under each data note
 const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 0.6, 'snow-howl': 0.3 };   // evens out the recordings
@@ -673,6 +673,11 @@ function scheduleBar(b, t0, from = -Infinity) {
   music.gain.setValueAtTime(1, Math.max(t0, ac.currentTime));
   ambCut.gain.setValueAtTime(AMB_LEVEL, Math.max(t0, ac.currentTime));
   if (from < 0) setAmbience(b, t0);
+  // third cue for rain: the whole mix is muffled in a dry month and opens up in a wet one
+  const lv = disc?.levels?.[b];
+  if (from < 0 && mode === 'music' && disc?.dataset === 'rain' && lv !== null && lv !== undefined) {
+    warm.frequency.setTargetAtTime(2200 * 2 ** (lv * 0.3), Math.max(t0, ac.currentTime), 0.12);
+  }
   const out = session;
   for (const n of notesByBar[b]) {
     const t = t0 + n.step * STEP + (n.kind === 'skip' ? 0 : swing(n.step));

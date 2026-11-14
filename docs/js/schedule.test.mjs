@@ -108,3 +108,11 @@ test('style: desert and snow biomes get their own scale; a run of normal months 
   const bars = [0, 1, 2, 3].map((b) => bar(schedule(flat, { region: 'other' }), b).filter((n) => n.kind === 'data').map((n) => `${n.step}:${n.pitch}`).join(' '));
   assert.equal(new Set(bars).size, 4, 'four normal-ish months in a row all differ');
 });
+
+test('rain: the three registers do not overlap (dry < normal < wet, every note)', () => {
+  for (const pl of [{ region: 'sea' }, { region: 'south-asia' }, { region: 'other' }, { region: 'other', biome: 'desert' }, { region: 'south-asia', biome: 'snow' }]) {
+    const range = (k) => { const p = bar(schedule(rain(k), pl), 3).filter((n) => n.kind === 'data').map((n) => n.pitch); return [Math.min(...p), Math.max(...p)]; };
+    for (const d of [-3, -1]) for (const z of [0]) assert.ok(range(d)[1] < range(z)[0], `dry ${d} vs normal ${JSON.stringify(pl)}`);
+    for (const w of [1, 4]) assert.ok(range(0)[1] < range(w)[0], `normal vs wet ${w} ${JSON.stringify(pl)}`);
+  }
+});

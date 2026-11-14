@@ -32,7 +32,7 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
     mix['rain-light'] = Math.min(1, wet * 2) * (1 - Math.max(0, wet - 0.5));
     mix['rain-heavy'] = Math.max(0, (wet - 0.5) * 2);  // wetter months: heavy rain comes in
     // the further from normal, the louder the bed: a normal month is a quiet backdrop, an extreme month swells
-    const swell = 0.5 + 0.5 * (Math.abs(level) / 4);
+    const swell = 0.3 + 0.7 * (Math.abs(level) / 4);   // normal = faint, extreme = full
     for (const k of LAYERS) mix[k] *= swell;
     if (/snow|ice|polar|glacier/i.test(biome)) {
       // snow does not patter: open-hill wind always, stronger the further from normal; a snowier month adds the howl

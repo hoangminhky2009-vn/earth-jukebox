@@ -9,7 +9,7 @@ const total = (m) => LAYERS.reduce((a, k) => a + m[k], 0);
 
 const Z = { 'snow-wind': 0, 'snow-howl': 0 };
 test('rain: normal = light rain only; wetter adds heavy rain; drier fades into wind; -4 = wind only', () => {
-  assert.deepEqual(ambienceMix(rain(0), 0), { wind: 0, 'rain-light': 0.5, 'rain-heavy': 0, birds: 0, ...Z });
+  assert.deepEqual(ambienceMix(rain(0), 0), { wind: 0, 'rain-light': 0.3, 'rain-heavy': 0, birds: 0, ...Z });
   assert.deepEqual(ambienceMix(rain(-4), 0), { wind: 0.8, 'rain-light': 0, 'rain-heavy': 0, birds: 0, ...Z });
   assert.equal(ambienceMix(rain(4), 0)['rain-heavy'], 1);
   for (let k = -3; k <= 4; k++) assert.ok(ambienceMix(rain(k), 0)['rain-heavy'] >= ambienceMix(rain(k - 1), 0)['rain-heavy']);
@@ -20,7 +20,7 @@ test('rain: normal = light rain only; wetter adds heavy rain; drier fades into w
 test('rain: the bed is quietest in a normal month and swells as the month gets further from normal', () => {
   const sum = (k) => total(ambienceMix(rain(k), 0));
   for (let k = 1; k <= 4; k++) { assert.ok(sum(k) > sum(k - 1), `wet ${k}`); assert.ok(sum(-k) > sum(-k + 1), `dry ${k}`); }
-  assert.ok(sum(0) < sum(4) / 2);
+  assert.ok(sum(0) < sum(4) / 3);
 });
 
 test('greenness: more birds and less wind as q goes up; no rain', () => {
