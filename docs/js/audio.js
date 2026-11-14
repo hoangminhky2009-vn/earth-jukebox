@@ -27,6 +27,7 @@ let master;    // volume
 let duckGain;  // screen-reader ducking
 let music;     // cut by a "skip" in a break month
 let fxOut;     // skip warning sound (not cut by the skip itself)
+let leadSend;  // melody only: dark echo and a longer room
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
 const AMB_LEVEL = 0.22;   // field recordings sit well under the music
@@ -80,6 +81,17 @@ function ensure() {
   sat.curve = curve;
   music.connect(warm); warm.connect(wobble); wobble.connect(sat); sat.connect(duckGain);
   music.connect(verb); verb.connect(wet); wet.connect(duckGain);
+  // melody echo (3 steps, dark, fading) and a longer room, so single notes bloom instead of beeping
+  leadSend = gainNode(1);
+  const echo = ac.createDelay(1); echo.delayTime.value = 3 * STEP;
+  const echoLP = ac.createBiquadFilter(); echoLP.type = 'lowpass'; echoLP.frequency.value = 1800;
+  const fb = gainNode(0.3);
+  const echoOut = gainNode(0.25);
+  leadSend.connect(echo); echo.connect(echoLP); echoLP.connect(fb); fb.connect(echo);
+  echoLP.connect(echoOut); echoOut.connect(music);
+  const room = ac.createConvolver(); room.buffer = impulse(2.6);
+  const roomOut = gainNode(0.28);
+  leadSend.connect(room); room.connect(roomOut); roomOut.connect(duckGain);
   fxOut.connect(duckGain);
   ambCut = gainNode(AMB_LEVEL);
   const ambSoft = ac.createBiquadFilter(); ambSoft.type = 'lowpass'; ambSoft.frequency.value = 4500;
@@ -111,7 +123,7 @@ const ksCache = new Map();
 function pluckBuffer(midi) {
   if (ksCache.has(midi)) return ksCache.get(midi);
   const sr = ac.sampleRate;
-  const len = Math.round(sr * 1.4);
+  const len = Math.round(sr * 2);
   const b = ac.createBuffer(1, len, sr);
   const d = b.getChannelData(0);
   // Fractional delay so the string is in tune: total loop delay = P + 0.5 (averaging filter) = one period.
@@ -119,8 +131,8 @@ function pluckBuffer(midi) {
   const N = Math.floor(P);
   const fr = P - N;
   let lp = 0;
-  for (let i = 0; i < N + 2; i++) { lp += ((Math.random() * 2 - 1) - lp) * 0.5; d[i] = lp * 0.6; }
-  const decay = midi > 84 ? 0.992 : 0.996;
+  for (let i = 0; i < N + 2; i++) { lp += ((Math.random() * 2 - 1) - lp) * 0.22; d[i] = lp * 1.2; }   // dark, soft pluck (nylon)
+  const decay = midi > 84 ? 0.994 : 0.997;
   for (let i = N + 2; i < len; i++) {
     const x0 = (1 - fr) * d[i - N] + fr * d[i - N - 1];
     const x1 = (1 - fr) * d[i - N - 1] + fr * d[i - N - 2];
@@ -167,54 +179,91 @@ function env(g, t, peak, attack, end) {
   g.gain.exponentialRampToValueAtTime(0.0001, end);
 }
 
-function pluck(midi, t, vel, out) {
+/** Small deterministic "random" in 0..1 per note, so a disc sounds the same every time it plays. */
+function hash01(a, b, c) {
+  const h = Math.sin(a * 12.9898 + b * 78.233 + c * 37.719) * 43758.5453;
+  return h - Math.floor(h);
+}
+
+/** Output stage for one melody note: slight stereo spread, plus a send to the melody echo and room. */
+function leadOut(out, pan, send = 1) {
+  const g = gainNode(1);
+  const p = ac.createStereoPanner(); p.pan.value = pan;
+  g.connect(p); p.connect(out);
+  if (send > 0) { const s = gainNode(send); g.connect(s); s.connect(leadSend); }
+  return g;
+}
+
+/** Nylon-string pluck (Karplus-Strong with a dark, soft excitation). */
+function pluck(midi, t, vel, out, dur, pan = 0) {
   const src = ac.createBufferSource();
   src.buffer = pluckBuffer(midi);
-  const g = gainNode(0.3 * vel);
-  g.gain.setValueAtTime(0.3 * vel, t);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 1.3);
-  src.connect(g); g.connect(out);
-  src.start(t); src.stop(t + 1.35);
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400; lp.Q.value = 0.4;
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.42 * vel, t);
+  g.gain.setValueAtTime(0.42 * vel, t + Math.max(0.15, dur));
+  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.15, dur) + 0.9);
+  src.connect(lp); lp.connect(g); g.connect(leadOut(out, pan));
+  src.start(t); src.stop(t + Math.max(0.15, dur) + 0.95);
   track(src, t);
 }
 
-function flute(midi, t, vel, out, dur = 0.3) {
+let fluteWave = null;
+/** Bansuri-like flute: soft harmonics (not a bare sine), breath through the whole note, a small scoop into pitch,
+ *  delayed vibrato, and notes that last until the next one (legato). */
+function flute(midi, t, vel, out, dur, pan = 0) {
+  if (!fluteWave) fluteWave = ac.createPeriodicWave(new Float32Array([0, 0, 0, 0, 0, 0]), new Float32Array([0, 1, 0.32, 0.11, 0.05, 0.02]));
   const f = midiHz(midi);
-  const o1 = ac.createOscillator(); o1.type = 'sine'; o1.frequency.value = f;
-  const o2 = ac.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 2;
-  const g2 = gainNode(0.18);
-  const lfo = ac.createOscillator(); lfo.frequency.value = 5.5;
+  const len = Math.max(0.2, dur);
+  const o = ac.createOscillator(); o.setPeriodicWave(fluteWave);
+  o.frequency.setValueAtTime(f * 0.982, t);                        // scoop up ~30 cents, like a player
+  o.frequency.exponentialRampToValueAtTime(f, t + 0.06);
+  const lfo = ac.createOscillator(); lfo.frequency.value = 5.2;
   const depth = gainNode(0);
-  depth.gain.setValueAtTime(0, t);
-  depth.gain.linearRampToValueAtTime(f * 0.007, t + 0.18);
-  lfo.connect(depth); depth.connect(o1.frequency);
+  depth.gain.setValueAtTime(0, t + 0.12);
+  depth.gain.linearRampToValueAtTime(f * 0.006, t + 0.4);
+  lfo.connect(depth); depth.connect(o.frequency);
+  const tone = ac.createBiquadFilter(); tone.type = 'lowpass'; tone.frequency.value = Math.min(6000, f * 3);
   const g = ac.createGain();
-  env(g, t, 0.14 * vel, 0.04, t + dur + 0.12);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.13 * vel, t + 0.07);
+  g.gain.setValueAtTime(0.13 * vel, t + len);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.22);
   const breath = ac.createBufferSource(); breath.buffer = noise();
-  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = Math.min(9000, f * 2); bp.Q.value = 1.2;
+  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = Math.min(8000, f * 1.5); bp.Q.value = 1.6;
   const gb = ac.createGain();
-  env(gb, t, 0.03 * vel, 0.02, t + 0.12);
-  o2.connect(g2); g2.connect(g); o1.connect(g); g.connect(out);
-  breath.connect(bp); bp.connect(gb); gb.connect(out);
-  const end = t + dur + 0.15;
-  for (const s of [o1, o2, lfo]) { s.start(t); s.stop(end); }
-  breath.start(t, Math.random()); breath.stop(t + 0.14);
-  track(o1, t); track(o2, t); track(lfo, t); track(breath, t);
+  gb.gain.setValueAtTime(0.0001, t);
+  gb.gain.linearRampToValueAtTime(0.06 * vel, t + 0.03);           // breathy onset ("chiff")
+  gb.gain.linearRampToValueAtTime(0.025 * vel, t + 0.12);          // then air under the tone
+  gb.gain.setValueAtTime(0.025 * vel, t + len);
+  gb.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.2);
+  const outG = leadOut(out, pan);
+  o.connect(tone); tone.connect(g); g.connect(outG);
+  breath.connect(bp); bp.connect(gb); gb.connect(outG);
+  const end = t + len + 0.25;
+  o.start(t); o.stop(end); lfo.start(t); lfo.stop(end);
+  breath.start(t, Math.random()); breath.stop(end);
+  track(o, t); track(lfo, t); track(breath, t);
 }
 
-/** Electric piano (two-operator FM, Rhodes-like): bright attack that mellows as it rings. */
-function keys(midi, t, vel, out, dur = 1.6) {
+/** Electric piano (two-operator FM, Rhodes-like), mellow: low modulation, two carriers a few cents apart (chorus). */
+function keys(midi, t, vel, out, dur = 1.6, pan = 0, send = 0) {
   const f = midiHz(midi);
-  const car = ac.createOscillator(); car.type = 'sine'; car.frequency.value = f;
   const mod = ac.createOscillator(); mod.type = 'sine'; mod.frequency.value = f;
   const idx = ac.createGain();
-  idx.gain.setValueAtTime(f * 1.4 * vel, t);
-  idx.gain.exponentialRampToValueAtTime(f * 0.12 + 1, t + 0.5);
-  mod.connect(idx); idx.connect(car.frequency);
+  idx.gain.setValueAtTime(f * 0.9 * vel, t);
+  idx.gain.exponentialRampToValueAtTime(f * 0.05 + 1, t + 0.4);
+  mod.connect(idx);
   const g = ac.createGain();
-  env(g, t, 0.1 * vel, 0.005, t + dur);
-  car.connect(g); g.connect(out);
-  for (const o of [car, mod]) { o.start(t); o.stop(t + dur + 0.05); track(o, t); }
+  env(g, t, 0.09 * vel, 0.006, t + dur);
+  const outG = send > 0 ? leadOut(out, pan, send) : out;
+  const oscs = [mod];
+  for (const det of [-5, 5]) {
+    const car = ac.createOscillator(); car.type = 'sine'; car.frequency.value = f; car.detune.value = det;
+    idx.connect(car.frequency); car.connect(g); oscs.push(car);
+  }
+  g.connect(outG);
+  for (const o of oscs) { o.start(t); o.stop(t + dur + 0.05); track(o, t); }
 }
 
 // ---------- half-time beat and bass (accompaniment, no data) ----------
@@ -246,7 +295,7 @@ function hat(t, vel, out) {
   const n = ac.createBufferSource(); n.buffer = noise();
   const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 7000;
   const g = ac.createGain();
-  env(g, t, 0.045 * vel, 0.001, t + 0.045);
+  env(g, t, 0.03 * vel, 0.002, t + 0.05);
   n.connect(hp); hp.connect(g); g.connect(out);
   n.start(t, Math.random()); n.stop(t + 0.05); track(n, t);
 }
@@ -325,17 +374,28 @@ function skip(t) {
   track(o, t); track(n, t);
 }
 
-const LEAD = { sea: pluck, 'south-asia': flute, other: (m, t, v, out) => keys(m, t, v * 1.3, out, 0.8) };
+const LEAD = {
+  sea: pluck,
+  'south-asia': flute,
+  other: (m, t, v, out, dur, pan) => keys(m, t, v * 1.3, out, dur + 0.6, pan, 1),
+};
 
 function sound(n, t, out) {
   if (n.kind === 'crackle') { if (n.step === 0) crackle(t, out); pop(t, n.velocity, out); return; }
   if (n.kind === 'skip') { skip(t); return; }
   if (mode === 'science') { beep(n.pitch, t, n.velocity, out); return; }
   const lead = LEAD[place?.region] ?? LEAD.other;
-  if (n.kind === 'data') { lead(n.pitch, t, n.velocity * (n.voice ? 0.5 : 0.75), out); return; }
+  if (n.kind === 'data') {
+    // played like a person: a few ms early or late, a little louder or softer, notes held until the next one
+    const r = hash01(n.bar, n.step, n.voice);
+    const tt = Math.max(ac.currentTime, t + (r - 0.5) * 0.024);
+    const v = n.velocity * (n.voice ? 0.5 : 0.75) * (0.85 + 0.3 * hash01(n.step, n.bar, 7));
+    lead(n.pitch, tt, v, out, n.len ?? 0.3, (r - 0.5) * 0.5);
+    return;
+  }
   // bed: electric-piano chord at step 0; the greenness pulse (voice 0, 4 a bar) in the place's instrument
   if (n.step === 0) keys(n.pitch, t, n.velocity * (n.pitch < 48 ? 1.3 : 1), out, 1.8);
-  if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out);
+  if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out, 4 * STEP, 0);
 }
 
 // ---------- field-recording bed ----------
@@ -454,6 +514,12 @@ function rebuild() {
   notesByBar = Array.from({ length: 12 }, () => []);
   if (!disc) return;
   for (const n of schedule(disc, place, mode)) notesByBar[n.bar].push(n);
+  // legato: each drop lasts until the next drop of the bar (the last one until the bar ends), at most 0.9 s
+  for (const bar of notesByBar) {
+    const drops = bar.filter((n) => n.kind === 'data' && n.voice === 0).sort((a, b) => a.step - b.step);
+    drops.forEach((n, i) => { n.len = Math.min(0.9, ((drops[i + 1]?.step ?? 16) - n.step) * STEP); });
+    for (const n of bar) if (n.kind === 'data' && n.voice !== 0) n.len = drops.find((d) => d.step === n.step)?.len ?? 0.3;
+  }
   if (ac && mode === 'music' && place?.region === 'sea') {
     for (const bar of notesByBar) for (const n of bar) if (n.kind === 'data' || n.voice === 0) { pluckBuffer(n.pitch); pluckBuffer(n.pitch + 24); }
   }
