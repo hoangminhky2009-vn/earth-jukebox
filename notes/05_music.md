@@ -3,7 +3,7 @@
 ## Principles
 - The data → music rules are **identical for every place, every year and both sides A/B**. A region only changes the **scale + instrument**.
 - The music reads `levels` (integers) ⇒ exactly reversible. Science mode reads `values`.
-- Keep **building the note schedule** (a pure function, testable, no audio needed) separate from **playing** it (Tone.js). The piano roll and the round-trip check use the schedule.
+- Keep **building the note schedule** (a pure function, testable, no audio needed) separate from **playing** it (Web Audio, `audio.js`). The piano roll and the round-trip check use the schedule.
 
 ## Note schedule
 - 120 BPM, 4/4. **1 month = 1 bar** = 2 seconds ⇒ 12 months = 24 seconds. Grid of 16 sixteenth notes per bar.
@@ -30,19 +30,20 @@ Real samples only if CC0 / CC-BY; otherwise synthesise.
 ## Interface for joining up (the contract — both sides code against exactly this)
 - `disc` and `place` are always the **full objects** from `discs.json` (never ids). `mode` is the string `"music"` or `"science"`.
 - `docs/js/schedule.js`: pure function `schedule(disc, place, mode)` ⇒ list of notes `{ bar, step, voice, pitch, velocity, kind: "data"|"bed"|"crackle"|"skip" }`,
-  `bar` 0–11, `step` 0–15, `pitch` = MIDI number. **Do not import Tone.js in this file**, so it runs under `node --test` and in the round-trip check.
+  `bar` 0–11, `step` 0–15, `pitch` = MIDI number. **No audio code in this file**, so it runs under `node --test` and in the round-trip check.
   - Rain: raindrops are `data`; the chord bed is `bed`.
   - NDVI: the q layers are `bed` notes, **one distinct `voice` number per layer** (0 … q−1) ⇒ count distinct bed voices to get q. No `data` notes in Music mode.
   - `null` month: only `crackle` notes in that bar.
   - Month in `breaks`: `schedule` keeps every normal note of that bar and adds **one** `skip` note (step 12). Cutting the last quarter happens only in `audio.js`.
   - Science mode: one voice of `data` notes, 4 per bar.
 - `docs/js/audio.js` (ES module) exports exactly:
-  `start()` (async; calls `Tone.start()` — Ky's "Press to start" button awaits it; nothing plays before it) ·
+  `start()` (async; resumes the AudioContext after the first click or key press; nothing plays before it) ·
   `load(disc, place)` · `play()` · `pause()` · `stop()` · `seek(month 0–11)` · `setMode("music"|"science")` · `duck(db, ms)` · `setVolume(0–1)` ·
   `onTick(fn)` — `fn(bar)` with an **integer 0–11, once per bar**; the piano roll slides its playhead across the bar itself (2 s per bar).
   Ky's `audio-stub.js` has the same exports.
-- Tone.js: vendor the single-file UMD build as `docs/vendor/tone/Tone.js`; in `audio.js` do `import '../vendor/tone/Tone.js';` then use `window.Tone`.
-  If `window.Tone` is undefined in the browser, ask Ky to add `<script src="vendor/tone/Tone.js"></script>` before `app.js` in `index.html`.
+- No Tone.js (Nov 14): `audio.js` uses the Web Audio API directly, every sound synthesized, so nothing is vendored.
+- Field-recording bed (Nov 14): real CC0 recordings under the music, chosen by `ambience.js` from the month's level only
+  (rain: wind → light rain → heavy rain; greenness: wind → birds; missing month: silent). Science mode has no bed.
 - Sabik may create `docs/audio-test.html` (his own test page) — never edit Ky's `index.html` / `app.js`.
 - Text for listeners comes from `datasets.<dataset>.levels[].label` (e.g. "2 to 5 mm/day drier").
 

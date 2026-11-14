@@ -5,7 +5,7 @@ Copy this file to the repo root as `CLAUDE.md` on Nov 14. Written before the eve
 ## Context
 - NASA Space Apps Challenge 2026, challenge "The Earth Information Jukebox", **Universal Event** (online, judged on the submission page only).
 - Submission opens Nov 14, 9:00; closes **Nov 15, 23:59, Team Owner's local time**. Test submission at 21:00 on Nov 15.
-- Team: Yến (lead: story, demo, submission form), Ky (web app, integration, docs), Sabik (data pipeline, music engine), Bormey (places, text descriptions, listening and screen-reader tests).
+- Team: Yến (lead: story, demo, submission form), Ky (web app, integration, docs, music engine since Nov 14), Sabik (data pipeline), Bormey (places, text descriptions, listening and screen-reader tests).
 - Replies: to **Ky in Vietnamese** (short, casual, with numbers and tables); to **Sabik in English** (short). Everything written **into the repo or the page is English**.
 - Design notes: `notes/00_start_here.md` first, then `notes/02_pipeline.md`, `03_json.md`, `05_music.md`, `06_tests.md`.
   Ky's Vietnamese notes (architecture, web, repo, risks) are outside the repo: `C:\Users\ThinkPad T14\Desktop\SpaceApps2026_ChuanBi\`.
@@ -13,7 +13,8 @@ Copy this file to the repo root as `CLAUDE.md` on Nov 14. Written before the eve
 ## Who owns which files — never edit the other person's files
 | Sabik | Ky |
 |---|---|
-| `pipeline/**`, `docs/data/discs.json`, `docs/data/frames/**`, `docs/js/schedule.js`, `docs/js/schedule.test.mjs`, `docs/js/audio.js`, `docs/audio-test.html`, `docs/vendor/**` | `docs/index.html`, `docs/css/**`, `docs/js/{app,store,ui-jukebox,roll,a11y,validate,audio-stub,scene,foley,viz}.js` + their `*.test.mjs`, `docs/js/{contrast,roundtrip}.test.mjs`, `docs/js/roll.fixture.js`, `docs/data/discs.sample.json`, `package.json`, `README.md`, `HOW_IT_WORKS.md`, `AI_USE.md`, `CREDITS.md` |
+| `pipeline/**`, `docs/data/discs.json`, `docs/data/frames/**` | `docs/index.html`, `docs/css/**`, `docs/js/{app,store,ui-jukebox,roll,a11y,validate,audio-stub,scene,foley,viz,schedule,audio,ambience}.js` + their `*.test.mjs`, `docs/js/{contrast,roundtrip}.test.mjs`, `docs/js/roll.fixture.js`, `docs/audio/**`, `tools/**`, `docs/data/discs.sample.json`, `package.json`, `README.md`, `HOW_IT_WORKS.md`, `AI_USE.md`, `CREDITS.md` |
+Music engine (`schedule.js`, `audio.js`) moved from Sabik to Ky on Nov 14 so Sabik can focus on the pipeline.
 The contract between the two halves is `notes/03_json.md` plus the audio interface in `notes/05_music.md`. Only **add** fields; tell the other person.
 
 ## Hard rules
