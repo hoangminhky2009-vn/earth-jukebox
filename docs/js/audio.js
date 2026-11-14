@@ -114,11 +114,18 @@ function pluckBuffer(midi) {
   const len = Math.round(sr * 1.4);
   const b = ac.createBuffer(1, len, sr);
   const d = b.getChannelData(0);
-  const N = Math.max(2, Math.round(sr / midiHz(midi)));
+  // Fractional delay so the string is in tune: total loop delay = P + 0.5 (averaging filter) = one period.
+  const P = sr / midiHz(midi) - 0.5;
+  const N = Math.floor(P);
+  const fr = P - N;
   let lp = 0;
-  for (let i = 0; i < N; i++) { lp += ((Math.random() * 2 - 1) - lp) * 0.5; d[i] = lp; }
-  const decay = midi > 84 ? 0.990 : 0.996;
-  for (let i = N; i < len; i++) d[i] = decay * 0.5 * (d[i - N] + d[i - N - 1 < 0 ? 0 : i - N - 1]);
+  for (let i = 0; i < N + 2; i++) { lp += ((Math.random() * 2 - 1) - lp) * 0.5; d[i] = lp * 0.6; }
+  const decay = midi > 84 ? 0.992 : 0.996;
+  for (let i = N + 2; i < len; i++) {
+    const x0 = (1 - fr) * d[i - N] + fr * d[i - N - 1];
+    const x1 = (1 - fr) * d[i - N - 1] + fr * d[i - N - 2];
+    d[i] = decay * 0.5 * (x0 + x1);
+  }
   ksCache.set(midi, b);
   return b;
 }
@@ -276,8 +283,8 @@ function groove(b, t0, from, out) {
   const low = 36 + ((((root - 36) % 12) + 12) % 12);   // bass in the octave above C2
   hit(0, (t) => bass(low, t, 1, out, 1.1));
   hit(10, (t) => bass(low, t, 0.7, out, 0.5));
-  hit(14, (t) => bass(low + 7, t, 0.5, out, 0.25));
-  hit(10, (t) => chord.forEach((n) => keys(n.pitch, t, 0.35, out, 0.7)));   // soft re-strike on the and-of-3
+  hit(14, (t) => bass(low + 12, t, 0.4, out, 0.25));   // octave pickup (a fifth could fall outside the scale)
+  hit(10, (t) => chord.forEach((n) => keys(n.pitch, t, 0.25, out, 0.7)));   // soft re-strike on the and-of-3
 }
 
 function beep(midi, t, vel, out) {
@@ -325,7 +332,7 @@ function sound(n, t, out) {
   if (n.kind === 'skip') { skip(t); return; }
   if (mode === 'science') { beep(n.pitch, t, n.velocity, out); return; }
   const lead = LEAD[place?.region] ?? LEAD.other;
-  if (n.kind === 'data') { lead(n.pitch, t, n.velocity * 0.75, out); return; }
+  if (n.kind === 'data') { lead(n.pitch, t, n.velocity * (n.voice ? 0.5 : 0.75), out); return; }
   // bed: electric-piano chord at step 0; the greenness pulse (voice 0, 4 a bar) in the place's instrument
   if (n.step === 0) keys(n.pitch, t, n.velocity * (n.pitch < 48 ? 1.3 : 1), out, 1.8);
   if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out);
