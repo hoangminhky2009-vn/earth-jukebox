@@ -21,12 +21,12 @@ test('euclid: exactly n hits, gaps differ by at most 1, n = 0 and n = 16', () =>
   }
 });
 
-test('rain: n = 8 + 2k data notes for every k, 4 bed notes (seventh chord), steps and bars in range', () => {
+test('rain: n = 4 + k data notes for every k, 3 bed notes (a plain triad), steps and bars in range', () => {
   for (let k = -4; k <= 4; k++) {
     const notes = schedule(rain(k), SEA, 'music');
     const b = bar(notes, 3);
-    assert.equal(b.filter((n) => n.kind === 'data').length, 8 + 2 * k, `k=${k}`);
-    assert.equal(b.filter((n) => n.kind === 'bed').length, 4);
+    assert.equal(b.filter((n) => n.kind === 'data').length, 4 + k, `k=${k}`);
+    assert.equal(b.filter((n) => n.kind === 'bed').length, 3);
     for (const n of notes) {
       assert.ok(n.bar >= 0 && n.bar <= 11 && n.step >= 0 && n.step <= 15);
       assert.ok(Number.isInteger(n.pitch) && n.pitch >= 21 && n.pitch <= 108, `pitch ${n.pitch}`);
@@ -40,11 +40,11 @@ test('rain: drier = lower, wetter = higher (mean drop pitch)', () => {
   for (let k = -3; k <= 3; k++) if (k !== 0) assert.ok(k < 0 ? mean(k) < mean(0) : mean(k) > mean(0), `k=${k}`);
 });
 
-test('rain: registers never overlap (chord 43-54, drops from 55) and drops sit on even steps', () => {
+test('rain: chord sits in 52-63 (above the lower interval limits), drops from 55 and drops sit on even steps', () => {
   const places = [{ region: 'sea' }, { region: 'south-asia' }, { region: 'other' }, { region: 'other', biome: 'desert' }, { region: 'south-asia', biome: 'snow-mountain' }];
   for (const pl of places) for (let k = -4; k <= 4; k++) {
     const b = bar(schedule(rain(k), pl), 3);
-    for (const n of b.filter((x) => x.kind === 'bed')) assert.ok(n.pitch >= 43 && n.pitch <= 54, `bed ${n.pitch}`);
+    for (const n of b.filter((x) => x.kind === 'bed')) assert.ok(n.pitch >= 52 && n.pitch <= 63, `bed ${n.pitch}`);
     for (const n of b.filter((x) => x.kind === 'data')) { assert.ok(n.pitch >= 55, `drop ${n.pitch}`); assert.equal(n.step % 2, 0); }
   }
 });
@@ -55,14 +55,14 @@ test('rain: saturated bars are accented at full velocity, others are not', () =>
 });
 
 test('null month: crackle only; break month: normal notes + exactly one skip at step 12', () => {
-  const d = rain(2, { levels: [0, 0, 0, 2, null, 0, 0, 0, 0, 0, 0, 0], breaks: [3, 4] });
+  const d = rain(2, { levels: [0, 0, 0, 2, null, 0, 0, 0, 0, 0, 0, 0], breaks: [4, 5] });   // months 4 and 5 = bars 3 and 4
   const notes = schedule(d, SEA);
   assert.ok(bar(notes, 4).length > 0 && bar(notes, 4).every((n) => n.kind === 'crackle'));
   const b3 = bar(notes, 3);
   const skips = b3.filter((n) => n.kind === 'skip');
   assert.equal(skips.length, 1);
   assert.equal(skips[0].step, SKIP_STEP);
-  assert.equal(b3.filter((n) => n.kind === 'data').length, 12);
+  assert.equal(b3.filter((n) => n.kind === 'data').length, 6);
   assert.equal(notes.filter((n) => n.kind === 'skip').length, 1);
 });
 
@@ -91,7 +91,7 @@ test('science mode: one voice, 4 data notes a bar; rain pitch = root + 2k, NDVI 
 });
 
 test('readBack gives the levels back exactly; unknown region falls back; same input = same output', () => {
-  const d = rain(0, { levels: [-4, -3, -2, -1, 0, 1, 2, 3, 4, null, 0, 1], breaks: [2] });
+  const d = rain(0, { levels: [-4, -3, -2, -1, 0, 1, 2, 3, 4, null, 0, 1], breaks: [3] });
   assert.deepEqual(readBack(schedule(d, SEA), 'rain'), d.levels);
   const g = ndvi(0, { levels: [1, 2, 3, 4, null, 4, 3, 2, 1, 1, 2, 3] });
   assert.deepEqual(readBack(schedule(g, { region: 'nowhere' }), 'ndvi'), g.levels);
@@ -107,4 +107,33 @@ test('style: desert and snow biomes get their own scale; a run of normal months 
   const flat = { dataset: 'rain', levels: Array(12).fill(-1), breaks: [] };
   const bars = [0, 1, 2, 3].map((b) => bar(schedule(flat, { region: 'other' }), b).filter((n) => n.kind === 'data').map((n) => `${n.step}:${n.pitch}`).join(' '));
   assert.equal(new Set(bars).size, 4, 'four normal-ish months in a row all differ');
+});
+
+test('harmony: tune notes are chord tones of their month and move by at most a fourth; chords are major or minor triads', () => {
+  for (const pl of [{ region: 'sea' }, { region: 'south-asia' }, { region: 'other' }, { region: 'other', biome: 'desert' }, { region: 'south-asia', biome: 'snow' }]) {
+    const d = { dataset: 'rain', levels: [0, 1, -1, 2, 0, -2, 3, 0, 4, -3, 1, 0], breaks: [] };
+    const notes = schedule(d, pl);
+    let prev = null;
+    for (let b = 0; b < 12; b++) {
+      const bed = bar(notes, b).filter((n) => n.kind === 'bed').map((n) => n.pitch % 12);
+      const sorted = [...new Set(bed)].sort((x, y) => x - y);
+      const shapes = [0, 1, 2].map((r) => { const root = sorted[r]; return sorted.map((p) => (p - root + 12) % 12).sort((x, y) => x - y).join(','); });
+      assert.ok(shapes.includes('0,4,7') || shapes.includes('0,3,7'), `bar ${b} chord ${sorted} ${JSON.stringify(pl)}`);
+      const tune = bar(notes, b).filter((x) => x.kind === 'data' && x.voice === 0).sort((x, y) => x.step - y.step);
+      tune.forEach((n, i) => {
+        assert.ok(bed.includes(n.pitch % 12), `tune note not in chord, bar ${b}`);
+        // inside a month: at most a fourth; into a new month the register may change on purpose (it carries the state)
+        if (i > 0) assert.ok(Math.abs(n.pitch - tune[i - 1].pitch) <= 5, `leap ${tune[i - 1].pitch} -> ${n.pitch} in bar ${b}`);
+        else if (prev !== null && d.levels[b] === d.levels[b - 1]) assert.ok(Math.abs(n.pitch - prev) <= 5, `join ${prev} -> ${n.pitch}`);
+      });
+      if (tune.length) prev = tune[tune.length - 1].pitch;
+    }
+  }
+});
+
+test('phrase: December always rests on the tonic chord (the year ends instead of looping on)', () => {
+  for (const pl of [{ region: 'sea' }, { region: 'south-asia' }, { region: 'other' }, { region: 'other', biome: 'desert' }, { region: 'x', biome: 'snow' }]) {
+    const dec = bar(schedule({ dataset: 'rain', levels: Array(12).fill(0), breaks: [] }, pl), 11).filter((n) => n.kind === 'bed').map((n) => n.pitch % 12);
+    assert.ok(dec.includes(0), `${JSON.stringify(pl)} December chord ${dec}`);   // C is the tonic before audio.js transposes
+  }
 });

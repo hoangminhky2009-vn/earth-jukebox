@@ -82,7 +82,7 @@ function ensure() {
   warm = ac.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200; warm.Q.value = 0.5;
   const wobble = ac.createDelay(0.05); wobble.delayTime.value = 0.012;
   const lfo = ac.createOscillator(); lfo.frequency.value = 0.55;
-  const lfoDepth = gainNode(0.0016);
+  const lfoDepth = gainNode(0);   // tape wobble off: it bent the dry sound but not its reverb, so the two beat (up to 19 cents apart)
   lfo.connect(lfoDepth); lfoDepth.connect(wobble.delayTime); lfo.start();
   const pre = gainNode(0.75);   // headroom
   music.connect(pre); pre.connect(warm); warm.connect(wobble); wobble.connect(duckGain);   // no waveshaper: it aliased into fizz
@@ -201,10 +201,11 @@ function pluck(midi, t, vel, out, dur, pan = 0) {
   const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400; lp.Q.value = 0.4;
   const g = ac.createGain();
   g.gain.setValueAtTime(0.42 * vel, t);
+  const tail = Math.min(1.2, 0.3 + dur * 1.2);   // short notes (busy months) ring briefly, long ones ring out
   g.gain.setValueAtTime(0.42 * vel, t + Math.max(0.15, dur));
-  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.15, dur) + 1.2);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.15, dur) + tail);
   src.connect(lp); lp.connect(g); g.connect(leadOut(out, pan));
-  src.start(t); src.stop(t + Math.max(0.15, dur) + 1.25);
+  src.start(t); src.stop(t + Math.max(0.15, dur) + tail + 0.05);
   track(src, t);
 }
 
@@ -258,7 +259,7 @@ function keys(midi, t, vel, out, dur = 1.6, pan = 0, send = 0) {
   env(g, t, 0.09 * vel, 0.006, t + dur);
   const outG = send > 0 ? leadOut(out, pan, send) : out;
   const oscs = [mod];
-  for (const det of [-5, 5]) {
+  for (const det of [-1.5, 1.5]) {   // was +-5 cents: audible beating
     const car = ac.createOscillator(); car.type = 'sine'; car.frequency.value = f; car.detune.value = det;
     idx.connect(car.frequency); car.connect(g); oscs.push(car);
   }
@@ -304,15 +305,16 @@ function bass(midi, t, vel, out, dur) {
   const f = midiHz(midi);
   const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420;
   const g = ac.createGain();
+  // legato: a soft attack, held for the whole length, a short release that overlaps the next bass note (no gap)
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(0.2 * vel, t + 0.015);
-  g.gain.setValueAtTime(0.2 * vel, t + dur * 0.6);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  g.gain.linearRampToValueAtTime(0.2 * vel, t + 0.03);
+  g.gain.setValueAtTime(0.2 * vel, t + dur);
+  g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.08);
   const o1 = ac.createOscillator(); o1.type = 'sine'; o1.frequency.value = f;
   const o2 = ac.createOscillator(); o2.type = 'triangle'; o2.frequency.value = f;
   const g2 = gainNode(0.35);
   o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(out);
-  for (const o of [o1, o2]) { o.start(t); o.stop(t + dur + 0.02); track(o, t); }
+  for (const o of [o1, o2]) { o.start(t); o.stop(t + dur + 0.1); track(o, t); }
 }
 
 let neyWave = null;
@@ -451,18 +453,22 @@ function tin(t, vel, out, hz) {
 }
 
 /** Drone on the tonic and fifth for one bar, overlapping the next (tanpura-like). */
-function drone(t0, out, tonic) {
-  for (const [m, det] of [[tonic, 0], [tonic + 7, 4], [tonic + 12, -4]]) {
+/** Drone (pedal point, tanpura-like): ONE continuous tone on the tonic for the whole play-through (it used to be
+ *  restarted every month, which pulsed every 2 s like a loop). It only goes quiet in months with no music. */
+let droneG = null;
+function startDrone(out, tonic) {
+  droneG = gainNode(0);
+  for (const [m, det, lvl] of [[tonic, 0, 0.022], [tonic + 12, 0, 0.014]]) {   // tonic only: every South Asia chord contains it
     const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = midiHz(m); o.detune.value = det;
     const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 650; lp.Q.value = 0.7;
-    const g = ac.createGain();
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.linearRampToValueAtTime(m === tonic ? 0.022 : 0.014, t0 + 0.5);
-    g.gain.setValueAtTime(m === tonic ? 0.022 : 0.014, t0 + BAR - 0.1);
-    g.gain.linearRampToValueAtTime(0.0001, t0 + BAR + 0.5);
-    o.connect(lp); lp.connect(g); g.connect(out);
-    o.start(t0); o.stop(t0 + BAR + 0.55); track(o, t0);
+    const g = gainNode(lvl);
+    o.connect(lp); lp.connect(g); g.connect(droneG);
+    o.start(); track(o, ac.currentTime);
   }
+  droneG.connect(out);
+}
+function setDrone(on, t) {
+  if (droneG) droneG.gain.setTargetAtTime(on ? 1 : 0, Math.max(t, ac.currentTime), 0.35);
 }
 
 /** Beat, bass (and in South Asia a drone) for one bar; a groove per region; silent in missing months and science mode. */
@@ -475,26 +481,25 @@ function groove(b, t0, from, out) {
   const tonic = 48 + TRANSPOSE[region];
   if (region === 'sea') {
     // light hand percussion: one soft kick, three tuned hand-drum strokes, a shaker on the eighths
+    // V8: half the strokes - one kick, two hand drums, shaker on the off-beats only
     hit(0, (t) => kick(t, 0.6, out));
-    hit(6, (t) => tom(t, 0.7, out, 196));
     hit(10, (t) => tom(t, 1, out, 165));
-    hit(14, (t) => tom(t, 0.6, out, 147));
-    if (b % 4 === 3) hit(12, (t) => tom(t, 0.5, out, 220));
-    for (let s = 0; s < 16; s += 2) hit(s, (t) => shaker(t, s % 4 === 2 ? 1 : 0.5, out));
+    if (b % 4 === 3) hit(14, (t) => tom(t, 0.5, out, 147));
+    for (const s of [2, 6, 10, 14]) hit(s, (t) => shaker(t, 0.7, out));
   } else if (region === 'south-asia') {
     // tabla-like cycle over a drone on the tonic and fifth
-    if (from <= t0) drone(t0, out, tonic);
+    // V8: half the strokes - low drum on 1 and the and-of-3, one ringing stroke on 3
     hit(0, (t) => bayan(t, 1, out));
-    hit(6, (t) => bayan(t, 0.55, out));
-    hit(10, (t) => bayan(t, 0.8, out));
+    hit(10, (t) => bayan(t, 0.7, out));
     const tinHz = midiHz(tonic + 24);
-    for (const s of [4, 8, 12, 14]) hit(s, (t) => tin(t, s === 8 ? 1 : 0.6, out, tinHz));
-    if (b % 4 === 3) hit(15, (t) => tin(t, 0.4, out, tinHz));
+    hit(8, (t) => tin(t, 1, out, tinHz));
+    if (b % 4 === 3) hit(14, (t) => tin(t, 0.4, out, tinHz));
   } else if (region === 'desert') {
     // frame-drum cycle (maqsum-like): doum on 1 and 3, tek strokes between, a roll before the loop turns
+    // V8: doum on 1 and 3, one tek between, a short roll only before the loop turns
     for (const s of [0, 8]) hit(s, (t) => doum(t, s === 0 ? 1 : 0.8, out));
-    for (const s of [2, 6, 12]) hit(s, (t) => tek(t, s === 6 ? 1 : 0.7, out));
-    if (b % 4 === 3) for (const s of [13, 14, 15]) hit(s, (t) => tek(t, 0.45, out));
+    hit(6, (t) => tek(t, 0.9, out));
+    if (b % 4 === 3) for (const s of [14, 15]) hit(s, (t) => tek(t, 0.4, out));
   } else if (region === 'snow') {
     // almost nothing: a soft heartbeat every other month, so the bells ring in open space
     if (b % 2 === 0) hit(0, (t) => kick(t, 0.3, out));
@@ -503,14 +508,26 @@ function groove(b, t0, from, out) {
     hit(0, (t) => kick(t, 1, out));
     hit(10, (t) => kick(t, 0.75, out));
     hit(8, (t) => snare(t, 1, out));
-    if (b % 4 === 3) { hit(7, (t) => kick(t, 0.4, out)); hit(14, (t) => snare(t, 0.3, out)); }   // small fill before the loop turns
-    for (const s of [2, 6, 10, 14]) hit(s, (t) => hat(t, 1, out));
+    if (b % 4 === 3) hit(14, (t) => snare(t, 0.3, out));   // small fill before the loop turns
+    for (const s of [2, 10]) hit(s, (t) => hat(t, 1, out));   // V8: two hats instead of four
   }
-  const root = notes.find((n) => n.kind === 'bed' && n.step === 0 && n.voice === 0);
-  if (!root) return;
-  const low = 36 + ((((root.pitch - 36) % 12) + 12) % 12);   // bass in the octave above C2, on the chord root
-  hit(0, (t) => bass(low, t, region === 'south-asia' || region === 'snow' ? 0.6 : 1, out, region === 'snow' ? 1.8 : 1.1));
-  if (region !== 'south-asia' && region !== 'snow') hit(10, (t) => bass(low, t, 0.7, out, 0.5));
+  // Bass line (one connected line, as in any harmony textbook): the chord root held for three beats, then the
+  // chord's fifth as a passing note that leads into next month's root; one long note when the chord does not change.
+  const rootOf = (bb) => {
+    const r = notesByBar[bb]?.find((n) => n.kind === 'bed' && n.step === 0 && n.voice === 0);
+    return r ? 36 + ((((r.pitch - 36) % 12) + 12) % 12) : null;   // in the octave above C2
+  };
+  const low = rootOf(b);
+  if (low === null) return;
+  const next = rootOf((b + 1) % 12);
+  const vel = region === 'south-asia' || region === 'snow' ? 0.6 : 0.9;
+  if (next === null || next === low) {
+    hit(0, (t) => bass(low, t, vel, out, BAR - 0.02));
+  } else {
+    const fifth = low + 7 > 47 ? low - 5 : low + 7;
+    hit(0, (t) => bass(low, t, vel, out, 12 * STEP));
+    hit(12, (t) => bass(fifth, t0 + 12 * STEP, vel * 0.8, out, 4 * STEP - 0.02));
+  }
 }
 
 function beep(midi, t, vel, out) {
@@ -561,7 +578,7 @@ function harmonium(midi, t, vel, out) {
   g.gain.linearRampToValueAtTime(0.03 * vel, t + 0.18);
   g.gain.linearRampToValueAtTime(0.024 * vel, t + 1.0);
   g.gain.linearRampToValueAtTime(0.0001, end + 0.25);
-  for (const [type, det] of [['square', -6], ['sawtooth', 6]]) {
+  for (const [type, det] of [['square', -2], ['sawtooth', 2]]) {   // was +-6 cents: rough beating on the upper harmonics
     const o = ac.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = det;
     o.connect(lp); o.start(t); o.stop(end + 0.3); track(o, t);
   }
@@ -588,7 +605,8 @@ function playBed(n, t, out) {
   const v = n.velocity * (n.pitch < 48 ? 1.3 : 1);
   if (curStyle === 'sea') {
     // harp-like: the chord broken upwards across the first half of the bar
-    pluck(n.pitch + 12, t + n.voice * 3 * STEP + swing(n.voice * 3), v * 0.55, out, 0.6, (n.voice - 1.5) * 0.2);
+    // in the chord's own low register (43-54), softer: it no longer sits on top of the plucked melody
+    pluck(n.pitch, t + n.voice * 3 * STEP + swing(n.voice * 3), v * 0.45, out, 0.6, (n.voice - 1.5) * 0.2);
   } else if (curStyle === 'south-asia') {
     harmonium(n.pitch, t, v, out);
   } else if (curStyle === 'desert') {
@@ -601,6 +619,17 @@ function playBed(n, t, out) {
   } else {
     keys(n.pitch, t, v, out, 1.8);
   }
+}
+
+/** Raindrop: a short unpitched tick (filtered noise), so the extra wet-month notes never clash with the tune. */
+function droplet(midi, t, vel, out, pan = 0) {
+  const n = ac.createBufferSource(); n.buffer = noise();
+  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 3200 + 400 * Math.random(); bp.Q.value = 3;
+  const g = ac.createGain();
+  env(g, t, 0.09 * vel, 0.001, t + 0.07);
+  const p = ac.createStereoPanner(); p.pan.value = pan;
+  n.connect(bp); bp.connect(g); g.connect(p); p.connect(out);
+  n.start(t, Math.random()); n.stop(t + 0.08); track(n, t);
 }
 
 const LEAD = {
@@ -622,6 +651,7 @@ function sound(n, t, out) {
     const tt = Math.max(ac.currentTime, t + (r - 0.5) * 0.024);
     const v = n.velocity * (n.voice ? 0.5 : 0.75) * (0.85 + 0.3 * hash01(n.step, n.bar, 7));
     noteSend = n.busy ? 0.3 : 1;
+    if (n.voice === 1) { droplet(n.pitch, tt, n.velocity >= 1 ? 0.9 : 0.6, out, (r - 0.5) * 1.2); return; }   // extra wet notes = raindrops
     lead(n.pitch, tt, v, out, n.len ?? 0.3, (r - 0.5) * 0.5);
     noteSend = 1;
     return;
@@ -685,6 +715,7 @@ function scheduleBar(b, t0, from = -Infinity) {
   music.gain.setValueAtTime(1, Math.max(t0, ac.currentTime));
   ambCut.gain.setValueAtTime(AMB_LEVEL, Math.max(t0, ac.currentTime));
   if (from < 0) setAmbience(b, t0);
+  if (from < 0) setDrone(mode === 'music' && notesByBar[b].some((n) => n.kind === 'data' || n.kind === 'bed'), t0);
   const out = session;
   for (const n of notesByBar[b]) {
     const t = t0 + n.step * STEP + (n.kind === 'skip' ? 0 : swing(n.step));
@@ -740,6 +771,7 @@ function silence() {
   ambCut.gain.cancelScheduledValues(now);
   ambCut.gain.setValueAtTime(AMB_LEVEL, now);
   stopAmbience();
+  droneG = null;   // its oscillators were in `live` and are stopped above
   session = newSession();
 }
 
@@ -761,7 +793,9 @@ function rebuild() {
   // legato: each drop lasts until the next drop of the bar (the last one until the bar ends), at most 0.9 s
   for (const bar of notesByBar) {
     const drops = bar.filter((n) => n.kind === 'data' && n.voice === 0).sort((a, b) => a.step - b.step);
-    drops.forEach((n, i) => { n.len = Math.min(1.2, ((drops[i + 1]?.step ?? 16) - n.step) * STEP * 1.3); n.busy = drops.length >= 7; });   // overlaps a little: legato
+    // legato when there is room; in busy (wet) months each drop stops before the next one, so drops stay separate
+    const busy = drops.length >= 6;
+    drops.forEach((n, i) => { const last = !drops[i + 1]; const gap = ((drops[i + 1]?.step ?? 16) - n.step) * STEP; n.len = last ? gap * 0.85 : busy ? gap * 0.8 : Math.min(1.2, gap * 1.3); n.busy = busy; });   // the last note ends before next month's chord
     for (const n of bar) if (n.kind === 'data' && n.voice !== 0) { n.len = drops.find((d) => d.step === n.step)?.len ?? 0.3; n.busy = true; }
   }
   if (ac && mode === 'music' && ['sea', 'desert'].includes(styleOf(place))) {
@@ -774,6 +808,7 @@ function begin(fromBar) {
   playing = true;
   nextBar = fromBar;
   nextTime = ac.currentTime + 0.06;
+  if (mode === 'music' && styleOf(place) === 'south-asia') startDrone(session.beat ?? session, 48 + TRANSPOSE['south-asia']);
   fill();
   pump = setInterval(fill, 100);
   loadAmbience();

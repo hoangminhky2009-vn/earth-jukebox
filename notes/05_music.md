@@ -9,7 +9,7 @@
 - 120 BPM, 4/4. **1 month = 1 bar** = 2 seconds ⇒ 12 months = 24 seconds. Grid of 16 sixteenth notes per bar.
 - **Chord bed:** a 4-bar loop in the region's scale ⇒ 12 bars = 3 loops. Always plays (except in `null` bars).
 - **Rain disc — level k (−4…+4) → raindrops:**
-  - Notes per bar `n = 8 + 2k` ⇒ 0, 2, 4, …, 16. Spread the n notes over the 16 grid steps with a **Euclidean rhythm** (even, groovy, not random).
+  - Notes per bar `n = 4 + k` ⇒ 0, 1, …, 8 (changed Nov 14 from 8 + 2k: 16 notes a bar was too busy). Spread the n notes over the 8 eighth-note slots with a **Euclidean rhythm** (even, groovy, not random).
   - Pitch: k < 0 ⇒ low octave · k = 0 ⇒ middle · k > 0 ⇒ high. Drier = sparse + low, wetter = dense + high.
   - k = −4 ⇒ 0 notes: only the chord bed remains (drought = no raindrops). It can't be confused with a missing month, because missing months crackle.
   - Saturated (|k| = 4) ⇒ accent (maximum velocity) for the whole bar.
@@ -52,6 +52,6 @@ Real samples only if CC0 / CC-BY; otherwise synthesise.
 - Text for listeners comes from `datasets.<dataset>.levels[].label` (e.g. "2 to 5 mm/day drier").
 
 ## Round-trip check
-From the schedule: rain ⇒ count `data` notes per bar ⇒ `k = (n − 8) / 2`; NDVI ⇒ count bed voices ⇒ q; a `null` bar must contain only `crackle`.
+From the schedule: rain ⇒ count `data` notes per bar ⇒ `k = n − 4`; NDVI ⇒ count bed voices ⇒ q; a `null` bar must contain only `crackle`.
 Compare with `levels`: expect **100% match** (the mapping is one-to-one). Science mode: pitch ⇒ `values`, NDVI error ≤ 1/48. Put the numbers in the README.
 Advanced (only if time): record the real audio ⇒ onset detection ⇒ count notes.

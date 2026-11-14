@@ -51,7 +51,7 @@ export function schedule(disc, place, mode) {
       for (let v = 0; v < level; v++) add(bar, 0, v, degree(scale, start + 2 * v, ROOT - 24 + 12 * v), 0.5, 'bed');
       for (const s of [4, 8, 12]) add(bar, s, 0, degree(scale, start, ROOT - 24), 0.5, 'bed'); // pulse: 4 notes with the step-0 one
     }
-    if (breaks.has(bar) && !(level === null || level === undefined)) add(bar, 12, 0, ROOT, 1, 'skip');
+    if (breaks.has(bar + 1) && !(level === null || level === undefined)) add(bar, 12, 0, ROOT, 1, 'skip');   // breaks are months 1-12
   }
   return notes;
 }

@@ -81,14 +81,14 @@ test('fixture: a null month has only crackle notes', () => {
 });
 
 test('fixture: a breaks month keeps its notes and adds exactly one skip note at step 12', () => {
-  const d = disc('sahara-ndvi-2024'); // breaks: [6]
+  const d = disc('sahara-ndvi-2024'); // breaks: [6] = June = bar 5 (months are 1-12, bars 0-11)
   const notes = schedule(d, place(d), 'music');
-  const b = bar(notes, 6);
+  const b = bar(notes, 5);
   const skips = b.filter((n) => n.kind === 'skip');
   assert.equal(skips.length, 1);
   assert.equal(skips[0].step, 12);
   assert.ok(b.some((n) => n.kind === 'bed'));
-  assert.equal(bar(notes, 5).filter((n) => n.kind === 'skip').length, 0);
+  assert.equal(bar(notes, 6).filter((n) => n.kind === 'skip').length, 0);
 });
 
 test('fixture: NDVI level q = q distinct bed voices, 4 notes of voice 0 per bar, no data notes', () => {
