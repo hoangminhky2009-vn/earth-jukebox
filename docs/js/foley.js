@@ -1,6 +1,7 @@
 // Written by Ky with help from Claude (SI). See AI_USE.md.
 // Quiet turntable foley, synthesized sample by sample (no recorded sounds, so nothing to license).
-// It uses its own AudioContext, separate from the music engine (audio.js / audio-stub.js).
+// It owns the page's one AudioContext; the music engine (audio.js) borrows it through sharedContext(),
+// so only one audio thread runs (two contexts on one laptop can make the sound crackle).
 //   place:   the centre hole taps the spindle, the disc lands on the rubber mat with a faint slap.
 //   needle:  the stylus touches the groove: a soft low bump, a contact tick, a short lead-in hush with a few pops.
 //   lift:    a small tick and a weak thump as the stylus leaves the record.
@@ -16,12 +17,15 @@ function context() {
   if (ac) return ac;
   const Ctx = typeof window !== 'undefined' ? (window.AudioContext || window.webkitAudioContext) : null;
   if (!Ctx) return null;
-  ac = new Ctx();
+  ac = new Ctx({ latencyHint: 'playback' });
   master = ac.createGain();
   master.gain.value = volume;
   master.connect(ac.destination);
   return ac;
 }
+
+/** The page's single AudioContext (created on first use). */
+export function sharedContext() { return context(); }
 
 function build(kind) {
   const sr = ac.sampleRate;

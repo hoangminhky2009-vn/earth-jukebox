@@ -41,7 +41,9 @@
     { "id": "mekong", "name": "Mekong Delta, Vietnam", "lat": 10.03, "lon": 105.78, "biome": "monsoon-delta",
       "region": "sea", "story": "Sample story: rice fields that turn green with the rains." },
     { "id": "sahara", "name": "Sahara, Algeria", "lat": 24.0, "lon": 3.0, "biome": "desert",
-      "region": "other", "story": "Sample story: one of the driest places on Earth." }
+      "region": "other", "story": "Sample story: one of the driest places on Earth." },
+    { "id": "ladakh", "name": "Ladakh, India", "lat": 34.15, "lon": 77.58, "biome": "snow-mountain",
+      "region": "south-asia", "story": "Sample story: a cold mountain desert where winter snow feeds the rivers." }
   ],
   "discs": [
     { "id": "dhaka-rain-2025", "place": "dhaka", "dataset": "rain", "year": 2025, "side": "A",
@@ -115,6 +117,18 @@
         "frames": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/",
         "sample_days": [5, 15, 25] },
       "description": "Sample: greenness in the Sahara in 2024. One June frame is missing from the source.",
+      "check": null },
+    { "id": "ladakh-rain-2025", "place": "ladakh", "dataset": "rain", "year": 2025, "side": "A",
+      "levels": [2, 1, 1, 0, -1, -1, 0, 1, 0, 0, 1, 2],
+      "values": [7.5, 3.5, 3.5, 0, -3.5, -3.5, 0, 3.5, 0, 0, 3.5, 7.5],
+      "saturated": [false, false, false, false, false, false, false, false, false, false, false, false],
+      "frames_used": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "match_pct": 100, "median_de": 1.4, "condition": "mint", "breaks": [],
+      "frame": "data/frames/ladakh-rain-2025.png",
+      "source": { "svs": "4897", "svs_url": "https://svs.gsfc.nasa.gov/4897",
+        "frames": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatalpha/",
+        "sample_days": [1, 8, 15, 22, 28] },
+      "description": "Sample: rain and snow compared with normal in Ladakh in 2025, wetter in winter.",
       "check": null }
   ]
 }

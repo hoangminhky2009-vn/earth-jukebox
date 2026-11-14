@@ -253,7 +253,8 @@ export function createScene(store, opts) {
   shelf.forEach((s, i) => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'hit slot'; pos(b, SLOT(i).x, SLOT(i).y, SLOT(i).w, SLOT(i).h);
     const name = document.createElement('span'); name.className = 'name'; const main = document.createTextNode(''); const yr = document.createElement('span'); yr.className = 'yr';
-    name.append(main, yr); b.append(name);
+    const ds = document.createElement('span'); ds.className = 'ds'; ds.setAttribute('aria-hidden', 'true');
+    name.append(ds, main, yr); b.append(name);
     if (!s) {
       b.disabled = true; b.setAttribute('aria-label', 'Empty slot, not recorded yet'); main.nodeValue = '???';
     } else {
@@ -283,7 +284,7 @@ export function createScene(store, opts) {
       });
       b.addEventListener('blur', () => { hoverId = null; });
     }
-    slotEls.push({ b, main, yr });
+    slotEls.push({ b, main, yr, ds });
     hits.append(b);
   });
   const doPress = (key) => { pressed = key; pressedT = 5; };
@@ -315,11 +316,12 @@ export function createScene(store, opts) {
     const d = loadedDisc(); const deck = Boolean(d);
     shelf.forEach((s, i) => {
       if (!s) return;
-      const { b, main, yr } = slotEls[i]; const first = store.getDisc(s.discId); const inDeck = slotInDeck(s);
+      const { b, main, yr, ds } = slotEls[i]; const first = store.getDisc(s.discId); const inDeck = slotInDeck(s);
       b.setAttribute('aria-label', inDeck ? `${slotName(s)}, ${DS_LONG[s.dataset] ?? s.dataset}, on the deck`
         : `${slotName(s)}, ${DS_LONG[s.dataset] ?? s.dataset} ${first.year}, side ${first.side}, ${COND_TEXT[first.condition] ?? first.condition}. Press to put it on the deck.`);
       main.nodeValue = inDeck ? 'IN DECK' : slotName(s).toUpperCase();
       yr.textContent = ` · ${slotYr(s)}`;
+      ds.textContent = inDeck ? '' : (DS_SHORT[s.dataset] ?? s.dataset.toUpperCase());   // same place twice: say which dataset
     });
     const label = { play: store.state.playing ? 'Pause' : 'Play', stop: 'Stop', flip: 'Flip to the other side', sci: 'Science mode', eject: 'Eject' };
     for (const key of Object.keys(btnEls)) {
@@ -383,6 +385,11 @@ export function createScene(store, opts) {
 
   /* ---------- weather particles ---------- */
   const surface = (x) => ((x >= X0 - 2 && x < X1 + 2) ? ROOF - snowH[x | 0] - sandH[x | 0] : GROUND);
+  // Piles are highest along the middle of the lip and taper to nothing at the ends (nothing builds up on the overhang).
+  const edgeDist = (x) => Math.min(x - X0, X1 - 1 - x);
+  const snowCap = (x) => Math.max(0, Math.min(8, edgeDist(x) * 0.4));
+  const sandCap = (x) => Math.max(0, Math.min(4, edgeDist(x) * 0.2));
+  const pileSnow = (x, h) => { if (x >= 0 && x < W && snowH[x] < snowCap(x)) snowH[x] = Math.min(snowCap(x), snowH[x] + h); };
   function spawnWeather() {
     const r = Math.random;
     if (weather === 'snow') {
@@ -409,7 +416,7 @@ export function createScene(store, opts) {
         p.t += p.f; p.x += p.vx + Math.sin(p.t) * p.sw; p.y += p.vy;
         const s = surface(p.x); if (!p.near && p.y >= ROOF) continue;
         if (p.y >= s) {
-          if (s < GROUND && p.x >= X0 - 2 && p.x < X1 + 2) { const xi = p.x | 0; if (snowH[xi] < 8) snowH[xi] += 1.6; if (xi + 1 < W && snowH[xi + 1] < 8) snowH[xi + 1] += 0.6; if (xi > 0 && snowH[xi - 1] < 8) snowH[xi - 1] += 0.6; }
+          if (s < GROUND && p.x >= X0 - 2 && p.x < X1 + 2) { const xi = p.x | 0; pileSnow(xi, 1.6); pileSnow(xi + 1, 0.6); pileSnow(xi - 1, 0.6); }
           continue;
         }
       } else if (p.k === 'rain') {
@@ -425,7 +432,7 @@ export function createScene(store, opts) {
         if (p.y >= GROUND) { out.push({ k: 'splash', x: p.x, y: GROUND - 1, vx: (Math.random() - 0.5), vy: -0.6, life: 6 }); continue; }
       } else if (p.k === 'sand') {
         p.x += p.vx; p.y += p.vy + Math.sin(p.x * 0.1) * 0.05; const s = surface(p.x);
-        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; if (sandH[xi] < 4) sandH[xi] += 0.5; if (sandGap < 9) sandGap += 0.03; continue; } p.y = s - 1; }
+        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; if (sandH[xi] < sandCap(xi)) sandH[xi] = Math.min(sandCap(xi), sandH[xi] + 0.5); if (sandGap < 9) sandGap += 0.03; continue; } p.y = s - 1; }
         if (p.x > W + 4) continue;
       } else if (p.k === 'leaf') {
         p.t += 0.06; p.x += Math.sin(p.t) * 0.5 + (p.vx || 0) * 0.2; p.y += p.vy;
@@ -441,9 +448,10 @@ export function createScene(store, opts) {
       if (p.y < H + 5 && p.x > -140 && p.x < W + 140) out.push(p);
     }
     parts = out;
-    for (let x = X0; x < X1 - 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 1.5) { snowH[x] -= d * 0.25; snowH[x + 1] += d * 0.25; } }
-    if (weather !== 'snow') for (let x = X0; x < X1; x++) if (snowH[x] > 0) { snowH[x] = Math.max(0, snowH[x] - 0.012); if (Math.random() < 0.0015 * snowH[x]) parts.push({ k: 'drip', x, y: ROOF + 8, vy: 0.2 }); }
-    if (weather !== 'sand') { for (let x = X0; x < X1; x++) sandH[x] = Math.max(0, sandH[x] - 0.006); sandGap = Math.max(0, sandGap - 0.01); }
+    for (let x = X0 - 2; x < X1 + 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 1.5) { snowH[x] -= d * 0.25; snowH[x + 1] += d * 0.25; } }
+    for (let x = X0 - 2; x < X1 + 2; x++) { snowH[x] = Math.min(snowH[x], snowCap(x)); sandH[x] = Math.min(sandH[x], sandCap(x)); }
+    if (weather !== 'snow') for (let x = X0 - 2; x < X1 + 2; x++) if (snowH[x] > 0) { snowH[x] = Math.max(0, snowH[x] - 0.012); if (Math.random() < 0.0015 * snowH[x]) parts.push({ k: 'drip', x, y: ROOF + 8, vy: 0.2 }); }
+    if (weather !== 'sand') { for (let x = X0 - 2; x < X1 + 2; x++) sandH[x] = Math.max(0, sandH[x] - 0.006); sandGap = Math.max(0, sandGap - 0.01); }
     if (weather !== 'forest' && leaves.length && Math.random() < 0.01) { const l = leaves.shift(); parts.push({ k: 'leaf', x: l.x, y: l.y, vx: 1, vy: 0.3, t: 0, c: l.c, falling: true }); }
   }
   function drawParticles() {

@@ -12,11 +12,24 @@ export const SCALES = {
   other: [0, 2, 4, 6, 7, 9, 11],        // lydian
 };
 
-// Scale degree each bar's chord starts on: a 4-bar loop (3 times a year) in the lofi habit of ii - V - I - vi.
-const CHORD_ROOTS = [1, 4, 0, 5];
-// Raindrop melody: scale-degree offsets from the chord root, walked in order. It only shapes the tune;
-// the data lives in how many drops fall (n) and in which octave.
-const DROP_WALK = [4, 2, 0, 2, 4, 6, 4, 2];   // one per drop slot: chord tones (root, 3rd, 5th, 7th)
+// Scale degree each bar's chord starts on: a 4-bar loop (3 times a year), one per region so places sound different
+// (accompaniment only: the data rules are the same everywhere).
+const CHORD_LOOPS = {
+  other: [1, 4, 0, 5],          // lydian, the lofi habit of ii - V - I - vi
+  sea: [0, 2, 3, 1],            // pentatonic, gentle and open
+  'south-asia': [0, 3, 0, 6],   // dorian modal vamp: i - IV - i - bVII, close to the drone
+};
+// Raindrop melody: four shapes of chord tones (offsets from the chord root, one per drop slot). The change from the
+// month before picks the shape: wetter than last month = the tune climbs, drier = it falls, same = it alternates.
+// The data itself lives in how many drops fall (n) and in which register; the shape only makes it a tune.
+const SHAPES = {
+  up: [0, 2, 4, 2, 4, 6, 7, 9],
+  down: [9, 7, 6, 4, 2, 4, 2, 0],
+  arch: [2, 4, 6, 4, 2, 0, 2, 4],
+  wave: [4, 2, 0, 2, 4, 2, 6, 4],
+};
+const BAND = 12;   // each register is one octave: dry 55-67, normal 60-72, wet 66-78 (kept low: warm, not shrill)
+const fold = (p, base) => { let q = p; while (q > base + BAND) q -= 12; while (q < base) q += 12; return q; };
 const CRACKLE_STEPS = [0, 2, 5, 7, 9, 12, 14];
 const SCIENCE_STEPS = [0, 4, 8, 12];
 export const SKIP_STEP = 12;
@@ -43,13 +56,16 @@ const isMissing = (v) => v === null || v === undefined;
  */
 export function schedule(disc, place, mode = 'music') {
   const scale = SCALES[place?.region] ?? SCALES.other;
+  const loop = CHORD_LOOPS[place?.region] ?? CHORD_LOOPS.other;
   const breaks = new Set(disc.breaks ?? []);
   const notes = [];
   const add = (bar, step, voice, pitch, velocity, kind) => notes.push({ bar, step, voice, pitch, velocity, kind });
 
+  let prevLevel = null;   // level of the month before (melody shape)
+  let prevLast = null;    // last drop of the month before (smooth joins)
   for (let bar = 0; bar < 12; bar++) {
     const level = disc.levels[bar];
-    const chord = CHORD_ROOTS[bar % 4];
+    const chord = loop[bar % 4];
 
     if (isMissing(level)) {
       // No data this month: crackle only, no chord and no data notes.
@@ -64,24 +80,47 @@ export function schedule(disc, place, mode = 'music') {
       // Raindrops: n = 8 + 2k notes; drier = fewer and an octave lower, wetter = more and an octave higher.
       // Drops sit on the 8 off-beat-swung sixteenths of the half-time feel (even steps); above 8, the extra
       // drops are a third on top of a drop (two notes at once), so the count stays n without crowding the beat.
-      // Registers never overlap: bass 36-47 (audio.js), chord 48-59, drops from 60 (dry) / 72 (normal) / 84 (wet).
+      // Registers: bass 36-47 (audio.js), chord 43-54, drops from 55 (dry) / 60 (normal) / 66 (wet): drier = lower.
       const n = 8 + 2 * level;
-      const base = level < 0 ? ROOT : level > 0 ? ROOT + 24 : ROOT + 12;
+      const lo = level < 0 ? ROOT - 5 : level > 0 ? ROOT + 6 : ROOT;   // bottom of the drop register
       const saturated = Math.abs(level) === 4;
+      const shape = prevLevel === null || prevLevel === level ? (bar % 2 ? SHAPES.wave : SHAPES.arch)
+        : level > prevLevel ? SHAPES.up : SHAPES.down;
+      const slots = euclid(Math.min(n, 8), 8);
       const extra = new Set(euclid(Math.max(0, n - 8), 8));
-      euclid(Math.min(n, 8), 8).forEach((slot) => {
+      // Start on the chord tone that lands nearest the last note of the month before, so months join smoothly.
+      let shift = 0;
+      let bestCost = Infinity;
+      if (slots.length) {
+        for (const r of [0, -2, 2, -4, 4]) {
+          const first = fold(degree(scale, chord + shape[slots[0]] + r, ROOT), lo);
+          const cost = (prevLast === null ? 0 : Math.abs(first - prevLast)) + Math.abs(r) * 0.1;
+          if (cost < bestCost) { bestCost = cost; shift = r; }
+        }
+      }
+      slots.forEach((slot) => {
         const s = slot * 2;
-        const d = (chord + DROP_WALK[slot]) % scale.length;
-        add(bar, s, 0, degree(scale, d, base), saturated ? 1 : (s % 8 === 0 ? 0.75 : 0.6), 'data');
-        if (extra.has(slot)) add(bar, s, 1, degree(scale, d + 2, base), saturated ? 1 : 0.5, 'data');
+        const d = chord + shape[slot] + shift;
+        const pitch = fold(degree(scale, d, ROOT), lo);
+        add(bar, s, 0, pitch, saturated ? 1 : (s % 8 === 0 ? 0.75 : 0.6), 'data');
+        prevLast = pitch;
+        if (extra.has(slot)) {
+          let h = degree(scale, d + 2, ROOT);   // a third above the drop
+          while (h <= pitch) h += 12;
+          while (h - pitch > 12) h -= 12;
+          if (h > 108) h -= 12;
+          add(bar, s, 1, h, saturated ? 1 : 0.5, 'data');
+        }
       });
-      // Seventh chord, folded into one octave (48-59) so it never rubs against the drops.
-      [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, 48 + ((((degree(scale, chord + d, ROOT - 12) - 48) % 12) + 12) % 12), 0.5, 'bed'));
+      // Seventh chord, folded into one octave (43-54) so it never rubs against the drops.
+      [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, 43 + ((((degree(scale, chord + d, ROOT - 12) - 43) % 12) + 12) % 12), 0.5, 'bed'));
     } else {
       // Greenness: q layers in the chord bed, each its own voice and octave, plus a steady pulse of 4 on voice 0.
       for (let v = 0; v < level; v++) add(bar, 0, v, degree(scale, chord + 2 * v, ROOT - 24 + 12 * v), 0.5, 'bed');
       for (const s of [4, 8, 12]) add(bar, s, 0, degree(scale, chord, ROOT - 24), 0.45, 'bed');
     }
+
+    if (!isMissing(level)) prevLevel = level;
 
     // A break in the source: keep the bar, add one skip marker; audio.js cuts the last quarter of the bar.
     // A missing month already crackles, and the contract says its bar holds crackle only.

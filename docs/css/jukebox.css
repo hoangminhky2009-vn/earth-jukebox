@@ -29,6 +29,7 @@
 }
 .compact .slot .name { font-size: calc(var(--s, 1) * 4.5px); }
 .name .yr { display: none; color: var(--accent); }
+.name .ds { display: block; font-size: 0.8em; color: var(--accent); }
 .slot:hover .name .yr, .slot:focus-visible .name .yr { display: inline; }
 .high-contrast .slot .name { color: #fff; background: #000; }
 .hit-led { position: absolute; pointer-events: none; }

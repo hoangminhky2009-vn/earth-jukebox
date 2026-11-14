@@ -40,11 +40,11 @@ test('rain: drier = lower, wetter = higher (mean drop pitch)', () => {
   for (let k = -3; k <= 3; k++) if (k !== 0) assert.ok(k < 0 ? mean(k) < mean(0) : mean(k) > mean(0), `k=${k}`);
 });
 
-test('rain: registers never overlap (chord 48-59, drops from 60) and drops sit on even steps', () => {
+test('rain: registers never overlap (chord 43-54, drops from 55) and drops sit on even steps', () => {
   for (const region of ['sea', 'south-asia', 'other']) for (let k = -4; k <= 4; k++) {
     const b = bar(schedule(rain(k), { region }), 3);
-    for (const n of b.filter((x) => x.kind === 'bed')) assert.ok(n.pitch >= 48 && n.pitch <= 59, `bed ${n.pitch}`);
-    for (const n of b.filter((x) => x.kind === 'data')) { assert.ok(n.pitch >= 60, `drop ${n.pitch}`); assert.equal(n.step % 2, 0); }
+    for (const n of b.filter((x) => x.kind === 'bed')) assert.ok(n.pitch >= 43 && n.pitch <= 54, `bed ${n.pitch}`);
+    for (const n of b.filter((x) => x.kind === 'data')) { assert.ok(n.pitch >= 55, `drop ${n.pitch}`); assert.equal(n.step % 2, 0); }
   }
 });
 
