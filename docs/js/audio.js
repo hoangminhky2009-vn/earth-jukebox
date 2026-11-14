@@ -13,7 +13,7 @@
 // a missing month silences the bed (only crackle). Science mode has no bed.
 // Claude cannot listen: levels are kept low and a compressor sits on the output.
 
-import { schedule } from './schedule.js';
+import { schedule, styleOf } from './schedule.js';
 import { ambienceMix, LAYERS } from './ambience.js';
 import { sharedContext } from './foley.js';
 
@@ -23,7 +23,7 @@ const AHEAD = BAR + 0.25;   // how far ahead of the audio clock notes are schedu
 const SWING = 0.55 * STEP;  // the off-beat sixteenths of the half-time feel land late
 const swing = (step) => (step % 4 === 2 ? SWING : 0);
 // Each region in its own key (semitones from C) with its own groove; the data rules do not change.
-const TRANSPOSE = { other: 0, sea: 2, 'south-asia': -2 };
+const TRANSPOSE = { other: 0, sea: 2, 'south-asia': -2, desert: 4, snow: 5 };
 
 let ac = null;
 let master;    // volume
@@ -319,6 +319,73 @@ function bass(midi, t, vel, out, dur) {
   for (const o of [o1, o2]) { o.start(t); o.stop(t + dur + 0.02); track(o, t); }
 }
 
+/** Oud-like pluck (desert): darker string with a body resonance and a small pitch slide into the note. */
+function oud(midi, t, vel, out, dur, pan = 0) {
+  const src = ac.createBufferSource();
+  src.buffer = pluckBuffer(midi);
+  src.playbackRate.setValueAtTime(1.025, t);
+  src.playbackRate.exponentialRampToValueAtTime(1, t + 0.05);
+  const body = ac.createBiquadFilter(); body.type = 'lowpass'; body.frequency.value = 1500; body.Q.value = 1.4;
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.48 * vel, t);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.2, dur) + 0.8);
+  src.connect(body); body.connect(g); g.connect(leadOut(out, pan));
+  src.start(t); src.stop(t + Math.max(0.2, dur) + 0.85);
+  track(src, t);
+}
+
+/** Bell / celesta (snow): FM with an inharmonic ratio, bright strike that rings long and cold. */
+function bell(midi, t, vel, out, dur, pan = 0) {
+  const f = midiHz(midi);
+  const mod = ac.createOscillator(); mod.type = 'sine'; mod.frequency.value = f * 3.5;
+  const idx = ac.createGain();
+  idx.gain.setValueAtTime(f * 1.6 * vel, t);
+  idx.gain.exponentialRampToValueAtTime(f * 0.05 + 1, t + 0.7);
+  const car = ac.createOscillator(); car.type = 'sine'; car.frequency.value = f;
+  mod.connect(idx); idx.connect(car.frequency);
+  const g = ac.createGain();
+  const end = t + Math.max(0.6, dur) + 1.6;
+  env(g, t, 0.1 * vel, 0.003, end);
+  car.connect(g); g.connect(leadOut(out, pan));
+  for (const o of [mod, car]) { o.start(t); o.stop(end + 0.05); track(o, t); }
+}
+
+/** Low frame-drum stroke (desert "doum"). */
+function doum(t, vel, out) {
+  const o = ac.createOscillator(); o.type = 'sine';
+  o.frequency.setValueAtTime(95, t);
+  o.frequency.exponentialRampToValueAtTime(58, t + 0.12);
+  const g = ac.createGain();
+  env(g, t, 0.42 * vel, 0.004, t + 0.42);
+  o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.45); track(o, t);
+}
+
+/** Rim stroke (desert "tek"): a short bright knock. */
+function tek(t, vel, out) {
+  const n = ac.createBufferSource(); n.buffer = noise();
+  const hp = ac.createBiquadFilter(); hp.type = 'bandpass'; hp.frequency.value = 2800; hp.Q.value = 2;
+  const g = ac.createGain();
+  env(g, t, 0.1 * vel, 0.001, t + 0.06);
+  const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = 1150;
+  const go = ac.createGain();
+  env(go, t, 0.04 * vel, 0.001, t + 0.04);
+  n.connect(hp); hp.connect(g); g.connect(out); o.connect(go); go.connect(out);
+  n.start(t, Math.random()); n.stop(t + 0.07); o.start(t); o.stop(t + 0.05);
+  track(n, t); track(o, t);
+}
+
+/** Soft brush swell (snow): air, no hit. */
+function brush(t, vel, out) {
+  const n = ac.createBufferSource(); n.buffer = noise();
+  const lp = ac.createBiquadFilter(); lp.type = 'bandpass'; lp.frequency.value = 3000; lp.Q.value = 0.6;
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.025 * vel, t + 0.18);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
+  n.connect(lp); lp.connect(g); g.connect(out);
+  n.start(t, Math.random()); n.stop(t + 0.5); track(n, t);
+}
+
 /** Hand drum (Southeast Asia groove): a short pitched thump with a little slap. */
 function tom(t, vel, out, hz) {
   const o = ac.createOscillator(); o.type = 'sine';
@@ -383,7 +450,7 @@ function groove(b, t0, from, out) {
   if (mode !== 'music' || !notes.some((n) => n.kind === 'data' || n.kind === 'bed')) return;
   const at = (step) => t0 + step * STEP + swing(step);
   const hit = (step, fn) => { const t = at(step); if (t >= from) fn(t); };
-  const region = place?.region in TRANSPOSE ? place.region : 'other';
+  const region = styleOf(place);
   const tonic = 48 + TRANSPOSE[region];
   if (region === 'sea') {
     // light hand percussion: one soft kick, three tuned hand-drum strokes, a shaker on the eighths
@@ -402,6 +469,15 @@ function groove(b, t0, from, out) {
     const tinHz = midiHz(tonic + 24);
     for (const s of [4, 8, 12, 14]) hit(s, (t) => tin(t, s === 8 ? 1 : 0.6, out, tinHz));
     if (b % 4 === 3) hit(15, (t) => tin(t, 0.4, out, tinHz));
+  } else if (region === 'desert') {
+    // frame-drum cycle (maqsum-like): doum on 1 and 3, tek strokes between, a roll before the loop turns
+    for (const s of [0, 8]) hit(s, (t) => doum(t, s === 0 ? 1 : 0.8, out));
+    for (const s of [2, 6, 12]) hit(s, (t) => tek(t, s === 6 ? 1 : 0.7, out));
+    if (b % 4 === 3) for (const s of [13, 14, 15]) hit(s, (t) => tek(t, 0.45, out));
+  } else if (region === 'snow') {
+    // almost nothing: a soft heartbeat and a brush of air, so the bells ring in open space
+    hit(0, (t) => kick(t, 0.35, out));
+    hit(8, (t) => brush(t, 1, out));
   } else {
     // lofi kit
     hit(0, (t) => kick(t, 1, out));
@@ -413,8 +489,8 @@ function groove(b, t0, from, out) {
   const root = notes.find((n) => n.kind === 'bed' && n.step === 0 && n.voice === 0);
   if (!root) return;
   const low = 36 + ((((root.pitch - 36) % 12) + 12) % 12);   // bass in the octave above C2, on the chord root
-  hit(0, (t) => bass(low, t, region === 'south-asia' ? 0.6 : 1, out, 1.1));
-  if (region !== 'south-asia') hit(10, (t) => bass(low, t, 0.7, out, 0.5));
+  hit(0, (t) => bass(low, t, region === 'south-asia' || region === 'snow' ? 0.6 : 1, out, region === 'snow' ? 1.8 : 1.1));
+  if (region !== 'south-asia' && region !== 'snow') hit(10, (t) => bass(low, t, 0.7, out, 0.5));
 }
 
 function beep(midi, t, vel, out) {
@@ -458,6 +534,8 @@ function skip(t) {
 const LEAD = {
   sea: pluck,
   'south-asia': flute,
+  desert: oud,
+  snow: bell,
   other: (m, t, v, out, dur, pan) => keys(m, t, v * 1.3, out, dur + 1.0, pan, noteSend),
 };
 
@@ -465,7 +543,7 @@ function sound(n, t, out) {
   if (n.kind === 'crackle') { if (n.step === 0) crackle(t, out); pop(t, n.velocity, out); return; }
   if (n.kind === 'skip') { skip(t); return; }
   if (mode === 'science') { beep(n.pitch, t, n.velocity, out); return; }
-  const lead = LEAD[place?.region] ?? LEAD.other;
+  const lead = LEAD[styleOf(place)] ?? LEAD.other;
   if (n.kind === 'data') {
     // played like a person: a few ms early or late, a little louder or softer, notes held until the next one
     const r = hash01(n.bar, n.step, n.voice);
@@ -602,7 +680,7 @@ function rebuild() {
     warm.frequency.setTargetAtTime(rain ? 2200 : 3200, ac.currentTime, 0.1);
     ambSoft.frequency.setTargetAtTime(rain && !dry ? 2600 : 4500, ac.currentTime, 0.1);
   }
-  const tr = mode === 'music' ? (TRANSPOSE[place?.region] ?? 0) : 0;   // each region in its own key
+  const tr = mode === 'music' ? (TRANSPOSE[styleOf(place)] ?? 0) : 0;   // each style in its own key
   for (const n of schedule(disc, place, mode)) {
     if (tr && (n.kind === 'data' || n.kind === 'bed')) n.pitch += tr;
     notesByBar[n.bar].push(n);
@@ -613,7 +691,7 @@ function rebuild() {
     drops.forEach((n, i) => { n.len = Math.min(1.2, ((drops[i + 1]?.step ?? 16) - n.step) * STEP * 1.3); n.busy = drops.length >= 7; });   // overlaps a little: legato
     for (const n of bar) if (n.kind === 'data' && n.voice !== 0) { n.len = drops.find((d) => d.step === n.step)?.len ?? 0.3; n.busy = true; }
   }
-  if (ac && mode === 'music' && place?.region === 'sea') {
+  if (ac && mode === 'music' && ['sea', 'desert'].includes(styleOf(place))) {
     for (const bar of notesByBar) for (const n of bar) if (n.kind === 'data' || n.voice === 0) { pluckBuffer(n.pitch); pluckBuffer(n.pitch + 24); }
   }
 }

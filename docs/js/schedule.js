@@ -1,16 +1,28 @@
 // Written by Ky with help from Claude (SI). See AI_USE.md.
 // The note schedule: a pure function from one disc to a list of notes (notes/05_music.md, "Note schedule").
 // No audio and no DOM here, so it runs under `node --test`, in the piano roll and in the round-trip check.
-// The rules are the same for every place, year and side; a place only changes the scale (and, in audio.js, the instrument).
+// The data rules are the same for every place, year and side; a place only changes the style: scale and chord loop here,
+// key, instruments and groove in audio.js.
 
 export const ROOT = 60;          // MIDI middle C
 export const STEPS = 16;         // sixteenth notes per bar (one bar = one month = 2 s at 120 BPM)
 
+// A musical style per place: its region, unless the biome is very distinct (desert, snow/ice).
 export const SCALES = {
   sea: [0, 2, 4, 7, 9],                 // major pentatonic
   'south-asia': [0, 2, 3, 5, 7, 9, 10], // dorian, close to raga Kafi
   other: [0, 2, 4, 6, 7, 9, 11],        // lydian
+  desert: [0, 1, 4, 5, 7, 8, 10],       // phrygian dominant (hijaz colour)
+  snow: [0, 2, 5, 7, 9],                // suspended pentatonic: open, cold, no thirds to lean on
 };
+
+/** Style of a place: 'desert' or 'snow' from its biome, else its region ('sea', 'south-asia', 'other'). */
+export function styleOf(place) {
+  const biome = String(place?.biome ?? '');
+  if (/desert|arid/i.test(biome)) return 'desert';
+  if (/snow|ice|polar|glacier/i.test(biome)) return 'snow';
+  return place?.region in SCALES ? place.region : 'other';
+}
 
 // Scale degree each bar's chord starts on: a 4-bar loop (3 times a year), one per region so places sound different
 // (accompaniment only: the data rules are the same everywhere).
@@ -18,6 +30,8 @@ const CHORD_LOOPS = {
   other: [1, 4, 0, 5],          // lydian, the lofi habit of ii - V - I - vi
   sea: [0, 2, 3, 1],            // pentatonic, gentle and open
   'south-asia': [0, 3, 0, 6],   // dorian modal vamp: i - IV - i - bVII, close to the drone
+  desert: [0, 1, 0, 6],         // i - bII - i - bVII, the hijaz cadence
+  snow: [0, 3, 1, 3],           // slow, open, hovering
 };
 // Raindrop melody: four shapes of chord tones (offsets from the chord root, one per drop slot). The change from the
 // month before picks the shape: wetter than last month = the tune climbs, drier = it falls, same = it alternates.
@@ -25,9 +39,15 @@ const CHORD_LOOPS = {
 const SHAPES = {
   up: [0, 2, 4, 2, 4, 6, 7, 9],
   down: [9, 7, 6, 4, 2, 4, 2, 0],
-  arch: [2, 4, 6, 4, 2, 0, 2, 4],
-  wave: [4, 2, 0, 2, 4, 2, 6, 4],
 };
+// A month like the one before: four different shapes in turn, so a run of normal months is not one loop.
+const SAME = [
+  [2, 4, 6, 4, 2, 0, 2, 4],   // arch
+  [4, 2, 0, 2, 4, 2, 6, 4],   // wave
+  [0, 4, 2, 6, 4, 7, 6, 2],   // leaps
+  [6, 4, 4, 2, 2, 0, 4, 2],   // sigh
+];
+const ROTATE = [0, 3, 5, 2];  // and the drops start on a different slot each month (same count, new rhythm)
 const BAND = 12;   // each register is one octave: dry 55-67, normal 60-72, wet 66-78 (kept low: warm, not shrill)
 const fold = (p, base) => { let q = p; while (q > base + BAND) q -= 12; while (q < base) q += 12; return q; };
 const CRACKLE_STEPS = [0, 2, 5, 7, 9, 12, 14];
@@ -55,8 +75,9 @@ const isMissing = (v) => v === null || v === undefined;
  * @returns {{bar:number, step:number, voice:number, pitch:number, velocity:number, kind:'data'|'bed'|'crackle'|'skip'}[]}
  */
 export function schedule(disc, place, mode = 'music') {
-  const scale = SCALES[place?.region] ?? SCALES.other;
-  const loop = CHORD_LOOPS[place?.region] ?? CHORD_LOOPS.other;
+  const style = styleOf(place);
+  const scale = SCALES[style];
+  const loop = CHORD_LOOPS[style];
   const breaks = new Set(disc.breaks ?? []);
   const notes = [];
   const add = (bar, step, voice, pitch, velocity, kind) => notes.push({ bar, step, voice, pitch, velocity, kind });
@@ -84,9 +105,10 @@ export function schedule(disc, place, mode = 'music') {
       const n = 8 + 2 * level;
       const lo = level < 0 ? ROOT - 5 : level > 0 ? ROOT + 6 : ROOT;   // bottom of the drop register
       const saturated = Math.abs(level) === 4;
-      const shape = prevLevel === null || prevLevel === level ? (bar % 2 ? SHAPES.wave : SHAPES.arch)
-        : level > prevLevel ? SHAPES.up : SHAPES.down;
-      const slots = euclid(Math.min(n, 8), 8);
+      const same = prevLevel === null || prevLevel === level;
+      const shape = same ? SAME[bar % 4] : level > prevLevel ? SHAPES.up : SHAPES.down;
+      const rot = n < 8 ? ROTATE[bar % 4] : 0;
+      const slots = euclid(Math.min(n, 8), 8).map((x) => (x + rot) % 8).sort((a, b) => a - b);
       const extra = new Set(euclid(Math.max(0, n - 8), 8));
       // Start on the chord tone that lands nearest the last note of the month before, so months join smoothly.
       let shift = 0;

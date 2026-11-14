@@ -41,8 +41,9 @@ test('rain: drier = lower, wetter = higher (mean drop pitch)', () => {
 });
 
 test('rain: registers never overlap (chord 43-54, drops from 55) and drops sit on even steps', () => {
-  for (const region of ['sea', 'south-asia', 'other']) for (let k = -4; k <= 4; k++) {
-    const b = bar(schedule(rain(k), { region }), 3);
+  const places = [{ region: 'sea' }, { region: 'south-asia' }, { region: 'other' }, { region: 'other', biome: 'desert' }, { region: 'south-asia', biome: 'snow-mountain' }];
+  for (const pl of places) for (let k = -4; k <= 4; k++) {
+    const b = bar(schedule(rain(k), pl), 3);
     for (const n of b.filter((x) => x.kind === 'bed')) assert.ok(n.pitch >= 43 && n.pitch <= 54, `bed ${n.pitch}`);
     for (const n of b.filter((x) => x.kind === 'data')) { assert.ok(n.pitch >= 55, `drop ${n.pitch}`); assert.equal(n.step % 2, 0); }
   }
@@ -95,4 +96,15 @@ test('readBack gives the levels back exactly; unknown region falls back; same in
   const g = ndvi(0, { levels: [1, 2, 3, 4, null, 4, 3, 2, 1, 1, 2, 3] });
   assert.deepEqual(readBack(schedule(g, { region: 'nowhere' }), 'ndvi'), g.levels);
   assert.deepEqual(schedule(d, SEA), schedule(d, SEA));
+});
+
+test('style: desert and snow biomes get their own scale; a run of normal months is not one repeated loop', async () => {
+  const { styleOf } = await import('./schedule.js');
+  assert.equal(styleOf({ region: 'other', biome: 'desert' }), 'desert');
+  assert.equal(styleOf({ region: 'south-asia', biome: 'snow-mountain' }), 'snow');
+  assert.equal(styleOf({ region: 'sea', biome: 'monsoon-delta' }), 'sea');
+  assert.equal(styleOf({ region: 'nowhere' }), 'other');
+  const flat = { dataset: 'rain', levels: Array(12).fill(-1), breaks: [] };
+  const bars = [0, 1, 2, 3].map((b) => bar(schedule(flat, { region: 'other' }), b).filter((n) => n.kind === 'data').map((n) => `${n.step}:${n.pitch}`).join(' '));
+  assert.equal(new Set(bars).size, 4, 'four normal-ish months in a row all differ');
 });
