@@ -123,15 +123,15 @@ test('LCD line: short wording, glyph, missing month', () => {
   assert.equal(lcdText(disc('mekong-ndvi-2024'), 'Mekong Delta, Vietnam', 0, data.datasets), 'MEKONG DELTA // JAN medium to high greenness');
 });
 
-test('tray pages: main page = river pair, forest pair, desert rain over ice rain; everything else on More places', async () => {
+test('tray pages: main page = river pair, forest pair, desert greenness over ice greenness; everything else on More places', async () => {
   const { shelfPages } = await import('./viz.js');
   const places = [{ id: 'dhaka', biome: 'monsoon-delta' }, { id: 'hue', biome: 'monsoon-delta' }, { id: 'amazon', biome: 'rainforest' },
     { id: 'zagora', biome: 'desert' }, { id: 'leh', biome: 'snow-mountain' }];
   const slots = places.flatMap((p) => ['rain', 'ndvi'].map((ds) => ({ placeId: p.id, dataset: ds })));
   const pages = shelfPages(slots, places);
   assert.deepEqual(pages[0].slots.map((s) => s && `${s.placeId} ${s.dataset}`),
-    ['dhaka rain', 'dhaka ndvi', 'amazon rain', 'amazon ndvi', 'zagora rain', 'leh rain']);
-  assert.deepEqual(pages[1].slots.map((s) => `${s.placeId} ${s.dataset}`), ['hue rain', 'hue ndvi', 'zagora ndvi', 'leh ndvi']);
+    ['dhaka rain', 'dhaka ndvi', 'amazon rain', 'amazon ndvi', 'zagora ndvi', 'leh ndvi']);
+  assert.deepEqual(pages[1].slots.map((s) => `${s.placeId} ${s.dataset}`), ['hue rain', 'hue ndvi', 'zagora rain', 'leh rain']);
   // only river data (today's real data): river pair on the main page, the other spots empty, the rest on More places
   const rivers = shelfPages(slots.slice(0, 4), places);
   assert.deepEqual(rivers[0].slots.map((s) => (s ? s.placeId : null)), ['dhaka', 'dhaka', null, null, null, null]);
