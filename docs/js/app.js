@@ -54,14 +54,16 @@ function kickAudio() {
   if (!audioEngine) return;
   audioEngine.start().then(() => audioEngine.setVolume(volumeNow)).catch((err) => { console.error(err); announce('Sound could not start'); });
 }
-function firstGesture() {
-  if (started) return;
+// Phones (iOS Safari above all) only let sound start from the end of a touch (touchend or click), not from pointerdown,
+// and only inside the gesture itself. So every touch, click or key press tries again until the audio really runs.
+const audioRunning = () => foley.sharedContext()?.state === 'running';
+const GESTURES = ['pointerdown', 'touchend', 'click', 'keydown'];
+function onGesture() {
   started = true;
-  foley.unlock();
-  kickAudio();
+  if (!audioRunning()) { foley.unlock(); kickAudio(); }
+  if (audioRunning()) for (const g of GESTURES) removeEventListener(g, onGesture, true);
 }
-addEventListener('pointerdown', firstGesture, { capture: true, once: true });
-addEventListener('keydown', firstGesture, { capture: true, once: true });
+for (const g of GESTURES) addEventListener(g, onGesture, true);
 
 async function main() {
   let data;
@@ -89,6 +91,8 @@ async function main() {
   store.on('disc:load', ({ disc }) => audio.load(disc, place(disc)));
   // Music starts when the needle touches the record (scene → onNeedleDown), not when Play is pressed:
   // the arm swings in first (~0.7 s), then the platter spins and the sound begins.
+  // Resume inside the gesture that pressed Play (the music itself starts a moment later, when the needle lands).
+  store.on('play', () => { if (!audioRunning()) audio.start().catch(() => {}); });
   store.on('pause', () => audio.pause());
   store.on('stop', () => audio.stop());
   store.on('seek', ({ month }) => audio.seek(month));
@@ -154,7 +158,7 @@ async function main() {
   foley.setVolume(volumeNow);
   store.on('settings', (st) => { volumeNow = st.volume; });
 
-  if (started) kickAudio(); // a gesture came in while the data was still loading
+  if (started && !audioRunning()) kickAudio(); // a gesture came in while the data was still loading
 }
 
 main();
