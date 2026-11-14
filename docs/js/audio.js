@@ -20,8 +20,10 @@ import { sharedContext } from './foley.js';
 const BAR = 2;
 const STEP = BAR / 16;
 const AHEAD = BAR + 0.25;   // how far ahead of the audio clock notes are scheduled
-const SWING = 0.55 * STEP;  // the off-beat sixteenths of the half-time feel land late
-const swing = (step) => (step % 4 === 2 ? SWING : 0);
+// How late the off-beat sixteenths of the half-time feel land, per style (lofi swings, the frame drum is straight).
+const SWING_BY = { other: 0.55, sea: 0.3, 'south-asia': 0.4, desert: 0, snow: 0.2 };
+let curStyle = 'other';
+const swing = (step) => (step % 4 === 2 ? (SWING_BY[curStyle] ?? 0.55) * STEP : 0);
 // Each region in its own key (semitones from C) with its own groove; the data rules do not change.
 const TRANSPOSE = { other: 0, sea: 2, 'south-asia': -2, desert: 4, snow: 5 };
 
@@ -531,6 +533,58 @@ function skip(t) {
   track(o, t); track(n, t);
 }
 
+/** Harmonium-like reed pad (South Asia): two detuned pulse-ish waves, bellows swell, held for the bar. */
+function harmonium(midi, t, vel, out) {
+  const f = midiHz(midi);
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1300; lp.Q.value = 0.6;
+  const g = ac.createGain();
+  const end = t + BAR - 0.05;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.03 * vel, t + 0.18);
+  g.gain.linearRampToValueAtTime(0.024 * vel, t + 1.0);
+  g.gain.linearRampToValueAtTime(0.0001, end + 0.25);
+  for (const [type, det] of [['square', -6], ['sawtooth', 6]]) {
+    const o = ac.createOscillator(); o.type = type; o.frequency.value = f; o.detune.value = det;
+    o.connect(lp); o.start(t); o.stop(end + 0.3); track(o, t);
+  }
+  lp.connect(g); g.connect(out);
+}
+
+/** Airy pad (snow): slow swell of sine and soft triangle, long release into the next month. */
+function air(midi, t, vel, out) {
+  const f = midiHz(midi);
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1400;
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.04 * vel, t + 0.8);
+  g.gain.linearRampToValueAtTime(0.0001, t + BAR + 0.8);
+  const o1 = ac.createOscillator(); o1.type = 'sine'; o1.frequency.value = f;
+  const o2 = ac.createOscillator(); o2.type = 'triangle'; o2.frequency.value = f * 2; o2.detune.value = 5;
+  const g2 = gainNode(0.25);
+  o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(out);
+  for (const o of [o1, o2]) { o.start(t); o.stop(t + BAR + 0.85); track(o, t); }
+}
+
+/** How each style plays its chord (the bed notes at step 0): stab, harp arpeggio, reed pad, oud strum, or air. */
+function playBed(n, t, out) {
+  const v = n.velocity * (n.pitch < 48 ? 1.3 : 1);
+  if (curStyle === 'sea') {
+    // harp-like: the chord broken upwards across the first half of the bar
+    pluck(n.pitch + 12, t + n.voice * 3 * STEP + swing(n.voice * 3), v * 0.55, out, 0.6, (n.voice - 1.5) * 0.2);
+  } else if (curStyle === 'south-asia') {
+    harmonium(n.pitch, t, v, out);
+  } else if (curStyle === 'desert') {
+    // no sustained chord: root and fifth strummed on the oud, again on beat 3
+    if (n.voice === 0 || n.voice === 2) {
+      for (const s of [0, 8]) oud(n.pitch + 12, t + s * STEP + n.voice * 0.012, v * (s ? 0.35 : 0.5), out, 0.3, n.voice ? 0.2 : -0.2);
+    }
+  } else if (curStyle === 'snow') {
+    air(n.pitch + 12, t, v, out);
+  } else {
+    keys(n.pitch, t, v, out, 1.8);
+  }
+}
+
 const LEAD = {
   sea: pluck,
   'south-asia': flute,
@@ -555,7 +609,7 @@ function sound(n, t, out) {
     return;
   }
   // bed: electric-piano chord at step 0; the greenness pulse (voice 0, 4 a bar) in the place's instrument
-  if (n.step === 0) keys(n.pitch, t, n.velocity * (n.pitch < 48 ? 1.3 : 1), out, 1.8);
+  if (n.step === 0) playBed(n, t, out);
   if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out, 4 * STEP, 0);
 }
 
@@ -680,7 +734,8 @@ function rebuild() {
     warm.frequency.setTargetAtTime(rain ? 2200 : 3200, ac.currentTime, 0.1);
     ambSoft.frequency.setTargetAtTime(rain && !dry ? 2600 : 4500, ac.currentTime, 0.1);
   }
-  const tr = mode === 'music' ? (TRANSPOSE[styleOf(place)] ?? 0) : 0;   // each style in its own key
+  curStyle = styleOf(place);
+  const tr = mode === 'music' ? (TRANSPOSE[curStyle] ?? 0) : 0;   // each style in its own key
   for (const n of schedule(disc, place, mode)) {
     if (tr && (n.kind === 'data' || n.kind === 'bed')) n.pitch += tr;
     notesByBar[n.bar].push(n);
