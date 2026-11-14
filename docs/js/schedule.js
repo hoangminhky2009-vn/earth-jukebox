@@ -12,10 +12,11 @@ export const SCALES = {
   other: [0, 2, 4, 6, 7, 9, 11],        // lydian
 };
 
-const CHORD_ROOTS = [0, 3, 4, 1];      // scale degree each bar's chord starts on (4-bar loop, 3 times a year)
+// Scale degree each bar's chord starts on: a 4-bar loop (3 times a year) in the lofi habit of ii - V - I - vi.
+const CHORD_ROOTS = [1, 4, 0, 5];
 // Raindrop melody: scale-degree offsets from the chord root, walked in order. It only shapes the tune;
 // the data lives in how many drops fall (n) and in which octave.
-const DROP_WALK = [0, 2, 4, 7, 4, 2, 4, 9, 7, 4, 2, 4, 7, 9, 11, 7];
+const DROP_WALK = [4, 2, 0, 2, 4, 6, 4, 2];   // one per drop slot: chord tones (root, 3rd, 5th, 7th)
 const CRACKLE_STEPS = [0, 2, 5, 7, 9, 12, 14];
 const SCIENCE_STEPS = [0, 4, 8, 12];
 export const SKIP_STEP = 12;
@@ -61,14 +62,21 @@ export function schedule(disc, place, mode = 'music') {
       for (const s of SCIENCE_STEPS) add(bar, s, 0, pitch, 0.8, 'data');
     } else if (disc.dataset === 'rain') {
       // Raindrops: n = 8 + 2k notes; drier = fewer and an octave lower, wetter = more and an octave higher.
+      // Drops sit on the 8 off-beat-swung sixteenths of the half-time feel (even steps); above 8, the extra
+      // drops are a third on top of a drop (two notes at once), so the count stays n without crowding the beat.
+      // Registers never overlap: bass 36-47 (audio.js), chord 48-59, drops from 60 (dry) / 72 (normal) / 84 (wet).
       const n = 8 + 2 * level;
-      const octave = level < 0 ? -12 : level > 0 ? 12 : 0;
+      const base = level < 0 ? ROOT : level > 0 ? ROOT + 24 : ROOT + 12;
       const saturated = Math.abs(level) === 4;
-      euclid(n).forEach((s, i) => {
-        const vel = saturated ? 1 : (s % 4 === 0 ? 0.75 : 0.6);
-        add(bar, s, 0, degree(scale, chord + DROP_WALK[i], ROOT + octave), vel, 'data');
+      const extra = new Set(euclid(Math.max(0, n - 8), 8));
+      euclid(Math.min(n, 8), 8).forEach((slot) => {
+        const s = slot * 2;
+        const d = (chord + DROP_WALK[slot]) % scale.length;
+        add(bar, s, 0, degree(scale, d, base), saturated ? 1 : (s % 8 === 0 ? 0.75 : 0.6), 'data');
+        if (extra.has(slot)) add(bar, s, 1, degree(scale, d + 2, base), saturated ? 1 : 0.5, 'data');
       });
-      [0, 2, 4].forEach((d, v) => add(bar, 0, v, degree(scale, chord + d, ROOT - 12), 0.5, 'bed'));
+      // Seventh chord, folded into one octave (48-59) so it never rubs against the drops.
+      [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, 48 + ((((degree(scale, chord + d, ROOT - 12) - 48) % 12) + 12) % 12), 0.5, 'bed'));
     } else {
       // Greenness: q layers in the chord bed, each its own voice and octave, plus a steady pulse of 4 on voice 0.
       for (let v = 0; v < level; v++) add(bar, 0, v, degree(scale, chord + 2 * v, ROOT - 24 + 12 * v), 0.5, 'bed');

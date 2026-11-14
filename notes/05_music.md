@@ -42,6 +42,10 @@ Real samples only if CC0 / CC-BY; otherwise synthesise.
   `onTick(fn)` — `fn(bar)` with an **integer 0–11, once per bar**; the piano roll slides its playhead across the bar itself (2 s per bar).
   Ky's `audio-stub.js` has the same exports.
 - No Tone.js (Nov 14): `audio.js` uses the Web Audio API directly, every sound synthesized, so nothing is vendored.
+- Drops on the swung grid (Nov 14): the n drops go on the 8 even steps (Euclidean over 8); for n > 8 the extra drops are a third on top
+  of a drop (voice 1, same step). Registers are fixed so nothing rubs: bass 36-47, chord 48-59 (folded into one octave), drops from 60/72/84.
+- Lofi style (Nov 14): the rain chord bed is a seventh chord (4 bed notes), loop ii-V-I-vi; audio.js adds a half-time beat, bass and swing
+  that carry no data and stop in null bars and science mode, so the round trip is unchanged.
 - Field-recording bed (Nov 14): real CC0 recordings under the music, chosen by `ambience.js` from the month's level only
   (rain: wind → light rain → heavy rain; greenness: wind → birds; missing month: silent). Science mode has no bed.
 - Sabik may create `docs/audio-test.html` (his own test page) — never edit Ky's `index.html` / `app.js`.

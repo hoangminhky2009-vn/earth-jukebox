@@ -21,12 +21,12 @@ test('euclid: exactly n hits, gaps differ by at most 1, n = 0 and n = 16', () =>
   }
 });
 
-test('rain: n = 8 + 2k data notes for every k, 3 bed notes, steps and bars in range', () => {
+test('rain: n = 8 + 2k data notes for every k, 4 bed notes (seventh chord), steps and bars in range', () => {
   for (let k = -4; k <= 4; k++) {
     const notes = schedule(rain(k), SEA, 'music');
     const b = bar(notes, 3);
     assert.equal(b.filter((n) => n.kind === 'data').length, 8 + 2 * k, `k=${k}`);
-    assert.equal(b.filter((n) => n.kind === 'bed').length, 3);
+    assert.equal(b.filter((n) => n.kind === 'bed').length, 4);
     for (const n of notes) {
       assert.ok(n.bar >= 0 && n.bar <= 11 && n.step >= 0 && n.step <= 15);
       assert.ok(Number.isInteger(n.pitch) && n.pitch >= 21 && n.pitch <= 108, `pitch ${n.pitch}`);
@@ -38,6 +38,14 @@ test('rain: n = 8 + 2k data notes for every k, 3 bed notes, steps and bars in ra
 test('rain: drier = lower, wetter = higher (mean drop pitch)', () => {
   const mean = (k) => { const d = bar(schedule(rain(k), SEA, 'music'), 3).filter((n) => n.kind === 'data'); return d.reduce((a, n) => a + n.pitch, 0) / d.length; };
   for (let k = -3; k <= 3; k++) if (k !== 0) assert.ok(k < 0 ? mean(k) < mean(0) : mean(k) > mean(0), `k=${k}`);
+});
+
+test('rain: registers never overlap (chord 48-59, drops from 60) and drops sit on even steps', () => {
+  for (const region of ['sea', 'south-asia', 'other']) for (let k = -4; k <= 4; k++) {
+    const b = bar(schedule(rain(k), { region }), 3);
+    for (const n of b.filter((x) => x.kind === 'bed')) assert.ok(n.pitch >= 48 && n.pitch <= 59, `bed ${n.pitch}`);
+    for (const n of b.filter((x) => x.kind === 'data')) { assert.ok(n.pitch >= 60, `drop ${n.pitch}`); assert.equal(n.step % 2, 0); }
+  }
 });
 
 test('rain: saturated bars are accented at full velocity, others are not', () => {
