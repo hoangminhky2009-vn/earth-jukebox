@@ -3,7 +3,7 @@
 // The level of the month decides; the place's biome decides what that weather sounds like there:
 // a normal month in a desert is dry wind (rain there is an event), in snow or ice it is wind, elsewhere it is rain.
 
-export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds'];
+export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds', 'snow-wind', 'snow-howl'];
 
 /**
  * @param {object} disc full disc object
@@ -13,7 +13,7 @@ export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds'];
  * @returns {{wind:number, 'rain-light':number, 'rain-heavy':number, birds:number}}
  */
 export function ambienceMix(disc, bar, mode = 'music', place = null) {
-  const mix = { wind: 0, 'rain-light': 0, 'rain-heavy': 0, birds: 0 };
+  const mix = { wind: 0, 'rain-light': 0, 'rain-heavy': 0, birds: 0, 'snow-wind': 0, 'snow-howl': 0 };
   const level = disc?.levels?.[bar];
   if (mode !== 'music' || level === null || level === undefined) return mix;   // missing month: silence (crackle only)
   const biome = String(place?.biome ?? '');
@@ -34,9 +34,11 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
     // the further from normal, the louder the bed: a normal month is a quiet backdrop, an extreme month swells
     const swell = 0.5 + 0.5 * (Math.abs(level) / 4);
     for (const k of LAYERS) mix[k] *= swell;
-    if (/snow|ice|polar/i.test(biome)) {   // snow is quiet: fold the rain into a stronger wind
-      mix.wind = Math.min(1, mix.wind + 0.6 * (mix['rain-light'] + mix['rain-heavy']));
-      mix['rain-light'] = 0; mix['rain-heavy'] = 0;
+    if (/snow|ice|polar|glacier/i.test(biome)) {
+      // snow does not patter: open-hill wind always, stronger the further from normal; a snowier month adds the howl
+      for (const k of LAYERS) mix[k] = 0;
+      mix['snow-wind'] = 0.45 + 0.35 * (Math.abs(level) / 4);
+      mix['snow-howl'] = level > 0 ? Math.min(1, 0.25 * level) : 0;
     }
   } else {
     const green = (level - 1) / 3;                     // q = 1..4 -> 0..1

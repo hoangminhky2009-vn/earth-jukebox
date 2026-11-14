@@ -40,7 +40,7 @@ let noteSend = 1;   // echo send of the note being played (lower in busy months)
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
 const AMB_LEVEL = 0.3;    // field recordings sit well under the music
-const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9 };   // evens out the recordings
+const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 1.4, 'snow-howl': 0.6 };   // evens out the recordings
 const ambBufs = {};
 let ambLoading = null;
 let amb = null;   // { layer: { src, g } } while playing
@@ -376,18 +376,6 @@ function tek(t, vel, out) {
   track(n, t); track(o, t);
 }
 
-/** Soft brush swell (snow): air, no hit. */
-function brush(t, vel, out) {
-  const n = ac.createBufferSource(); n.buffer = noise();
-  const lp = ac.createBiquadFilter(); lp.type = 'bandpass'; lp.frequency.value = 3000; lp.Q.value = 0.6;
-  const g = ac.createGain();
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.linearRampToValueAtTime(0.025 * vel, t + 0.18);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
-  n.connect(lp); lp.connect(g); g.connect(out);
-  n.start(t, Math.random()); n.stop(t + 0.5); track(n, t);
-}
-
 /** Hand drum (Southeast Asia groove): a short pitched thump with a little slap. */
 function tom(t, vel, out, hz) {
   const o = ac.createOscillator(); o.type = 'sine';
@@ -477,9 +465,8 @@ function groove(b, t0, from, out) {
     for (const s of [2, 6, 12]) hit(s, (t) => tek(t, s === 6 ? 1 : 0.7, out));
     if (b % 4 === 3) for (const s of [13, 14, 15]) hit(s, (t) => tek(t, 0.45, out));
   } else if (region === 'snow') {
-    // almost nothing: a soft heartbeat and a brush of air, so the bells ring in open space
-    hit(0, (t) => kick(t, 0.35, out));
-    hit(8, (t) => brush(t, 1, out));
+    // almost nothing: a soft heartbeat every other month, so the bells ring in open space
+    if (b % 2 === 0) hit(0, (t) => kick(t, 0.3, out));
   } else {
     // lofi kit
     hit(0, (t) => kick(t, 1, out));
