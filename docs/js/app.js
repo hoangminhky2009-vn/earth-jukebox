@@ -86,7 +86,8 @@ async function main() {
   // Store events drive the audio engine (audio gets the full objects, never ids).
   const place = (disc) => store.getPlace(disc.place);
   store.on('disc:load', ({ disc }) => audio.load(disc, place(disc)));
-  store.on('play', () => audio.play());
+  // Music starts when the needle touches the record (scene → onNeedleDown), not when Play is pressed:
+  // the arm swings in first (~0.7 s), then the platter spins and the sound begins.
   store.on('pause', () => audio.pause());
   store.on('stop', () => audio.stop());
   store.on('seek', ({ month }) => audio.seek(month));
@@ -114,7 +115,7 @@ async function main() {
   };
 
   initA11y(store, { datasets: data.datasets, duck: audio.duck, isStarted: () => started, preview });
-  createScene(store, { datasets: data.datasets, announce });
+  createScene(store, { datasets: data.datasets, announce, onNeedleDown: () => { if (store.state.playing) audio.play(); } });
   // After a disc lands on the deck, say so (a11y.js joins it to a "Recorded: ..." sentence spoken a moment before).
   store.on('disc:load', ({ disc }) => {
     const p = place(disc);

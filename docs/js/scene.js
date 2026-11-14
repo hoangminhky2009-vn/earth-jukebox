@@ -567,7 +567,7 @@ export function createScene(store, opts) {
     // arm first, platter second
     const armTarget = playing && !fly ? 1 : 0;
     const armSpeed = rm ? 1 : dt / 0.7; armA += Math.sign(armTarget - armA) * Math.min(Math.abs(armTarget - armA), armSpeed);
-    if (playing && armA >= 1 && !spinning && !fly) { foley.play('needle'); spinning = true; onMonth(); }
+    if (playing && armA >= 1 && !spinning && !fly) { foley.play('needle'); spinning = true; onMonth(); if (opts.onNeedleDown) opts.onNeedleDown(); }
     speed += ((spinning ? 80 : 0) - speed) * Math.min(1, dt * 2);   // 80 deg/s = one turn every 4.5 s, eases in and out
     if (!rm) angle += speed * dt * Math.PI / 180;
     if (fly) { fly.t = Math.min(1, fly.t + dt / 0.55); if (fly.t >= 1) { fly = null; foley.play('place'); settle = 3; } }
