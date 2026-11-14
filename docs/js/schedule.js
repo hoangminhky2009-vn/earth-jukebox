@@ -60,20 +60,8 @@ const SHAPE_SETS = {
   },
 };
 const ROTATE = [0, 3, 5, 2];  // and the drops start on a different slot each month (same count, new rhythm)
-const BAND = 8;    // registers do not overlap, so the state is heard at once: dry 55-63, normal 64-72, wet 73-81
+const BAND = 12;   // each register is one octave: dry 55-67, normal 60-72, wet 66-78 (kept low: warm, not shrill)
 const fold = (p, base) => { let q = p; while (q > base + BAND) q -= 12; while (q < base) q += 12; return q; };
-/** Fold into the register; if that pitch class has no place in the narrow register, take the nearest scale note inside it. */
-const placeIn = (p, base, scale) => {
-  const q = fold(p, base);
-  if (q <= base + BAND) return q;
-  let best = base; let cost = Infinity;
-  for (let m = base; m <= base + BAND; m++) {
-    if (!scale.includes((((m - ROOT) % 12) + 12) % 12)) continue;
-    const c = Math.min(Math.abs(m - q), Math.abs(m - (q - 12)));
-    if (c < cost) { cost = c; best = m; }
-  }
-  return best;
-};
 const CRACKLE_STEPS = [0, 2, 5, 7, 9, 12, 14];
 const SCIENCE_STEPS = [0, 4, 8, 12];
 export const SKIP_STEP = 12;
@@ -122,24 +110,25 @@ export function schedule(disc, place, mode = 'music') {
         : ROOT + 2 * level;                                    // 9 pitches, 2 semitones apart, for k = -4..+4
       for (const s of SCIENCE_STEPS) add(bar, s, 0, pitch, 0.8, 'data');
     } else if (disc.dataset === 'rain') {
-      // Raindrops: n = 4 + k notes (0 in the driest month, 4 in a normal one, 8 in the wettest), so the tune
-      // breathes like lofi instead of rattling; drier = fewer and lower, wetter = more and higher.
-      // Drops sit on the 8 eighth-note slots (even steps) of the half-time feel.
-      // Registers: bass 36-47 (audio.js), chord 43-54, drops 55-63 (dry) / 64-72 (normal) / 73-81 (wet): drier = lower.
-      const n = 4 + level;
-      const lo = level < 0 ? ROOT - 5 : level > 0 ? ROOT + 13 : ROOT + 4;   // bottom of the drop register
+      // Raindrops: n = 8 + 2k notes; drier = fewer and an octave lower, wetter = more and an octave higher.
+      // Drops sit on the 8 off-beat-swung sixteenths of the half-time feel (even steps); above 8, the extra
+      // drops are a third on top of a drop (two notes at once), so the count stays n without crowding the beat.
+      // Registers: bass 36-47 (audio.js), chord 43-54, drops from 55 (dry) / 60 (normal) / 66 (wet): drier = lower.
+      const n = 8 + 2 * level;
+      const lo = level < 0 ? ROOT - 5 : level > 0 ? ROOT + 6 : ROOT;   // bottom of the drop register
       const saturated = Math.abs(level) === 4;
       const same = prevLevel === null || prevLevel === level;
       const set = SHAPE_SETS[style];
       const shape = same ? set.same[bar % 4] : level > prevLevel ? set.up : set.down;
-      const rot = n < 8 ? (1 + ROTATE[bar % 4]) % 8 : 0;   // +1: a normal month starts on the beat
-      const slots = euclid(n, 8).map((x) => (x + rot) % 8).sort((a, b) => a - b);
+      const rot = n < 8 ? ROTATE[bar % 4] : 0;
+      const slots = euclid(Math.min(n, 8), 8).map((x) => (x + rot) % 8).sort((a, b) => a - b);
+      const extra = new Set(euclid(Math.max(0, n - 8), 8));
       // Start on the chord tone that lands nearest the last note of the month before, so months join smoothly.
       let shift = 0;
       let bestCost = Infinity;
       if (slots.length) {
         for (const r of [0, -2, 2, -4, 4]) {
-          const first = placeIn(degree(scale, chord + shape[slots[0]] + r, ROOT), lo, scale);
+          const first = fold(degree(scale, chord + shape[slots[0]] + r, ROOT), lo);
           const cost = (prevLast === null ? 0 : Math.abs(first - prevLast)) + Math.abs(r) * 0.1;
           if (cost < bestCost) { bestCost = cost; shift = r; }
         }
@@ -147,9 +136,16 @@ export function schedule(disc, place, mode = 'music') {
       slots.forEach((slot) => {
         const s = slot * 2;
         const d = chord + shape[slot] + shift;
-        const pitch = placeIn(degree(scale, d, ROOT), lo, scale);
+        const pitch = fold(degree(scale, d, ROOT), lo);
         add(bar, s, 0, pitch, saturated ? 1 : (s % 8 === 0 ? 0.75 : 0.6), 'data');
         prevLast = pitch;
+        if (extra.has(slot)) {
+          let h = degree(scale, d + 2, ROOT);   // a third above the drop
+          while (h <= pitch) h += 12;
+          while (h - pitch > 12) h -= 12;
+          if (h > 108) h -= 12;
+          add(bar, s, 1, h, saturated ? 1 : 0.5, 'data');
+        }
       });
       // Seventh chord, folded into one octave (43-54) so it never rubs against the drops.
       [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, 43 + ((((degree(scale, chord + d, ROOT - 12) - 43) % 12) + 12) % 12), 0.5, 'bed'));
@@ -169,7 +165,7 @@ export function schedule(disc, place, mode = 'music') {
 }
 
 /**
- * Read the levels back from a schedule (the round-trip check). Rain: k = n - 4 from the data notes;
+ * Read the levels back from a schedule (the round-trip check). Rain: k = (n - 8) / 2 from the data notes;
  * NDVI: q = number of distinct bed voices; a bar with only crackle is null.
  */
 export function readBack(notes, dataset) {
@@ -177,7 +173,7 @@ export function readBack(notes, dataset) {
   for (let bar = 0; bar < 12; bar++) {
     const inBar = notes.filter((n) => n.bar === bar && n.kind !== 'skip');
     if (inBar.length && inBar.every((n) => n.kind === 'crackle')) { out.push(null); continue; }
-    if (dataset === 'rain') out.push(inBar.filter((n) => n.kind === 'data').length - 4);
+    if (dataset === 'rain') out.push((inBar.filter((n) => n.kind === 'data').length - 8) / 2);
     else out.push(new Set(inBar.filter((n) => n.kind === 'bed').map((n) => n.voice)).size);
   }
   return out;

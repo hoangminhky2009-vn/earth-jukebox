@@ -19,10 +19,13 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
   const biome = String(place?.biome ?? '');
   const desert = /desert|arid/i.test(biome);
   if (disc.dataset === 'rain' && desert) {
-    // a desert's normal is no rain: dry wind always, stronger when drier; rain only in a wetter-than-normal month
-    mix.wind = 0.5 + 0.5 * (Math.max(0, -level) / 4);
+    // a desert's normal is no rain: an open, gusting wind always (the hill-storm recording), stronger when drier,
+    // howling in the driest months; rain only in a wetter-than-normal month
+    const dry = Math.max(0, -level) / 4;
+    mix['snow-wind'] = 0.55 + 0.45 * dry;
+    mix['snow-howl'] = level <= -3 ? 0.35 * (-level - 2) : 0;
     if (level > 0) {
-      mix.wind *= 1 - 0.4 * (level / 4);
+      mix['snow-wind'] *= 1 - 0.4 * (level / 4);
       mix['rain-light'] = 0.3 + 0.15 * level;
       mix['rain-heavy'] = level >= 3 ? 0.5 * (level - 2) : 0;
     }
@@ -32,7 +35,7 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
     mix['rain-light'] = Math.min(1, wet * 2) * (1 - Math.max(0, wet - 0.5));
     mix['rain-heavy'] = Math.max(0, (wet - 0.5) * 2);  // wetter months: heavy rain comes in
     // the further from normal, the louder the bed: a normal month is a quiet backdrop, an extreme month swells
-    const swell = 0.3 + 0.7 * (Math.abs(level) / 4);   // normal = faint, extreme = full
+    const swell = 0.5 + 0.5 * (Math.abs(level) / 4);
     for (const k of LAYERS) mix[k] *= swell;
     if (/snow|ice|polar|glacier/i.test(biome)) {
       // snow does not patter: open-hill wind always, stronger the further from normal; a snowier month adds the howl
@@ -43,7 +46,7 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
   } else {
     const green = (level - 1) / 3;                     // q = 1..4 -> 0..1
     mix.birds = desert ? 0.6 * green : 0.15 + 0.85 * green;   // bare desert: no birds until it greens up
-    mix.wind = desert ? 0.25 + 0.6 * (1 - green) : (1 - green) * 0.6;
+    if (desert) mix['snow-wind'] = 0.25 + 0.6 * (1 - green); else mix.wind = (1 - green) * 0.6;
   }
   for (const k of LAYERS) mix[k] = Math.round(mix[k] * 1000) / 1000;
   return mix;

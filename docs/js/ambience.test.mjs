@@ -9,7 +9,7 @@ const total = (m) => LAYERS.reduce((a, k) => a + m[k], 0);
 
 const Z = { 'snow-wind': 0, 'snow-howl': 0 };
 test('rain: normal = light rain only; wetter adds heavy rain; drier fades into wind; -4 = wind only', () => {
-  assert.deepEqual(ambienceMix(rain(0), 0), { wind: 0, 'rain-light': 0.3, 'rain-heavy': 0, birds: 0, ...Z });
+  assert.deepEqual(ambienceMix(rain(0), 0), { wind: 0, 'rain-light': 0.5, 'rain-heavy': 0, birds: 0, ...Z });
   assert.deepEqual(ambienceMix(rain(-4), 0), { wind: 0.8, 'rain-light': 0, 'rain-heavy': 0, birds: 0, ...Z });
   assert.equal(ambienceMix(rain(4), 0)['rain-heavy'], 1);
   for (let k = -3; k <= 4; k++) assert.ok(ambienceMix(rain(k), 0)['rain-heavy'] >= ambienceMix(rain(k - 1), 0)['rain-heavy']);
@@ -20,7 +20,7 @@ test('rain: normal = light rain only; wetter adds heavy rain; drier fades into w
 test('rain: the bed is quietest in a normal month and swells as the month gets further from normal', () => {
   const sum = (k) => total(ambienceMix(rain(k), 0));
   for (let k = 1; k <= 4; k++) { assert.ok(sum(k) > sum(k - 1), `wet ${k}`); assert.ok(sum(-k) > sum(-k + 1), `dry ${k}`); }
-  assert.ok(sum(0) < sum(4) / 3);
+  assert.ok(sum(0) < sum(4) / 2);
 });
 
 test('greenness: more birds and less wind as q goes up; no rain', () => {
@@ -48,16 +48,18 @@ test('snow or ice places: no rain or park wind; hill wind always, the howl only 
   assert.ok(ambienceMix(rain(4), 0, 'music', snow)['snow-howl'] > ambienceMix(rain(1), 0, 'music', snow)['snow-howl']);
 });
 
-test('desert: a normal month is dry wind, no rain; rain only when wetter than normal; no birds when bare', () => {
+test('desert: a gusting open wind every month, a howl when driest, no rain unless wetter, no birds when bare', () => {
   const sand = { biome: 'desert' };
   for (let k = -4; k <= 0; k++) {
     const m = ambienceMix(rain(k), 0, 'music', sand);
-    assert.equal(m['rain-light'] + m['rain-heavy'] + m.birds, 0, `k=${k}`);
-    assert.ok(m.wind >= 0.5);
+    assert.equal(m['rain-light'] + m['rain-heavy'] + m.birds + m.wind, 0, `k=${k}`);
+    assert.ok(m['snow-wind'] >= 0.55);
   }
-  assert.ok(ambienceMix(rain(-4), 0, 'music', sand).wind > ambienceMix(rain(0), 0, 'music', sand).wind);
+  assert.ok(ambienceMix(rain(-4), 0, 'music', sand)['snow-wind'] > ambienceMix(rain(0), 0, 'music', sand)['snow-wind']);
+  assert.ok(ambienceMix(rain(-4), 0, 'music', sand)['snow-howl'] > 0);
+  assert.equal(ambienceMix(rain(-2), 0, 'music', sand)['snow-howl'], 0);
   assert.ok(ambienceMix(rain(1), 0, 'music', sand)['rain-light'] > 0);
   assert.ok(ambienceMix(rain(4), 0, 'music', sand)['rain-heavy'] > 0);
-  for (let k = 1; k <= 4; k++) for (const v of Object.values(ambienceMix(rain(k), 0, 'music', sand))) assert.ok(v >= 0 && v <= 1);
+  for (let k = -4; k <= 4; k++) for (const v of Object.values(ambienceMix(rain(k), 0, 'music', sand))) assert.ok(v >= 0 && v <= 1);
   assert.equal(ambienceMix(ndvi(1), 0, 'music', sand).birds, 0);
 });

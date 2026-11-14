@@ -88,7 +88,7 @@ Read notes/05_music.md completely ("Interface for joining up" is the contract wi
 NDVI layers = bed notes with distinct voices, breaks bar = normal notes + one skip note). Write docs/js/schedule.js — NO Tone.js import, no DOM — exporting:
 - euclid(k, n): Bjorklund algorithm, array of n booleans with k hits spread evenly.
 - schedule(disc, place, mode) ⇒ notes {bar, step, voice, pitch, velocity, kind} following every rule in notes/05_music.md:
-  16 steps × 12 bars; rain n = 4 + k raindrops spread with euclid (was 8 + 2k; the music part moved to Ky on Nov 14); register by the sign of k; accent when |k| = 4;
+  16 steps × 12 bars; rain n = 8 + 2k raindrops spread with euclid; register by the sign of k; accent when |k| = 4;
   NDVI q bed voices with a steady 4 notes per bar; 4-bar chord loop in the region's scale (sea = major pentatonic, south-asia = Dorian, other = Lydian);
   null month ⇒ only crackle; month in breaks ⇒ skip; Science mode ⇒ one voice, 4 notes per bar, pitch = base + 2k semitones (rain)
   or base + round(24 × value) (NDVI). Pitches as MIDI numbers. Deterministic: the same disc always gives the same notes.
@@ -136,7 +136,7 @@ On disc «id», bar «month», I hear «what you hear, e.g. "the raindrops are l
 Change only «instrument / velocity / filter / reverb». Keep the data rules in notes/05_music.md unchanged.
 Tell me which numbers you changed and why, and re-run node --test.
 ```
-Never change n = 4 + k (Ky's music rule since Nov 14), the layer counts or the crackle/skip rules — that would break Ky's round-trip check.
+Never change n = 8 + 2k, the layer counts or the crackle/skip rules — that would break Ky's round-trip check.
 
 ---
 

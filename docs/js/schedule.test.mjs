@@ -21,11 +21,11 @@ test('euclid: exactly n hits, gaps differ by at most 1, n = 0 and n = 16', () =>
   }
 });
 
-test('rain: n = 4 + k data notes for every k, 4 bed notes (seventh chord), steps and bars in range', () => {
+test('rain: n = 8 + 2k data notes for every k, 4 bed notes (seventh chord), steps and bars in range', () => {
   for (let k = -4; k <= 4; k++) {
     const notes = schedule(rain(k), SEA, 'music');
     const b = bar(notes, 3);
-    assert.equal(b.filter((n) => n.kind === 'data').length, 4 + k, `k=${k}`);
+    assert.equal(b.filter((n) => n.kind === 'data').length, 8 + 2 * k, `k=${k}`);
     assert.equal(b.filter((n) => n.kind === 'bed').length, 4);
     for (const n of notes) {
       assert.ok(n.bar >= 0 && n.bar <= 11 && n.step >= 0 && n.step <= 15);
@@ -62,7 +62,7 @@ test('null month: crackle only; break month: normal notes + exactly one skip at 
   const skips = b3.filter((n) => n.kind === 'skip');
   assert.equal(skips.length, 1);
   assert.equal(skips[0].step, SKIP_STEP);
-  assert.equal(b3.filter((n) => n.kind === 'data').length, 6);
+  assert.equal(b3.filter((n) => n.kind === 'data').length, 12);
   assert.equal(notes.filter((n) => n.kind === 'skip').length, 1);
 });
 
@@ -107,12 +107,4 @@ test('style: desert and snow biomes get their own scale; a run of normal months 
   const flat = { dataset: 'rain', levels: Array(12).fill(-1), breaks: [] };
   const bars = [0, 1, 2, 3].map((b) => bar(schedule(flat, { region: 'other' }), b).filter((n) => n.kind === 'data').map((n) => `${n.step}:${n.pitch}`).join(' '));
   assert.equal(new Set(bars).size, 4, 'four normal-ish months in a row all differ');
-});
-
-test('rain: the three registers do not overlap (dry < normal < wet, every note)', () => {
-  for (const pl of [{ region: 'sea' }, { region: 'south-asia' }, { region: 'other' }, { region: 'other', biome: 'desert' }, { region: 'south-asia', biome: 'snow' }]) {
-    const range = (k) => { const p = bar(schedule(rain(k), pl), 3).filter((n) => n.kind === 'data').map((n) => n.pitch); return [Math.min(...p), Math.max(...p)]; };
-    for (const d of [-3, -1]) for (const z of [0]) assert.ok(range(d)[1] < range(z)[0], `dry ${d} vs normal ${JSON.stringify(pl)}`);
-    for (const w of [1, 4]) assert.ok(range(0)[1] < range(w)[0], `normal vs wet ${w} ${JSON.stringify(pl)}`);
-  }
 });
