@@ -78,3 +78,26 @@ a { color: var(--accent); }
   .btn { padding: 0.6rem 1rem; }
   .buttons .btn { flex: 1 1 40%; }
 }
+
+/* Piano roll */
+.roll-box { margin-top: 1.25rem; }
+.roll-box[hidden] { display: none; }
+#roll { overflow-x: auto; }
+.roll-svg { display: block; width: 100%; min-width: 560px; height: auto; border: 1px solid rgba(183, 140, 255, 0.5); border-radius: var(--radius); background: var(--surface-solid); }
+.roll-bg { fill: rgba(7, 11, 20, 0.6); }
+.roll-barline { stroke: rgba(184, 196, 221, 0.35); stroke-width: 0.6; }
+.roll-month { fill: var(--text-muted); font: 8px var(--font); }
+.roll-dot { fill: var(--accent); }
+.roll-bed { fill: var(--accent-2); opacity: 0.45; }
+.roll-crackle-bg { fill: rgba(255, 216, 79, 0.08); }
+.roll-crackle { fill: none; stroke: var(--focus); stroke-width: 0.9; stroke-linecap: round; }
+.roll-skip-bg { fill: rgba(7, 11, 20, 0.85); stroke: var(--focus); stroke-width: 1; stroke-dasharray: 3 2; }
+.roll-skip { fill: none; stroke: var(--focus); stroke-width: 2; stroke-linecap: round; }
+.roll-playhead { stroke: var(--text); stroke-width: 1.6; }
+.roll-legend { margin: 0.5rem 0 0; color: var(--text-muted); font-size: 0.9rem; }
+.high-contrast .roll-svg { border-color: #fff; background: #000; }
+.high-contrast .roll-bg, .high-contrast .roll-crackle-bg, .high-contrast .roll-skip-bg { fill: #000; }
+.high-contrast .roll-dot { fill: #fff; }
+.high-contrast .roll-bed { fill: #fff; opacity: 0.6; }
+.high-contrast .roll-barline, .high-contrast .roll-crackle, .high-contrast .roll-skip, .high-contrast .roll-skip-bg, .high-contrast .roll-playhead { stroke: #fff; }
+.high-contrast .roll-month { fill: #fff; }

@@ -6,6 +6,7 @@ import { createStore } from './store.js';
 import { initPlaceList } from './ui-list.js';
 import { initA11y, announce } from './a11y.js';
 import { initJukebox } from './ui-jukebox.js';
+import { initRoll } from './roll.js';
 
 const DATA_URL = 'data/discs.sample.json'; // K5 switches this to data/discs.json
 
@@ -22,6 +23,16 @@ async function loadAudio() {
   } catch (err) {
     console.warn('audio.js could not be loaded, using audio-stub.js instead:', err);
     return import('./audio-stub.js');
+  }
+}
+
+/** Sabik's schedule.js if it exists; otherwise the stand-in notes in roll.fixture.js. */
+async function loadSchedule() {
+  try {
+    return (await import('./schedule.js')).schedule;
+  } catch (err) {
+    console.warn('schedule.js could not be loaded, using roll.fixture.js instead:', err);
+    return (await import('./roll.fixture.js')).schedule;
   }
 }
 
@@ -52,6 +63,7 @@ async function main() {
   }
 
   const audio = await loadAudio();
+  const schedule = await loadSchedule();
   const store = createStore(data);
 
   // Store events drive the audio engine (audio gets the full objects, never ids).
@@ -90,6 +102,7 @@ async function main() {
     onBlocked: announce,
   });
 
+  initRoll(store, { container: document.getElementById('roll-box'), svgHost: document.getElementById('roll'), getSchedule: () => schedule });
   initJukebox(store, { datasets: data.datasets, announce, isStarted: () => started });
 
   // Settings toggles (persisted per browser).
