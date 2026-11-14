@@ -23,7 +23,7 @@ const SHAPES = {
   arch: [2, 4, 6, 4, 2, 0, 2, 4],
   wave: [4, 2, 0, 2, 4, 2, 6, 4],
 };
-const BAND = 14;   // each register is 14 semitones wide: dry 60-74, normal 72-86, wet 84-98
+const BAND = 12;   // each register is one octave: dry 60-72, normal 66-78, wet 72-84 (kept low: warmer, not shrill)
 const fold = (p, base) => { let q = p; while (q > base + BAND) q -= 12; while (q < base) q += 12; return q; };
 const CRACKLE_STEPS = [0, 2, 5, 7, 9, 12, 14];
 const SCIENCE_STEPS = [0, 4, 8, 12];
@@ -74,9 +74,9 @@ export function schedule(disc, place, mode = 'music') {
       // Raindrops: n = 8 + 2k notes; drier = fewer and an octave lower, wetter = more and an octave higher.
       // Drops sit on the 8 off-beat-swung sixteenths of the half-time feel (even steps); above 8, the extra
       // drops are a third on top of a drop (two notes at once), so the count stays n without crowding the beat.
-      // Registers never overlap: bass 36-47 (audio.js), chord 48-59, drops from 60 (dry) / 72 (normal) / 84 (wet).
+      // Registers: bass 36-47 (audio.js), chord 48-59, drops from 60 (dry) / 66 (normal) / 72 (wet): drier = lower.
       const n = 8 + 2 * level;
-      const base = level < 0 ? ROOT : level > 0 ? ROOT + 24 : ROOT + 12;
+      const lo = level < 0 ? ROOT : level > 0 ? ROOT + 12 : ROOT + 6;   // bottom of the drop register
       const saturated = Math.abs(level) === 4;
       const shape = prevLevel === null || prevLevel === level ? (bar % 2 ? SHAPES.wave : SHAPES.arch)
         : level > prevLevel ? SHAPES.up : SHAPES.down;
@@ -87,7 +87,7 @@ export function schedule(disc, place, mode = 'music') {
       let bestCost = Infinity;
       if (slots.length) {
         for (const r of [0, -2, 2, -4, 4]) {
-          const first = fold(degree(scale, chord + shape[slots[0]] + r, base), base);
+          const first = fold(degree(scale, chord + shape[slots[0]] + r, ROOT), lo);
           const cost = (prevLast === null ? 0 : Math.abs(first - prevLast)) + Math.abs(r) * 0.1;
           if (cost < bestCost) { bestCost = cost; shift = r; }
         }
@@ -95,11 +95,11 @@ export function schedule(disc, place, mode = 'music') {
       slots.forEach((slot) => {
         const s = slot * 2;
         const d = chord + shape[slot] + shift;
-        const pitch = fold(degree(scale, d, base), base);
+        const pitch = fold(degree(scale, d, ROOT), lo);
         add(bar, s, 0, pitch, saturated ? 1 : (s % 8 === 0 ? 0.75 : 0.6), 'data');
         prevLast = pitch;
         if (extra.has(slot)) {
-          let h = degree(scale, d + 2, base);   // a third above the drop
+          let h = degree(scale, d + 2, ROOT);   // a third above the drop
           while (h <= pitch) h += 12;
           while (h - pitch > 12) h -= 12;
           if (h > 108) h -= 12;

@@ -29,6 +29,8 @@ let music;     // cut by a "skip" in a break month
 let fxOut;     // skip warning sound (not cut by the skip itself)
 let leadSend;  // melody only: dark echo and a longer room
 let vibrato;   // one shared 5.2 Hz LFO for the flute
+let warm;      // master low-pass of the music (darker for rain discs)
+let ambSoft;   // low-pass of the field recordings (deeper rain for rain discs)
 let noteSend = 1;   // echo send of the note being played (lower in busy months)
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
@@ -72,7 +74,7 @@ function ensure() {
   verb.buffer = impulse(1.8);
   const wet = gainNode(0.14);
   // lofi colour: warm low-pass -> slow tape wobble (modulated delay) -> soft saturation
-  const warm = ac.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200; warm.Q.value = 0.5;
+  warm = ac.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200; warm.Q.value = 0.5;
   const wobble = ac.createDelay(0.05); wobble.delayTime.value = 0.012;
   const lfo = ac.createOscillator(); lfo.frequency.value = 0.55;
   const lfoDepth = gainNode(0.0016);
@@ -98,7 +100,7 @@ function ensure() {
   leadSend.connect(room); room.connect(roomOut); roomOut.connect(duckGain);
   fxOut.connect(duckGain);
   ambCut = gainNode(AMB_LEVEL);
-  const ambSoft = ac.createBiquadFilter(); ambSoft.type = 'lowpass'; ambSoft.frequency.value = 4500;
+  ambSoft = ac.createBiquadFilter(); ambSoft.type = 'lowpass'; ambSoft.frequency.value = 4500;
   ambCut.connect(ambSoft); ambSoft.connect(duckGain);
   duckGain.connect(master); master.connect(comp); comp.connect(ac.destination);
   session = newSession();
@@ -517,6 +519,11 @@ function silence() {
 function rebuild() {
   notesByBar = Array.from({ length: 12 }, () => []);
   if (!disc) return;
+  if (ac) {   // rain discs sound darker and deeper: lower music low-pass, rain recordings without their hiss
+    const rain = disc.dataset === 'rain';
+    warm.frequency.setTargetAtTime(rain ? 2200 : 3200, ac.currentTime, 0.1);
+    ambSoft.frequency.setTargetAtTime(rain ? 2600 : 4500, ac.currentTime, 0.1);
+  }
   for (const n of schedule(disc, place, mode)) notesByBar[n.bar].push(n);
   // legato: each drop lasts until the next drop of the bar (the last one until the bar ends), at most 0.9 s
   for (const bar of notesByBar) {
