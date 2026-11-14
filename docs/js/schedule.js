@@ -23,7 +23,7 @@ const SHAPES = {
   arch: [2, 4, 6, 4, 2, 0, 2, 4],
   wave: [4, 2, 0, 2, 4, 2, 6, 4],
 };
-const BAND = 12;   // each register is one octave: dry 60-72, normal 66-78, wet 72-84 (kept low: warmer, not shrill)
+const BAND = 12;   // each register is one octave: dry 55-67, normal 60-72, wet 66-78 (kept low: warm, not shrill)
 const fold = (p, base) => { let q = p; while (q > base + BAND) q -= 12; while (q < base) q += 12; return q; };
 const CRACKLE_STEPS = [0, 2, 5, 7, 9, 12, 14];
 const SCIENCE_STEPS = [0, 4, 8, 12];
@@ -74,9 +74,9 @@ export function schedule(disc, place, mode = 'music') {
       // Raindrops: n = 8 + 2k notes; drier = fewer and an octave lower, wetter = more and an octave higher.
       // Drops sit on the 8 off-beat-swung sixteenths of the half-time feel (even steps); above 8, the extra
       // drops are a third on top of a drop (two notes at once), so the count stays n without crowding the beat.
-      // Registers: bass 36-47 (audio.js), chord 48-59, drops from 60 (dry) / 66 (normal) / 72 (wet): drier = lower.
+      // Registers: bass 36-47 (audio.js), chord 43-54, drops from 55 (dry) / 60 (normal) / 66 (wet): drier = lower.
       const n = 8 + 2 * level;
-      const lo = level < 0 ? ROOT : level > 0 ? ROOT + 12 : ROOT + 6;   // bottom of the drop register
+      const lo = level < 0 ? ROOT - 5 : level > 0 ? ROOT + 6 : ROOT;   // bottom of the drop register
       const saturated = Math.abs(level) === 4;
       const shape = prevLevel === null || prevLevel === level ? (bar % 2 ? SHAPES.wave : SHAPES.arch)
         : level > prevLevel ? SHAPES.up : SHAPES.down;
@@ -106,8 +106,8 @@ export function schedule(disc, place, mode = 'music') {
           add(bar, s, 1, h, saturated ? 1 : 0.5, 'data');
         }
       });
-      // Seventh chord, folded into one octave (48-59) so it never rubs against the drops.
-      [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, 48 + ((((degree(scale, chord + d, ROOT - 12) - 48) % 12) + 12) % 12), 0.5, 'bed'));
+      // Seventh chord, folded into one octave (43-54) so it never rubs against the drops.
+      [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, 43 + ((((degree(scale, chord + d, ROOT - 12) - 43) % 12) + 12) % 12), 0.5, 'bed'));
     } else {
       // Greenness: q layers in the chord bed, each its own voice and octave, plus a steady pulse of 4 on voice 0.
       for (let v = 0; v < level; v++) add(bar, 0, v, degree(scale, chord + 2 * v, ROOT - 24 + 12 * v), 0.5, 'bed');

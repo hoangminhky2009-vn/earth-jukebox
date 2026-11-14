@@ -208,9 +208,9 @@ function pluck(midi, t, vel, out, dur, pan = 0) {
   const g = ac.createGain();
   g.gain.setValueAtTime(0.42 * vel, t);
   g.gain.setValueAtTime(0.42 * vel, t + Math.max(0.15, dur));
-  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.15, dur) + 0.9);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.15, dur) + 1.2);
   src.connect(lp); lp.connect(g); g.connect(leadOut(out, pan));
-  src.start(t); src.stop(t + Math.max(0.15, dur) + 0.95);
+  src.start(t); src.stop(t + Math.max(0.15, dur) + 1.25);
   track(src, t);
 }
 
@@ -233,7 +233,7 @@ function flute(midi, t, vel, out, dur, pan = 0) {
   g.gain.setValueAtTime(0.0001, t);
   g.gain.linearRampToValueAtTime(0.13 * vel, t + 0.07);
   g.gain.setValueAtTime(0.13 * vel, t + len);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.22);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.45);
   const breath = ac.createBufferSource(); breath.buffer = noise();
   const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = Math.min(8000, f * 1.5); bp.Q.value = 1.6;
   const gb = ac.createGain();
@@ -241,11 +241,11 @@ function flute(midi, t, vel, out, dur, pan = 0) {
   gb.gain.linearRampToValueAtTime(0.06 * vel, t + 0.03);           // breathy onset ("chiff")
   gb.gain.linearRampToValueAtTime(0.025 * vel, t + 0.12);          // then air under the tone
   gb.gain.setValueAtTime(0.025 * vel, t + len);
-  gb.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.2);
+  gb.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.35);
   const outG = leadOut(out, pan);
   o.connect(tone); tone.connect(g); g.connect(outG);
   breath.connect(bp); bp.connect(gb); gb.connect(outG);
-  const end = t + len + 0.25;
+  const end = t + len + 0.5;
   o.start(t); o.stop(end);
   o.addEventListener('ended', () => depth.disconnect());   // free the shared LFO's fan-out
   breath.start(t, Math.random()); breath.stop(end);
@@ -381,7 +381,7 @@ function skip(t) {
 const LEAD = {
   sea: pluck,
   'south-asia': flute,
-  other: (m, t, v, out, dur, pan) => keys(m, t, v * 1.3, out, dur + 0.6, pan, noteSend),
+  other: (m, t, v, out, dur, pan) => keys(m, t, v * 1.3, out, dur + 1.0, pan, noteSend),
 };
 
 function sound(n, t, out) {
@@ -528,7 +528,7 @@ function rebuild() {
   // legato: each drop lasts until the next drop of the bar (the last one until the bar ends), at most 0.9 s
   for (const bar of notesByBar) {
     const drops = bar.filter((n) => n.kind === 'data' && n.voice === 0).sort((a, b) => a.step - b.step);
-    drops.forEach((n, i) => { n.len = Math.min(0.9, ((drops[i + 1]?.step ?? 16) - n.step) * STEP); n.busy = drops.length >= 7; });
+    drops.forEach((n, i) => { n.len = Math.min(1.2, ((drops[i + 1]?.step ?? 16) - n.step) * STEP * 1.3); n.busy = drops.length >= 7; });   // overlaps a little: legato
     for (const n of bar) if (n.kind === 'data' && n.voice !== 0) { n.len = drops.find((d) => d.step === n.step)?.len ?? 0.3; n.busy = true; }
   }
   if (ac && mode === 'music' && place?.region === 'sea') {
