@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-14T05:37:08.202143+00:00",
+  "generated": "2026-11-14T05:55:10.256042+00:00",
   "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md",
   "cutoff": "2026-11-14",
   "listing_latest": "2026-11-11",
@@ -2563,8 +2563,8 @@
       "quality": {
         "sampled_pixels": 1300,
         "matched_pixels": 1300,
-        "opaque_matched_pixels": 480,
-        "transparent_pixels": 820,
+        "opaque_matched_pixels": 640,
+        "transparent_pixels": 660,
         "match_pct": 100.0,
         "median_de": 4.9447,
         "median_de_note": "Transparent rain pixels count as classified, but have no colour distance. If there are no opaque matched pixels, the required numeric median_de field uses 0; it is not a measured distance."
@@ -2601,14 +2601,14 @@
           "frames_used": 5
         },
         {
-          "level": 0,
-          "value": 0,
+          "level": -1,
+          "value": -3.5,
           "saturated": false,
           "frames_used": 5
         },
         {
-          "level": 0,
-          "value": 0,
+          "level": -1,
+          "value": -3.5,
           "saturated": false,
           "frames_used": 5
         },
@@ -2656,12 +2656,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 17,
+            "transparent_pixels": 25,
             "match_pct": 100.0,
-            "median_de": 0.0,
+            "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2678,12 +2678,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 21,
+            "transparent_pixels": 25,
             "match_pct": 100.0,
-            "median_de": 0.0,
+            "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2700,12 +2700,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 23,
+            "transparent_pixels": 25,
             "match_pct": 100.0,
-            "median_de": 0.0,
+            "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2726,8 +2726,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2748,8 +2748,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2770,8 +2770,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2792,8 +2792,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2814,8 +2814,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2836,8 +2836,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2858,8 +2858,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2880,8 +2880,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2902,8 +2902,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2924,8 +2924,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2946,8 +2946,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2968,8 +2968,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -2990,8 +2990,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3012,8 +3012,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3034,8 +3034,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3056,8 +3056,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3078,8 +3078,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3100,8 +3100,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3122,8 +3122,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3144,8 +3144,8 @@
             "match_pct": 100.0,
             "median_de": null,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3162,12 +3162,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 25,
+            "transparent_pixels": 24,
             "match_pct": 100.0,
-            "median_de": null,
+            "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3178,18 +3178,18 @@
           "bytes": 276222,
           "sha256": "dbec1c516f010d3653b9eedb767394bb240496e60a2ec8c40110d08f7158e566",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 16,
+            "transparent_pixels": 4,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3200,18 +3200,18 @@
           "bytes": 281517,
           "sha256": "7c4f19f617ede8e6b096f170e9f91857d864245a685de76c1e30566743d7bc1c",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 14,
+            "transparent_pixels": 3,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3222,18 +3222,18 @@
           "bytes": 281126,
           "sha256": "81da2b68974f3576d1ee41d0f293c036958e2fcc175563be4a05254326518522",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 16,
+            "transparent_pixels": 1,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3244,18 +3244,18 @@
           "bytes": 275405,
           "sha256": "d042de989c37c6358eff240342951fffbcafa63befb689028f80403b260b9ee0",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 16,
+            "transparent_pixels": 0,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3266,18 +3266,18 @@
           "bytes": 274408,
           "sha256": "3c2b576356f060a145c3b0ace932d3fc7c168948bb383fcadb4b4b93b7c1fea8",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 14,
+            "transparent_pixels": 0,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3288,18 +3288,18 @@
           "bytes": 272996,
           "sha256": "13631c6f6466b6a6a5b60bda345829872919be32a81fb82a8bcf909966e844f5",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 14,
+            "transparent_pixels": 0,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3310,18 +3310,18 @@
           "bytes": 277730,
           "sha256": "526110f91f1215aca8c70d6a204439bc7a942f9e7021cbfebf3c0b14cc225e51",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 13,
+            "transparent_pixels": 0,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3332,18 +3332,18 @@
           "bytes": 274198,
           "sha256": "36f980bc5360aa134a2a6faa9453b3a558695d9ba458e22cbccbc7d87df19848",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 13,
+            "transparent_pixels": 0,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3360,12 +3360,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 8,
+            "transparent_pixels": 0,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3382,12 +3382,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 5,
+            "transparent_pixels": 0,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3398,18 +3398,18 @@
           "bytes": 281819,
           "sha256": "de709736c2e528072768b81ebc79fa540478f8cabe8c2a5b89a89b375558e6d4",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 13,
+            "transparent_pixels": 2,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3420,18 +3420,18 @@
           "bytes": 285591,
           "sha256": "d0c69f6253dfb8c04e1c4f03d6f2b7692cb007e9e7134efa4ea0ed3ef2b11d33",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 16,
+            "transparent_pixels": 2,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3448,12 +3448,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 12,
+            "transparent_pixels": 2,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3464,18 +3464,18 @@
           "bytes": 294101,
           "sha256": "333f850aa28ebe6fac28605aa3cf38741e9507a37129abba6ae63ebf9cd90ea7",
           "reading": {
-            "level": 0,
-            "value": 0,
+            "level": -1,
+            "value": -3.5,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 14,
+            "transparent_pixels": 2,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3492,12 +3492,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 12,
+            "transparent_pixels": 2,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3514,12 +3514,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 6,
+            "transparent_pixels": 1,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3536,12 +3536,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 6,
+            "transparent_pixels": 1,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3562,8 +3562,8 @@
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3584,8 +3584,8 @@
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3606,8 +3606,8 @@
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3624,12 +3624,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 6,
+            "transparent_pixels": 2,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3646,12 +3646,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 2,
+            "transparent_pixels": 1,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3672,8 +3672,8 @@
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3690,12 +3690,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 1,
+            "transparent_pixels": 2,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3712,12 +3712,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 2,
+            "transparent_pixels": 7,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3734,12 +3734,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 0,
+            "transparent_pixels": 3,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3756,12 +3756,12 @@
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 6,
+            "transparent_pixels": 11,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3772,18 +3772,18 @@
           "bytes": 327144,
           "sha256": "89f6fc59f51b964e9484cad4604e261df6ccb7dc86b8be3c1d28f7ec7ce222ec",
           "reading": {
-            "level": -1,
-            "value": -3.5,
+            "level": 0,
+            "value": 0,
             "saturated": false,
             "sampled_pixels": 25,
             "matched_pixels": 25,
             "invalid_pixels": 0,
-            "transparent_pixels": 7,
+            "transparent_pixels": 13,
             "match_pct": 100.0,
             "median_de": 4.944725307909359,
             "centre_pixel": [
-              838,
-              767
+              840,
+              771
             ],
             "west_lon": 20.0
           }
@@ -3823,15 +3823,15 @@
           256
         ],
         "centre_pixel": [
-          838,
-          767
+          840,
+          771
         ],
         "west_lon": 20.0,
         "bounds": {
-          "west": 91.0,
-          "east": 116.6,
-          "north": 26.1,
-          "south": 0.5
+          "west": 91.2,
+          "east": 116.8,
+          "north": 25.7,
+          "south": 0.1
         },
         "note": "A single dated regional image, not a picture of the annual aggregate."
       }

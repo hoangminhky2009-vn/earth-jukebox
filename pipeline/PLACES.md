@@ -1,15 +1,17 @@
-# Sampling points for the four proposed places
+# Sampling points supplied by Ky
 
-The place names and introduction text come from Bormey's [live team document, place tab](https://docs.google.com/document/d/1XgIDQHjdR-5IGtX96clUcxXklNICMZ_j9mVAuMOil0I/edit?tab=t.uv0ru88njche), read on 14 November 2026. It gives no exact coordinates. The points below are implementation choices for team review; they are not claimed to have been approved by Bormey. Prepared by Sabik with help from OpenAI Codex (SI).
+The place names and introduction text come from Bormey's [live team document, place tab](https://docs.google.com/document/d/1XgIDQHjdR-5IGtX96clUcxXklNICMZ_j9mVAuMOil0I/edit?tab=t.uv0ru88njche), read on 14 November 2026. The exact coordinates below come from Ky's team message shared by Sabik on 14 November. They replace the provisional implementation points. Prepared by Sabik with help from OpenAI Codex (SI).
 
 | Export place | Centre latitude, longitude | Basis and scope |
 |---|---|---|
-| Dhaka | 23.81, 90.41 | Retains the already agreed and checked team centre. This is not the BMD weather station. |
-| Sylhet and surroundings | 24.90, 91.88 | Sylhet station coordinates in the [Bangladesh Meteorological Department report](https://presite.bmd.gov.bd/file/2017/04/09/pdf/36934.pdf). The image window samples surrounding land, not a station measurement or a Sylhet–Sunamganj regional average. |
-| Tonle Sap near Phnom Krom | 13.293056, 103.838611 | Lakeshore field-study point, 13°17′35″N, 103°50′19″E, [Table 1, page 2](https://hp.brs.nihon-u.ac.jp/~museum/doc/kanpou/Vol.28_Bioresource_Sciences_1-6.pdf). [APSARA](https://apsaraauthority.gov.kh/2021/08/09/phnom-krom/) places Phnom Krom on the lake banks near Siem Reap. This matches the proposed lakeshore-community focus; it is not a whole-lake average. |
-| Hue and surroundings | 16.469444, 107.577778 | Hue Citadel coordinate from [UNESCO geographical data](https://whc.unesco.org/en/list/0678/maps/). This is not a Perfume River basin average. |
+| Dhaka | 23.81, 90.41 | Ky's point, unchanged from the first configuration. The window is not a city-wide average. |
+| Sylhet and surroundings | 24.90, 91.87 | Ky's point, replacing longitude 91.88. It is not a station measurement or a Sylhet–Sunamganj regional average. |
+| Tonle Sap | 12.88, 104.07 | Ky's point, replacing the provisional Phnom Krom point at 13.293056, 103.838611. The name is now simply Tonle Sap. This is not a whole-lake average. |
+| Hue and surroundings | 16.46, 107.59 | Ky's point, replacing 16.469444, 107.577778. This is not a Perfume River basin average. |
 
 Each rain window is 5 × 5 pixels (about 0.5° wide). Light NDVI windows are 5 × 5 pixels (about 0.44° wide). They are nearest-palette estimates from displayed images, not administrative-area statistics or direct station observations. Tonle Sap's window can include water and flooded land. We retain invalid/missing results according to the fixed reader rules rather than moving the point to force a desired greenness value.
+
+At Ky's Tonle Sap point, 64.22% (2024) and 62.67% (2025) of sampled NDVI pixels match the vegetation colour scale. All sampled frames still meet the fixed minimum-valid-pixel rule. Its greenness describes the accepted vegetation-colour pixels in this mixed window, not lake water or a whole-area average. Hue's corresponding match rates are 84.00% and 83.89%. These rates describe decoding coverage, not scientific accuracy.
 
 Geographic correction on 14 November: the rain source map starts at 20 E; the NDVI source starts at 180 W. The first rain export incorrectly treated both alike and was replaced. `pipeline/evidence/geography-check.json` records independent coastline registration. The 256-pixel rain preview spans 25.6 degrees and is much broader than the 5-pixel sampling window. In the corrected Dhaka preview, Dhaka is at the centre; the bounds are 77.6–103.2 E and 11.1–36.7 N. The image is a regional context view, not a city boundary or a whole-region data average.
 

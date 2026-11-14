@@ -30,9 +30,9 @@
   },
   "places": [
     {
-      "name": "Dhaka",
-      "approximate_latitude": 23.81,
-      "approximate_longitude": 90.41,
+      "name": "Dhaka, Bangladesh",
+      "latitude": 23.81,
+      "longitude": 90.41,
       "pixel": [
         3076,
         753
@@ -46,9 +46,9 @@
       "clear_of_conservative_date_panel": true
     },
     {
-      "name": "Sylhet",
-      "approximate_latitude": 24.9,
-      "approximate_longitude": 91.87,
+      "name": "Sylhet and surroundings, Bangladesh",
+      "latitude": 24.9,
+      "longitude": 91.87,
       "pixel": [
         3093,
         740
@@ -62,25 +62,25 @@
       "clear_of_conservative_date_panel": true
     },
     {
-      "name": "Tonle Sap",
-      "approximate_latitude": 13.0,
-      "approximate_longitude": 104.0,
+      "name": "Tonle Sap, Cambodia",
+      "latitude": 12.88,
+      "longitude": 104.07,
       "pixel": [
-        3231,
-        876
+        3232,
+        877
       ],
       "window_inclusive": [
-        3229,
-        874,
-        3233,
-        878
+        3230,
+        875,
+        3234,
+        879
       ],
       "clear_of_conservative_date_panel": true
     },
     {
-      "name": "Hue",
-      "approximate_latitude": 16.46,
-      "approximate_longitude": 107.59,
+      "name": "Hue and surroundings, Vietnam",
+      "latitude": 16.46,
+      "longitude": 107.59,
       "pixel": [
         3272,
         836
@@ -94,11 +94,11 @@
       "clear_of_conservative_date_panel": true
     }
   ],
-  "decision": "The inspected light frame leaves all four approximate 5x5 geographic sampling windows clear of date annotation.",
+  "decision": "Ky-supplied coordinates are clear of the previously inspected date panel. All 72 NDVI source frames also pass the exporter dimension and sample-window guards.",
   "limitations": [
     "Only this one frame was visually inspected; this does not verify the layout of every historical frame.",
-    "Coordinates are provisional geographic examples, pending the root team place configuration.",
     "Layout clearance does not validate physical NDVI values; the pipeline extracts relative colourbar positions only.",
     "Recheck any added location or changed source layout before export."
-  ]
+  ],
+  "coordinates_rechecked_at": "2026-11-14T05:57:02.949659+00:00"
 }

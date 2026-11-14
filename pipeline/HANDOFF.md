@@ -2,9 +2,13 @@
 
 Written by Sabik with help from OpenAI Codex (SI). Ky owns the top-level project documentation; the suggested additions below are for him to integrate.
 
+## Coordinates aligned with Ky's message
+
+The current export uses exactly Dhaka (23.81, 90.41), Sylhet (24.90, 91.87), Tonle Sap (12.88, 104.07), and Hue (16.46, 107.59). These replace the earlier provisional points. All data and crops were regenerated. Dhaka's four discs and images are byte-for-byte unchanged, so Bormey can continue the Dhaka description already requested. Tonle Sap is no longer labelled "near Phnom Krom". Tonle Sap rain and greenness, plus Hue greenness, have changed readings; use the latest export.
+
 ## Geographic correction — replaces the earlier rain export
 
-The first rain export used the wrong longitude origin. SVS 4897's Pacific-centred map starts at **20 E**, not 180 W. The old Dhaka sample at x=2704 was near 69.6 W in the Caribbean. The correct Dhaka pixel is **x=704, y=661**. All eight rain discs, crops and evidence have been regenerated. Do not use the earlier rain values or images; all NDVI monthly values and crops are unchanged.
+The first rain export used the wrong longitude origin. SVS 4897's Pacific-centred map starts at **20 E**, not 180 W. The old Dhaka sample at x=2704 was near 69.6 W in the Caribbean. The correct Dhaka pixel is **x=704, y=661**. All eight rain discs, crops and evidence were regenerated in commit `2612e53`. Do not use the earlier rain values or images. That longitude correction did not change NDVI; the later coordinate alignment described above does change Tonle Sap and Hue NDVI.
 
 `python -m pipeline.verify_geography` independently registers the NASA coastlines against Natural Earth land polygons. Both inspected rain years select 20 E (over 99% land/ocean agreement); both NDVI years select -180 (over 96%). Rain alpha and composite opaque pixels agree 100%. See `evidence/geography-check.json`. This checks geographic placement, not physical rainfall accuracy. Additive `source.west_lon` records the layout in the JSON.
 
@@ -12,12 +16,12 @@ Ky: the x=2704 Dhaka example in `notes/00_start_here.md` and the generic formula
 
 ## What is ready
 
-- `docs/data/discs.json`: **16 real discs** for Dhaka, Sylhet, Tonle Sap near Phnom Krom, and Hue; rain 2025/2026 and greenness 2024/2025. No fake observations. The three added sampling points are documented implementation choices for team review in `pipeline/PLACES.md`.
+- `docs/data/discs.json`: **16 real discs** for Dhaka, Sylhet, Tonle Sap, and Hue; rain 2025/2026 and greenness 2024/2025. No fake observations. Ky's exact sampling coordinates and their scope are documented in `pipeline/PLACES.md`.
 - **184 distinct source frames** were read and reused for all four places: rain 60 in 2025 and 52 in 2026, plus 36 greenness frames in each year. Source URLs, file hashes and readings are in `pipeline/evidence/`.
 - Corrected Dhaka rain-2025 January–December levels: `[0,0,0,0,0,-1,-1,0,0,0,0,0]`, five valid frames each month, all 1,500 sampled pixels classified. This is colour-decoding success, not proof of rainfall accuracy.
 - Rain 2026 has only two sampled November dates at the cutoff, 14 November. November fails the three-frame minimum and December is future; both stay null in every 2026 rain disc. There are no archive breaks in the requested dates. The four rain-2026 discs are `scratched`; the other twelve are `mint`.
 - All 16 crops are 256 × 256. Each is a **15 July** reference image from the disc's year, not an annual average or an image synchronized to each playing month. The original Dhaka rain crop uses the 15 July 2025 NASA composite.
-- Corrected Tonle Sap rain-2025 is near normal January–September and wetter in October–December. Its greenness window includes invalid pixels (about 83% colour match); these are excluded under the same fixed rules used everywhere.
+- At Ky's Tonle Sap point, rain-2025 is wetter in June and November and near normal in the other sampled months. The greenness window has 64.22% and 62.67% colour match in 2024 and 2025. Every sampled frame meets the fixed valid-pixel threshold, but the result describes accepted vegetation pixels in a mixed land/water window. Hue's greenness match is 84.00% and 83.89%. These are decoding-coverage rates, not accuracy claims.
 - Ky's new upstream commit `a46be20` supplies the score and native Web Audio engine and moves music ownership to Ky. This branch keeps his implementation. Sabik's separate Tone.js prototype is preserved locally outside the repository and is not part of this handoff.
 
 ## Ky: integration
@@ -25,7 +29,7 @@ Ky: the x=2704 Dhaka example in `notes/00_start_here.md` and the generic formula
 1. Change `DATA_URL` in your `docs/js/app.js` from `data/discs.sample.json` to `data/discs.json` when you integrate this branch. Your existing dynamic imports find your music modules. No script-tag change is required.
 2. Both A/B sides are supplied, with the same twelve calendar-month positions. The two missing 2026 rain months stay null; do not substitute fake B-side observations.
 3. Place introductions come from the latest team document. Crop descriptions remain empty pending Bormey's review of the actual images. The exporter preserves existing disc descriptions and independent checks when rerun.
-4. Add the source and SI notes below to your owned documentation. There are no new JSON schema fields and the shared labels are unchanged.
+4. Add the source and SI notes below to your owned documentation. The optional `source.west_lon` field records the verified map layout; existing contract fields and shared labels are unchanged.
 
 ## Run it
 
@@ -71,8 +75,8 @@ Source hashes, frame counts and colour-match evidence make the image decoding re
 
 The [live team document](https://docs.google.com/document/d/1XgIDQHjdR-5IGtX96clUcxXklNICMZ_j9mVAuMOil0I/edit?tab=t.uv0ru88njche), read 14 November, currently proposes Dhaka, Sylhet, Tonle Sap and Huế. It supplies introductions but no sampling coordinates or checked crop descriptions yet. Its newer introductions correctly describe rainfall differences from normal; earlier ideas about daily downpours cannot be demonstrated with this monthly anomaly pipeline. Historical flood examples from 2020/2022 are background, not events captured by our 2025/2026 discs.
 
-Review the proposed representative points in `pipeline/PLACES.md` before submission. Complete subjective listening, NVDA testing, and mobile/Safari testing. Merge the reviewed branch and switch the data URL before claiming the public Pages game uses these real observations.
+The pipeline now uses Ky's coordinates from his team message. Bormey should still check that the place stories describe these sampling areas and supply crop descriptions. Complete subjective listening, NVDA testing, and mobile/Safari testing. Merge the reviewed branch and switch the data URL before claiming the public Pages game uses these real observations.
 
 Known upstream follow-up for Ky: `schedule.js` checks `breaks.has(bar)` even though the JSON contract uses months 1–12 and `bar` is 0–11. Use `bar + 1` and update the regression case. This does not affect the first Dhaka disc, whose breaks list is empty.
 
-Another upstream audio check for Ky: when entering a null month, the music/reverb and field-recording tail may continue briefly while the ambience fades. A true crackle-only missing month needs isolation after the reverb and immediate ambience muting, while keeping the crackle bus audible. This is a code-review finding, not a completed listening test of the latest engine.
+Audio check still to perform on Ky's latest engine: listen when entering a null month and confirm whether the intended crackle-only behaviour holds. Earlier code review raised possible music/reverb and field-recording tails, but Ky has since changed the engine; that observation is not a confirmed defect in the latest version.
