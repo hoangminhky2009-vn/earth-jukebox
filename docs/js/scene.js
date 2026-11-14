@@ -262,6 +262,7 @@ export function createScene(store, opts) {
     cg.globalAlpha = 0.35; p('#000000', X0 - 4, GROUND, X1 - X0 + 8, 3); cg.globalAlpha = 1;
     p('#1b120f', 20, 114, 224, 136); p('#2a1c1b', 22, 116, 220, 132); p('#140d0c', 22, 116, 220, 2); p('#4a3029', 22, 246, 220, 2);
     for (let i = 0; i < L.count; i++) { const s = SLOT(i); p('#33221f', s.x, s.y, s.w, s.h - 2); p('#1b120f', s.x, s.y + s.h - 2, s.w, 1); p('#5a3a30', s.x, s.y + s.h - 1, s.w, 1); }
+    if (pages.length > 1) { p('#1b120f', 1, 122, 13, 124); p('#7b4f36', 2, 123, 11, 122); p('#c48b5e', 2, 123, 11, 1); p('#3b2418', 12, 123, 1, 122); }   // the page tab
     p('#120b0a', 246, 114, 8, 136);
     p('#1b120f', 256, 112, 206, 142); p('#3a4752', 258, 114, 202, 138); p('#56677a', 258, 114, 202, 1); p('#56677a', 258, 114, 1, 138); p('#242c33', 258, 251, 202, 1);
     for (let y = 116; y < 250; y += 3) for (let x = 260; x < 458; x += 1) if (h2(x >> 4, y, 8) > 0.7) p('#3f4d59', x, y, 1, 1);
@@ -333,8 +334,9 @@ export function createScene(store, opts) {
     hits.append(b);
   }
   // Page switch: a real button above the tray, only when there is more than one page.
+  // A tab on the left side of the console, with vertical text.
   const pageBtn = document.createElement('button'); pageBtn.type = 'button'; pageBtn.className = 'hit page-btn';
-  pos(pageBtn, 22, 93, 150, 10);
+  pos(pageBtn, 1, 122, 12, 124);
   pageBtn.hidden = pages.length < 2;
   pageBtn.addEventListener('click', () => {
     page = (page + 1) % pages.length; setShelf(); syncHits();
@@ -370,7 +372,7 @@ export function createScene(store, opts) {
     const d = loadedDisc(); const deck = Boolean(d);
     if (pages.length > 1) {
       const nxt = pages[(page + 1) % pages.length];
-      pageBtn.textContent = `${pages[page].title.toUpperCase()} ${page + 1}/${pages.length} \u25B6`;
+      pageBtn.textContent = page === pages.length - 1 ? '\u25C0 BACK TO MAIN' : page === 0 ? 'MORE PLACES \u25B6' : `MORE PLACES ${page}/${pages.length - 1} \u25B6`;
       pageBtn.setAttribute('aria-label', `Tray page ${page + 1} of ${pages.length}: ${pages[page].title}. Show ${nxt.title}`);
     }
     shelf.forEach((s, i) => {

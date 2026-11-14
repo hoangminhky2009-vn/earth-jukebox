@@ -78,5 +78,5 @@
 .roll-legend { margin: 8px 0 0; color: var(--text-muted); font: 400 var(--fs-small)/1.6 var(--font-pixel); }
 .high-contrast .roll-bg, .high-contrast .roll-crackle-bg, .high-contrast .roll-skip-bg { fill: #000; }
 .high-contrast .roll-bed { fill: #fff; opacity: 0.6; }
-.page-btn { font-size: calc(var(--s, 1) * 5px); letter-spacing: 0.5px; color: var(--accent); background: rgba(20, 13, 12, 0.85); border: max(1px, calc(var(--s, 1) * 0.5px)) solid var(--accent); text-align: left; padding: 0 calc(var(--s, 1) * 2px); }
+.page-btn { writing-mode: vertical-rl; font-size: calc(var(--s, 1) * 5px); letter-spacing: 0.5px; color: #f6e7c4; background: transparent; border: 0; padding: 0; text-align: center; line-height: 1; }
 .page-btn:hover { color: #fff; }
