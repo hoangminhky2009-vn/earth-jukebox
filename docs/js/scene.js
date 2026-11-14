@@ -197,7 +197,8 @@ export function createScene(store, opts) {
   const pages = shelfPages(shelfSlots(store.state.discs, store.state.places), store.state.places);
   const L = slotLayout(Math.max(1, ...pages.map((pg) => pg.slots.length)));
   hits.classList.toggle('compact', L.compact);
-  const SLOT = (i) => ({ x: 24 + (i % L.cols) * L.stepX, y: 118 + Math.floor(i / L.cols) * L.stepY, w: L.w, h: L.h });
+  // slots are read in columns: each column is one place, rain on top and greenness below
+  const SLOT = (i) => ({ x: 24 + Math.floor(i / L.rows) * L.stepX, y: 118 + (i % L.rows) * L.stepY, w: L.w, h: L.h });
   let page = 0;
   let shelf = [];
   const setShelf = () => { shelf = Array.from({ length: L.count }, (_, i) => pages[page].slots[i] ?? null); };

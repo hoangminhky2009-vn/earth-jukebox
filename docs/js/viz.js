@@ -59,17 +59,31 @@ export function shelfSlots(discs, places) {
 }
 
 /** Tray geometry in internal pixels: 6 big slots (3×2), or 12 compact ones (4×3) when there are more pairs. */
-/** Tray pages: river and monsoon places first, then forest / desert / ice places; at most `per` slots a page. */
-export const PAGE_TITLES = { rivers: 'Rivers and monsoon', lands: 'Forest, desert and ice' };
-export function shelfPages(slots, places, per = 8) {
+/** The river place shown on the main tray page (the team picks its standout river here). */
+export const FEATURED_RIVER = 'dhaka';
+export const PAGE_TITLES = { main: 'River, forest, desert and ice', more: 'More places' };
+
+/**
+ * Tray pages. The main page has six fixed spots, read as columns (top = rain, bottom = greenness):
+ * the featured river place (rain, greenness), a forest place (rain, greenness), then a desert place (rain) above
+ * a snow/ice place (rain). A spot with no disc in the data stays empty. Every other disc goes to "More places"
+ * pages, 6 a page, so nothing is dropped.
+ */
+export function shelfPages(slots, places, per = 6) {
   const byId = new Map(places.map((p) => [p.id, p]));
-  const theme = (s) => { const art = biomeLook(byId.get(s.placeId)?.biome, s.placeId).art; return ['forest', 'desert', 'ice'].includes(art) ? 'lands' : 'rivers'; };
-  const pages = [];
-  for (const key of ['rivers', 'lands']) {
-    const list = slots.filter((s) => theme(s) === key);
-    for (let i = 0; i < list.length; i += per) pages.push({ key, title: PAGE_TITLES[key], slots: list.slice(i, i + per) });
-  }
-  return pages.length ? pages : [{ key: 'rivers', title: PAGE_TITLES.rivers, slots: [] }];
+  const art = (id) => biomeLook(byId.get(id)?.biome, id).art;
+  const isRiver = (id) => !['forest', 'desert', 'ice'].includes(art(id));
+  const riverId = slots.some((s) => s.placeId === FEATURED_RIVER) ? FEATURED_RIVER : slots.find((s) => isRiver(s.placeId))?.placeId;
+  const want = [
+    [(id) => id === riverId, 'rain'], [(id) => id === riverId, 'ndvi'],
+    [(id) => art(id) === 'forest', 'rain'], [(id) => art(id) === 'forest', 'ndvi'],
+    [(id) => art(id) === 'desert', 'rain'], [(id) => art(id) === 'ice', 'rain'],
+  ];
+  const main = want.map(([pick, ds]) => slots.find((s) => pick(s.placeId) && s.dataset === ds) ?? null);
+  const rest = slots.filter((s) => !main.includes(s));
+  const pages = [{ key: 'main', title: PAGE_TITLES.main, slots: main }];
+  for (let i = 0; i < rest.length; i += per) pages.push({ key: 'more', title: PAGE_TITLES.more, slots: rest.slice(i, i + per) });
+  return pages;
 }
 
 /** Tray grid for n place+dataset pairs. Exactly n slots (no empty "???" fillers); discs as big as the grid allows. */
