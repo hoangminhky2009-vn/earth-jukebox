@@ -40,7 +40,7 @@ let noteSend = 1;   // echo send of the note being played (lower in busy months)
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
 const AMB_LEVEL = 0.3;    // field recordings sit well under the music
-const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 1.4, 'snow-howl': 0.6 };   // evens out the recordings
+const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 1.0, 'snow-howl': 0.4 };   // evens out the recordings
 const ambBufs = {};
 let ambLoading = null;
 let amb = null;   // { layer: { src, g } } while playing
@@ -92,7 +92,7 @@ function ensure() {
   const echo = ac.createDelay(1); echo.delayTime.value = 3 * STEP;
   const echoLP = ac.createBiquadFilter(); echoLP.type = 'lowpass'; echoLP.frequency.value = 1800;
   const fb = gainNode(0.2);
-  const echoOut = gainNode(0.16);
+  const echoOut = gainNode(0.11);
   leadSend.connect(echo); echo.connect(echoLP); echoLP.connect(fb); fb.connect(echo);
   echoLP.connect(echoOut); echoOut.connect(music);
   const roomSend = gainNode(1.2);   // the melody gets more of the one shared reverb (a second convolver cost too much CPU)
@@ -730,7 +730,7 @@ function rebuild() {
   // legato: each drop lasts until the next drop of the bar (the last one until the bar ends), at most 0.9 s
   for (const bar of notesByBar) {
     const drops = bar.filter((n) => n.kind === 'data' && n.voice === 0).sort((a, b) => a.step - b.step);
-    drops.forEach((n, i) => { n.len = Math.min(1.2, ((drops[i + 1]?.step ?? 16) - n.step) * STEP * 1.3); n.busy = drops.length >= 7; });   // overlaps a little: legato
+    drops.forEach((n, i) => { n.len = Math.min(1.2, ((drops[i + 1]?.step ?? 16) - n.step) * STEP * 1.3); n.busy = drops.length >= 6; });   // overlaps a little: legato
     for (const n of bar) if (n.kind === 'data' && n.voice !== 0) { n.len = drops.find((d) => d.step === n.step)?.len ?? 0.3; n.busy = true; }
   }
   if (ac && mode === 'music' && ['sea', 'desert'].includes(styleOf(place))) {

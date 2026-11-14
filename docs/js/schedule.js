@@ -110,19 +110,18 @@ export function schedule(disc, place, mode = 'music') {
         : ROOT + 2 * level;                                    // 9 pitches, 2 semitones apart, for k = -4..+4
       for (const s of SCIENCE_STEPS) add(bar, s, 0, pitch, 0.8, 'data');
     } else if (disc.dataset === 'rain') {
-      // Raindrops: n = 8 + 2k notes; drier = fewer and an octave lower, wetter = more and an octave higher.
-      // Drops sit on the 8 off-beat-swung sixteenths of the half-time feel (even steps); above 8, the extra
-      // drops are a third on top of a drop (two notes at once), so the count stays n without crowding the beat.
+      // Raindrops: n = 4 + k notes (0 in the driest month, 4 in a normal one, 8 in the wettest), so the tune
+      // breathes like lofi instead of rattling; drier = fewer and lower, wetter = more and higher.
+      // Drops sit on the 8 eighth-note slots (even steps) of the half-time feel.
       // Registers: bass 36-47 (audio.js), chord 43-54, drops from 55 (dry) / 60 (normal) / 66 (wet): drier = lower.
-      const n = 8 + 2 * level;
+      const n = 4 + level;
       const lo = level < 0 ? ROOT - 5 : level > 0 ? ROOT + 6 : ROOT;   // bottom of the drop register
       const saturated = Math.abs(level) === 4;
       const same = prevLevel === null || prevLevel === level;
       const set = SHAPE_SETS[style];
       const shape = same ? set.same[bar % 4] : level > prevLevel ? set.up : set.down;
-      const rot = n < 8 ? ROTATE[bar % 4] : 0;
-      const slots = euclid(Math.min(n, 8), 8).map((x) => (x + rot) % 8).sort((a, b) => a - b);
-      const extra = new Set(euclid(Math.max(0, n - 8), 8));
+      const rot = n < 8 ? (1 + ROTATE[bar % 4]) % 8 : 0;   // +1: a normal month starts on the beat
+      const slots = euclid(n, 8).map((x) => (x + rot) % 8).sort((a, b) => a - b);
       // Start on the chord tone that lands nearest the last note of the month before, so months join smoothly.
       let shift = 0;
       let bestCost = Infinity;
@@ -139,13 +138,6 @@ export function schedule(disc, place, mode = 'music') {
         const pitch = fold(degree(scale, d, ROOT), lo);
         add(bar, s, 0, pitch, saturated ? 1 : (s % 8 === 0 ? 0.75 : 0.6), 'data');
         prevLast = pitch;
-        if (extra.has(slot)) {
-          let h = degree(scale, d + 2, ROOT);   // a third above the drop
-          while (h <= pitch) h += 12;
-          while (h - pitch > 12) h -= 12;
-          if (h > 108) h -= 12;
-          add(bar, s, 1, h, saturated ? 1 : 0.5, 'data');
-        }
       });
       // Seventh chord, folded into one octave (43-54) so it never rubs against the drops.
       [0, 2, 4, 6].forEach((d, v) => add(bar, 0, v, 43 + ((((degree(scale, chord + d, ROOT - 12) - 43) % 12) + 12) % 12), 0.5, 'bed'));
@@ -165,7 +157,7 @@ export function schedule(disc, place, mode = 'music') {
 }
 
 /**
- * Read the levels back from a schedule (the round-trip check). Rain: k = (n - 8) / 2 from the data notes;
+ * Read the levels back from a schedule (the round-trip check). Rain: k = n - 4 from the data notes;
  * NDVI: q = number of distinct bed voices; a bar with only crackle is null.
  */
 export function readBack(notes, dataset) {
@@ -173,7 +165,7 @@ export function readBack(notes, dataset) {
   for (let bar = 0; bar < 12; bar++) {
     const inBar = notes.filter((n) => n.bar === bar && n.kind !== 'skip');
     if (inBar.length && inBar.every((n) => n.kind === 'crackle')) { out.push(null); continue; }
-    if (dataset === 'rain') out.push((inBar.filter((n) => n.kind === 'data').length - 8) / 2);
+    if (dataset === 'rain') out.push(inBar.filter((n) => n.kind === 'data').length - 4);
     else out.push(new Set(inBar.filter((n) => n.kind === 'bed').map((n) => n.voice)).size);
   }
   return out;
