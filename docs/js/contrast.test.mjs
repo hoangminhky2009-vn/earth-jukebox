@@ -1,16 +1,16 @@
 // Written by Ky with help from Claude (SI). See AI_USE.md.
-// Reads the colour variables declared in base.css and checks WCAG contrast of the text/background pairs.
+// Reads the colour tokens declared in tokens.css and checks WCAG contrast of the text/background pairs.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-const css = readFileSync(new URL('../css/base.css', import.meta.url), 'utf8');
+const css = readFileSync(new URL('../css/tokens.css', import.meta.url), 'utf8');
 
 /** Variables declared in the first block whose selector is exactly `selector`. */
 function vars(selector) {
   const esc = selector.replace('.', String.raw`\.`);
   const m = css.match(new RegExp(String.raw`(?:^|\n)${esc}\s*\{([^}]*)\}`));
-  assert.ok(m, `${selector} block not found in base.css`);
+  assert.ok(m, `${selector} block not found in tokens.css`);
   const out = {};
   for (const [, name, value] of m[1].matchAll(/--([\w-]+)\s*:\s*([^;]+);/g)) out[name] = value.trim();
   return out;
@@ -32,11 +32,14 @@ export function ratio(a, b) {
 
 // [foreground variable, background variable, minimum ratio]: main text 7:1, other text 4.5:1.
 const PAIRS = [
-  ['text', 'bg', 7], ['text', 'surface-solid', 7],
-  ['text-muted', 'bg', 4.5], ['text-muted', 'surface-solid', 4.5],
-  ['accent', 'bg', 4.5], ['accent', 'surface-solid', 4.5],
-  ['accent-2', 'bg', 4.5], ['accent-2', 'surface-solid', 4.5],
-  ['focus', 'bg', 4.5], ['bg', 'accent', 4.5], // button label on the accent button
+  // main text: 7:1 on the page, the panel and the inset rows (solid stand-ins of the lightest end of each surface)
+  ['text-body', 'bg-page', 7], ['text-body', 'bg-panel-solid', 7], ['text-body', 'surface-inset-solid', 7],
+  ['text-max', 'bg-panel-solid', 7], ['text-max', 'surface-inset-solid', 7], ['text-bright', 'accent-wash-solid', 7],
+  // other text: 4.5:1
+  ['text-muted', 'bg-page', 4.5], ['text-muted', 'bg-panel-solid', 4.5], ['text-muted', 'surface-inset-solid', 4.5],
+  ['accent', 'bg-panel-solid', 4.5], ['accent-bright', 'bg-panel-solid', 4.5],
+  ['win', 'bg-panel-solid', 4.5], ['gold-flame', 'bg-panel-solid', 4.5], ['gold-amber', 'bg-panel-solid', 4.5],
+  ['violet-soft', 'bg-panel-solid', 4.5], ['focus', 'bg-page', 4.5], ['focus', 'bg-panel-solid', 4.5],
 ];
 
 for (const [label, selector] of [['default theme', ':root'], ['high-contrast theme', '.high-contrast']]) {

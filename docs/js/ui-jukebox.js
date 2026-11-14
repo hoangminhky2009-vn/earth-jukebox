@@ -12,12 +12,12 @@ const LIMITS = {
   ndvi: 'Greenness is a position on the image’s colour scale (low to high). It is not an NDVI number: the scale carries no NDVI values.',
 };
 const CONDITION = {
-  mint: { icon: '★', text: 'Mint', note: 'every month has data' },
-  scratched: { icon: '◐', text: 'Scratched', note: 'some months are missing' },
-  skips: { icon: '✕', text: 'Skips', note: 'the colour match is weak in some months' },
+  mint: { icon: '✓', text: 'Mint', note: 'every month has data' },
+  scratched: { icon: '✕', text: 'Scratched', note: 'some months are missing' },
+  skips: { icon: '↻', text: 'Skips', note: 'the colour match is weak in some months' },
 };
 
-/** Star Mint / half-circle Scratched / cross Skips: the word is always there, never colour alone. */
+/** Check Mint / cross Scratched / loop Skips (mono glyphs): the word is always there, never colour alone. */
 export function conditionLabel(condition) {
   const c = CONDITION[condition];
   return c ? `${c.icon} ${c.text}` : String(condition);
@@ -38,6 +38,39 @@ export function readoutText(disc, month, datasets) {
     return `${name} · ${when}: ${label}${pos}`;
   }
   return `${name} · ${when}: ${label} · colour match ${Math.round(disc.match_pct)}%`;
+}
+
+/** The small mono line under the header: ">_ disc/dhaka-rain-2025 · rain · source: NASA SVS 4897 · side A". */
+export function metaText(disc, datasets) {
+  if (!disc) return '>_ no disc loaded · pick a place';
+  const svs = datasets?.[disc.dataset]?.svs ?? disc.source?.svs;
+  return `>_ disc/${disc.id} · ${disc.dataset} · source: NASA SVS${svs ? ` ${svs}` : ''} · side ${disc.side}`;
+}
+
+/**
+ * The LEVEL row and the trend glyph for a month. Rain has a sign (wetter or drier than normal);
+ * greenness has no "normal", so it shows its position on the scale. dir is 'up', 'down', 'flat' or 'none'.
+ */
+export function levelInfo(disc, month, datasets) {
+  const m = Math.min(11, Math.max(0, Math.floor(month)));
+  const level = disc.levels[m];
+  if (level === null || level === undefined) return { dir: 'none', glyph: '', text: '— missing' };
+  if (disc.dataset === 'rain') {
+    if (level > 0) return { dir: 'up', glyph: '▲', text: `▲ +${level}` };
+    if (level < 0) return { dir: 'down', glyph: '▼', text: `▼ −${Math.abs(level)}` };
+    return { dir: 'flat', glyph: '●', text: '● near normal' };
+  }
+  const top = Math.max(...(datasets?.[disc.dataset]?.levels ?? [{ level }]).map((l) => l.level));
+  return { dir: 'flat', glyph: '', text: `● ${level} of ${top}` };
+}
+
+/** Short form for the stats block: "5/month · 60 total" or "3-5/month · 48 total". */
+export function framesShort(disc) {
+  const f = disc.frames_used ?? [];
+  if (!f.length) return 'not recorded';
+  const lo = Math.min(...f);
+  const hi = Math.max(...f);
+  return `${lo === hi ? lo : `${lo}-${hi}`}/month · ${f.reduce((a, b) => a + b, 0)} total`;
 }
 
 /** "5 frames per month (60 in total)" or "3 to 5 frames per month (48 in total)". */
@@ -105,6 +138,7 @@ export function initJukebox(store, opts) {
   const discLabel = $('disc-label');
   const readout = $('readout');
   const condition = $('condition');
+  const trend = $('readout-trend');
   const playBtn = $('btn-play');
   const modeBtn = $('btn-mode');
   const current = () => store.getDisc(store.state.loadedDisc);
@@ -145,14 +179,28 @@ export function initJukebox(store, opts) {
     player.classList.toggle('is-loaded', loaded);
     playBtn.textContent = store.state.playing ? 'Pause' : 'Play';
     modeBtn.setAttribute('aria-pressed', String(store.state.mode === 'science'));
+    $('meta-line').textContent = metaText(disc, datasets);
+    $('discs-chip').textContent = `Discs ${store.state.collected.size}/${store.state.discs.length}`;
     if (!loaded) {
       readout.textContent = 'No disc loaded. Pick a place, press Enter to record its disc, then Enter again to play it.';
-      condition.hidden = true;
+      trend.textContent = '';
+      for (const id of ['stat-month', 'stat-level', 'stat-match', 'stat-frames']) $(id).textContent = '—';
+      condition.textContent = '—';
+      delete condition.dataset.condition;
       return;
     }
+    const m = Math.min(11, Math.max(0, Math.floor(store.state.position)));
     readout.textContent = readoutText(disc, store.state.position, datasets);
-    condition.hidden = false;
-    condition.textContent = `${conditionLabel(disc.condition)} · side ${disc.side}`;
+    const lv = levelInfo(disc, store.state.position, datasets);
+    trend.textContent = lv.glyph && lv.dir !== 'flat' ? lv.glyph : ''; // decoration only, the sentence carries the meaning
+    trend.className = `trend ${lv.dir}`;
+    $('stat-month').textContent = `${MONTHS[m]} ${disc.year}`;
+    const levelEl = $('stat-level');
+    levelEl.textContent = lv.text;
+    levelEl.className = lv.dir;
+    $('stat-match').textContent = `${Math.round(disc.match_pct)}%`;
+    $('stat-frames').textContent = framesShort(disc);
+    condition.textContent = conditionLabel(disc.condition);
     condition.dataset.condition = disc.condition;
   }
   let shown = null;
@@ -161,7 +209,7 @@ export function initJukebox(store, opts) {
     if (id !== shown) { shown = id; showFrame(current()); }
     render();
   }
-  for (const ev of ['disc:load', 'play', 'pause', 'stop', 'seek', 'flip', 'mode', 'tick', 'eject']) store.on(ev, sync);
+  for (const ev of ['disc:load', 'play', 'pause', 'stop', 'seek', 'flip', 'mode', 'tick', 'eject', 'disc:record']) store.on(ev, sync);
   sync();
 
   // --- the five buttons

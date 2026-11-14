@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { readoutText, conditionLabel, detailRows, framesText } from './ui-jukebox.js';
+import { readoutText, conditionLabel, detailRows, framesText, metaText, levelInfo, framesShort } from './ui-jukebox.js';
 
 const data = JSON.parse(readFileSync(new URL('../data/discs.sample.json', import.meta.url), 'utf8'));
 const disc = (id) => data.discs.find((d) => d.id === id);
@@ -19,9 +19,9 @@ test('ndvi readout shows the colour-scale position', () => {
     'Greenness · January 2024: medium to high greenness (0.62 on the colour scale)');
 });
 test('condition labels always carry a word', () => {
-  assert.equal(conditionLabel('mint'), '★ Mint');
-  assert.equal(conditionLabel('scratched'), '◐ Scratched');
-  assert.equal(conditionLabel('skips'), '✕ Skips');
+  assert.equal(conditionLabel('mint'), '✓ Mint');
+  assert.equal(conditionLabel('scratched'), '✕ Scratched');
+  assert.equal(conditionLabel('skips'), '↻ Skips');
 });
 test('details rows carry limits, SVS and CREDITS links', () => {
   const d = detailRows(disc('dhaka-rain-2025'), data.datasets);
@@ -30,4 +30,24 @@ test('details rows carry limits, SVS and CREDITS links', () => {
   assert.equal(d.creditsUrl, 'https://github.com/hoangminhky2009-vn/earth-jukebox/blob/main/CREDITS.md');
   assert.match(detailRows(disc('mekong-ndvi-2024'), data.datasets).rows.find((r) => r[0] === 'Limits')[1], /no NDVI values/);
   assert.equal(framesText(disc('dhaka-rain-2025')), '5 frames per month (60 in total)');
+});
+
+test('meta line names the disc, dataset, source and side', () => {
+  assert.equal(metaText(disc('dhaka-rain-2025'), data.datasets), '>_ disc/dhaka-rain-2025 · rain · source: NASA SVS 4897 · side A');
+  assert.equal(metaText(null, data.datasets), '>_ no disc loaded · pick a place');
+});
+test('level row: rain has a sign, greenness a position, missing says so', () => {
+  const d = disc('dhaka-rain-2025'); // levels 0,0,-1,-1,0,1,...
+  assert.deepEqual(levelInfo(d, 0, data.datasets), { dir: 'flat', glyph: '●', text: '● near normal' });
+  assert.equal(levelInfo(d, 2, data.datasets).text, '▼ −1');
+  assert.equal(levelInfo(d, 2, data.datasets).dir, 'down');
+  assert.equal(levelInfo(d, 5, data.datasets).text, '▲ +1');
+  assert.equal(levelInfo(d, 10, data.datasets).text, '▲ +2');
+  assert.match(levelInfo(disc('mekong-ndvi-2024'), 0, data.datasets).text, /^● 3 of 4$/);
+  assert.equal(levelInfo(disc('dhaka-rain-2026'), 10, data.datasets).dir, 'none');
+});
+test('frames short form', () => {
+  assert.equal(framesShort(disc('dhaka-rain-2025')), '5/month · 60 total');
+  assert.equal(framesShort({ frames_used: [3, 5] }), '3-5/month · 8 total');
+  assert.equal(framesShort({ frames_used: [] }), 'not recorded');
 });

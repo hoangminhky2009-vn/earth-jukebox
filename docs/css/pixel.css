@@ -1,0 +1,112 @@
+/* Written by Ky with help from Claude (SI). See AI_USE.md. */
+/* The delphi-game pixel rules as plain classes (pixel.module.css without CSS modules or @layer).
+   1. No border-radius: corners are NOTCHED with clip-path, one pixel unit (--px-notch).
+   2. Hard shadow: box-shadow with blur 0 and an offset (--px-bong). Thickness of the object.
+   3. steps(), not cubic-bezier, for anything that changes an object's shape, position or colour.
+   4. Object or light: objects are hard; light (glow, offset 0, blurred) may be soft.
+   The clip-path polygon is widened to include the hard shadow, otherwise clip-path would cut the shadow off.
+   The glow is drawn INSIDE the box (inset) for the same reason. Keep specificity simple: one class per rule. */
+:root {
+  --px-notch: 3px;
+  --px-do-day: 3px;
+  --px-vien-trong: inset 1px 1px 0 rgba(248, 250, 252, 0.22), inset -1px -1px 0 rgba(10, 6, 24, 0.55);
+  --px-bong: var(--px-do-day) var(--px-do-day) 0 rgba(10, 6, 24, 0.7);
+  --px-bong-cao: calc(var(--px-do-day) * 2) calc(var(--px-do-day) * 2) 0 rgba(10, 6, 24, 0.7);
+}
+
+/* Notched octagon, no shadow room (chips, inset blocks). */
+.px-notch {
+  border-radius: 0;
+  clip-path: polygon(
+    var(--px-notch) 0, calc(100% - var(--px-notch)) 0, 100% var(--px-notch), 100% calc(100% - var(--px-notch)),
+    calc(100% - var(--px-notch)) 100%, var(--px-notch) 100%, 0 calc(100% - var(--px-notch)), 0 var(--px-notch));
+}
+
+/* Notched box plus room for its hard shadow (offset --px-s, at least the notch size). */
+.px-frame {
+  --px-s: var(--px-do-day);
+  border-radius: 0;
+  clip-path: polygon(
+    var(--px-notch) 0, calc(100% - var(--px-notch)) 0, 100% var(--px-notch),
+    100% var(--px-s), calc(100% + var(--px-s) - var(--px-notch)) var(--px-s), calc(100% + var(--px-s)) calc(var(--px-s) + var(--px-notch)),
+    calc(100% + var(--px-s)) calc(100% + var(--px-s) - var(--px-notch)), calc(100% + var(--px-s) - var(--px-notch)) calc(100% + var(--px-s)),
+    calc(var(--px-s) + var(--px-notch)) calc(100% + var(--px-s)), var(--px-s) calc(100% + var(--px-s) - var(--px-notch)),
+    var(--px-s) 100%, var(--px-notch) 100%, 0 calc(100% - var(--px-notch)), 0 var(--px-notch));
+}
+
+/* Pixel panel: a section of the page. */
+.panel {
+  border: 1px solid var(--border-idle-strong);
+  background: var(--surface-card);
+  background-color: var(--bg-panel-solid);
+  box-shadow: var(--px-vien-trong), var(--px-bong);
+  padding: 14px;
+}
+
+/* Inset block inside a panel (stats, disc and frame boxes). No shadow. */
+.inset {
+  border: 1px solid var(--border-idle);
+  background: var(--surface-inset);
+  box-shadow: var(--px-vien-trong);
+}
+
+/* Pixel button, small (delphi .nut): presses down by the shadow thickness and loses the shadow. */
+.btn {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  min-height: 44px; padding: 0 14px;
+  border: 1px solid var(--border-idle-strong);
+  background: var(--surface-inset);
+  color: var(--text-dim);
+  font: 600 12px/1.2 var(--font-mono);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: var(--px-vien-trong), var(--px-bong);
+  transform: translate(0, 0);
+  transition: transform 90ms steps(2, end), box-shadow 90ms steps(2, end), color 90ms steps(2, end);
+}
+.btn:hover:not(:disabled) { color: var(--text-bright); border-color: var(--accent); }
+.btn:active:not(:disabled) { transform: translate(var(--px-do-day), var(--px-do-day)); box-shadow: var(--px-vien-trong); }
+.btn:disabled { cursor: not-allowed; opacity: 0.55; box-shadow: var(--px-vien-trong); }
+.btn[aria-pressed="true"] {
+  border-color: var(--violet-soft); color: var(--text-bright);
+  background: rgba(139, 92, 246, 0.16);
+  box-shadow: var(--px-vien-trong), var(--px-bong), inset 0 0 12px rgba(139, 92, 246, 0.4);
+}
+.btn[aria-pressed="true"]::before { content: "\2713\00a0"; content: "\2713\00a0" / ""; } /* a check mark, so "on" is not only a colour */
+
+/* Primary button (delphi .nutChinh): same shape, accent border and a faint accent wash. Full width. */
+.btn-primary {
+  width: 100%; min-height: 52px;
+  border-color: var(--accent); color: var(--text-bright);
+  background: rgba(34, 211, 238, 0.14);
+  font-size: 13.5px; font-weight: 700; letter-spacing: 2px;
+}
+
+/* Lift on hover, only with a real mouse (touch hover sticks). */
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover:not(:disabled):not(:active) { --px-s: calc(var(--px-do-day) * 2); box-shadow: var(--px-vien-trong), var(--px-bong-cao); }
+  .btn[aria-pressed="true"]:hover:not(:disabled):not(:active) { box-shadow: var(--px-vien-trong), var(--px-bong-cao), inset 0 0 12px rgba(139, 92, 246, 0.4); }
+}
+
+/* Mono chip: square, no radius. */
+.chip {
+  display: inline-block; padding: 2px 6px;
+  border: 1px solid var(--border-idle);
+  background: var(--surface-idle);
+  color: var(--text-muted);
+  font: 600 var(--fs-label)/1.3 var(--font-mono);
+  letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;
+}
+.chip-on { border-color: var(--border-accent); color: var(--accent-soft); background: rgba(34, 211, 238, 0.1); }
+.chip-win { border-color: var(--win); color: var(--win-soft); }
+
+/* Focus: 3px, drawn inside the box because clip-path would cut an outside outline. */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.btn:focus-visible, .place-btn:focus-visible, .disc-chip:focus-visible, .panel:focus-visible { outline-offset: -3px; }
+
+/* Reduced motion: no transitions, no animations, still no information lost. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after { animation: none !important; transition: none !important; }

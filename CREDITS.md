@@ -22,6 +22,8 @@ Everything we used, including open-source and free resources (required by the su
 | Claude (Anthropic) | — | SI assistant, see `AI_USE.md` |
 
 ## Fonts, sounds, images
-- [Only CC0 / CC-BY / MIT / Apache-2.0. Add each one here with its link and licence.]
+- JetBrains Mono (JetBrains) and Space Grotesk (Florian Karsten), loaded from Google Fonts. Licence: SIL Open Font License 1.1. https://fonts.google.com/specimen/JetBrains+Mono, https://fonts.google.com/specimen/Space+Grotesk
+- Visual style: our own CSS, following the design tokens of the team's earlier game "delphi-game" (owner's own work). No images or icons added; only CSS frames and text glyphs.
+- [Only CC0 / CC-BY / MIT / Apache-2.0 / OFL. Add each further font, sound or image here with its link and licence.]
 
 NASA imagery is generally free of copyright; we credit "NASA's Scientific Visualization Studio" and link each page. We do not use NASA logos.

@@ -125,8 +125,8 @@ export function renderRoll(layout, label) {
     svgEl('text', { class: 'roll-month', x: b * layout.barW + layout.barW / 2, y: layout.plotH + 13, 'text-anchor': 'middle' }, svg).textContent = MONTHS[b].slice(0, 3);
   }
   for (const s of layout.shapes) {
-    if (s.type === 'dot') svgEl('circle', { class: 'roll-dot', cx: s.cx, cy: s.cy, r: s.r }, svg);
-    else if (s.type === 'bed') svgEl('rect', { class: 'roll-bed', x: s.x, y: s.y, width: s.w, height: s.h, rx: 1.5 }, svg);
+    if (s.type === 'dot') svgEl('rect', { class: 'roll-dot', x: s.cx - s.r, y: s.cy - s.r, width: s.r * 2, height: s.r * 2 }, svg); // square: pixel UI has no curves
+    else if (s.type === 'bed') svgEl('rect', { class: 'roll-bed', x: s.x, y: s.y, width: s.w, height: s.h }, svg);
     else if (s.type === 'crackle') {
       svgEl('rect', { class: 'roll-crackle-bg', x: s.x, y: s.y, width: s.w, height: s.h }, svg);
       svgEl('path', { class: 'roll-crackle', d: s.d }, svg);

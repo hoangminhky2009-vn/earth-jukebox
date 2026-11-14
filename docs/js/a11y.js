@@ -120,7 +120,7 @@ export function initA11y(store, opts = {}) {
   // Moving focus out of the list altogether also cancels (the list sends no event for that).
   if (typeof document !== 'undefined') {
     document.addEventListener('focusin', (e) => {
-      if (!e.target.closest?.('.place-list')) cancelPreview();
+      if (!e.target.closest?.('.place-btn')) cancelPreview();
     });
   }
 
