@@ -39,7 +39,13 @@ let ambSoft;   // low-pass of the field recordings (deeper rain for rain discs)
 let noteSend = 1;   // echo send of the note being played (lower in busy months)
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
-const AMB_LEVEL = 0.3;    // field recordings sit well under the music
+// Mix hierarchy (front to back): data notes 1.0 > chord bed 0.5 > beat and bass 0.65 (short, so they read quieter) >
+// field recordings 0.22. Only the melody and a little of the chord go to the reverb; the beat stays dry.
+const BED_LEVEL = 0.5;
+const BEAT_LEVEL = 0.65;
+const AMB_LEVEL = 0.22;
+let verbIn;    // reverb input (sends only)
+let ambDuck;   // field recordings dip a little under each data note
 const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 1.0, 'snow-howl': 0.4 };   // evens out the recordings
 const ambBufs = {};
 let ambLoading = null;
@@ -71,13 +77,14 @@ function ensure() {
   ac = sharedContext() ?? new Ctx({ latencyHint: 'playback' });   // one context for the whole page, 'playback' buffer
   const comp = ac.createDynamicsCompressor();
   comp.threshold.value = -16; comp.ratio.value = 4; comp.attack.value = 0.005; comp.release.value = 0.2;
-  master = gainNode(volume * 1.2);
+  master = gainNode(volume * 1.6);
   duckGain = gainNode(1);
   music = gainNode(1);
   fxOut = gainNode(1);
   const verb = ac.createConvolver();
   verb.buffer = impulse(1.6);
-  const wet = gainNode(0.14);
+  const wet = gainNode(0.22);
+  verbIn = gainNode(1); verbIn.connect(verb);
   // lofi colour: warm low-pass -> slow tape wobble (modulated delay)
   warm = ac.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200; warm.Q.value = 0.5;
   const wobble = ac.createDelay(0.05); wobble.delayTime.value = 0.012;
@@ -86,29 +93,45 @@ function ensure() {
   lfo.connect(lfoDepth); lfoDepth.connect(wobble.delayTime); lfo.start();
   const pre = gainNode(0.75);   // headroom
   music.connect(pre); pre.connect(warm); warm.connect(wobble); wobble.connect(duckGain);   // no waveshaper: it aliased into fizz
-  music.connect(verb); verb.connect(wet); wet.connect(duckGain);
+  verb.connect(wet); wet.connect(duckGain);   // nothing reaches the reverb except the sends below
   // melody echo (3 steps, dark, fading) and a longer room, so single notes bloom instead of beeping
   leadSend = gainNode(1);
   const echo = ac.createDelay(1); echo.delayTime.value = 3 * STEP;
   const echoLP = ac.createBiquadFilter(); echoLP.type = 'lowpass'; echoLP.frequency.value = 1800;
   const fb = gainNode(0.2);
-  const echoOut = gainNode(0.11);
+  const echoOut = gainNode(0.07);
   leadSend.connect(echo); echo.connect(echoLP); echoLP.connect(fb); fb.connect(echo);
   echoLP.connect(echoOut); echoOut.connect(music);
-  const roomSend = gainNode(1.2);   // the melody gets more of the one shared reverb (a second convolver cost too much CPU)
+  const roomSend = gainNode(0.5);   // the melody's share of the one reverb
   vibrato = ac.createOscillator(); vibrato.frequency.value = 5.2; vibrato.start();
-  leadSend.connect(roomSend); roomSend.connect(verb);
+  leadSend.connect(roomSend); roomSend.connect(verbIn);
   fxOut.connect(duckGain);
   ambCut = gainNode(AMB_LEVEL);
   ambSoft = ac.createBiquadFilter(); ambSoft.type = 'lowpass'; ambSoft.frequency.value = 4500;
-  ambCut.connect(ambSoft); ambSoft.connect(duckGain);
+  ambDuck = gainNode(1);
+  ambCut.connect(ambDuck); ambDuck.connect(ambSoft); ambSoft.connect(duckGain);
   duckGain.connect(master); master.connect(comp); comp.connect(ac.destination);
   session = newSession();
   return ac;
 }
 
 function gainNode(v) { const g = ac.createGain(); g.gain.value = v; return g; }
-function newSession() { const g = gainNode(1); g.connect(music); return g; }
+/** One play-through: its own gain (faded out on stop) with a sub-bus for the chord bed and one for the beat. */
+function newSession() {
+  const g = gainNode(1); g.connect(music);
+  g.bed = gainNode(BED_LEVEL); g.bed.connect(g);
+  const bedVerb = gainNode(0.35); g.bed.connect(bedVerb); bedVerb.connect(verbIn);
+  g.beat = gainNode(BEAT_LEVEL); g.beat.connect(g);
+  return g;
+}
+
+/** A data note pushes the chord bed and the field recordings back for a moment, so the note is always the clearest thing. */
+function makeRoom(out, t) {
+  for (const [param, base] of [[out.bed.gain, BED_LEVEL], [ambDuck.gain, 1]]) {
+    param.setTargetAtTime(base * 0.6, t, 0.012);
+    param.setTargetAtTime(base, t + 0.12, 0.18);
+  }
+}
 
 /** Soft stereo room: decaying noise. */
 function impulse(sec) {
@@ -591,13 +614,15 @@ function sound(n, t, out) {
     const tt = Math.max(ac.currentTime, t + (r - 0.5) * 0.024);
     const v = n.velocity * (n.voice ? 0.5 : 0.75) * (0.85 + 0.3 * hash01(n.step, n.bar, 7));
     noteSend = n.busy ? 0.3 : 1;
+    makeRoom(out, tt);
     lead(n.pitch, tt, v, out, n.len ?? 0.3, (r - 0.5) * 0.5);
     noteSend = 1;
     return;
   }
   // bed: electric-piano chord at step 0; the greenness pulse (voice 0, 4 a bar) in the place's instrument
-  if (n.step === 0) playBed(n, t, out);
-  if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out, 4 * STEP, 0);
+  // greenness: the layers ARE the data, so they play at the front; for rain the chord is backing
+  if (n.step === 0) playBed(n, t, disc?.dataset === 'ndvi' ? out : out.bed);
+  if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out.bed, 4 * STEP, 0);
 }
 
 // ---------- field-recording bed ----------
@@ -660,7 +685,7 @@ function scheduleBar(b, t0, from = -Infinity) {
     if (t < from) continue;
     sound(n, t, out);
   }
-  groove(b, t0, from, out);
+  groove(b, t0, from, out.beat);
   if (from === -Infinity) {
     barStarts.push([b, t0]);
     if (barStarts.length > 4) barStarts.shift();
@@ -818,7 +843,7 @@ export function duck(db, ms) {
 
 export function setVolume(v) {
   volume = Math.min(1, Math.max(0, Number(v) || 0));
-  if (ac) master.gain.setTargetAtTime(volume * 1.2, ac.currentTime, 0.03);
+  if (ac) master.gain.setTargetAtTime(volume * 1.6, ac.currentTime, 0.03);
 }
 
 export function onTick(fn) { tickFn = typeof fn === 'function' ? fn : () => {}; }
