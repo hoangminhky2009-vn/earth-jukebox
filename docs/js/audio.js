@@ -598,8 +598,9 @@ function rebuild() {
   if (!disc) return;
   if (ac) {   // rain discs sound darker and deeper: lower music low-pass, rain recordings without their hiss
     const rain = disc.dataset === 'rain';
+    const dry = /desert|arid/i.test(place?.biome ?? '');   // desert wind keeps its dry hiss
     warm.frequency.setTargetAtTime(rain ? 2200 : 3200, ac.currentTime, 0.1);
-    ambSoft.frequency.setTargetAtTime(rain ? 2600 : 4500, ac.currentTime, 0.1);
+    ambSoft.frequency.setTargetAtTime(rain && !dry ? 2600 : 4500, ac.currentTime, 0.1);
   }
   const tr = mode === 'music' ? (TRANSPOSE[place?.region] ?? 0) : 0;   // each region in its own key
   for (const n of schedule(disc, place, mode)) {

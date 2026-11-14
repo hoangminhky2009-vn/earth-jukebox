@@ -45,3 +45,17 @@ test('snow or ice places: no rain sound, the precipitation becomes wind', () => 
   }
   assert.ok(ambienceMix(rain(4), 0, 'music', snow).wind > ambienceMix(rain(0), 0, 'music', snow).wind);
 });
+
+test('desert: a normal month is dry wind, no rain; rain only when wetter than normal; no birds when bare', () => {
+  const sand = { biome: 'desert' };
+  for (let k = -4; k <= 0; k++) {
+    const m = ambienceMix(rain(k), 0, 'music', sand);
+    assert.equal(m['rain-light'] + m['rain-heavy'] + m.birds, 0, `k=${k}`);
+    assert.ok(m.wind >= 0.5);
+  }
+  assert.ok(ambienceMix(rain(-4), 0, 'music', sand).wind > ambienceMix(rain(0), 0, 'music', sand).wind);
+  assert.ok(ambienceMix(rain(1), 0, 'music', sand)['rain-light'] > 0);
+  assert.ok(ambienceMix(rain(4), 0, 'music', sand)['rain-heavy'] > 0);
+  for (let k = 1; k <= 4; k++) for (const v of Object.values(ambienceMix(rain(k), 0, 'music', sand))) assert.ok(v >= 0 && v <= 1);
+  assert.equal(ambienceMix(ndvi(1), 0, 'music', sand).birds, 0);
+});
