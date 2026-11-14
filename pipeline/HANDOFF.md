@@ -1,20 +1,22 @@
-# Sabik's first working handoff — 14 November 2026
+# Sabik's data handoff — 14 November 2026
 
 Written by Sabik with help from OpenAI Codex (SI). Ky owns the top-level project documentation; the suggested additions below are for him to integrate.
 
 ## What is ready
 
-- `docs/data/discs.json`: one real disc, Dhaka rain 2025, side A. It contains no fake observations.
-- All 60 requested NASA frames were read: five dates for each of twelve months. Levels January–December: `[1,0,0,0,0,0,-1,0,2,2,1,1]`.
-- 1,500 of 1,500 sampled pixels were classified. This is colour-decoding success, not proof of rainfall accuracy. Detailed source URLs, file hashes and readings are in `pipeline/evidence/rain-2025.json`.
-- `docs/data/frames/dhaka-rain-2025.png` is a 256 × 256 regional crop of the **15 July 2025** NASA composite. It is one dated image, not an annual average. Its centre represents Dhaka.
+- `docs/data/discs.json`: **16 real discs** for Dhaka, Sylhet, Tonle Sap near Phnom Krom, and Hue; rain 2025/2026 and greenness 2024/2025. No fake observations. The three added sampling points are documented implementation choices for team review in `pipeline/PLACES.md`.
+- **184 distinct source frames** were read and reused for all four places: rain 60 in 2025 and 52 in 2026, plus 36 greenness frames in each year. Source URLs, file hashes and readings are in `pipeline/evidence/`.
+- The original Dhaka rain-2025 result is unchanged: January–December levels `[1,0,0,0,0,0,-1,0,2,2,1,1]`, five valid frames each month, all 1,500 sampled pixels classified. This is colour-decoding success, not proof of rainfall accuracy.
+- Rain 2026 has only two sampled November dates at the cutoff, 14 November. November fails the three-frame minimum and December is future; both stay null in every 2026 rain disc. There are no archive breaks in the requested dates. The four rain-2026 discs are `scratched`; the other twelve are `mint`.
+- All 16 crops are 256 × 256. Each is a **15 July** reference image from the disc's year, not an annual average or an image synchronized to each playing month. The original Dhaka rain crop uses the 15 July 2025 NASA composite.
+- Tonle Sap rain remains in the near-normal bin throughout the valid sampled months. Do not replace this with a more dramatic series. Its greenness window includes invalid pixels (about 83% colour match); these are excluded under the same fixed rules used everywhere.
 - Ky's new upstream commit `a46be20` supplies the score and native Web Audio engine and moves music ownership to Ky. This branch keeps his implementation. Sabik's separate Tone.js prototype is preserved locally outside the repository and is not part of this handoff.
 
 ## Ky: integration
 
 1. Change `DATA_URL` in your `docs/js/app.js` from `data/discs.sample.json` to `data/discs.json` when you integrate this branch. Your existing dynamic imports find your music modules. No script-tag change is required.
-2. This first disc has only side A. The store already handles the missing B side. Do not substitute fake B-side observations.
-3. Bormey's story and frame description are deliberately empty pending reviewed text. The exporter preserves existing disc descriptions and independent checks when rerun. Add the agreed place stories to `pipeline/places.json` before expanding.
+2. Both A/B sides are supplied, with the same twelve calendar-month positions. The two missing 2026 rain months stay null; do not substitute fake B-side observations.
+3. Place introductions come from the latest team document. Crop descriptions remain empty pending Bormey's review of the actual images. The exporter preserves existing disc descriptions and independent checks when rerun.
 4. Add the source and SI notes below to your owned documentation. There are no new JSON schema fields and the shared labels are unchanged.
 
 ## Run it
@@ -33,7 +35,7 @@ After Ky switches the data URL, open `http://localhost:8000/`, collect the Dhaka
 
 Downloads are cached outside the published website in `cache/` and never committed. Use `--refresh` to update NASA listings and retry failed downloads. A network failure stops an export; it does not become a scientific missing observation. Future and not-yet-published dates remain missing, with no invented values. Only holes inside the listed archive become `breaks`. The clarified condition rule is implemented and tested: breaks win as `skips`, otherwise a null month means `scratched`, otherwise `mint`. Saturation is checked as well.
 
-`--all --day15` expands the configured places to both rain years and both NDVI years, using the agreed full-resolution, day-15-only NDVI fallback. Without `--day15`, NDVI samples days 5, 15 and 25 and requires more downloading. The light-image option needs a visual check that date labels avoid every selected place before use.
+Reproduce this full export with `python -m pipeline.run --all --variant light`. NDVI samples days 5, 15 and 25. The inspected timestamp rectangle is guarded and clear of all selected windows; see `pipeline/evidence/ndvi-light-layout.json`. `--all --day15` instead uses the agreed full-resolution, day-15-only fallback, with `source.sample_days` explicitly changed to `[15]`.
 
 ## Scientific limits to retain in the explanation
 
@@ -60,6 +62,8 @@ Source hashes, frame counts and colour-match evidence make the image decoding re
 
 The [live team document](https://docs.google.com/document/d/1XgIDQHjdR-5IGtX96clUcxXklNICMZ_j9mVAuMOil0I/edit?tab=t.uv0ru88njche), read 14 November, currently proposes Dhaka, Sylhet, Tonle Sap and Huế. It supplies introductions but no sampling coordinates or checked crop descriptions yet. Its newer introductions correctly describe rainfall differences from normal; earlier ideas about daily downpours cannot be demonstrated with this monthly anomaly pipeline. Historical flood examples from 2020/2022 are background, not events captured by our 2025/2026 discs.
 
-Confirm representative points before the full export. Complete subjective listening, NVDA testing, and mobile/Safari testing. Merge the reviewed branch and switch the data URL before claiming the public Pages game uses these real observations.
+Review the proposed representative points in `pipeline/PLACES.md` before submission. Complete subjective listening, NVDA testing, and mobile/Safari testing. Merge the reviewed branch and switch the data URL before claiming the public Pages game uses these real observations.
 
 Known upstream follow-up for Ky: `schedule.js` checks `breaks.has(bar)` even though the JSON contract uses months 1–12 and `bar` is 0–11. Use `bar + 1` and update the regression case. This does not affect the first Dhaka disc, whose breaks list is empty.
+
+Another upstream audio check for Ky: when entering a null month, the music/reverb and field-recording tail may continue briefly while the ambience fades. A true crackle-only missing month needs isolation after the reverb and immediate ambience muting, while keeping the crackle bus audible. This is a code-review finding, not a completed listening test of the latest engine.

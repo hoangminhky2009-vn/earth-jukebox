@@ -1,0 +1,104 @@
+{
+  "provenance": {
+    "made_with": "Written by Sabik with help from OpenAI Codex (SI). See AI_USE.md.",
+    "method": "Visual inspection of the original NASA frame, supported by pixel-boundary checks; no image modification."
+  },
+  "checked_at": "2026-11-14T05:00:52.310078+00:00",
+  "source": {
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png",
+    "sha256": "43d2a83a4689b1ae9e77a9725ffa433cb6b2c5eb70f642620f370922be130757",
+    "date": "2025-07-15",
+    "bytes": 5031403,
+    "width": 4096,
+    "height": 2048,
+    "mode": "RGBA"
+  },
+  "date_panel": {
+    "observed_approximate_bounds_half_open": [
+      0,
+      1852,
+      676,
+      2048
+    ],
+    "conservative_exclusion_bounds_half_open": [
+      0,
+      1840,
+      700,
+      2048
+    ],
+    "boundary_observations": "Left-edge pixels first change from blue at row 1852. Bottom row changes from the shaded panel at x 676. Rounded panel corner means not every pixel inside the bounding rectangle is covered."
+  },
+  "places": [
+    {
+      "name": "Dhaka",
+      "approximate_latitude": 23.81,
+      "approximate_longitude": 90.41,
+      "pixel": [
+        3076,
+        753
+      ],
+      "window_inclusive": [
+        3074,
+        751,
+        3078,
+        755
+      ],
+      "clear_of_conservative_date_panel": true
+    },
+    {
+      "name": "Sylhet",
+      "approximate_latitude": 24.9,
+      "approximate_longitude": 91.87,
+      "pixel": [
+        3093,
+        740
+      ],
+      "window_inclusive": [
+        3091,
+        738,
+        3095,
+        742
+      ],
+      "clear_of_conservative_date_panel": true
+    },
+    {
+      "name": "Tonle Sap",
+      "approximate_latitude": 13.0,
+      "approximate_longitude": 104.0,
+      "pixel": [
+        3231,
+        876
+      ],
+      "window_inclusive": [
+        3229,
+        874,
+        3233,
+        878
+      ],
+      "clear_of_conservative_date_panel": true
+    },
+    {
+      "name": "Hue",
+      "approximate_latitude": 16.46,
+      "approximate_longitude": 107.59,
+      "pixel": [
+        3272,
+        836
+      ],
+      "window_inclusive": [
+        3270,
+        834,
+        3274,
+        838
+      ],
+      "clear_of_conservative_date_panel": true
+    }
+  ],
+  "decision": "The inspected light frame leaves all four approximate 5x5 geographic sampling windows clear of date annotation.",
+  "limitations": [
+    "Only this one frame was visually inspected; this does not verify the layout of every historical frame.",
+    "Coordinates are provisional geographic examples, pending the root team place configuration.",
+    "Layout clearance does not validate physical NDVI values; the pipeline extracts relative colourbar positions only.",
+    "Recheck any added location or changed source layout before export."
+  ]
+}

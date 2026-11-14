@@ -20,6 +20,15 @@ from .reader import read_frame, coordinates_to_pixel
 from .validate import write_validated
 
 
+def assert_light_window_clear(lat, lon, width, height):
+    if (width,height) != (4096,2048):
+        raise ValueError('Unexpected light-frame dimensions; inspect the date-label layout again')
+    x,y = coordinates_to_pixel(lon,lat,width,height)
+    xs = np.arange(x-2,x+3) % width
+    if np.any(xs < 700) and y+2 >= 1840:
+        raise ValueError('Sampling window overlaps the NDVI date label; use the full-resolution fallback')
+
+
 def build_discs(manifest, places, *, ndvi_bar=None):
     """Decode a frame once for all places. Network errors stop the export."""
     dataset, year = manifest['dataset'], manifest['year']
@@ -38,6 +47,8 @@ def build_discs(manifest, places, *, ndvi_bar=None):
         for place in places:
             entry = {k:v for k,v in record.items() if k not in ('path','cached')}
             if status == 'ok':
+                if dataset == 'ndvi' and manifest.get('variant') == 'light':
+                    assert_light_window_clear(place['lat'],place['lon'],image.shape[1],image.shape[0])
                 entry['reading'] = read_frame(image, dataset, place['lat'], place['lon'], ndvi_bar=ndvi_bar)
             results[place['id']][day] = entry
     discs, evidence = [], {}

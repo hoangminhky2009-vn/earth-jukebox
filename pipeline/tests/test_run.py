@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 import pytest
-from pipeline.run import build_discs, merge_export, merge_evidence
+from pipeline.run import build_discs, merge_export, merge_evidence, assert_light_window_clear
 
 
 PLACE = {'id':'dhaka','name':'Dhaka','lat':23.81,'lon':90.41,
@@ -70,3 +70,11 @@ def test_single_place_rerun_keeps_other_evidence():
     old = {'places':{'first':{'quality':1},'other':{'quality':2}}}
     result = merge_evidence(old,{'first':{'quality':3}})
     assert result == {'first':{'quality':3},'other':{'quality':2}}
+
+
+def test_ndvi_light_overlay_is_never_sampled_as_vegetation():
+    assert_light_window_clear(23.81,90.41,4096,2048)
+    with pytest.raises(ValueError,match='date label'):
+        assert_light_window_clear(-80,-170,4096,2048)
+    with pytest.raises(ValueError,match='dimensions'):
+        assert_light_window_clear(23.81,90.41,2048,1024)
