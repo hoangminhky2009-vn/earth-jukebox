@@ -15,6 +15,7 @@
 
 import { schedule } from './schedule.js';
 import { ambienceMix, LAYERS } from './ambience.js';
+import { sharedContext } from './foley.js';
 
 const BAR = 2;
 const STEP = BAR / 16;
@@ -63,28 +64,24 @@ const midiHz = (m) => 440 * 2 ** ((m - 69) / 12);
 function ensure() {
   if (ac) return ac;
   const Ctx = window.AudioContext || window.webkitAudioContext;
-  ac = new Ctx({ latencyHint: 'playback' });   // bigger buffer: no dropouts on a busy laptop
+  ac = sharedContext() ?? new Ctx({ latencyHint: 'playback' });   // one context for the whole page, 'playback' buffer
   const comp = ac.createDynamicsCompressor();
   comp.threshold.value = -16; comp.ratio.value = 4; comp.attack.value = 0.005; comp.release.value = 0.2;
-  master = gainNode(volume * 0.9);
+  master = gainNode(volume * 1.2);
   duckGain = gainNode(1);
   music = gainNode(1);
   fxOut = gainNode(1);
   const verb = ac.createConvolver();
-  verb.buffer = impulse(1.8);
+  verb.buffer = impulse(1.6);
   const wet = gainNode(0.14);
-  // lofi colour: warm low-pass -> slow tape wobble (modulated delay) -> soft saturation
+  // lofi colour: warm low-pass -> slow tape wobble (modulated delay)
   warm = ac.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200; warm.Q.value = 0.5;
   const wobble = ac.createDelay(0.05); wobble.delayTime.value = 0.012;
   const lfo = ac.createOscillator(); lfo.frequency.value = 0.55;
   const lfoDepth = gainNode(0.0016);
   lfo.connect(lfoDepth); lfoDepth.connect(wobble.delayTime); lfo.start();
-  const sat = ac.createWaveShaper();
-  const curve = new Float32Array(1024);
-  for (let i = 0; i < 1024; i++) { const x = (i / 1023) * 2 - 1; curve[i] = Math.tanh(1.1 * x) / Math.tanh(1.1); }
-  sat.curve = curve;
-  const pre = gainNode(0.7);   // headroom so the saturation only warms, never fuzzes
-  music.connect(pre); pre.connect(warm); warm.connect(wobble); wobble.connect(sat); sat.connect(duckGain);
+  const pre = gainNode(0.75);   // headroom
+  music.connect(pre); pre.connect(warm); warm.connect(wobble); wobble.connect(duckGain);   // no waveshaper: it aliased into fizz
   music.connect(verb); verb.connect(wet); wet.connect(duckGain);
   // melody echo (3 steps, dark, fading) and a longer room, so single notes bloom instead of beeping
   leadSend = gainNode(1);
@@ -94,10 +91,9 @@ function ensure() {
   const echoOut = gainNode(0.16);
   leadSend.connect(echo); echo.connect(echoLP); echoLP.connect(fb); fb.connect(echo);
   echoLP.connect(echoOut); echoOut.connect(music);
-  const room = ac.createConvolver(); room.buffer = impulse(2.6);
-  const roomOut = gainNode(0.2);
+  const roomSend = gainNode(1.2);   // the melody gets more of the one shared reverb (a second convolver cost too much CPU)
   vibrato = ac.createOscillator(); vibrato.frequency.value = 5.2; vibrato.start();
-  leadSend.connect(room); room.connect(roomOut); roomOut.connect(duckGain);
+  leadSend.connect(roomSend); roomSend.connect(verb);
   fxOut.connect(duckGain);
   ambCut = gainNode(AMB_LEVEL);
   ambSoft = ac.createBiquadFilter(); ambSoft.type = 'lowpass'; ambSoft.frequency.value = 4500;
@@ -616,7 +612,7 @@ export function duck(db, ms) {
 
 export function setVolume(v) {
   volume = Math.min(1, Math.max(0, Number(v) || 0));
-  if (ac) master.gain.setTargetAtTime(volume * 0.9, ac.currentTime, 0.03);
+  if (ac) master.gain.setTargetAtTime(volume * 1.2, ac.currentTime, 0.03);
 }
 
 export function onTick(fn) { tickFn = typeof fn === 'function' ? fn : () => {}; }
