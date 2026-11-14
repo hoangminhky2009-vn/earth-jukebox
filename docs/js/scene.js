@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, slotLayout, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -193,11 +193,15 @@ export function createScene(store, opts) {
   const P = (c, x, y, w = 1, h = 1, g = ctx) => { g.fillStyle = c; g.fillRect(x | 0, y | 0, w, h); };
 
   /* ---------- data ---------- */
-  const slots = shelfSlots(store.state.discs, store.state.places).slice(0, 12);
-  const L = slotLayout(slots.length);
+  // The tray has pages (rivers and monsoon / forest, desert and ice); one layout for all pages so slots never move.
+  const pages = shelfPages(shelfSlots(store.state.discs, store.state.places), store.state.places);
+  const L = slotLayout(Math.max(1, ...pages.map((pg) => pg.slots.length)));
   hits.classList.toggle('compact', L.compact);
   const SLOT = (i) => ({ x: 24 + (i % L.cols) * L.stepX, y: 118 + Math.floor(i / L.cols) * L.stepY, w: L.w, h: L.h });
-  const shelf = Array.from({ length: L.count }, (_, i) => slots[i] ?? null);
+  let page = 0;
+  let shelf = [];
+  const setShelf = () => { shelf = Array.from({ length: L.count }, (_, i) => pages[page].slots[i] ?? null); };
+  setShelf();
   const slotOfDisc = (id) => shelf.findIndex((s) => s && s.discIds.includes(id));
   const placeOf = (d) => store.getPlace(d.place);
   const look = (d) => biomeLook(placeOf(d)?.biome, d.place);
@@ -293,43 +297,49 @@ export function createScene(store, opts) {
     if (!store.state.collected.has(s.discId)) store.record(s.discId);
     store.load(s.discId);
   }
-  shelf.forEach((s, i) => {
+  for (let i = 0; i < L.count; i++) {
+    const cur = () => shelf[i];   // which disc a slot holds depends on the tray page shown
     const b = document.createElement('button'); b.type = 'button'; b.className = 'hit slot'; pos(b, SLOT(i).x, SLOT(i).y, SLOT(i).w, SLOT(i).h);
     const name = document.createElement('span'); name.className = 'name'; const main = document.createTextNode(''); const yr = document.createElement('span'); yr.className = 'yr';
     const ds = document.createElement('span'); ds.className = 'ds'; ds.setAttribute('aria-hidden', 'true');
     name.append(ds, main, yr); b.append(name);
-    if (!s) {
-      b.disabled = true; b.setAttribute('aria-label', 'Empty slot, not recorded yet'); main.nodeValue = '???';
-    } else {
-      b.dataset.disc = s.discId;
-      b.addEventListener('click', () => { if (!b.dataset.dragged) activate(i); delete b.dataset.dragged; });
-      b.addEventListener('pointerdown', (e) => { if (slotInDeck(s)) return; drag = { id: s.discId, i, sx: e.clientX, sy: e.clientY, on: false }; b.setPointerCapture(e.pointerId); });
-      b.addEventListener('pointermove', (e) => {
-        if (!drag || drag.i !== i) return;
-        if (!drag.on && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 6) drag.on = true;
-        if (drag.on) { const r = cv.getBoundingClientRect(); drag.x = (e.clientX - r.left) / r.width * W; drag.y = (e.clientY - r.top) / r.height * H; }
-      });
-      b.addEventListener('pointerup', () => {
-        if (drag && drag.on) {
-          b.dataset.dragged = '1';
-          if (Math.hypot(drag.x - PL.x, drag.y - PL.y) < PL.r + 6) { const dd = drag; drag = null; activate(dd.i, { x: dd.x, y: dd.y }); return; }
-        }
-        drag = null;
-      });
-      b.addEventListener('pointercancel', () => { drag = null; });
-      b.addEventListener('mouseenter', () => { hoverId = s.discId; });
-      b.addEventListener('mouseleave', () => { hoverId = null; });
-      b.addEventListener('focus', () => {
-        hoverId = s.discId;
-        // Focus announces the place and its first disc (the a11y module), so only the first slot of a place says it.
-        const primary = store.primaryDisc(s.placeId);
-        if (primary && primary.id === s.discId) store.focusPlace(s.placeId);
-      });
-      b.addEventListener('blur', () => { hoverId = null; });
-    }
+    b.addEventListener('click', () => { if (!cur()) return; if (!b.dataset.dragged) activate(i); delete b.dataset.dragged; });
+    b.addEventListener('pointerdown', (e) => { const sl = cur(); if (!sl || slotInDeck(sl)) return; drag = { id: sl.discId, i, sx: e.clientX, sy: e.clientY, on: false }; b.setPointerCapture(e.pointerId); });
+    b.addEventListener('pointermove', (e) => {
+      if (!drag || drag.i !== i) return;
+      if (!drag.on && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 6) drag.on = true;
+      if (drag.on) { const r = cv.getBoundingClientRect(); drag.x = (e.clientX - r.left) / r.width * W; drag.y = (e.clientY - r.top) / r.height * H; }
+    });
+    b.addEventListener('pointerup', () => {
+      if (drag && drag.on) {
+        b.dataset.dragged = '1';
+        if (Math.hypot(drag.x - PL.x, drag.y - PL.y) < PL.r + 6) { const dd = drag; drag = null; activate(dd.i, { x: dd.x, y: dd.y }); return; }
+      }
+      drag = null;
+    });
+    b.addEventListener('pointercancel', () => { drag = null; });
+    b.addEventListener('mouseenter', () => { hoverId = cur()?.discId ?? null; });
+    b.addEventListener('mouseleave', () => { hoverId = null; });
+    b.addEventListener('focus', () => {
+      const sl = cur(); if (!sl) return;
+      hoverId = sl.discId;
+      // Focus announces the place and its first disc (the a11y module), so only the first slot of a place says it.
+      const primary = store.primaryDisc(sl.placeId);
+      if (primary && primary.id === sl.discId) store.focusPlace(sl.placeId);
+    });
+    b.addEventListener('blur', () => { hoverId = null; });
     slotEls.push({ b, main, yr, ds });
     hits.append(b);
+  }
+  // Page switch: a real button above the tray, only when there is more than one page.
+  const pageBtn = document.createElement('button'); pageBtn.type = 'button'; pageBtn.className = 'hit page-btn';
+  pos(pageBtn, 22, 93, 150, 10);
+  pageBtn.hidden = pages.length < 2;
+  pageBtn.addEventListener('click', () => {
+    page = (page + 1) % pages.length; setShelf(); syncHits();
+    announce(`Tray page ${page + 1} of ${pages.length}: ${pages[page].title}. ${pages[page].slots.length} discs.`);
   });
+  hits.append(pageBtn);
   const doPress = (key) => { pressed = key; pressedT = 5; };
   const ACTIONS = {
     play: () => { const r = store.state.playing ? store.pause() : store.play(); if (!r.ok) announce(r.error); },
@@ -357,9 +367,16 @@ export function createScene(store, opts) {
 
   function syncHits() {
     const d = loadedDisc(); const deck = Boolean(d);
+    if (pages.length > 1) {
+      const nxt = pages[(page + 1) % pages.length];
+      pageBtn.textContent = `${pages[page].title.toUpperCase()} ${page + 1}/${pages.length} \u25B6`;
+      pageBtn.setAttribute('aria-label', `Tray page ${page + 1} of ${pages.length}: ${pages[page].title}. Show ${nxt.title}`);
+    }
     shelf.forEach((s, i) => {
-      if (!s) return;
-      const { b, main, yr, ds } = slotEls[i]; const first = store.getDisc(s.discId); const inDeck = slotInDeck(s);
+      const { b, main, yr, ds } = slotEls[i];
+      b.hidden = !s;
+      if (!s) { main.nodeValue = ''; yr.textContent = ''; ds.textContent = ''; return; }
+      const first = store.getDisc(s.discId); const inDeck = slotInDeck(s);
       b.setAttribute('aria-label', inDeck ? `${slotName(s)}, ${DS_LONG[s.dataset] ?? s.dataset}, on the deck`
         : `${slotName(s)}, ${DS_LONG[s.dataset] ?? s.dataset} ${first.year}, side ${first.side}, ${COND_TEXT[first.condition] ?? first.condition}. Press to put it on the deck.`);
       main.nodeValue = inDeck ? 'IN DECK' : slotName(s).toUpperCase();
@@ -381,6 +398,8 @@ export function createScene(store, opts) {
   function lift() { if (armA > 0.9) foley.play('lift'); }
   function halt() { playing = false; spinning = false; }
   store.on('disc:load', ({ disc }) => {
+    const pg = pages.findIndex((pp) => pp.slots.some((x) => x.discIds.includes(disc.id)));
+    if (pg >= 0 && pg !== page) { page = pg; setShelf(); }
     lift(); halt(); touched = false; flipT = 0;
     const idx = slotOfDisc(disc.id); const s = SLOT(Math.max(0, idx));
     const from = pendingFrom ?? { x: s.x + s.w / 2, y: s.y + L.cy };
@@ -559,11 +578,7 @@ export function createScene(store, opts) {
     // shelf discs (side A of each pair), status mark = condition by colour AND shape
     shelf.forEach((s, i) => {
       const sl = SLOT(i); const cx = sl.x + sl.w / 2; const cy = sl.y + L.cy; const R = L.discR - 2;
-      if (!s) {
-        for (let a = 0; a < 6.28; a += 0.25) P('#6b5a4c', cx + Math.cos(a) * R, cy + Math.sin(a) * R);
-        LOCK.forEach((row, y) => [...row].forEach((c, x) => c === '#' && P('#9c8a73', cx - 4 + x, cy - 4 + y)));
-        return;
-      }
+      if (!s) return;   // a shorter tray page: plain wood
       if (slotInDeck(s) || (drag && drag.on && drag.id === s.discId)) { for (let a = 0; a < 6.28; a += 0.3) P('#8a7a60', cx + Math.cos(a) * R, cy + Math.sin(a) * R); return; }
       const lifted = hoverId === s.discId ? -4 : 0; P('#1b120f', cx - R + 3, cy + R + 1 + (lifted ? 4 : 0), R * 2 - 6, 2);
       drawDiscAt(getArt(s.discId, 'small'), cx, cy + lifted, L.discR, lifted ? -0.12 : 0);

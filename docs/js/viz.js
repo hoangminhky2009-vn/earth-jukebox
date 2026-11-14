@@ -59,6 +59,19 @@ export function shelfSlots(discs, places) {
 }
 
 /** Tray geometry in internal pixels: 6 big slots (3×2), or 12 compact ones (4×3) when there are more pairs. */
+/** Tray pages: river and monsoon places first, then forest / desert / ice places; at most `per` slots a page. */
+export const PAGE_TITLES = { rivers: 'Rivers and monsoon', lands: 'Forest, desert and ice' };
+export function shelfPages(slots, places, per = 8) {
+  const byId = new Map(places.map((p) => [p.id, p]));
+  const theme = (s) => { const art = biomeLook(byId.get(s.placeId)?.biome, s.placeId).art; return ['forest', 'desert', 'ice'].includes(art) ? 'lands' : 'rivers'; };
+  const pages = [];
+  for (const key of ['rivers', 'lands']) {
+    const list = slots.filter((s) => theme(s) === key);
+    for (let i = 0; i < list.length; i += per) pages.push({ key, title: PAGE_TITLES[key], slots: list.slice(i, i + per) });
+  }
+  return pages.length ? pages : [{ key: 'rivers', title: PAGE_TITLES.rivers, slots: [] }];
+}
+
 /** Tray grid for n place+dataset pairs. Exactly n slots (no empty "???" fillers); discs as big as the grid allows. */
 export function slotLayout(n) {
   if (n <= 6) return { count: n, cols: 3, rows: 2, w: 70, h: 64, stepX: 72, stepY: 66, discR: 22, cy: 27, compact: false };

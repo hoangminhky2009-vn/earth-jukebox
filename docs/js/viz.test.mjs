@@ -122,3 +122,16 @@ test('LCD line: short wording, glyph, missing month', () => {
   assert.equal(lcdText(disc('dhaka-rain-2026'), 'Dhaka, Bangladesh', 11, data.datasets), 'DHAKA // DEC ░ NO DATA');
   assert.equal(lcdText(disc('mekong-ndvi-2024'), 'Mekong Delta, Vietnam', 0, data.datasets), 'MEKONG DELTA // JAN medium to high greenness');
 });
+
+test('tray pages: rivers first, then forest/desert/ice; never more than 8 on a page', async () => {
+  const { shelfPages } = await import('./viz.js');
+  const places = [{ id: 'dhaka', biome: 'monsoon-delta' }, { id: 'sahara', biome: 'desert' }, { id: 'ladakh', biome: 'snow-mountain' }, { id: 'amazon', biome: 'rainforest' }];
+  const slots = places.flatMap((p) => ['rain', 'ndvi'].map((ds) => ({ placeId: p.id, dataset: ds })));
+  const pages = shelfPages(slots, places);
+  assert.deepEqual(pages.map((p) => p.key), ['rivers', 'lands']);
+  assert.deepEqual(pages[0].slots.map((s) => s.placeId), ['dhaka', 'dhaka']);
+  assert.equal(pages[1].slots.length, 6);
+  const many = Array.from({ length: 10 }, (_, i) => ({ placeId: 'dhaka', dataset: `d${i}` }));
+  assert.deepEqual(shelfPages(many, places).map((p) => p.slots.length), [8, 2]);
+  assert.equal(shelfPages([], places).length, 1);
+});
