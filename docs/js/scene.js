@@ -508,7 +508,8 @@ export function createScene(store, opts) {
   // Snow lies level along the whole lid; sand piles are highest in the middle and taper to nothing at the ends.
   const edgeDist = (x) => Math.min(x - X0, X1 - 1 - x);
   const snowCap = (x) => (edgeDist(x) < -2 ? 0 : edgeDist(x) < 1 ? 5 : 8);   // snow lies flat across the whole lid (only the very corners are a little lower)
-  const sandCap = (x) => Math.max(0, Math.min(7, edgeDist(x) * 0.4));
+  const sandCap = (x) => (edgeDist(x) < -2 ? 0 : edgeDist(x) < 1 ? 2 : 4);   // sand spreads in a thin layer with small lumps along the whole lid
+  const pileSand = (x, h) => { if (x >= 0 && x < W && sandH[x] < sandCap(x)) sandH[x] = Math.min(sandCap(x), sandH[x] + h); };
   const pileSnow = (x, h) => { if (x >= 0 && x < W && snowH[x] < snowCap(x)) snowH[x] = Math.min(snowCap(x), snowH[x] + h); };
   // The weather follows the month playing: it eases toward the month's intensity, so a downpour builds and a snowfall thins
   // out gradually (and the snow on the lid melts when the month is green).
@@ -665,7 +666,7 @@ export function createScene(store, opts) {
         if (p.y >= GROUND) { out.push({ k: 'splash', x: p.x, y: GROUND - 1, vx: (Math.random() - 0.5), vy: -0.6, life: 6 }); continue; }
       } else if (p.k === 'sand') {
         p.x += p.vx; p.y += p.vy + Math.sin(p.x * 0.1) * 0.05; const s = surface(p.x);
-        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; if (sandH[xi] < sandCap(xi)) sandH[xi] = Math.min(sandCap(xi), sandH[xi] + 1.2 + 3 * wxNow); continue; } p.y = s - 1; }
+        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; const add = 1 + 2.2 * wxNow; pileSand(xi, add); for (const [o, w] of [[1, 0.75], [2, 0.5], [3, 0.3]]) { pileSand(xi + o, add * w); pileSand(xi - o, add * w); } continue; } p.y = s - 1; }
         if (p.x > W + 4) continue;
       } else if (p.k === 'leaf') {
         p.t += 0.06; p.x += Math.sin(p.t) * 0.5 + (p.vx || 0) * 0.2; p.y += p.vy;
@@ -681,6 +682,7 @@ export function createScene(store, opts) {
       if (p.y < H + 5 && p.x > -140 && p.x < W + 140) out.push(p);
     }
     parts = out;
+    for (let x = X0 - 2; x < X1 + 1; x++) { const d = sandH[x] - sandH[x + 1]; if (Math.abs(d) > 0.9) { sandH[x] -= d * 0.25; sandH[x + 1] += d * 0.25; } }   // sand spreads out
     for (let x = X0 - 2; x < X1 + 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 0.6) { snowH[x] -= d * 0.3; snowH[x + 1] += d * 0.3; } }   // snow settles level
     for (let x = X0 - 2; x < X1 + 2; x++) { snowH[x] = Math.min(snowH[x], snowCap(x)); sandH[x] = Math.min(sandH[x], sandCap(x)); }
     // snow on the lid stays through the snowy months and only melts, slowly, in a really green month (the record is just 24 s long)
