@@ -292,6 +292,12 @@ export function weatherIntensity(disc, month, weather = 'rain') {
 // ------------------------------------------------------------------ grass on the lid (greenness discs)
 
 /** How much grass grows on the lid for a month: greenness 1..4 -> 0..1; missing month: null (it stays as it was); other data: 0. */
+/** Plant colours: a green scale, but a desert's plants are dry sage and ochre, never lush green. */
+export const FLORA_COLOURS = {
+  green: GREEN_SCALE,
+  desert: { 1: '#b59b62', 2: '#aa9a5c', 3: '#9aa060', 4: '#8aa062' },
+};
+
 export function greenGrowth(disc, month) {
   if (disc?.dataset !== 'ndvi') return 0;
   const level = disc.levels?.[month];
@@ -314,14 +320,14 @@ export function bladeHeight(growth, seed, max = 8) {
  * the tallest plant in pixels, and how many specimens stand along the lid. Rainforest: ferns, palms, trees, giant trees.
  */
 export const FLORA = {
-  forest: { max: 58, count: 34, kinds: [['fern', 0.34], ['palm', 0.58], ['tree', 0.9], ['giant', 1]] },
-  lake: { max: 26, count: 30, kinds: [['reed', 0.45], ['stilt', 1]] },                       // flooded forest: reeds and trees on stilt roots
-  wetland: { max: 22, count: 34, kinds: [['reed', 0.75], ['willow', 1]] },                   // reeds and willows
-  city: { max: 42, count: 26, kinds: [['bamboo', 0.55], ['banana', 1]] },                    // river delta: bamboo clumps and banana plants
-  coast: { max: 38, count: 26, kinds: [['coconut', 0.5], ['casuarina', 1]] },                // coconut palms and casuarina
-  desert: { max: 30, count: 24, kinds: [['spinifex', 0.6], ['gum', 1]] },                    // spinifex tufts and ghost gums
-  ice: { max: 30, count: 26, kinds: [['spruce', 0.6], ['birch', 1]] },                       // spruce and birch
-  delta: { max: 26, count: 22, kinds: [['reed', 0.6], ['willow', 1]] },
+  forest: { max: 70, count: 34, kinds: [['fern', 0.34], ['palm', 0.58], ['tree', 0.9], ['giant', 1]] },
+  lake: { max: 34, count: 30, kinds: [['reed', 0.45], ['stilt', 1]] },                       // flooded forest: reeds and trees on stilt roots
+  wetland: { max: 30, count: 34, kinds: [['reed', 0.75], ['willow', 1]] },                   // reeds and willows
+  city: { max: 54, count: 26, kinds: [['bamboo', 0.55], ['banana', 1]] },                    // river delta: bamboo clumps and banana plants
+  coast: { max: 48, count: 26, kinds: [['coconut', 0.5], ['casuarina', 1]] },                // coconut palms and casuarina
+  desert: { max: 36, count: 24, kinds: [['spinifex', 0.6], ['gum', 1]] },                    // spinifex tufts and ghost gums
+  ice: { max: 38, count: 26, kinds: [['spruce', 0.6], ['birch', 1]] },                       // spruce and birch
+  delta: { max: 32, count: 22, kinds: [['reed', 0.6], ['willow', 1]] },
 };
 const KIND_HEIGHT = { fern: 0.22, palm: 0.6, tree: 0.78, giant: 1, reed: 0.5, stilt: 0.8, willow: 0.75, bamboo: 1, banana: 0.4, coconut: 1, casuarina: 0.75, spinifex: 0.18, gum: 1, spruce: 1, birch: 0.75 };
 const KIND_START = { fern: 0.05, palm: 0.2, tree: 0.3, giant: 0.55, reed: 0.05, stilt: 0.12, willow: 0.25, bamboo: 0.2, banana: 0.1, coconut: 0.2, casuarina: 0.1, spinifex: 0.05, gum: 0.35, spruce: 0.1, birch: 0.3 };

@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, plantKind, plantHeight, FLORA, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, plantKind, plantHeight, FLORA, FLORA_COLOURS, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -522,13 +522,14 @@ export function createScene(store, opts) {
   function drawFlora(d, rm) {
     if (!d || growNow <= 0.03 || card) return;
     const art = look(d).art; const spec = FLORA[art] ?? FLORA.delta;
+    const gDesert = art === 'desert' ? 0.75 : 1;   // a desert never gets as lush as the data's top level suggests
     const xs = floraSpots[art] ?? (floraSpots[art] = FLORA_X(spec.count));
-    const t = rm ? 0 : performance.now() / 1000; const lush = GREEN_SCALE[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
+    const t = rm ? 0 : performance.now() / 1000; const lush = (art === 'desert' ? FLORA_COLOURS.desert : FLORA_COLOURS.green)[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
     const leaf = (k) => lit(lush, k); const wood = '#5a3d27'; const woodHi = '#7a5535'; const white = '#e8e0d0';
     const order = xs.map((x, i) => [x, h2(i, 5, 23), i]).sort((a2, b2) => a2[1] - b2[1]);
     ctx.globalAlpha = 0.7;
     for (const [x0, seed, i] of order) {
-      const h = plantHeight(growNow, seed, spec.max, art); if (!h) continue;
+      const h = plantHeight(growNow * gDesert, seed, spec.max, art); if (!h) continue;
       const kind = plantKind(seed, art); const sway = rm ? 0 : Math.sin(t * 1.4 + i) * (kind === 'fern' || kind === 'reed' ? 0.9 : 1.5);
       const topX = x0 + Math.round(sway * (h / 40)); const base = ROOF;
       const trunk = (w, col = wood, hi = woodHi) => { for (let y = 0; y < h; y++) { const f = y / h; const cx = Math.round(x0 + (topX - x0) * f * f); P(col, cx, base - y, w, 1); P(hi, cx, base - y, 1, 1); } };
@@ -703,7 +704,7 @@ export function createScene(store, opts) {
       return;
     }
     if (ic.kind === 'plant') {
-      const g = GREEN_SCALE[ic.size]; const sway = cur && t ? Math.round(Math.sin(t * 3)) : 0;
+      const g = monthPal[ic.size]; const sway = cur && t ? Math.round(Math.sin(t * 3)) : 0;
       P('#5a3d27', x0 + 2, gy, 27, 4); P('#7a5535', x0 + 2, gy, 27, 1);
       for (let i = 0; i < ic.size * 2; i++) P(lit(g, -0.2), x0 + 4 + ((i * 7) % 23), gy - 1, 1, 1);   // grass tufts
       if (ic.size === 1) { P('#6a8a3a', cx, gy - 4, 1, 4); P(g, cx - 2 + sway, gy - 5, 2, 1); P(g, cx + 1 + sway, gy - 6, 2, 1); }
@@ -769,8 +770,10 @@ export function createScene(store, opts) {
 
   // The weather calendar shows only while the music plays (needle down); otherwise the sky is the plain map.
   const skyChartOn = (d) => Boolean(d) && !card && spinning;
+  let monthPal = GREEN_SCALE;   // the calendar's plants: dry sage and ochre in a desert, green elsewhere
   function drawSkyChart(d) {
     if (!skyChartOn(d)) { if (!scEl.hidden) scEl.hidden = true; return; }
+    monthPal = look(d).art === 'desert' ? FLORA_COLOURS.desert : GREEN_SCALE;
     const pair = pairOf(d).slice(0, 2); const set = pair.length > 1 ? pair : [d];
     const rowY = set.length > 1 ? [28, 58] : [43];
     const key = set.map((x) => x.id).join('+');
@@ -891,7 +894,7 @@ export function createScene(store, opts) {
     ctx.drawImage(conC, 0, 0);
     // grass on the lid (greenness discs): blades with a darker root and a bright tip, a few flowers when it is lush; snow lies over it
     if (growNow > 0.02) {
-      const t = rm ? 0 : performance.now() / 1000; const gc = GREEN_SCALE[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
+      const t = rm ? 0 : performance.now() / 1000; const gc = (look(loadedDisc() ?? { place: '' }).art === 'desert' ? FLORA_COLOURS.desert : GREEN_SCALE)[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
       for (let x = X0; x < X1; x++) {
         const hgt = bladeHeight(growNow, growSeed[x]); if (!hgt) continue;
         const sway = rm || hgt < 3 ? 0 : Math.round(Math.sin(t * 2 + x * 0.35) * 0.7);
