@@ -7,6 +7,13 @@
 .screen #load-error { position: absolute; left: 10%; right: 10%; top: 40%; z-index: 5; }
 .logo { position: absolute; left: calc(var(--s, 1) * 8px); top: calc(var(--s, 1) * 4px); font-size: calc(var(--s, 1) * 7px); letter-spacing: 1px; color: var(--text-body); opacity: 0.9; pointer-events: none; }
 .coords { position: absolute; font-size: calc(var(--s, 1) * 5px); color: var(--accent); white-space: nowrap; pointer-events: none; text-shadow: calc(var(--s, 1) * 0.5px) calc(var(--s, 1) * 0.5px) 0 var(--bg-page); }
+.sky-chart { position: absolute; inset: 0; pointer-events: none; }
+.sky-chart > div { position: absolute; white-space: nowrap; overflow: hidden; font-size: calc(var(--s, 1) * 5px); line-height: 1.2; }
+.sc-title { color: var(--accent); letter-spacing: 0.5px; }
+.sc-axis { color: #c9b98f; text-align: right; }
+.sc-month { color: #9a8f7a; text-align: center; }
+.sc-month.now { color: #fff6e0; }
+.high-contrast .sky-chart > div { color: #fff; background: #000; }
 .lcd {
   position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;
   font-size: calc(var(--s, 1) * 6px); letter-spacing: 0.5px; color: var(--lcd-fg); text-shadow: 0 0 calc(var(--s, 1) * 2px) rgba(155, 231, 165, 0.6);
@@ -78,8 +85,8 @@
 .roll-legend { margin: 8px 0 0; color: var(--text-muted); font: 400 var(--fs-small)/1.6 var(--font-pixel); }
 .high-contrast .roll-bg, .high-contrast .roll-crackle-bg, .high-contrast .roll-skip-bg { fill: #000; }
 .high-contrast .roll-bed { fill: #fff; opacity: 0.6; }
-.page-btn { writing-mode: vertical-rl; font-size: calc(var(--s, 1) * 5px); letter-spacing: 0.5px; color: #f6e7c4; background: transparent; border: 0; padding: 0; text-align: center; line-height: 1; }
-.page-btn:hover { color: #fff; }
+.page-btn { font-size: calc(var(--s, 1) * 5px); letter-spacing: 0.3px; color: #1b120f; background: #e8d9b5; border: 0; padding: 0; text-align: center; line-height: 1; box-shadow: 0 calc(var(--s, 1) * 1px) 0 #120b0a, inset 0 1px 0 #fff6e0, inset 0 -1px 0 #b9a888; z-index: 2; }
+.page-btn:hover { background: #fff6e0; }
 .story-card { position: absolute; pointer-events: none; z-index: 3; color: #f6e7c4; font-family: var(--font-pixel); font-size: calc(var(--s, 1) * 5.5px); line-height: 1.4; letter-spacing: 0.3px; text-shadow: calc(var(--s, 1) * 0.5px) calc(var(--s, 1) * 0.5px) 0 #120b0a; overflow: hidden; }
 .story-card b { display: block; color: var(--accent); font-size: calc(var(--s, 1) * 7px); letter-spacing: 0.8px; }
-.screen.card-on .logo, .screen.card-on .coords, .screen.card-on .lcd, .screen.card-on .hit .name, .screen.card-on .led-years, .screen.card-on .page-btn { opacity: 0; }   /* text over the picture is hidden while the card shows; the buttons stay usable */
+.screen.card-on .logo, .screen.card-on .coords, .screen.card-on .sky-chart, .screen.card-on .lcd, .screen.card-on .hit .name, .screen.card-on .led-years, .screen.card-on .page-btn { opacity: 0; }   /* text over the picture is hidden while the card shows; the buttons stay usable */

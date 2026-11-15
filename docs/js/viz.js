@@ -212,3 +212,28 @@ export function stepCard(card, dt, { rm = false, playing = false } = {}) {
   else card.a = Math.max(0, card.a - dt / (playing ? 1.2 : 3.7));
   return !(card.fading && card.a <= 0.01);
 }
+
+// ------------------------------------------------------------------ data panel (12-month bar chart on the main screen)
+
+/**
+ * Bar for one month of the sky chart, in pixels from the chart's baseline (`px` pixels a level).
+ * Rain: a bar up (wetter) or down (drier); "near normal" is a 1 px tick on the line. Greenness: a bar up, 1 to 4 levels.
+ * @returns {{kind: 'missing'|'bar', up: number, down: number}}
+ */
+export function barSpec(dataset, level, px = 3) {
+  if (isMissing(level)) return { kind: 'missing', up: 0, down: 0 };
+  if (dataset === 'rain') return level === 0 ? { kind: 'bar', up: 1, down: 0 }
+    : level > 0 ? { kind: 'bar', up: Math.min(4, level) * px, down: 0 } : { kind: 'bar', up: 0, down: Math.min(4, -level) * px };
+  return { kind: 'bar', up: Math.max(1, Math.min(4, level)) * px, down: 0 };
+}
+
+/** Title line of the sky chart: place, what is shown, which year is which bar, and the NASA SVS page it comes from. */
+export function panelTitle(discs, datasets, placeName = '') {
+  const d = discs[0]; if (!d) return '';
+  const label = d.dataset === 'rain' ? 'RAIN VS NORMAL' : 'GREENNESS';
+  const years = discs.length > 1 ? `LEFT ${discs[0].year}, RIGHT ${discs[1].year}` : String(d.year);
+  const svs = datasets?.[d.dataset]?.svs;
+  const name = String(placeName).split(',')[0].replace(/\s+(and surroundings|near .*)$/i, '').toUpperCase();
+  return `${name ? `${name} · ` : ''}${label} · ${years}${svs ? ` · NASA SVS ${svs}` : ''}`;
+}
+

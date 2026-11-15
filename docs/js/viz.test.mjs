@@ -170,3 +170,17 @@ test('story card: reduced motion shows it fully for 2.5 s and cuts it, no fade',
   assert.equal(stepCard(r, 2, { rm: true }), false);
   assert.equal(r.a, 0);
 });
+
+test('sky chart: bar sizes follow the level; missing months have no bar', async () => {
+  const { barSpec, panelTitle } = await import('./viz.js');
+  assert.deepEqual(barSpec('rain', 0, 7), { kind: 'bar', up: 1, down: 0 });
+  assert.deepEqual(barSpec('rain', 2, 7), { kind: 'bar', up: 14, down: 0 });
+  assert.deepEqual(barSpec('rain', -4, 7), { kind: 'bar', up: 0, down: 28 });
+  assert.deepEqual(barSpec('ndvi', 3, 13), { kind: 'bar', up: 39, down: 0 });
+  assert.equal(barSpec('rain', null, 7).kind, 'missing');
+  assert.equal(barSpec('ndvi', undefined, 13).kind, 'missing');
+  assert.equal(panelTitle([{ dataset: 'rain', year: 2025 }, { dataset: 'rain', year: 2026 }], { rain: { svs: '4897' } }, 'Manaus and surroundings, Brazil'),
+    'MANAUS · RAIN VS NORMAL · LEFT 2025, RIGHT 2026 · NASA SVS 4897');
+  assert.equal(panelTitle([{ dataset: 'ndvi', year: 2024 }], {}), 'GREENNESS · 2024');
+  assert.equal(panelTitle([], {}), '');
+});

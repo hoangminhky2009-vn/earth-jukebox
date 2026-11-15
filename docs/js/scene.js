@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, barSpec, panelTitle, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -205,6 +205,15 @@ export function createScene(store, opts) {
   cardEl.hidden = true; cv.parentElement.append(cardEl);
   let cardOpacity = -1;
   const CARD = { x: 24, y: 13, w: 432, h: 244 };
+  /* ---------- sky chart: the 12 months of the disc on the deck drawn over the world map, the playing month lit ---------- */
+  // So the data can be read without sound: one bar a month (side A and side B side by side), a playhead, labels.
+  const SC = { x0: 44, cell: 31, top: 27, bottom: 87 };
+  const scEl = document.createElement('div'); scEl.className = 'sky-chart'; scEl.setAttribute('aria-hidden', 'true'); scEl.hidden = true;
+  const scTitle = document.createElement('div'); scTitle.className = 'sc-title'; pos(scTitle, SC.x0, 19, 380, 7);
+  const scAxis = [0, 1, 2].map(() => { const e = document.createElement('div'); e.className = 'sc-axis'; return e; });
+  const scMonths = MONTH_ABBR.map((m, i) => { const e = document.createElement('div'); e.className = 'sc-month'; e.textContent = m; pos(e, SC.x0 + i * SC.cell, 89, SC.cell, 7); return e; });
+  scEl.append(scTitle, ...scAxis, ...scMonths); cv.parentElement.append(scEl);
+  let scKey = ''; let scNow = -1;
   /* ---------- data ---------- */
   // The tray has pages (rivers and monsoon / forest, desert and ice); one layout for all pages so slots never move.
   const pages = shelfPages(shelfSlots(store.state.discs, store.state.places), store.state.places);
@@ -275,7 +284,6 @@ export function createScene(store, opts) {
     cg.globalAlpha = 0.35; p('#000000', X0 - 4, GROUND, X1 - X0 + 8, 3); cg.globalAlpha = 1;
     p('#1b120f', 20, 114, 224, 136); p('#2a1c1b', 22, 116, 220, 132); p('#140d0c', 22, 116, 220, 2); p('#4a3029', 22, 246, 220, 2);
     for (let i = 0; i < L.count; i++) { const s = SLOT(i); p('#33221f', s.x, s.y, s.w, s.h - 2); p('#1b120f', s.x, s.y + s.h - 2, s.w, 1); p('#5a3a30', s.x, s.y + s.h - 1, s.w, 1); }
-    if (pages.length > 1) { p('#1b120f', 1, 122, 13, 124); p('#7b4f36', 2, 123, 11, 122); p('#c48b5e', 2, 123, 11, 1); p('#3b2418', 12, 123, 1, 122); }   // the page tab
     p('#120b0a', 246, 114, 8, 136);
     p('#1b120f', 256, 112, 206, 142); p('#3a4752', 258, 114, 202, 138); p('#56677a', 258, 114, 202, 1); p('#56677a', 258, 114, 1, 138); p('#242c33', 258, 251, 202, 1);
     for (let y = 116; y < 250; y += 3) for (let x = 260; x < 458; x += 1) if (h2(x >> 4, y, 8) > 0.7) p('#3f4d59', x, y, 1, 1);
@@ -346,10 +354,9 @@ export function createScene(store, opts) {
     slotEls.push({ b, main, yr, ds });
     hits.append(b);
   }
-  // Page switch: a real button above the tray, only when there is more than one page.
-  // A tab on the left side of the console, with vertical text.
+  // Page switch: a small real button in the bottom-right corner of the tray, only when there is more than one page.
   const pageBtn = document.createElement('button'); pageBtn.type = 'button'; pageBtn.className = 'hit page-btn';
-  pos(pageBtn, 1, 122, 18, 124);   // the painted tab is 12 px wide; the hit area reaches over the box's wooden edge (a touch target of about 24 px on a phone held sideways)
+  pos(pageBtn, 222, 233, 21, 13);
   pageBtn.hidden = pages.length < 2;
   pageBtn.addEventListener('click', () => {
     page = (page + 1) % pages.length; setShelf(); syncHits();
@@ -385,7 +392,7 @@ export function createScene(store, opts) {
     const d = loadedDisc(); const deck = Boolean(d);
     if (pages.length > 1) {
       const nxt = pages[(page + 1) % pages.length];
-      pageBtn.textContent = page === pages.length - 1 ? '\u25C0 BACK TO MAIN' : page === 0 ? 'MORE PLACES \u25B6' : `MORE PLACES ${page}/${pages.length - 1} \u25B6`;
+      pageBtn.textContent = `${page + 1}/${pages.length} ${page === pages.length - 1 ? '\u25C0' : '\u25B6'}`;
       pageBtn.setAttribute('aria-label', `Tray page ${page + 1} of ${pages.length}: ${pages[page].title}. Show ${nxt.title}`);
     }
     shelf.forEach((s, i) => {
@@ -575,10 +582,51 @@ export function createScene(store, opts) {
     });
   }
 
+  function drawSkyChart(d) {
+    if (!d || card) { if (!scEl.hidden) scEl.hidden = true; return; }
+    const rows = pairOf(d).slice(0, 2); const set = rows.length > 1 ? rows : [d];
+    const rain = d.dataset === 'rain'; const px = rain ? 7 : 13; const base = rain ? 57 : SC.bottom - 2;
+    const key = set.map((x) => x.id).join('+');
+    if (key !== scKey || scEl.hidden) {
+      scKey = key; scTitle.textContent = panelTitle(set, datasets, placeOf(d)?.name);
+      const labels = rain ? [['WETTER', SC.top + 1], ['NORMAL', base - 3], ['DRIER', SC.bottom - 7]] : [['GREENER', SC.top + 4], ['', 0], ['LESS GREEN', SC.bottom - 7]];
+      labels.forEach(([t, y], i) => { scAxis[i].textContent = t; pos(scAxis[i], 4, y, SC.x0 - 7, 7); });
+      scEl.hidden = false;
+    }
+    // the map steps back behind the chart
+    ctx.globalAlpha = 0.5; P('#0b0d1a', 0, 17, W, ROOF - 17); ctx.globalAlpha = 1;
+    const x1 = SC.x0 + SC.cell * 12;
+    ctx.globalAlpha = 0.6; P('#c9b98f', SC.x0, rain ? base : base + 1, x1 - SC.x0, 1); ctx.globalAlpha = 1;
+    const now = spinning ? monthNow() : -1;
+    for (let m = 0; m < 12; m++) {
+      const cx = SC.x0 + m * SC.cell; const cur = m === now;
+      if (cur) { ctx.globalAlpha = 0.13; P('#ffffff', cx, SC.top, SC.cell - 1, SC.bottom - SC.top); ctx.globalAlpha = 1; }
+      else if (m % 2) { ctx.globalAlpha = 0.05; P('#ffffff', cx, SC.top, SC.cell - 1, SC.bottom - SC.top); ctx.globalAlpha = 1; }
+      set.forEach((rd, i) => {
+        const bw = set.length > 1 ? 12 : 20; const bx = cx + (set.length > 1 ? 3 + i * 13 : 5);
+        const b = barSpec(rd.dataset, rd.levels[m], px);
+        if (b.kind === 'missing') { for (let x = 0; x < bw; x += 2) P('#8d8a99', bx + x, base - 1, 1, 1); return; }
+        let c = levelColor(rd.dataset, rd.levels[m]);
+        c = cur ? lit(c, 0.25) : rd.id === d.id ? c : lit(c, -0.3);
+        if (b.up) P(c, bx, base - b.up, bw, b.up);
+        if (b.down) P(c, bx, base + 1, bw, b.down);
+        if (b.up > 1) P(lit(c, 0.4), bx, base - b.up, bw, 1);
+        if (b.down) P(lit(c, -0.35), bx, base + b.down, bw, 1);
+      });
+    }
+    if (spinning) {   // playhead: moves through the year with the music
+      const x = Math.round(SC.x0 + Math.min(12, Math.max(0, store.state.position)) * SC.cell);
+      ctx.globalAlpha = 0.75; P('#fff6e0', x, SC.top - 1, 1, SC.bottom - SC.top + 2); ctx.globalAlpha = 1;
+      P('#fff6e0', x - 1, SC.top - 2, 3, 1);
+    }
+    if (now !== scNow) { scMonths.forEach((e, i) => e.classList.toggle('now', i === now)); scNow = now; }
+  }
+
   /* ---------- main draw ---------- */
   function draw() {
     const rm = RM(); const d = loadedDisc();
     ctx.drawImage(skyC, 0, 0);
+    drawSkyChart(d);
     // map ping + coordinates for the disc on the deck (or the one hovered / focused)
     const focusDisc = store.getDisc(hoverId) ?? d;
     if (focusDisc) {
@@ -587,7 +635,7 @@ export function createScene(store, opts) {
         const [mx, my] = toMap(lat, lon);
         const col = d && focusDisc.id === d.id ? pingColor(d, monthNow()) : PING.idle;   // C: the ping takes the colour of the month playing
         P(col, mx - 1, my - 1, 3, 3); circle(mx, my, rm ? 5 : pingR, col, rm ? 0.6 : Math.max(0, 1 - pingR / 14));
-        const txt = `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? 'E' : 'W'}`;
+        const txt = d && !card ? '' : `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? 'E' : 'W'}`;
         if (coordsEl.textContent !== txt) { coordsEl.textContent = txt; pos(coordsEl, mx + 6, my - 4, 120, 8); coordsEl.style.width = 'auto'; coordsEl.style.height = 'auto'; }
       }
     } else if (coordsEl.textContent) coordsEl.textContent = '';
