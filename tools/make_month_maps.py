@@ -6,7 +6,7 @@ Sources (the same NASA images the data is read from; nothing is drawn or changed
   rain  NASA SVS 4897 composite frames (IMERG rain anomaly over the land and sea), 3600 x 1800, the frame nearest the 15th
   ndvi  NASA SVS 5544 frames (VIIRS NDVI), 4096 x 2048, the frame nearest the 15th
   snow  NASA GIBS MODIS Terra monthly snow cover, with coastlines (as in pipeline/snow.py)
-Each map covers 21.6 x 11.2 degrees around the place, 216 x 112 pixels, 64 colours, written to
+Each map covers 32.4 x 16.8 degrees around the place, 216 x 112 pixels, 64 colours, written to
 docs/data/maps/<disc id>-<MM>.png, plus docs/data/maps/index.json (which months exist, and each image's date and URL).
 
 Usage: python tools/make_month_maps.py        (frames are cached in pipeline/cache/maps/, about 200 MB on first run)
@@ -31,7 +31,7 @@ OUT = ROOT / 'docs' / 'data' / 'maps'
 CACHE = ROOT / 'pipeline' / 'cache' / 'maps'
 HEADERS = {'User-Agent': 'EarthJukebox-SpaceApps2026/1.0 (NASA SVS image sonification)'}
 W, H = 216, 112                     # output pixels
-SPAN_LON, SPAN_LAT = 21.6, 11.2     # degrees covered
+SPAN_LON, SPAN_LAT = 32.4, 16.8     # degrees covered (wide enough to see the region around the place)
 SOURCES = {
     'rain': {'folder': 'https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/',
              'pattern': r'(\d{4})\.(\d{2})\.(\d{2})\.png$', 'west': 20.0, 'credit': 'NASA SVS 4897'},
