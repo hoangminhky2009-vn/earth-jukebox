@@ -517,8 +517,9 @@ export function createScene(store, opts) {
   function spawnWeather() {
     const r = Math.random; const wx = wxNow;
     if (weather === 'snow') {
-      const n = parts.filter((p) => p.k === 'snow').length; const cap = Math.round(10 + wx * 125);
-      for (let i = 0; i < (n < 50 && wx > 0.5 ? 6 : r() < Math.max(0.02, wx) ? 1 : 0) && n + i < cap; i++) {
+      // at 0.5 and above it snows as it always did (fast to a full sky, then steady); below that it thins out
+      const n = parts.filter((p) => p.k === 'snow').length; const cap = wx >= 0.5 ? 130 : Math.round(10 + wx * 240);
+      for (let i = 0; i < (n < 50 && wx >= 0.5 ? 6 : r() < Math.min(1, 0.1 + wx * 1.8) ? 1 : 0) && n + i < cap; i++) {
         const near = r() < 0.45;
         parts.push({ k: 'snow', near, sz: near ? (r() < 0.3 ? 3 : 2) : 1, x: r() * W, y: n < 50 ? r() * ROOF : -3, vx: (r() - 0.5) * 0.12, vy: near ? 0.22 + r() * 0.12 : 0.1 + r() * 0.08, t: r() * 6, sw: near ? 0.22 : 0.1, f: 0.02 + r() * 0.03 });
       }
@@ -540,7 +541,7 @@ export function createScene(store, opts) {
         p.t += p.f; p.x += p.vx + Math.sin(p.t) * p.sw; p.y += p.vy;
         const s = surface(p.x); if (!p.near && p.y >= ROOF) continue;
         if (p.y >= s) {
-          if (s < GROUND && p.x >= X0 - 2 && p.x < X1 + 2) { const xi = p.x | 0; pileSnow(xi, 2.6); pileSnow(xi + 1, 1); pileSnow(xi - 1, 1); }   // each flake that lands adds more (it piles faster; the fall speed is unchanged)
+          if (s < GROUND && p.x >= X0 - 2 && p.x < X1 + 2) { const xi = p.x | 0; const add = 4 + 20 * wxNow; pileSnow(xi, add); pileSnow(xi + 1, add * 0.35); pileSnow(xi - 1, add * 0.35); }   // each flake that lands adds a lot while it snows hard, so a 24 s record visibly builds a snow bank (the fall speed is unchanged)
           continue;
         }
       } else if (p.k === 'rain') {
@@ -574,7 +575,8 @@ export function createScene(store, opts) {
     parts = out;
     for (let x = X0 - 2; x < X1 + 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 0.6) { snowH[x] -= d * 0.3; snowH[x + 1] += d * 0.3; } }   // snow settles level
     for (let x = X0 - 2; x < X1 + 2; x++) { snowH[x] = Math.min(snowH[x], snowCap(x)); sandH[x] = Math.min(sandH[x], sandCap(x)); }
-    const melt = weather !== 'snow' ? 0.012 : wxNow < 0.35 ? 0.05 * (0.35 - wxNow) / 0.35 : 0;   // a green month melts the snow on the lid
+    // snow on the lid stays through the snowy months and only melts, slowly, in a really green month (the record is just 24 s long)
+    const melt = weather !== 'snow' ? 0.012 : wxNow < 0.2 ? 0.006 + 0.014 * (0.2 - wxNow) / 0.2 : 0;
     if (melt > 0) for (let x = X0 - 2; x < X1 + 2; x++) if (snowH[x] > 0) { snowH[x] = Math.max(0, snowH[x] - melt); if (Math.random() < 0.0015 * snowH[x]) parts.push({ k: 'drip', x, y: ROOF + 8, vy: 0.2 }); }
     if (weather !== 'sand') { for (let x = X0 - 2; x < X1 + 2; x++) sandH[x] = Math.max(0, sandH[x] - 0.006); }
     if (weather !== 'forest' && leaves.length && Math.random() < 0.01) { const l = leaves.shift(); parts.push({ k: 'leaf', x: l.x, y: l.y, vx: 1, vy: 0.3, t: 0, c: l.c, falling: true }); }
