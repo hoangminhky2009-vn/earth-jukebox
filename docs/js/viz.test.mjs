@@ -145,33 +145,28 @@ test('story card: the draft marker is dropped from the story', async () => {
   assert.equal(storyText({}), '');
 });
 
-test('story card: fades in, holds while waiting, fades out as the record speeds up, gone at speed', async () => {
+test('story card: fades in, holds while waiting, fades out over about 1.2 s once Play is pressed', async () => {
   const { newCard, stepCard } = await import('./viz.js');
   const c = newCard({ id: 'dhaka' });
   for (let i = 0; i < 20; i++) stepCard(c, 0.05);          // 1 s on the deck, not playing
   assert.equal(c.a, 1);
   assert.equal(c.fading, false);
-  let alive = true; let prev = 1;
-  for (let i = 0; i < 80 && alive; i++) {                  // the platter eases up to 80 deg/s
-    const speed = Math.min(80, i * 4);
-    alive = stepCard(c, 0.05, { spinning: true, speed });
-    assert.ok(c.a <= prev + 1e-9, 'opacity never rises while the record speeds up');
-    prev = c.a;
-  }
-  assert.equal(alive, false);
+  let n = 0; let prev = 1;
+  while (stepCard(c, 0.05, { playing: true }) && n < 200) { assert.ok(c.a <= prev + 1e-9, 'opacity never rises'); prev = c.a; n++; }
+  assert.ok(n >= 20 && n <= 28, `gone after about 1.2 s (${n} steps)`);
   assert.ok(c.a <= 0.01);
 });
 
-test('story card: still fades after 5 s when nobody presses Play; reduced motion cuts after 2.5 s with no fade', async () => {
+test('story card: still fades after 4 s when nobody presses Play; reduced motion cuts after 2.5 s with no fade', async () => {
   const { newCard, stepCard } = await import('./viz.js');
   const a = newCard({ id: 'hue' });
-  for (let i = 0; i < 100; i++) stepCard(a, 0.05);        // 5 s
+  for (let i = 0; i < 80; i++) stepCard(a, 0.05);         // 4 s
   assert.equal(a.fading, false);
   let n = 0; while (stepCard(a, 0.05) && n < 400) n++;
-  assert.ok(n > 20 && n < 70, `faded over about 2 s (${n} steps)`);
+  assert.ok(n > 30 && n < 50, `faded over about 2 s (${n} steps)`);
   const r = newCard({ id: 'hue' });
   assert.equal(stepCard(r, 1, { rm: true }), true);
   assert.equal(r.a, 1);                                     // shown fully, no fade in
-  assert.equal(stepCard(r, 2.5, { rm: true }), false);   // 3.5 s in total, past the 2.5 s
+  assert.equal(stepCard(r, 2.5, { rm: true }), false);
   assert.equal(r.a, 0);
 });

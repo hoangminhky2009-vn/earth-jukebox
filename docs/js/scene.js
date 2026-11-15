@@ -686,7 +686,7 @@ export function createScene(store, opts) {
     pingR = (pingR + dt * 10) % 14; ringT += dt;
     if (playing && spinning && ringT > 1.1) { ringT = 0; rings.push({ r: 0 }); }
     rings = rings.map((r) => ({ r: r.r + dt * 16 })).filter((r) => r.r < 30);
-    if (card && !stepCard(card, dt, { rm, spinning, speed })) { card = null; cardEl.hidden = true; }
+    if (card && !stepCard(card, dt, { rm, playing })) { card = null; cardEl.hidden = true; }
     draw();
   }, 33);
 

@@ -198,18 +198,18 @@ export function storyText(place) {
 export const newCard = (place) => ({ id: place.id, a: 0, t: 0, fading: false });
 
 /**
- * Advance a card by dt seconds. `speed` is the platter speed in degrees a second (80 when fully up to speed).
+ * Advance a card by dt seconds.
  * - appears over 0.3 s and stays while the disc waits on the deck
- * - fades as the platter speeds up: opacity follows 1 - speed / 50, so it is gone before the record is at full speed
- * - if nobody presses Play it still fades after 5 s (over 2 s), so it never blocks the console for long
+ * - the moment Play is pressed it fades out over 1.2 s, so it is gone about when the needle lands and the record turns
+ * - if nobody presses Play it still fades after 4 s (over 2 s), so it never blocks the console for long
  * - reduced motion: no fading at all, the card is shown for 2.5 s and cut away
  * @returns {boolean} true while the card should still be drawn
  */
-export function stepCard(card, dt, { rm = false, spinning = false, speed = 0 } = {}) {
+export function stepCard(card, dt, { rm = false, playing = false } = {}) {
   card.t += dt;
   if (rm) { card.a = card.t < 2.5 ? 1 : 0; return card.a > 0; }
-  if (!card.fading && (spinning || card.t > 5)) card.fading = true;
+  if (!card.fading && (playing || card.t > 4)) card.fading = true;
   if (!card.fading) card.a = Math.min(1, card.a + dt / 0.3);
-  else card.a = Math.max(0, Math.min(card.a, spinning ? 1 - speed / 50 : card.a - dt / 2));
+  else card.a = Math.max(0, card.a - dt / (playing ? 1.2 : 2));
   return !(card.fading && card.a <= 0.01);
 }
