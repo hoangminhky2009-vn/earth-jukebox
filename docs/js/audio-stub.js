@@ -23,3 +23,4 @@ export function setMode(mode) { console.debug('[audio-stub] mode', mode); }
 export function duck(db, ms) { console.debug('[audio-stub] duck', db, ms); }
 export function setVolume(v) { console.debug('[audio-stub] volume', v); }
 export function onTick(fn) { tickFn = fn; }
+export function onEnd() {}

@@ -105,6 +105,13 @@ async function main() {
   store.on('mode', ({ mode }) => audio.setMode(mode));
   store.on('settings', (s) => audio.setVolume(s.volume));
   audio.onTick((bar) => store.tick(bar));
+  // End of the year: the music stops, the needle lifts, then the disc goes back on the shelf (the tray returns).
+  audio.onEnd?.(() => {
+    const d = store.state.loadedDisc;
+    store.stop();
+    announce('End of the year. The disc goes back on the shelf.');
+    setTimeout(() => { if (store.state.loadedDisc === d && !store.state.playing) store.eject(); }, 1200);
+  });
 
   // 1-second preview: only when nothing is loaded, so it never clobbers the user's disc.
   let previewTimer = null;

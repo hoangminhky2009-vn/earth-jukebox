@@ -126,3 +126,10 @@
 @media (prefers-reduced-motion: reduce) { .coach-hole, .coach-card { transition: none; } .coach-cursor { animation: none; } }
 .reduce-motion .coach-hole, .reduce-motion .coach-card { transition: none; }
 
+/* Map screen (scene.js): while a disc is on the deck the tray shows the NASA image of the month; the slots and the
+   page button are hidden under it (and out of the tab order) until the disc goes back. */
+#hits.map-on .slot, #hits.map-on .page-btn { visibility: hidden; }
+.map-label { position: absolute; font-size: calc(var(--s, 1) * 4.5px); color: #9fd3b0; letter-spacing: 0.4px; white-space: nowrap; overflow: hidden; text-align: center; pointer-events: none; }
+.high-contrast .map-label { color: #fff; background: #000; }
+.screen.card-on .map-label { opacity: 0; }
+
