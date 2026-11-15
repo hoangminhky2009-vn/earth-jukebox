@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- Written by Ky with help from Claude (SI). See AI_USE.md. -->
+<!-- Intro cover (like the cover image of an itch.io page): the product itself, as a screenshot, with the name and the team over it.
+     Rendered by tools/make_cover.mjs at 630 x 500 (2x) and 16:9. The screenshot is slides/03-amazon-rainforest.png (tools/make_slide_shots.mjs). -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DeltaBeat intro cover</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap">
+<style>
+  :root { --u: min(100vw / 63, 100vh / 50); --gold: #f6d27a; --cream: #f4ead2; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 100vw; height: 100vh; overflow: hidden; background: #0b1418; font-family: 'Pixelify Sans', monospace; }
+  .stage { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+  .shot { position: absolute; left: 0; width: 100%; bottom: 0; image-rendering: pixelated; display: block; }
+  .wide .shot { height: 100%; object-fit: cover; }
+  .fade { position: absolute; left: 0; top: 0; width: 100%; background: linear-gradient(180deg, #0b1418 0%, #0b1418 62%, rgba(11,20,24,0.0) 100%); }
+  .scan { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(0,0,0,0.2) 0 calc(var(--u) * 0.1), transparent calc(var(--u) * 0.1) calc(var(--u) * 0.2)); pointer-events: none; }
+  .logo { position: absolute; width: 100%; text-align: center; line-height: 1; white-space: nowrap; }
+  .logo span { display: inline-block; font-weight: 700; margin: 0 calc(var(--u) * 0.1); letter-spacing: calc(var(--u) * 0.2);
+    text-shadow: calc(var(--u) * 0.4) calc(var(--u) * 0.4) 0 #120b0a, calc(var(--u) * -0.16) 0 0 #120b0a, calc(var(--u) * 0.16) calc(var(--u) * -0.16) 0 #120b0a; }
+  .sub { position: absolute; width: 100%; text-align: center; color: var(--cream); font-weight: 600; text-shadow: calc(var(--u) * 0.3) calc(var(--u) * 0.3) 0 #120b0a; letter-spacing: calc(var(--u) * 0.3); }
+  .tag { position: absolute; width: 100%; text-align: center; color: #9fd3b0; letter-spacing: calc(var(--u) * 0.25); }
+  .season { position: absolute; width: 100%; text-align: center; color: #b9a3f0; letter-spacing: calc(var(--u) * 0.8); }
+  .ribbon { position: absolute; left: 0; bottom: 0; width: 100%; background: rgba(11,8,24,0.9); border-top: calc(var(--u) * 0.2) solid #2a2342; text-align: center; }
+  .ribbon .team { color: var(--gold); letter-spacing: calc(var(--u) * 0.3); }
+  .ribbon .team b { color: #fff; font-weight: 700; }
+  .ribbon .names { color: #c9b98f; letter-spacing: calc(var(--u) * 0.12); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <img class="shot" id="shot" src="../slides/03-amazon-rainforest.png" alt="">
+  <div class="fade" id="fade"></div>
+  <div class="season" id="season">NASA SPACE APPS 2026</div>
+  <div class="logo" id="logo"></div>
+  <div class="sub" id="sub">EARTH'S MUSIC BOX · THE EARTH INFORMATION JUKEBOX</div>
+  <div class="ribbon" id="ribbon"><div class="team">MADE BY <b>THE DELTA FORCE</b></div><div class="names">HOANG YEN DUONG · KORNGBORMEY VUTHOEUN · HOÀNG MINH KỲ · SABIK BIN SULTAN</div></div>
+  <div class="scan"></div>
+</div>
+<script>
+const cols = ['#e86a6a', '#f6a94a', '#f6d27a', '#7cd17a', '#4fd6e0', '#7fa8e8', '#b08ae8', '#f08ac0', '#f4ead2'];
+document.getElementById('logo').innerHTML = [...'DELTABEAT'].map((ch, i) => `<span style="color:${cols[i]}">${ch}</span>`).join('');
+function layout() {
+  const W = innerWidth; const H = innerHeight; const U = Math.min(W / 63, H / 50); const wide = W / H > 1.5;
+  document.getElementById('stage').classList.toggle('wide', wide);
+  const px = (el, o) => Object.assign(el.style, o);
+  const g = (id) => document.getElementById(id);
+  if (!wide) {   // 630 x 500: the product fills the width at the bottom, the name stands on the open top
+    const shotH = W * 900 / 1600; px(g('shot'), { height: `${shotH}px`, width: '100%', objectFit: 'fill' });
+    const top = H - shotH; const cut = top + shotH * 0.095;   // the sky above the product, and the app's own header row hidden under it
+    px(g('fade'), { height: `${cut + 22}px`, background: `linear-gradient(180deg, #0b1418 ${cut}px, rgba(11,20,24,0) ${cut + 22}px)` });
+    px(g('season'), { top: `${U * 0.9}px`, fontSize: `${U * 1.2}px` });
+    px(g('logo'), { top: `${U * 2.7}px`, fontSize: `${U * 7.6}px` });
+    px(g('sub'), { top: `${U * 11}px`, fontSize: `${U * 1.6}px` });
+    px(g('ribbon'), { padding: `${U * 0.5}px 0 ${U * 0.7}px` });
+  } else {   // 16:9: the product behind, the name over its sky
+    px(g('shot'), { height: '100%', width: '100%', objectFit: 'cover' });
+    px(g('fade'), { height: `${H * 0.4}px`, background: 'linear-gradient(180deg, rgba(11,20,24,0.92) 0%, rgba(11,20,24,0.78) 60%, rgba(11,20,24,0) 100%)' });
+    px(g('season'), { top: `${H * 0.045}px`, fontSize: `${H * 0.026}px` });
+    px(g('logo'), { top: `${H * 0.1}px`, fontSize: `${H * 0.15}px` });
+    px(g('sub'), { top: `${H * 0.27}px`, fontSize: `${H * 0.03}px` });
+    px(g('ribbon'), { padding: `${H * 0.008}px 0 ${H * 0.012}px` });
+  }
+  const r = g('ribbon'); r.querySelector('.team').style.fontSize = `${wide ? H * 0.034 : U * 1.8}px`; r.querySelector('.names').style.fontSize = `${wide ? H * 0.022 : U * 1.15}px`;
+}
+const ready = () => document.fonts.ready.then(() => { layout(); document.body.dataset.ready = '1'; });
+const shot = document.getElementById('shot'); if (shot.complete && shot.naturalWidth) ready(); else shot.addEventListener('load', ready);
+addEventListener('resize', layout);
+</script>
+</body>
+</html>
