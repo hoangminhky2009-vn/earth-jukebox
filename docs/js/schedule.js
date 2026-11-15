@@ -119,7 +119,7 @@ export function schedule(disc, place, mode = 'music') {
       CRACKLE_STEPS.forEach((s, i) => add(bar, s, 0, ROOT, i === 0 ? 0.5 : 0.35, 'crackle'));
     } else if (mode === 'science') {
       // One plain voice, 4 notes a bar; the pitch is the number.
-      const pitch = disc.dataset === 'ndvi'
+      const pitch = disc.dataset !== 'rain'   // greenness and snow cover: the 0..1 value
         ? ROOT + Math.round(24 * (disc.values?.[bar] ?? 0))   // 2 octaves for NDVI 0..1
         : ROOT + 2 * level;                                    // 9 pitches, 2 semitones apart, for k = -4..+4
       for (const s of SCIENCE_STEPS) add(bar, s, 0, pitch, 0.8, 'data');

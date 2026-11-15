@@ -63,3 +63,14 @@ test('desert: a gusting open wind every month, a howl when driest, no rain unles
   for (let k = -4; k <= 4; k++) for (const v of Object.values(ambienceMix(rain(k), 0, 'music', sand))) assert.ok(v >= 0 && v <= 1);
   assert.equal(ambienceMix(ndvi(1), 0, 'music', sand).birds, 0);
 });
+
+test('snow places have no birds: snow cover and greenness discs are wind only', async () => {
+  const { ambienceMix } = await import('./ambience.js');
+  const place = { biome: 'snow-coast' };
+  for (const dataset of ['snow', 'ndvi']) for (const lv of [1, 2, 3, 4]) {
+    const m = ambienceMix({ dataset, levels: Array(12).fill(lv) }, 0, 'music', place);
+    assert.equal(m.birds, 0, `${dataset} level ${lv}`);
+    assert.ok(m['snow-wind'] > 0);
+  }
+});
+

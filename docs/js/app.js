@@ -124,7 +124,7 @@ async function main() {
   // After a disc lands on the deck, say so (a11y.js joins it to a "Recorded: ..." sentence spoken a moment before).
   store.on('disc:load', ({ disc }) => {
     const p = place(disc);
-    announce(`On the deck: ${p.name.split(',')[0]}, ${disc.dataset === 'rain' ? 'rain' : 'greenness'} ${disc.year}, side ${disc.side}. Press Space to play.`);
+    announce(`On the deck: ${p.name.split(',')[0]}, ${{ rain: 'rain', snow: 'snow cover' }[disc.dataset] ?? 'greenness'} ${disc.year}, side ${disc.side}. Press Space to play.`);
   });
 
   initRoll(store, { container: document.getElementById('roll-box'), svgHost: document.getElementById('roll'), getSchedule: () => schedule });

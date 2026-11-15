@@ -658,7 +658,7 @@ function sound(n, t, out) {
   }
   // bed: electric-piano chord at step 0; the greenness pulse (voice 0, 4 a bar) in the place's instrument
   if (n.step === 0) playBed(n, t, out);
-  if (disc?.dataset === 'ndvi' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out, 4 * STEP, 0);
+  if (disc?.dataset !== 'rain' && n.voice === 0) lead(n.pitch + 24, t, n.velocity * 0.8, out, 4 * STEP, 0);
 }
 
 // ---------- field-recording bed ----------

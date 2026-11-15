@@ -38,7 +38,12 @@ Every number comes from NASA Scientific Visualization Studio frames read by our 
 of a small area around each place is matched to the colour key of the image. These are categories ("2 to 5 mm/day
 drier than normal"), not measured rainfall. The rain images show a departure from normal that fades over about three
 months. Limits and checks are listed in `pipeline/HANDOFF.md`. We never invent, smooth or fix values; the music can be
-read back to the same categories (`node --test`: 336 of 336 real months match).
+read back to the same categories (`node --test`: 360 of 360 real months match).
+
+The snow place (Tromso) also has **snow cover** discs (2025, 2026): the share of the land under snow each month, read
+the same way from NASA's monthly MODIS Terra snow map served by NASA GIBS (`pipeline/snow.py`; the map's colour key
+gives every whole percent its own colour, so it decodes exactly). There is no data in the polar night (December,
+January).
 
 ## Run it yourself
 

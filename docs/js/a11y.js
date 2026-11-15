@@ -4,7 +4,7 @@
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
-const DATASET_NAME = { rain: 'rain', ndvi: 'vegetation' };
+const DATASET_NAME = { rain: 'rain', ndvi: 'vegetation', snow: 'snow cover' };
 
 let datasets = {};
 let hooks = { duck: () => {}, write: null };
