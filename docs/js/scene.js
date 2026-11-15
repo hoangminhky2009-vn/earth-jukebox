@@ -642,8 +642,10 @@ export function createScene(store, opts) {
     cloud(cx, cy, w, col);
   }
 
+  // The weather calendar shows only while the music plays (needle down); otherwise the sky is the plain map.
+  const skyChartOn = (d) => Boolean(d) && !card && spinning;
   function drawSkyChart(d) {
-    if (!d || card) { if (!scEl.hidden) scEl.hidden = true; return; }
+    if (!skyChartOn(d)) { if (!scEl.hidden) scEl.hidden = true; return; }
     const pair = pairOf(d).slice(0, 2); const set = pair.length > 1 ? pair : [d];
     const rowY = set.length > 1 ? [28, 58] : [43];
     const key = set.map((x) => x.id).join('+');
@@ -715,7 +717,7 @@ export function createScene(store, opts) {
         const [mx, my] = toMap(lat, lon);
         const col = d && focusDisc.id === d.id ? pingColor(d, monthNow()) : PING.idle;   // C: the ping takes the colour of the month playing
         P(col, mx - 1, my - 1, 3, 3); circle(mx, my, rm ? 5 : pingR, col, rm ? 0.6 : Math.max(0, 1 - pingR / 14));
-        const txt = d && !card ? '' : `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? 'E' : 'W'}`;
+        const txt = skyChartOn(d) ? '' : `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? 'E' : 'W'}`;
         if (coordsEl.textContent !== txt) { coordsEl.textContent = txt; pos(coordsEl, mx + 6, my - 4, 120, 8); coordsEl.style.width = 'auto'; coordsEl.style.height = 'auto'; }
       }
     } else if (coordsEl.textContent) coordsEl.textContent = '';
