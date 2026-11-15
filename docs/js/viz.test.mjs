@@ -230,3 +230,18 @@ test('weather intensity: harder rain when wetter, thicker snow when snowier, les
   assert.equal(weatherIntensity(snow, 1, 'snow'), 0);
 });
 
+test('grass on the lid: grows with greenness, none for other data, a missing month keeps what is there', async () => {
+  const { greenGrowth, bladeHeight } = await import('./viz.js');
+  const g = { dataset: 'ndvi', levels: [1, 4, null] };
+  assert.equal(greenGrowth(g, 0), 0);
+  assert.equal(greenGrowth(g, 1), 1);
+  assert.equal(greenGrowth(g, 2), null);
+  assert.equal(greenGrowth({ dataset: 'rain', levels: [4] }, 0), 0);
+  assert.equal(bladeHeight(0, 0.5), 0);
+  assert.ok(bladeHeight(1, 1) >= bladeHeight(1, 0.1), 'some blades are taller');
+  assert.ok(bladeHeight(1, 0.5) > bladeHeight(0.3, 0.5), 'more growth, taller grass');
+  const tall = Array.from({ length: 100 }, (_, i) => bladeHeight(1, i / 99)).filter((h) => h > 0).length;
+  const few = Array.from({ length: 100 }, (_, i) => bladeHeight(0.3, i / 99)).filter((h) => h > 0).length;
+  assert.ok(tall > few && few > 0 && tall <= 100, 'more columns sprout as it greens');
+});
+

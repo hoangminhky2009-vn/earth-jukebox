@@ -289,3 +289,21 @@ export function weatherIntensity(disc, month, weather = 'rain') {
   return 1 - q;   // greenness: the greener, the less snow and the less sand; rain places keep a gentle shower
 }
 
+// ------------------------------------------------------------------ grass on the lid (greenness discs)
+
+/** How much grass grows on the lid for a month: greenness 1..4 -> 0..1; missing month: null (it stays as it was); other data: 0. */
+export function greenGrowth(disc, month) {
+  if (disc?.dataset !== 'ndvi') return 0;
+  const level = disc.levels?.[month];
+  if (isMissing(level)) return null;
+  return (Math.max(1, Math.min(4, level)) - 1) / 3;
+}
+
+/** Height in pixels of the blade in column x for a growth 0..1: only some columns sprout at first (`seed` 0..1 per column). */
+export function bladeHeight(growth, seed, max = 8) {
+  if (growth <= 0.02) return 0;
+  const sprout = 0.15 + 0.7 * seed;   // a column starts to grow once the growth passes its own threshold
+  if (growth < sprout * 0.6) return 0;
+  return Math.max(1, Math.round((0.35 + 0.65 * seed) * max * Math.min(1, growth + 0.15)));
+}
+

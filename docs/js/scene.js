@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -513,6 +513,8 @@ export function createScene(store, opts) {
   // The weather follows the month playing: it eases toward the month's intensity, so a downpour builds and a snowfall thins
   // out gradually (and the snow on the lid melts when the month is green).
   let wxNow = 0.5;
+  // Grass on the lid: it grows with the greenness of the month playing and withers back when the disc comes off.
+  const growA = new Float32Array(W); const growSeed = Float32Array.from({ length: W }, (_, x) => h2(x, 7, 31)); let growNow = 0;
   const wxTarget = () => { const d = loadedDisc(); return d && spinning ? weatherIntensity(d, monthNow(), weather) : 0.5; };
   function spawnWeather() {
     const r = Math.random; const wx = wxNow;
@@ -813,6 +815,16 @@ export function createScene(store, opts) {
     for (const r of rings) circle(ANT.x, ANT.y, r.r, '#f6d27a', Math.max(0, 0.8 - r.r / 30));
     P(playing && spinning ? '#f6d27a' : '#8e9aa6', ANT.x - 1, ANT.y - 2, 3, 3);
     ctx.drawImage(conC, 0, 0);
+    // grass on the lid (greenness discs): blades with a darker root and a bright tip, a few flowers when it is lush; snow lies over it
+    if (growNow > 0.02) {
+      const t = rm ? 0 : performance.now() / 1000; const gc = GREEN_SCALE[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
+      for (let x = X0; x < X1; x++) {
+        const hgt = bladeHeight(growNow, growSeed[x]); if (!hgt) continue;
+        const sway = rm || hgt < 3 ? 0 : Math.round(Math.sin(t * 2 + x * 0.35) * 0.7);
+        P(lit(gc, -0.35), x, ROOF - hgt + 1, 1, hgt - 1); P(lit(gc, 0.15), x + sway, ROOF - hgt, 1, 1);
+        if (growNow > 0.7 && hgt >= 5 && growSeed[x] > 0.93) P(growSeed[x] > 0.97 ? '#f6a5c0' : '#fff0a0', x + sway, ROOF - hgt - 1, 1, 1);
+      }
+    }
     // accumulations on the lip and in the gap
     for (let x = X0 - 2; x < X1 + 2; x++) {
       const s = snowH[x] | 0; const a = sandH[x] | 0;
@@ -910,6 +922,7 @@ export function createScene(store, opts) {
       gaugeA += (target - gaugeA) * (rm ? 1 : Math.min(1, dt * 3)); }
     if (mapFade < 1) mapFade = Math.min(1, mapFade + dt / 0.6);
     wxNow += (wxTarget() - wxNow) * Math.min(1, dt * 0.8);
+    { const d = loadedDisc(); const g = d && spinning ? greenGrowth(d, monthNow()) : 0; if (g !== null) growNow += (g - growNow) * Math.min(1, dt * (g > growNow ? 0.5 : 0.25)); }
     if (card && !stepCard(card, dt, { rm, playing })) { card = null; cardEl.hidden = true; }
     draw();
   }, 33);
