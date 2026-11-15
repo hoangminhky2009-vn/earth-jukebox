@@ -23,13 +23,15 @@ JOBS = {
     "sylhet": ("sylhet.jpg", 0.5, 0.55, 1.0),
     "tonle-sap": ("tonle-sap.jpg", 0.5, 0.5, 1.0),
     "hue": ("hue.jpg", 0.3, 0.62, 0.58),            # the hills over the Lap An lagoon (the small far boat is cropped out)
-    "amazon": ("amazon.jpg", 0.5, 0.5, 1.0),
+    "amazon": ("amazon.jpg", 0.5, 0.5, 1.0),   # creek in the rainforest, Pacaya-Samiria (Peru)
     "alice-springs": ("alice-springs.jpg", 0.5, 0.2, 1.0),   # top of the gorge only (small walkers at the bottom are cropped out)
     "tromso": ("tromso.jpg", 0.215, 0.6, 0.43),               # the snowy mountain and the fjord (the hut is cropped out)
 }
 
-# optional colour tweaks (brightness, red gain, blue gain) for photos that came out dark or too cool
-TWEAK = {}
+# optional colour tweaks (brightness, red gain, blue gain, extra saturation) for photos that came out dark or too cool
+TWEAK = {
+    "amazon": (1.2, 0.98, 1.0, 1.7),   # misty photo: lift it and take the grey out of the greens
+}
 
 BAYER4 = np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]], dtype=np.float32)
 
@@ -43,14 +45,15 @@ def crop_16_9(im: Image.Image, fx: float, fy: float, zoom: float = 1.0) -> Image
     return im.crop((x0, y0, x0 + cw, y0 + ch))
 
 
-def pixelate(path: Path, fx: float, fy: float, zoom: float = 1.0, tweak=(1.0, 1.0, 1.0)) -> Image.Image:
+def pixelate(path: Path, fx: float, fy: float, zoom: float = 1.0, tweak=(1.0, 1.0, 1.0, 1.0)) -> Image.Image:
+    tweak = tuple(tweak) + (1.0,) * (4 - len(tweak))
     im = Image.open(path).convert("RGB")
     im = crop_16_9(im, fx, fy, zoom)
     im = im.resize((W, H), Image.Resampling.LANCZOS)
-    if tweak != (1.0, 1.0, 1.0):
+    if tweak[:3] != (1.0, 1.0, 1.0):
         a = np.asarray(im, dtype=np.float32) * np.array([tweak[0] * tweak[1], tweak[0], tweak[0] * tweak[2]], dtype=np.float32)
         im = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
-    im = ImageEnhance.Color(im).enhance(1.25)
+    im = ImageEnhance.Color(im).enhance(1.25 * tweak[3])
     im = ImageEnhance.Contrast(im).enhance(1.12)
     palette = im.quantize(colors=COLOURS, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
     arr = np.asarray(im, dtype=np.float32)
