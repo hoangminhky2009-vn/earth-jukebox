@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, plantKind, plantHeight, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, plantKind, plantHeight, FLORA, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -513,44 +513,75 @@ export function createScene(store, opts) {
   // The weather follows the month playing: it eases toward the month's intensity, so a downpour builds and a snowfall thins
   // out gradually (and the snow on the lid melts when the month is green).
   let wxNow = 0.5;
-  /* ---------- tropical forest (rainforest places): ferns, palms, broadleaf trees and a few giants rise behind the lid as the
-     months green up, as tall as the sky allows; the sky calendar still shows through (they are drawn a little see-through) ---------- */
-  const isJungle = (d) => /rainforest|jungle|tropical/i.test(String(placeOf(d)?.biome ?? ''));
-  const JUNGLE_X = Array.from({ length: 34 }, (_, i) => 20 + i * 13 + Math.round((h2(i, 3, 17) - 0.5) * 9));
-  function drawJungle(d, rm) {
-    if (!d || growNow <= 0.03 || !isJungle(d) || card) return;
+  /* ---------- plants behind the lid: each landscape grows its own (FLORA in viz.js) as the months green up, as tall as the sky
+     allows (drawn a little see-through so the sky calendar still shows): rainforest trees and giants, reeds and stilt-root trees
+     on the lake, bamboo and banana in the delta, coconut palms and casuarina on the coast, spinifex and ghost gums in the
+     desert, spruce and birch in the north ---------- */
+  const FLORA_X = (count) => Array.from({ length: count }, (_, i) => 20 + Math.round(i * 440 / count) + Math.round((h2(i, 3, 17) - 0.5) * 9));
+  const floraSpots = {};
+  function drawFlora(d, rm) {
+    if (!d || growNow <= 0.03 || card) return;
+    const art = look(d).art; const spec = FLORA[art] ?? FLORA.delta;
+    const xs = floraSpots[art] ?? (floraSpots[art] = FLORA_X(spec.count));
     const t = rm ? 0 : performance.now() / 1000; const lush = GREEN_SCALE[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
-    const leaf = (k) => lit(lush, k); const wood = '#5a3d27'; const woodHi = '#7a5535';
-    const order = JUNGLE_X.map((x, i) => [x, h2(i, 5, 23), i]).sort((a, b) => a[1] - b[1]);   // far to near is random
+    const leaf = (k) => lit(lush, k); const wood = '#5a3d27'; const woodHi = '#7a5535'; const white = '#e8e0d0';
+    const order = xs.map((x, i) => [x, h2(i, 5, 23), i]).sort((a2, b2) => a2[1] - b2[1]);
     ctx.globalAlpha = 0.7;
     for (const [x0, seed, i] of order) {
-      const h = plantHeight(growNow, seed, 58); if (!h) continue;
-      const kind = plantKind(seed); const sway = rm ? 0 : Math.sin(t * 1.4 + i) * (kind === 'fern' ? 0.9 : 1.6);
+      const h = plantHeight(growNow, seed, spec.max, art); if (!h) continue;
+      const kind = plantKind(seed, art); const sway = rm ? 0 : Math.sin(t * 1.4 + i) * (kind === 'fern' || kind === 'reed' ? 0.9 : 1.5);
       const topX = x0 + Math.round(sway * (h / 40)); const base = ROOF;
-      const trunk = (w) => { for (let y = 0; y < h; y++) { const f = y / h; const cx = Math.round(x0 + (topX - x0) * f * f); P(wood, cx, base - y, w, 1); P(woodHi, cx, base - y, 1, 1); } };
+      const trunk = (w, col = wood, hi = woodHi) => { for (let y = 0; y < h; y++) { const f = y / h; const cx = Math.round(x0 + (topX - x0) * f * f); P(col, cx, base - y, w, 1); P(hi, cx, base - y, 1, 1); } };
+      const dome = (cx, cy, r, wide = 1.25) => { for (let dy = -r; dy <= r; dy++) { const w = Math.round(Math.sqrt(r * r - dy * dy) * wide); P(leaf(dy < -r * 0.3 ? 0.12 : dy > r * 0.4 ? -0.35 : -0.1), cx - w, cy + dy, w * 2 + 1, 1); } };
+      const fan = (cx, cy, len, n, droop) => { for (let a = 0; a < n; a++) { const ang = (a / (n - 1)) * Math.PI - Math.PI;
+        for (let s2 = 0; s2 <= len; s2++) { const f = s2 / len; const px = cx + Math.round(Math.cos(ang) * s2 * 0.95); const py = cy + Math.round(Math.sin(ang) * s2 * 0.5 + f * f * len * droop);
+          P(leaf(f > 0.6 ? -0.3 : 0.05), px, py); if (s2 % 3 === 1) P(leaf(-0.4), px, py + 1); } } };
       if (kind === 'fern') {
         for (let a = -3; a <= 3; a++) { const len = Math.round(h * (0.9 - Math.abs(a) * 0.12) + 2);
           for (let s2 = 0; s2 <= len; s2++) { const f = s2 / len; const px = x0 + Math.round(a * f * (h * 0.55) / 3 + sway * f); const py = base - Math.round(h * 0.9 * Math.sin(f * Math.PI * 0.55) - f * f * h * 0.45);
             P(leaf(-0.2 + 0.3 * f), px, py); if (s2 % 2 === 0) P(leaf(-0.35), px, py + 1); } }
       } else if (kind === 'palm') {
-        trunk(1);
-        const crown = Math.max(5, Math.round(h * 0.38)); const topY = base - h;
-        for (let a = 0; a < 7; a++) { const ang = (a / 6) * Math.PI - Math.PI;   // fronds fan out and droop
-          for (let s2 = 0; s2 <= crown; s2++) { const f = s2 / crown; const px = topX + Math.round(Math.cos(ang) * s2 * 0.95); const py = topY + Math.round(Math.sin(ang) * s2 * 0.5 + f * f * crown * 0.55);
-            P(leaf(f > 0.6 ? -0.3 : 0.05), px, py); if (s2 % 3 === 1) P(leaf(-0.4), px, py + 1); } }
-        P(leaf(0.3), topX, topY - 1, 1, 1);
+        trunk(1); fan(topX, base - h, Math.max(5, Math.round(h * 0.38)), 7, 0.55); P(leaf(0.3), topX, base - h - 1, 1, 1);
       } else if (kind === 'tree') {
-        trunk(2);
-        const r = Math.max(4, Math.round(h * 0.3)); const cy = base - h;
-        for (let dy = -r; dy <= r; dy++) { const w = Math.round(Math.sqrt(r * r - dy * dy) * 1.25); P(leaf(dy < -r * 0.3 ? 0.12 : dy > r * 0.4 ? -0.35 : -0.1), topX - w, cy + dy, w * 2 + 1, 1); }
+        trunk(2); const r = Math.max(4, Math.round(h * 0.3)); const cy = base - h; dome(topX, cy, r);
         for (let k = 0; k < 7; k++) P(leaf(0.4), topX - r + Math.round(h2(i, k, 41) * r * 2.2), cy - r + 1 + Math.round(h2(i, k, 43) * r * 0.9), 2, 1);
-        const vine = 3 + Math.round(h2(i, 9, 47) * 4); for (let k = 0; k < 2; k++) P(leaf(-0.2), topX - r + 1 + k * (r * 2 - 2), cy + r - 1, 1, vine);   // lianas hang from the canopy
-      } else {   // giant emergent tree: straight trunk with buttress roots, a wide flat crown high above the rest
+        const vine = 3 + Math.round(h2(i, 9, 47) * 4); for (let k = 0; k < 2; k++) P(leaf(-0.2), topX - r + 1 + k * (r * 2 - 2), cy + r - 1, 1, vine);
+      } else if (kind === 'giant') {
         trunk(3);
-        for (let k = 1; k <= 5; k++) { P(wood, x0 - k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); P(wood, x0 + 2 + k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); }   // buttress roots
+        for (let k = 1; k <= 5; k++) { P(wood, x0 - k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); P(wood, x0 + 2 + k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); }
         const cw = Math.max(10, Math.round(h * 0.55)); const cy = base - h; const ch = Math.max(3, Math.round(h * 0.13));
         for (let dy = -ch; dy <= ch; dy++) { const w = Math.round(cw * Math.sqrt(1 - (dy / ch) ** 2)); P(leaf(dy < 0 ? 0.15 : -0.3), topX + 1 - w, cy + dy, w * 2 + 1, 1); }
         for (let k = 0; k < 6; k++) P(leaf(0.45), topX + 1 - cw + Math.round(h2(i, k, 51) * cw * 2), cy - ch + Math.round(h2(i, k, 53) * ch), 3, 1);
+      } else if (kind === 'reed') {   // a tuft of reeds with brown seed heads
+        for (let k = -1; k <= 1; k++) { const hh = Math.max(2, h - Math.abs(k) * 2); for (let y = 0; y < hh; y++) P(leaf(-0.15 + 0.3 * y / hh), x0 + k * 2 + Math.round(sway * y / hh), base - y); P('#8a6a3a', x0 + k * 2 + Math.round(sway), base - hh, 1, Math.min(3, hh)); }
+      } else if (kind === 'stilt') {   // flooded-forest tree: a round crown held up on thin stilt roots
+        const r = Math.max(3, Math.round(h * 0.28)); const cy = base - Math.round(h * 0.7);
+        for (const dx of [-r + 1, -1, 1, r - 1]) for (let y = 0; y < base - cy; y++) P(wood, x0 + Math.round(dx * (1 - y / (base - cy) * 0.5)), base - y);
+        dome(topX, cy, r, 1.4);
+      } else if (kind === 'willow') {   // rounded crown, long drooping branches
+        trunk(1); const r = Math.max(3, Math.round(h * 0.26)); const cy = base - h; dome(topX, cy, r, 1.3);
+        for (let k = -r; k <= r; k += 2) P(leaf(-0.15), topX + k, cy + Math.round(r * 0.5), 1, Math.round(r * 0.9 + 1 + h2(i, k + 9, 57) * 3));
+      } else if (kind === 'bamboo') {   // jointed culms with leafy tops
+        for (const k of [-2, 0, 2]) { const hh = Math.round(h * (k === 0 ? 1 : 0.8)); for (let y = 0; y < hh; y++) P(y % 5 === 4 ? '#c9d98a' : '#7fa84a', x0 + k + Math.round(sway * y / hh), base - y);
+          for (let l = 0; l < 4; l++) { P(leaf(0.1), x0 + k + Math.round(sway) - 2 + l, base - hh + (l % 2), 1, 1); P(leaf(-0.2), x0 + k + Math.round(sway) + 1 + l, base - hh + 1 + (l % 2), 1, 1); } }
+      } else if (kind === 'banana') {   // short stem, big drooping leaves
+        trunk(2, '#8fa85a', '#b5c97a'); for (let a = 0; a < 5; a++) { const ang = (a / 4) * Math.PI - Math.PI; for (let s2 = 0; s2 <= Math.max(5, h * 0.7); s2++) { const f = s2 / Math.max(5, h * 0.7); P(leaf(0.1 - 0.3 * f), topX + Math.round(Math.cos(ang) * s2), base - h + Math.round(Math.sin(ang) * s2 * 0.5 + f * f * h * 0.5), 1, 2); } }
+      } else if (kind === 'coconut') {   // tall leaning palm with coconuts
+        for (let y = 0; y < h; y++) { const f = y / h; P(wood, x0 + Math.round(f * f * 5 - 2), base - y); } const cx = x0 + 3;
+        fan(cx, base - h, Math.max(6, Math.round(h * 0.34)), 7, 0.6); P('#7a4a2a', cx, base - h + 2, 2, 2); P('#7a4a2a', cx - 2, base - h + 3, 2, 2);
+      } else if (kind === 'casuarina') {   // feathery, drooping needles in a narrow crown
+        trunk(1); for (let k = 1; k <= Math.round(h * 0.55); k++) { const w = Math.round(1 + (1 - k / (h * 0.55)) * -1 + k * 0.22); const y = base - h + k * 2 - 4; if (y > base - 3) break; P(leaf(-0.3 + 0.2 * ((k + i) % 2)), topX - w, y, w * 2 + 1, 1); P(leaf(-0.45), topX - w, y + 1, 1, 2); P(leaf(-0.45), topX + w, y + 1, 1, 2); }
+      } else if (kind === 'spinifex') {   // a spiky round tuft
+        for (let a = -5; a <= 5; a++) { const len = Math.max(2, Math.round(h * (1 - Math.abs(a) * 0.1))); for (let s2 = 0; s2 <= len; s2++) P(s2 > len * 0.6 ? '#c9b46a' : '#9a8a4a', x0 + Math.round(a * s2 * 0.45), base - s2); }
+      } else if (kind === 'gum') {   // ghost gum: pale trunk, sparse crown
+        trunk(2, white, '#ffffff'); P('#b9ae98', x0, base - Math.round(h * 0.4), 1, 2); const r = Math.max(3, Math.round(h * 0.18));
+        for (const [dx, dy] of [[-r, 2], [0, 0], [r, 3]]) dome(topX + dx, base - h + dy, Math.max(2, Math.round(r * 0.8)), 1.3);
+      } else if (kind === 'spruce') {   // layered conifer
+        const w0 = Math.max(3, Math.round(h * 0.28)); P(wood, topX, base - 3, 1, 3);
+        for (let tier = 0; tier < 4; tier++) { const y = base - 3 - tier * Math.round((h - 3) / 4); const w = Math.max(1, Math.round(w0 * (1 - tier * 0.22))); for (let dy = 0; dy <= Math.round((h - 3) / 4) + 1; dy++) { const ww = Math.round(w * (1 - dy / (Math.round((h - 3) / 4) + 2))) + 1; P(leaf(-0.45 + 0.1 * tier), topX - ww, y - dy, ww * 2 + 1, 1); } }
+      } else if (kind === 'birch') {   // white trunk with dark marks, light small crown
+        trunk(1, white, '#ffffff'); for (let y = 3; y < h - 3; y += 4) P('#3a3a3a', x0, base - y, 1, 1);
+        const r = Math.max(3, Math.round(h * 0.26)); dome(topX, base - h + 1, r, 1.1); for (let k = 0; k < 6; k++) P(leaf(0.45), topX - r + Math.round(h2(i, k, 61) * r * 2), base - h - r + 2 + Math.round(h2(i, k, 63) * r), 1, 1);
       }
     }
     ctx.globalAlpha = 1;
@@ -856,7 +887,7 @@ export function createScene(store, opts) {
     } else if (coordsEl.textContent) coordsEl.textContent = '';
     for (const r of rings) circle(ANT.x, ANT.y, r.r, '#f6d27a', Math.max(0, 0.8 - r.r / 30));
     P(playing && spinning ? '#f6d27a' : '#8e9aa6', ANT.x - 1, ANT.y - 2, 3, 3);
-    drawJungle(d, rm);   // behind the lid
+    drawFlora(d, rm);   // behind the lid
     ctx.drawImage(conC, 0, 0);
     // grass on the lid (greenness discs): blades with a darker root and a bright tip, a few flowers when it is lush; snow lies over it
     if (growNow > 0.02) {

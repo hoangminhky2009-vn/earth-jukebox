@@ -309,17 +309,35 @@ export function bladeHeight(growth, seed, max = 8) {
 
 // ------------------------------------------------------------------ tropical forest growing behind the lid (rainforest places)
 
-/** What grows at a spot (seed 0..1): ferns, palms, broadleaf trees, and now and then a giant emergent tree. */
-export const plantKind = (seed) => (seed < 0.34 ? 'fern' : seed < 0.58 ? 'palm' : seed < 0.9 ? 'tree' : 'giant');
-const KIND_HEIGHT = { fern: 0.22, palm: 0.6, tree: 0.78, giant: 1 };
-const KIND_START = { fern: 0.05, palm: 0.2, tree: 0.3, giant: 0.55 };   // growth at which this kind first shows
+/**
+ * What grows behind the lid in each landscape (the disc art of the place, see biomeLook): [kind, upper seed bound] pairs,
+ * the tallest plant in pixels, and how many specimens stand along the lid. Rainforest: ferns, palms, trees, giant trees.
+ */
+export const FLORA = {
+  forest: { max: 58, count: 34, kinds: [['fern', 0.34], ['palm', 0.58], ['tree', 0.9], ['giant', 1]] },
+  lake: { max: 26, count: 30, kinds: [['reed', 0.45], ['stilt', 1]] },                       // flooded forest: reeds and trees on stilt roots
+  wetland: { max: 22, count: 34, kinds: [['reed', 0.75], ['willow', 1]] },                   // reeds and willows
+  city: { max: 42, count: 26, kinds: [['bamboo', 0.55], ['banana', 1]] },                    // river delta: bamboo clumps and banana plants
+  coast: { max: 38, count: 26, kinds: [['coconut', 0.5], ['casuarina', 1]] },                // coconut palms and casuarina
+  desert: { max: 30, count: 24, kinds: [['spinifex', 0.6], ['gum', 1]] },                    // spinifex tufts and ghost gums
+  ice: { max: 30, count: 26, kinds: [['spruce', 0.6], ['birch', 1]] },                       // spruce and birch
+  delta: { max: 26, count: 22, kinds: [['reed', 0.6], ['willow', 1]] },
+};
+const KIND_HEIGHT = { fern: 0.22, palm: 0.6, tree: 0.78, giant: 1, reed: 0.5, stilt: 0.8, willow: 0.75, bamboo: 1, banana: 0.4, coconut: 1, casuarina: 0.75, spinifex: 0.18, gum: 1, spruce: 1, birch: 0.75 };
+const KIND_START = { fern: 0.05, palm: 0.2, tree: 0.3, giant: 0.55, reed: 0.05, stilt: 0.12, willow: 0.25, bamboo: 0.2, banana: 0.1, coconut: 0.2, casuarina: 0.1, spinifex: 0.05, gum: 0.35, spruce: 0.1, birch: 0.3 };
+
+/** What grows at a spot (seed 0..1) in a landscape (default: the rainforest). */
+export function plantKind(seed, art = 'forest') {
+  const kinds = (FLORA[art] ?? FLORA.forest).kinds;
+  return (kinds.find(([, upto]) => seed < upto) ?? kinds.at(-1))[0];
+}
 
 /**
- * Height in pixels of the plant at a spot for a growth 0..1 (no fixed ceiling: `max` is the tallest, a giant at full growth).
- * Ferns come up first and stay low; trees follow; the giants only rise in a lush month. 0 = not up yet.
+ * Height in pixels of the plant at a spot for a growth 0..1 (no fixed ceiling: `max` is the tallest, at full growth).
+ * Low plants come up first and stay low; trees follow; the tallest only rise in a lush month. 0 = not up yet.
  */
-export function plantHeight(growth, seed, max = 56) {
-  const kind = plantKind(seed); const start = KIND_START[kind] + 0.25 * ((seed * 7) % 1);
+export function plantHeight(growth, seed, max = 56, art = 'forest') {
+  const kind = plantKind(seed, art); const start = KIND_START[kind] + 0.25 * ((seed * 7) % 1);
   if (growth <= start) return 0;
   const k = Math.min(1, (growth - start) / (1 - start));
   const eased = k * k * (3 - 2 * k);

@@ -256,3 +256,15 @@ test('tropical forest: ferns first, trees later, giants only when lush; no ceili
   assert.ok(plantHeight(1, 0.7) > plantHeight(0.5, 0.7), 'it grows with the greenness');
 });
 
+test('plants of each landscape: its own kinds, all grow with the greenness', async () => {
+  const { FLORA, plantKind, plantHeight } = await import('./viz.js');
+  assert.equal(plantKind(0.1, 'city'), 'bamboo'); assert.equal(plantKind(0.9, 'city'), 'banana');
+  assert.equal(plantKind(0.1, 'ice'), 'spruce'); assert.equal(plantKind(0.9, 'ice'), 'birch');
+  assert.equal(plantKind(0.9, 'desert'), 'gum'); assert.equal(plantKind(0.9, 'coast'), 'casuarina');
+  assert.equal(plantKind(0.9, 'nowhere'), 'giant', 'an unknown landscape falls back to the rainforest');
+  for (const [art, f] of Object.entries(FLORA)) {
+    assert.ok(f.kinds.at(-1)[1] === 1 && f.count > 0 && f.max > 0, art);
+    for (const seed of [0.05, 0.3, 0.6, 0.95]) assert.ok(plantHeight(1, seed, f.max, art) >= plantHeight(0.4, seed, f.max, art), `${art} ${seed}`);
+  }
+});
+
