@@ -29,7 +29,7 @@ and lowers the music while it speaks.
 - **Greenness discs** (NASA SVS 5544): the greener the land, the more layers play together.
 - **A missing month** (no data, for example snow cover or a date not yet published) is crackle, not music: nothing
   is made up. **A break in the source** makes the record skip.
-- Quiet field recordings (rain, wind, birds) follow the same month; they are real, freely licensed recordings, and the birds are recorded in each place's own region (Cambodia, Bengal, outback Australia; the Amazon and Tromsø keep gentle park birds).
+- Quiet field recordings (rain, wind, birds) follow the same month; they are real, freely licensed recordings, and Tonle Sap and Hue hear birds recorded in Siem Reap, Cambodia; the other places hear gentle park birds.
 - Every place uses the same rules; only the style changes with the landscape (river, forest, desert, snow).
 
 ## Data and honesty
