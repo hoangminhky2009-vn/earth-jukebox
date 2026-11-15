@@ -1,8 +1,10 @@
 # Written by Ky with help from Claude (SI). See AI_USE.md.
 """Turn the CC0 field recordings (see CREDITS.md) into short seamless loops for the page.
 
-Usage: python tools/make_ambience.py <folder with rain_2.ogg rain_4.ogg birds.wav wind.wav hill.ogg howl.ogg>
-Writes docs/audio/ambience/{rain-heavy,rain-light,birds,wind,snow-wind,snow-howl}.mp3 (stereo, 44.1 kHz, 96 kbps).
+Usage: python tools/make_ambience.py <folder with the source recordings> [--only name ...]
+Sources: rain_2.ogg rain_4.ogg birds.wav wind.wav hill.ogg howl.ogg, and the regional bird recordings
+mekong.ogg bengal.mp3 outback.mp3 arctic.mp3 (each place hears birds recorded in its own region).
+Writes docs/audio/ambience/<name>.mp3 (stereo, 44.1 kHz, 96 kbps); a job whose source is missing is skipped.
 Each loop: cut a segment, blend its tail into its head over 2 s (so it repeats without a click),
 and set the loudness to the same RMS so audio.js can mix them with plain gains. Needs ffmpeg and numpy.
 """
@@ -25,6 +27,11 @@ JOBS = {
     "wind": ("wind.wav", 1.0, 22.0),
     "snow-wind": ("hill.ogg", 12.0, 30.0),    # Killiney Hill storm, gusty wind on an exposed hill
     "snow-howl": ("howl.ogg", 20.0, 30.0),    # howling wind (skips the silent start)
+    # regional birds (CREDITS.md)
+    "birds-mekong": ("mekong.ogg", 1.0, 30.0),      # Siem Reap, Cambodia (near Tonle Sap)
+    "birds-bengal": ("bengal.mp3", 2.0, 30.0),      # Narendrapur, West Bengal (the Bengal delta)
+    "birds-outback": ("outback.mp3", 2.0, 30.0),    # Cooya Pooya, Pilbara, Western Australia (arid outback)
+    "birds-arctic": ("arctic.mp3", 5.0, 30.0),      # Prestvatn, Tromso, Norway
 }
 
 
@@ -62,9 +69,11 @@ def encode(y: np.ndarray, out: Path) -> None:
 
 
 def main() -> None:
-    src = Path(sys.argv[1])
+    src = Path(sys.argv[1]); only = sys.argv[3:] if len(sys.argv) > 2 and sys.argv[2] == "--only" else None
     OUT.mkdir(parents=True, exist_ok=True)
     for name, (file, start, length) in JOBS.items():
+        if (only and name not in only) or not (src / file).exists():
+            continue
         y = make_loop(decode(src / file), start, length)
         out = OUT / f"{name}.mp3"
         encode(y, out)

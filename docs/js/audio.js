@@ -14,7 +14,7 @@
 // Claude cannot listen: levels are kept low and a compressor sits on the output.
 
 import { schedule, styleOf } from './schedule.js';
-import { ambienceMix, LAYERS } from './ambience.js';
+import { ambienceMix, LAYERS, BIRD_FILES, birdsFile } from './ambience.js';
 import { sharedContext } from './foley.js';
 
 const BAR = 2;
@@ -39,11 +39,12 @@ let ambSoft;   // low-pass of the field recordings (deeper rain for rain discs)
 let noteSend = 1;   // echo send of the note being played (lower in busy months)
 let session;   // the current play-through; faded out and replaced on stop / pause / seek
 let ambCut;    // field-recording bed (also cut by a skip)
-const AMB_LEVEL = 0.3;    // field recordings sit well under the music
+const AMB_LEVEL = 0.22;   // field recordings sit well under the music
 const AMB_TRIM = { wind: 1.3, 'rain-light': 1, 'rain-heavy': 0.7, birds: 0.9, 'snow-wind': 1.4, 'snow-howl': 0.6 };   // evens out the recordings
 const ambBufs = {};
 let ambLoading = null;
 let amb = null;   // { layer: { src, g } } while playing
+let birdBus = null;   // the single bird calls of the current play-through
 
 let disc = null;
 let place = null;
@@ -665,7 +666,7 @@ function sound(n, t, out) {
 
 function loadAmbience() {
   if (ambLoading) return ambLoading;
-  ambLoading = Promise.all(LAYERS.map(async (name) => {
+  ambLoading = Promise.all([...new Set([...LAYERS, ...BIRD_FILES])].map(async (name) => {
     const res = await fetch(new URL(`../audio/ambience/${name}.mp3`, import.meta.url));
     if (!res.ok) throw new Error(`${name}.mp3: HTTP ${res.status}`);
     ambBufs[name] = await ac.decodeAudioData(await res.arrayBuffer());
@@ -678,14 +679,17 @@ function startAmbience() {
   if (amb || !LAYERS.every((n) => ambBufs[n])) return;
   amb = {};
   const now = ac.currentTime;
+  birdBus = gainNode(1); birdBus.connect(ambCut);
   for (const name of LAYERS) {
+    if (name === 'birds') continue;   // birds are single calls, not a loop (scheduleBirds)
+    const buf = ambBufs[name];
     const src = ac.createBufferSource();
-    src.buffer = ambBufs[name];
+    src.buffer = buf;
     src.loop = true;
     const g = gainNode(0);
     src.connect(g); g.connect(ambCut);
-    src.start(now, Math.random() * ambBufs[name].duration);
-    amb[name] = { src, g };
+    src.start(now, Math.random() * buf.duration);
+    amb[name] = { src, g, buf };
   }
   const cur = currentBar();
   setAmbience(cur ? cur[0] : nextBar, now);
@@ -694,12 +698,41 @@ function startAmbience() {
 function setAmbience(b, t) {
   if (!amb) return;
   const mix = ambienceMix(disc, b, mode, place);
-  for (const name of LAYERS) amb[name].g.gain.setTargetAtTime(mix[name] * AMB_TRIM[name], Math.max(t, ac.currentTime), 0.4);
+  for (const name of LAYERS) if (amb[name]) amb[name].g.gain.setTargetAtTime(mix[name] * AMB_TRIM[name], Math.max(t, ac.currentTime), 0.4);
+}
+
+/**
+ * Birds as single calls, never a loop: each bar picks a few short stretches of the place's own recording at random
+ * (random start, length, left-right place and a slight change of speed), so nothing repeats. The busier the month
+ * (greener, or less snow), the more calls; when a month is livelier than the one before, a few extra calls greet it:
+ * life coming back.
+ */
+function scheduleBirds(b, t0) {
+  if (!amb || !birdBus || mode !== 'music') return;
+  const buf = ambBufs[birdsFile(place)] ?? ambBufs.birds; if (!buf) return;
+  const dens = ambienceMix(disc, b, mode, place).birds ?? 0;
+  if (dens <= 0.02) return;
+  const prev = b > 0 ? ambienceMix(disc, b - 1, mode, place).birds ?? 0 : dens;
+  let n = Math.floor(dens * 2.5 + Math.random() * (0.5 + dens * 1.5));
+  if (dens > prev + 0.1) n += 2;
+  for (let i = 0; i < n; i++) {
+    const at = Math.max(ac.currentTime + 0.02, t0 + Math.random() * BAR);
+    const dur = 0.9 + Math.random() * 2.2;
+    const off = Math.random() * Math.max(0.1, buf.duration - dur - 0.1);
+    const vol = AMB_TRIM.birds * (0.45 + 0.5 * dens) * (0.7 + Math.random() * 0.3);
+    const src = ac.createBufferSource(); src.buffer = buf; src.playbackRate.value = 0.95 + Math.random() * 0.1;
+    const g = ac.createGain(); const pan = ac.createStereoPanner(); pan.pan.value = (Math.random() - 0.5) * 1.4;
+    g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(vol, at + 0.15);
+    g.gain.setValueAtTime(vol, at + dur - 0.35); g.gain.linearRampToValueAtTime(0, at + dur);
+    src.connect(g); g.connect(pan); pan.connect(birdBus);
+    src.start(at, off, dur + 0.05);
+  }
 }
 
 function stopAmbience() {
   if (!amb) return;
   const now = ac.currentTime;
+  if (birdBus) { const bb = birdBus; bb.gain.setTargetAtTime(0, now, 0.08); setTimeout(() => bb.disconnect(), 600); birdBus = null; }
   for (const { src, g } of Object.values(amb)) {
     g.gain.cancelScheduledValues(now);
     g.gain.setValueAtTime(g.gain.value, now);
@@ -715,6 +748,7 @@ function scheduleBar(b, t0, from = -Infinity) {
   music.gain.setValueAtTime(1, Math.max(t0, ac.currentTime));
   ambCut.gain.setValueAtTime(AMB_LEVEL, Math.max(t0, ac.currentTime));
   if (from < 0) setAmbience(b, t0);
+  if (from < 0) scheduleBirds(b, t0);
   if (from < 0) setDrone(mode === 'music' && notesByBar[b].some((n) => n.kind === 'data' || n.kind === 'bed'), t0);
   const out = session;
   for (const n of notesByBar[b]) {

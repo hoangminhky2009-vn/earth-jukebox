@@ -64,13 +64,18 @@ test('desert: a gusting open wind every month, a howl when driest, no rain unles
   assert.equal(ambienceMix(ndvi(1), 0, 'music', sand).birds, 0);
 });
 
-test('snow places have no birds: snow cover and greenness discs are wind only', async () => {
-  const { ambienceMix } = await import('./ambience.js');
+test('birds come from the region of the place; snow places hear them only when there is little snow', async () => {
+  const { ambienceMix, birdsFile } = await import('./ambience.js');
+  assert.equal(birdsFile({ biome: 'snow-coast' }), 'birds-arctic');
+  assert.equal(birdsFile({ biome: 'desert' }), 'birds-outback');
+  assert.equal(birdsFile({ biome: 'rainforest' }), 'birds');
+  assert.equal(birdsFile({ biome: 'monsoon-delta', region: 'south-asia' }), 'birds-bengal');
+  assert.equal(birdsFile({ biome: 'monsoon-delta', region: 'sea' }), 'birds-mekong');
+  assert.equal(birdsFile({}), 'birds');
   const place = { biome: 'snow-coast' };
-  for (const dataset of ['snow', 'ndvi']) for (const lv of [1, 2, 3, 4]) {
-    const m = ambienceMix({ dataset, levels: Array(12).fill(lv) }, 0, 'music', place);
-    assert.equal(m.birds, 0, `${dataset} level ${lv}`);
-    assert.ok(m['snow-wind'] > 0);
-  }
+  const full = ambienceMix({ dataset: 'snow', levels: Array(12).fill(4) }, 0, 'music', place);
+  const little = ambienceMix({ dataset: 'snow', levels: Array(12).fill(1) }, 0, 'music', place);
+  assert.equal(full.birds, 0);
+  assert.ok(little.birds > 0.5);
+  assert.ok(full['snow-wind'] > little['snow-wind']);
 });
-
