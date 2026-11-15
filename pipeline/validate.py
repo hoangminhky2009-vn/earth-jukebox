@@ -21,6 +21,11 @@ def source_sampling(source, dataset, bad):
             bad('source.gibs_layer must be MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct')
         elif not str(source.get('wms', '')).startswith('https://gibs.earthdata.nasa.gov/'):
             bad('source.wms must be a NASA GIBS address')
+        if isinstance(source, dict):
+            if source.get('status') not in ('available', 'withheld'):
+                bad('snow source.status must explicitly state available or withheld')
+            if not isinstance(source.get('limitation'), str) or not source['limitation'].strip():
+                bad('snow source.limitation is required')
         return 1, 1
     minimum, maximum = (3, 5) if dataset == 'rain' else (2, 3)
     if not isinstance(source, dict):
@@ -106,6 +111,10 @@ def validate(data):
         for name in ['levels','values','saturated','frames_used']:
             if not isinstance(disc.get(name),list) or len(disc[name])!=12:bad(f'{name} needs exactly 12 entries')
         if any(not isinstance(disc.get(name),list) or len(disc[name])!=12 for name in ['levels','values','saturated','frames_used']):continue
+        if dataset == 'snow' and isinstance(disc.get('source'), dict) and disc['source'].get('status') == 'withheld':
+            if (any(v is not None for v in disc['levels'] + disc['values'])
+                    or any(disc['frames_used']) or any(disc['saturated']) or disc.get('breaks')):
+                bad('withheld snow must have null values/levels, no used frames, no saturation and no breaks')
         breaks=disc.get('breaks')
         if not isinstance(breaks,list) or any(type(m) is not int or not 1<=m<=12 for m in breaks):bad('breaks must contain months 1..12');breaks=[]
         expected='skips' if breaks else 'scratched' if None in disc['levels'] else 'mint'

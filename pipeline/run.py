@@ -124,7 +124,7 @@ def merge_export(existing, places, discs):
                 'check':prior.get('check',disc['check'])}
         disc_map[disc['id']] = disc
     return {**existing,'version':1,'generated':datetime.now(timezone.utc).isoformat(),
-            'provenance':{'source':'Colours read from NASA SVS frames (Earth Information Center). Rain values are colour-bin representatives, not exact measurements; NDVI values are colourbar positions, not measured NDVI. Snow cover (Tromso) is read the same way from the NASA GIBS monthly MODIS Terra snow map (pipeline/snow.py).',
+            'provenance':{'source':'Colours read from NASA SVS frames (Earth Information Center). Rain values are colour-bin representatives, not exact measurements; NDVI values are colourbar positions, not measured NDVI. Tromso snow percentages are withheld because NASA GIBS transparency cannot distinguish zero snow from unavailable observations or water; raw MOD10CM values and quality flags are needed (pipeline/snow.py).',
                           'made_with':'Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md'},
             'datasets':{**existing.get('datasets',{}),**dataset_metadata()},'places':list(place_map.values()),'discs':list(disc_map.values())}
 

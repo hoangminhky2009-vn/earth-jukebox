@@ -57,7 +57,7 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
     }
   } else if (disc.dataset === 'snow') {
     // snow cover: the hill wind grows with the snow, the howl comes in when nearly all the land is white;
-    // a month with little snow has the summer birds of the place (its own Arctic recording)
+    // a month with little snow has gentle park birds
     const snow = (level - 1) / 3;
     mix['snow-wind'] = 0.3 + 0.5 * snow;
     mix['snow-howl'] = level >= 4 ? 0.35 : 0;

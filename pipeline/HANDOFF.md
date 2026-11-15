@@ -1,5 +1,13 @@
 # Sabik's data handoff — 14 November 2026
 
+## Update — 15 November: snow and monthly maps
+
+- The seasonal-comparison branch contains 32 rain/greenness records across eight places, with all 46 usable Ferlo months now mapped. The four Bormey descriptions in `reviewed_descriptions.json` are preserved for the fixed 15 July 2025 images; they are not reused as captions for other months.
+- The earlier Tromso snow estimates are withdrawn. NASA's GIBS colour key renders both 0% and missing/cloud/night/water categories transparently. The old cross-month land mask and transparent-to-zero substitution cannot recover a land-average snow percentage. Both snow records now carry null values, explicit withheld status and a limitation. Imagery is visual context only; no numeric snow data notes play.
+- `pipeline/snow.py` now withholds a month whenever any sampled cell is unresolved. `pipeline/evidence/snow.json` retains source hashes and observed colour counts and explains the withdrawal. Restore quantitative snow only from raw MOD10CM values and quality flags, with reviewed handling of valid zero, land/water and unavailable categories. See NASA's [colour key](https://gibs.earthdata.nasa.gov/colormaps/v1.0/MODIS_NDSI_Snow_Cover.xml) and [v6.1 guide](https://nsidc.org/sites/default/files/mod10cm-v061-userguide_0.pdf).
+
+The earlier notes below describe the original four-place handoff. Human listening, actual NVDA use and physical-device checks still belong to the team's final review.
+
 Written by Sabik with help from OpenAI Codex (SI). Ky owns the top-level project documentation; the suggested additions below are for him to integrate.
 
 ## Coordinates aligned with Ky's message

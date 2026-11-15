@@ -1,9 +1,9 @@
 # Written by Ky with help from Claude (SI). See AI_USE.md.
-"""Turn the CC0 field recordings (see CREDITS.md) into short seamless loops for the page.
+"""Turn the licensed field recordings (see CREDITS.md) into short seamless loops for the page.
 
 Usage: python tools/make_ambience.py <folder with the source recordings> [--only name ...]
 Sources: rain_2.ogg rain_4.ogg birds.wav wind.wav hill.ogg howl.ogg, and the regional bird recordings
-mekong.ogg bengal.mp3 outback.mp3 (each place hears birds recorded in its own region).
+mekong.ogg bengal.mp3 outback.mp3 (regional birds where available; park birds elsewhere).
 Writes docs/audio/ambience/<name>.mp3 (stereo, 44.1 kHz, 96 kbps); a job whose source is missing is skipped.
 Each loop: cut a segment, blend its tail into its head over 2 s (so it repeats without a click),
 and set the loudness to the same RMS so audio.js can mix them with plain gains. Needs ffmpeg and numpy.

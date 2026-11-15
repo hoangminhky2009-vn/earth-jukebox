@@ -31,9 +31,11 @@ test('flip on a one-sided disc keeps the side and says so', () => {
 
 test('flip on a two-sided disc swaps to the other side', () => {
   const s = loaded('dhaka-rain-2025');
+  s.seek(6);
   assert.equal(s.flip().ok, true);
   assert.equal(s.state.side, 'B');
   assert.equal(s.state.loadedDisc, 'dhaka-rain-2026');
+  assert.equal(s.state.position, 6, 'flipping keeps the same calendar month');
 });
 
 test('record adds to collected and emits disc:record', () => {

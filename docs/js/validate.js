@@ -63,6 +63,17 @@ export function validate(data) {
       continue; // month-by-month checks would only repeat the same problem
     }
 
+    if (disc.dataset === 'snow' && disc.source?.gibs_layer === 'MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct') {
+      if (!['available', 'withheld'].includes(disc.source.status)
+          || typeof disc.source.limitation !== 'string' || !disc.source.limitation.trim()) {
+        errors.push(`${id}: snow source needs an explicit quality status and limitation`);
+      }
+      if (disc.source.status === 'withheld' && ([...disc.levels, ...disc.values].some(v => v !== null)
+          || disc.frames_used.some(Boolean) || disc.saturated.some(Boolean) || disc.breaks?.length)) {
+        errors.push(`${id}: withheld snow must not contain numerical estimates or used frames`);
+      }
+    }
+
     for (let i = 0; i < 12; i++) {
       const m = `month ${i + 1}`;
       const level = disc.levels[i];

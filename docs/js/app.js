@@ -2,13 +2,15 @@
 // Page wiring: loads data, creates the store, connects audio, the pixel scene, announcements and settings.
 
 import { validate } from './validate.js';
-import { createStore } from './store.js';
+import { createStore, playableCatalog } from './store.js';
 import { initA11y, announce } from './a11y.js';
 import { initDialogs } from './ui-jukebox.js';
 import { initCoach } from './coach.js';
 import { createScene } from './scene.js';
 import * as foley from './foley.js';
 import { initRoll } from './roll.js';
+import { initSeasonal } from './seasonal-ui.js';
+import { bindRecordEnd } from './record-end.js';
 
 // Real NASA-derived discs; add ?sample to the address to load the hand-made sample (it has a desert and a snow place).
 const DATA_URL = new URLSearchParams(location.search).has('sample') ? 'data/discs.sample.json' : 'data/discs.json';
@@ -82,6 +84,8 @@ async function main() {
     return;
   }
 
+  // Validate the full archive first, then give the tray, shortcuts and labelled selectors the same catalog.
+  data = playableCatalog(data);
   const audio = await loadAudio();
   audioEngine = audio;
   const schedule = await loadSchedule();
@@ -100,18 +104,14 @@ async function main() {
   store.on('flip', (p) => {
     if (!p.changed) return;
     audio.load(p.disc, p.place);
+    audio.seek(Math.floor(store.state.position));
     if (store.state.playing) audio.play();
   });
   store.on('mode', ({ mode }) => audio.setMode(mode));
   store.on('settings', (s) => audio.setVolume(s.volume));
   audio.onTick((bar) => store.tick(bar));
-  // End of the year: the music stops, the needle lifts, then the disc goes back on the shelf (the tray returns).
-  audio.onEnd?.(() => {
-    const d = store.state.loadedDisc;
-    store.stop();
-    announce('End of the year. The disc goes back on the shelf.');
-    setTimeout(() => { if (store.state.loadedDisc === d && !store.state.playing) store.eject(); }, 1200);
-  });
+  // End of the year: stop, lift the needle and return the disc unless another action starts.
+  bindRecordEnd(store, audio, { announce });
 
   // 1-second preview: only when nothing is loaded, so it never clobbers the user's disc.
   let previewTimer = null;
@@ -137,6 +137,7 @@ async function main() {
 
   initRoll(store, { container: document.getElementById('roll-box'), svgHost: document.getElementById('roll'), getSchedule: () => schedule });
   initDialogs(store, { datasets: data.datasets, announce });
+  initSeasonal(store, data);
 
   // How to use: a guided tour with a spotlight (button, H key, and once on the first visit)
   const coach = initCoach(store, { boxOf: scene.boxOf, announce, reducedMotion: () => Boolean(store.state.settings.reducedMotion) });

@@ -12,7 +12,7 @@ const CREDITS_URL = 'https://github.com/hoangminhky2009-vn/earth-jukebox/blob/ma
 const LIMITS = {
   rain: 'Rain is smoothed over about 3 months and saturates beyond ±15 mm/day: stronger rain or drought still reads as 15+.',
   ndvi: 'Greenness is a position on the image’s colour scale (low to high). It is not an NDVI number: the scale carries no NDVI values.',
-  snow: 'Snow cover is the share of land pixels under snow in a 0.05° box around the place. MODIS needs daylight: there is no data in the polar night (December, January), and a pixel hidden by cloud all month counts as snow-free.',
+  snow: 'The sampled box is 0.5° latitude by 1° longitude on a 0.05° grid. In the rendered NASA map, transparent pixels can mean zero snow, water or unavailable observations. They are never counted as snow-free; percentages require raw MOD10CM values and quality flags.',
 };
 const CONDITION = {
   mint: { icon: '✓', text: 'Mint', note: 'every month has data' },
@@ -30,6 +30,7 @@ export function conditionLabel(condition) {
 export function readoutText(disc, month, datasets) {
   const m = Math.min(11, Math.max(0, Math.floor(month)));
   const when = `${MONTHS[m]} ${disc.year}`;
+  if (disc.source?.status === 'withheld') return `Snow cover · ${when}: percentage withheld — the map cannot distinguish no snow from unavailable observations`;
   const level = disc.levels[m];
   if (level === null || level === undefined) return `${when}: missing data (crackle)`;
   const found = datasets?.[disc.dataset]?.levels.find((l) => l.level === level);
@@ -57,6 +58,7 @@ export function metaText(disc, datasets) {
  */
 export function levelInfo(disc, month, datasets) {
   const m = Math.min(11, Math.max(0, Math.floor(month)));
+  if (disc.source?.status === 'withheld') return { dir: 'none', glyph: '', text: '— withheld' };
   const level = disc.levels[m];
   if (level === null || level === undefined) return { dir: 'none', glyph: '', text: '— missing' };
   if (disc.dataset === 'rain') {
@@ -95,8 +97,9 @@ export function detailRows(disc, datasets) {
     rows: [
       ['Dataset', ds.label ?? disc.dataset],
       ['Unit', ds.unit ?? 'not given'],
+      ['Data status', disc.source?.status === 'withheld' ? `Percentages withheld. ${disc.source.limitation}` : ''],
       ['Condition', `${conditionLabel(disc.condition)}${cond ? ` (${cond.note})` : ''}`],
-      ['Colour match', `${Math.round(disc.match_pct)}%`],
+      ['Colour match', disc.source?.status === 'withheld' ? 'Not a validation of snow percentages; numerical values are withheld.' : `${Math.round(disc.match_pct)}%`],
       ['Frames used', framesText(disc)],
       ['Limits', LIMITS[disc.dataset] ?? 'See the unit above.'],
       ['Description', disc.description ?? ''],
@@ -123,7 +126,7 @@ export function frameFigure(disc, place) {
     : 'vegetation greenness (pale = bare, deep green = dense plants)';
   const alt = String(disc.description ?? '').trim() || `NASA map of ${what}, ${date}, centred on ${where}.`;
   const caption = snow
-    ? `NASA MODIS Terra monthly snow map (from NASA GIBS), ${date}, northern Norway around ${where}: ${what}. One month's picture for this disc; the music uses all 12 months.`
+    ? `NASA MODIS Terra monthly snow map (from NASA GIBS), ${date}, northern Norway around ${where}: ${what}. ${disc.source?.status === 'withheld' ? 'Visual context only. Numerical snow values are withheld because transparency is ambiguous.' : 'One month’s picture for this disc; the music uses all 12 months.'}`
     : `NASA Scientific Visualization Studio frame, ${date}, centred on ${where}: ${what}. One day's picture for this disc; the music uses all 12 months.`;
   return { src: disc.frame, alt, caption };
 }
@@ -240,7 +243,9 @@ export function initDialogs(store, opts) {
     body.append(el('div', { className: 'chart' }, renderMonthChart(bars, disc.dataset)));
     body.append(el('p', { className: 'chart-note' }, disc.dataset === 'rain'
       ? 'Bars up (▲) are wetter than normal, bars down (▼) are drier, in mm/day. Each number is the middle of its band. A grey checker cell means no data.'
-      : disc.dataset === 'snow' ? 'Four blocks = the share of the land under snow, in quarters. A grey checker cell means no data (polar night, or not published yet).'
+      : disc.dataset === 'snow' ? (disc.source?.status === 'withheld'
+        ? 'Snow percentages are withheld: transparent map pixels cannot distinguish no snow from unavailable observations or water. Grey cells contain no numerical estimate.'
+        : 'Four blocks = the share of the land under snow, in quarters. Grey cells contain no usable estimate; transparent pixels are never treated as zero.')
       : 'Four blocks = the greenness scale split in quarters (low to high). A grey checker cell means no data.'));
     body.append(renderMonthTable(bars, disc));
     const fig = frameFigure(disc, store.getPlace(disc.place));

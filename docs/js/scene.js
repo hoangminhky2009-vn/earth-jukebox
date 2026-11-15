@@ -184,11 +184,19 @@ export function createScene(store, opts) {
   const screen = $('screen'); const hits = $('hits'); const lcdEl = $('lcd'); const coordsEl = $('coords');
   const RM = () => Boolean(store.state.settings.reducedMotion);
 
-  function fit() {   // fills the window above the footer line, never scrolls
-    const foot = document.querySelector('.foot')?.offsetHeight ?? 30;
-    screen.style.setProperty('--s', String(Math.max(0.2, Math.min(innerWidth / W, (innerHeight - foot - 4) / H))));
+  function fit() {   // Show the whole console above the fold; the labelled controls stay in document flow.
+    const width = screen.parentElement.clientWidth;
+    // Use document coordinates so resizing while scrolled does not change the height budget.
+    const top = screen.getBoundingClientRect().top + window.scrollY;
+    const height = window.innerHeight - top - 16;
+    screen.style.setProperty('--s', String(Math.max(0.2, Math.min(width / W, 620 / H, height / H))));
   }
   fit(); addEventListener('resize', fit);
+  // Header wrapping and font loading can change the available height without a window resize.
+  const fitObserver = new ResizeObserver(fit);
+  fitObserver.observe(screen.parentElement);
+  const intro = document.querySelector('.intro');
+  if (intro) fitObserver.observe(intro);
   const pos = (el, x, y, w, h) => Object.assign(el.style, { left: `${x / W * 100}%`, top: `${y / H * 100}%`, width: `${w / W * 100}%`, height: `${h / H * 100}%` });
 
   const P = (c, x, y, w = 1, h = 1, g = ctx) => { g.fillStyle = c; g.fillRect(x | 0, y | 0, w, h); };

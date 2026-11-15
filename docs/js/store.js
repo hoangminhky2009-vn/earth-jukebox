@@ -6,6 +6,11 @@
 const EVENTS = ['place:focus', 'place:select', 'disc:record', 'disc:load', 'play', 'pause', 'stop',
   'seek', 'flip', 'mode', 'settings', 'tick', 'eject'];
 
+/** Keep explicitly withheld records in the source archive, outside every playable UI choice. */
+export function playableCatalog(data) {
+  return { ...data, discs: data.discs.filter(disc => disc.source?.status !== 'withheld') };
+}
+
 /** @param {{places:object[], discs:object[], datasets?:object}} data parsed discs.json */
 export function createStore(data) {
   const reduced = typeof window !== 'undefined' && window.matchMedia
@@ -123,7 +128,6 @@ export function createStore(data) {
       }
       state.loadedDisc = other.id;
       state.side = other.side;
-      state.position = 0;
       emit('flip', { changed: true, side: other.side, disc: other, place: getPlace(other.place) });
       return { ok: true, disc: other };
     },

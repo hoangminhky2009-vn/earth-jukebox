@@ -11,12 +11,19 @@
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/jukebox.css">
+  <link rel="stylesheet" href="css/seasonal.css?v=3">
 </head>
 <body>
   <a class="skip-link" href="#hits">Skip to the console</a>
-  <h1 class="sr-only">Earth Jukebox</h1>
+  <header class="intro">
+    <p class="eyebrow">THE DELTA FORCE · EARTH JUKEBOX</p>
+    <h1>Every place has a rhythm.</h1>
+    <p>Listen to the seasons. Hear what changed.</p>
+    <nav aria-label="Start exploring"><a href="#console-controls">Play a record</a><a href="#seasonal">Compare seasons ↓</a></nav>
+  </header>
 
   <main id="main">
+    <section class="console-section" aria-label="The record player">
     <div class="screen" id="screen">
       <canvas id="cv" width="480" height="270" aria-hidden="true"></canvas>
       <div class="logo" aria-hidden="true">EARTH JUKEBOX</div>
@@ -30,12 +37,78 @@
       </div>
       <p id="load-error" role="alert" hidden></p>
     </div>
+    <div class="console-controls" id="console-controls">
+      <p class="eyebrow">01 CHOOSE A PLACE · 02 PLAY · 03 FLIP THE YEAR</p>
+      <div class="picker-row">
+        <label>Place<select id="record-place"></select></label>
+        <label>What to hear<select id="record-dataset"><option value="rain">Rain compared with normal</option><option value="ndvi">Vegetation greenness</option></select></label>
+        <label>Year<select id="record-year"></select></label>
+        <button class="btn" id="record-load" type="button">Put on the deck</button>
+      </div>
+      <div class="transport" role="group" aria-label="Labelled record controls">
+        <button class="btn" id="record-play" type="button" disabled>Play record</button>
+        <button class="soft-btn" id="record-stop" type="button" disabled>Stop</button>
+        <button class="soft-btn" id="record-flip" type="button" disabled>Flip year</button>
+        <button class="soft-btn" id="record-science" type="button" aria-pressed="false">Science mode</button>
+        <button class="soft-btn" id="record-details" type="button" disabled>See the evidence</button>
+      </div>
+      <p id="record-status">Choose a place above, or pick a disc from the shelf.</p>
+      <p class="fine-print">Rain is wetter or drier than normal, smoothed over about three months. Greenness is read from NASA’s colour scale. Missing months are never filled in.</p>
+    </div>
+    </section>
+
+    <section class="seasonal" id="seasonal" aria-labelledby="seasonal-title">
+      <div class="section-heading"><div><p class="eyebrow">A CLOSER LISTEN</p><h2 id="seasonal-title">The same months. A different story.</h2></div><span class="tag">12 MONTHS · ONE MUSICAL SCALE</span></div>
+      <p>Compare matching months without remembering two whole songs. Every category keeps the same note across places and years.</p>
+      <div class="presets" aria-label="Suggested listening journeys">
+        <button class="soft-btn" id="preset-years" type="button">Dhaka, year by year</button>
+        <button class="soft-btn" id="preset-places" type="button">Dhaka &amp; Sylhet</button>
+        <button class="soft-btn" id="preset-ferlo" type="button">Ferlo’s green season</button>
+      </div>
+      <div class="mode-picker" role="group" aria-label="Comparison type">
+        <button type="button" data-season-mode="years" aria-pressed="true">Compare years</button>
+        <button type="button" data-season-mode="places" aria-pressed="false">Compare places</button>
+        <button type="button" data-season-mode="duet" aria-pressed="false">Rain + greenness</button>
+      </div>
+      <div class="picker-row comparison-pickers">
+        <label><span id="compare-place-label">Place</span><select id="compare-place"></select></label>
+        <label id="compare-place-b-wrap">Place B<select id="compare-place-b"></select></label>
+        <label id="compare-dataset-wrap">What to compare<select id="compare-dataset"><option value="rain">Rain compared with normal</option><option value="ndvi">Vegetation greenness</option></select></label>
+        <label><span id="compare-year-label">Year A</span><select id="compare-year"></select></label>
+        <label id="compare-year-b-wrap">Year B<select id="compare-year-b"></select></label>
+      </div>
+      <p id="comparison-heading" class="comparison-heading"></p>
+      <p id="comparison-summary" class="summary" role="status"></p>
+      <div class="comparison-toolbar">
+        <button class="btn" id="compare-play" type="button">Play A → B, month by month</button>
+        <button class="soft-btn" id="compare-stop" type="button" disabled>Stop comparison</button>
+        <label id="changes-wrap"><input type="checkbox" id="changes-only"> Hear only what changed</label>
+        <label class="volume-label">Volume<input id="compare-volume" type="range" min="0" max="1" step="0.05" value="0.8"></label>
+      </div>
+      <div id="duet-mixer" class="duet-mixer" hidden>
+        <label><input id="duet-rain" type="checkbox" checked> Rain · soft reed</label>
+        <label><input id="duet-green" type="checkbox" checked> Greenness · pure tone</label>
+      </div>
+      <p class="playback-status" id="compare-status">Choose a month to inspect it, then listen.</p>
+      <div id="month-grid" class="month-grid" role="group" aria-label="Select a calendar month"></div>
+      <div class="month-heading"><h3 id="selected-month">January</h3><button class="soft-btn" id="hear-month" type="button">Hear this month</button></div>
+      <div id="month-readout" class="month-readout"></div>
+      <p class="fine-print" id="comparison-caveat"></p>
+      <details class="evidence-panel" id="month-evidence"><summary>Where this month’s sound comes from</summary><div id="evidence-content"></div></details>
+      <details class="evidence-panel"><summary>Learn the comparison sound</summary>
+        <p>These short auditions use a fixed category scale and no accompaniment. They keep the same instrument, loudness and pitch rule for both places or years. The main record player keeps its landscape-inspired musical arrangements.</p>
+        <p>Rain: level −4 → E3, near normal → C4, level +4 → G♯4, moving two semitones per category. Greenness: categories 1–4 → C4, E4, G♯4, C5. More or greener means a higher note within that variable. Equal notes mean equal categories, not identical conditions.</p>
+        <p>Comparison: A plays first, then B, one second each. If either side is missing or has a flagged colour-match break, that pair is silent. A duet plays both available variables together for each month; the pitches of different variables are not interchangeable measurements.</p>
+      </details>
+      <div class="export-row"><button class="soft-btn" id="export-comparison" type="button">Download this audition · WAV</button><button class="soft-btn" id="export-evidence" type="button">Download its data · JSON</button><span id="export-status" role="status"></span></div>
+    </section>
   </main>
 
-  <p class="rotate-hint">On a phone, turn it sideways: the jukebox gets much bigger.</p>
+  <p class="rotate-hint">The labelled controls work in portrait. Turn sideways for a larger record player.</p>
 
   <footer class="foot">
-    <p>Made by The Delta Force with help from Claude and Codex (SI) &mdash; see <a href="https://github.com/hoangminhky2009-vn/earth-jukebox/blob/main/AI_USE.md">AI_USE.md</a>. Data: NASA Scientific Visualization Studio (Earth Information Center) and NASA MODIS snow cover (GIBS).</p>
+    <p>Earth Jukebox · The Delta Force. Data: NASA Scientific Visualization Studio and NASA MODIS snow cover (GIBS).</p>
+    <p><a href="https://github.com/hoangminhky2009-vn/earth-jukebox/blob/main/CREDITS.md">Sources &amp; credits</a> · <a href="https://github.com/hoangminhky2009-vn/earth-jukebox/blob/main/AI_USE.md">Project disclosures</a></p>
   </footer>
 
   <dialog id="details-dialog" class="dlg" aria-labelledby="details-h">

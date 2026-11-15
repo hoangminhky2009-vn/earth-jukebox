@@ -10,7 +10,9 @@ Each map covers 32.4 x 16.8 degrees around the place, 216 x 112 pixels, 64 colou
 docs/data/maps/<disc id>-<MM>.png, plus docs/data/maps/index.json (which months exist, and each image's date and URL).
 
 Usage: python tools/make_month_maps.py        (frames are cached in pipeline/cache/maps/, about 200 MB on first run)
+       python tools/make_month_maps.py --place ferlo  (updates only this place; keeps other maps and index entries)
 """
+import argparse
 import io
 import json
 import re
@@ -71,7 +73,7 @@ def listing(ds):
 
 def nearest_15th(avail, year, month):
     days = [d for d in avail if d.year == year and d.month == month]
-    return min(days, key=lambda d: abs(d.day - 15)) if days else None
+    return min(days, key=lambda d: (abs(d.day - 15), d)) if days else None
 
 
 def cut(img, lon, lat, west):
@@ -88,15 +90,46 @@ def save(im, path):
     im.quantize(colors=64, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(path, optimize=True)
 
 
-def main():
+def withheld_snow(disc):
+    return disc['dataset'] == 'snow' and disc.get('source', {}).get('status') == 'withheld'
+
+
+def index_for_update(selected_places, discs=()):
+    """Keep unselected places intact, but never mix images made with different crop geometry."""
+    path = OUT / 'index.json'
+    existing = json.loads(path.read_text(encoding='utf-8')) if path.exists() else None
+    same_geometry = existing and existing.get('span_deg') == [SPAN_LON, SPAN_LAT] and existing.get('size_px') == [W, H]
+    if selected_places and existing:
+        if not same_geometry:
+            raise ValueError('Existing map dimensions differ; run a full rebuild instead of --place.')
+        return existing
+    # Withheld numerical snow records may still have valid NASA imagery for visual context.
+    # A full rebuild keeps those existing maps instead of equating null values with absent images.
+    retained = {d['id']: existing['discs'][d['id']] for d in discs
+                if same_geometry and withheld_snow(d) and d['id'] in existing['discs']}
+    return {'note': 'Monthly NASA images cut around each place for the map screen (tools/make_month_maps.py). '
+                    'Same sources as the data; only cropped and reduced to 64 colours.',
+            'span_deg': [SPAN_LON, SPAN_LAT], 'size_px': [W, H], 'discs': retained}
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--place', action='append', help='Only update this place ID; can be repeated.')
+    args = parser.parse_args(argv)
     data = json.loads(DATA.read_text(encoding='utf-8'))
     places = {p['id']: p for p in data['places']}
+    selected_places = set(args.place or [])
+    unknown = selected_places - places.keys()
+    if unknown:
+        parser.error('Unknown place ID: ' + ', '.join(sorted(unknown)))
+    discs = [d for d in data['discs'] if not selected_places or d['place'] in selected_places]
     OUT.mkdir(parents=True, exist_ok=True)
-    index = {}
-    lists = {ds: listing(ds) for ds in SOURCES}
+    payload = index_for_update(selected_places, discs)
+    index = payload['discs']
+    lists = {ds: listing(ds) for ds in SOURCES if any(d['dataset'] == ds for d in discs)}
     # which world frames are needed (one per dataset and month), then fetch them in parallel
     need = {}
-    for d in data['discs']:
+    for d in discs:
         if d['dataset'] not in SOURCES:
             continue
         for m in range(12):
@@ -112,7 +145,11 @@ def main():
     with ThreadPoolExecutor(4) as pool:
         frames = dict(pool.map(fetch, need.items()))
     print('frames ready', flush=True)
-    for d in data['discs']:
+    for d in discs:
+        if withheld_snow(d):
+            entry = index.setdefault(d['id'], {})
+            print(d['id'], len(entry), '(existing NASA images retained; numerical snow values withheld)', flush=True)
+            continue
         p = places[d['place']]; entry = {}
         for m in range(12):
             if d['levels'][m] is None:
@@ -143,9 +180,7 @@ def main():
                             'url': wms('MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct', t)}
         index[d['id']] = entry
         print(d['id'], len(entry), flush=True)
-    (OUT / 'index.json').write_text(json.dumps({'note': 'Monthly NASA images cut around each place for the map screen (tools/make_month_maps.py). '
-                                                'Same sources as the data; only cropped and reduced to 64 colours.',
-                                                'span_deg': [SPAN_LON, SPAN_LAT], 'size_px': [W, H], 'discs': index}, indent=1) + '\n', encoding='utf-8')
+    (OUT / 'index.json').write_text(json.dumps(payload, indent=1) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

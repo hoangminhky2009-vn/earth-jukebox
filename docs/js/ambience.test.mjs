@@ -64,7 +64,7 @@ test('desert: a gusting open wind every month, a howl when driest, no rain unles
   assert.equal(ambienceMix(ndvi(1), 0, 'music', sand).birds, 0);
 });
 
-test('birds come from the region of the place; snow places hear them only when there is little snow', async () => {
+test('regional birds are selected where available, with a park fallback; snow suppresses birds', async () => {
   const { ambienceMix, birdsFile } = await import('./ambience.js');
   assert.equal(birdsFile({ biome: 'snow-coast' }), 'birds');
   assert.equal(birdsFile({ biome: 'desert' }), 'birds-outback');
