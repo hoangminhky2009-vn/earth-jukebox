@@ -1,4 +1,4 @@
-# How it works
+# How DeltaBeat works
 
 ## Data
 - `pipeline/` (Python) reads dated NASA SVS frames, takes a small area around each agreed place, and matches the

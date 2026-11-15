@@ -1,4 +1,6 @@
-# Earth Jukebox
+# DeltaBeat: Earth's Music Box
+
+(Our entry for "The Earth Information Jukebox"; the repository is still called `earth-jukebox`.)
 
 **By The Delta Force, for NASA Space Apps Challenge 2026: "The Earth Information Jukebox".**
 
