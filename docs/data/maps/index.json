@@ -1,0 +1,2113 @@
+{
+ "note": "Monthly NASA images cut around each place for the map screen (tools/make_month_maps.py). Same sources as the data; only cropped and reduced to 64 colours.",
+ "span_deg": [
+  21.6,
+  11.2
+ ],
+ "size_px": [
+  216,
+  112
+ ],
+ "discs": {
+  "dhaka-rain-2025": {
+   "0": {
+    "file": "data/maps/dhaka-rain-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/dhaka-rain-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/dhaka-rain-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/dhaka-rain-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/dhaka-rain-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/dhaka-rain-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/dhaka-rain-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/dhaka-rain-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/dhaka-rain-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/dhaka-rain-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.10.15.png"
+   },
+   "10": {
+    "file": "data/maps/dhaka-rain-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.11.15.png"
+   },
+   "11": {
+    "file": "data/maps/dhaka-rain-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.12.15.png"
+   }
+  },
+  "sylhet-rain-2025": {
+   "0": {
+    "file": "data/maps/sylhet-rain-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/sylhet-rain-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/sylhet-rain-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/sylhet-rain-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/sylhet-rain-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/sylhet-rain-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/sylhet-rain-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/sylhet-rain-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/sylhet-rain-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/sylhet-rain-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.10.15.png"
+   },
+   "10": {
+    "file": "data/maps/sylhet-rain-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.11.15.png"
+   },
+   "11": {
+    "file": "data/maps/sylhet-rain-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.12.15.png"
+   }
+  },
+  "tonle-sap-rain-2025": {
+   "0": {
+    "file": "data/maps/tonle-sap-rain-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/tonle-sap-rain-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/tonle-sap-rain-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/tonle-sap-rain-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/tonle-sap-rain-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/tonle-sap-rain-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/tonle-sap-rain-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/tonle-sap-rain-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/tonle-sap-rain-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/tonle-sap-rain-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.10.15.png"
+   },
+   "10": {
+    "file": "data/maps/tonle-sap-rain-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.11.15.png"
+   },
+   "11": {
+    "file": "data/maps/tonle-sap-rain-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.12.15.png"
+   }
+  },
+  "hue-rain-2025": {
+   "0": {
+    "file": "data/maps/hue-rain-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/hue-rain-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/hue-rain-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/hue-rain-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/hue-rain-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/hue-rain-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/hue-rain-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/hue-rain-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/hue-rain-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/hue-rain-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.10.15.png"
+   },
+   "10": {
+    "file": "data/maps/hue-rain-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.11.15.png"
+   },
+   "11": {
+    "file": "data/maps/hue-rain-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.12.15.png"
+   }
+  },
+  "dhaka-rain-2026": {
+   "0": {
+    "file": "data/maps/dhaka-rain-2026-01.png",
+    "date": "2026-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/dhaka-rain-2026-02.png",
+    "date": "2026-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/dhaka-rain-2026-03.png",
+    "date": "2026-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/dhaka-rain-2026-04.png",
+    "date": "2026-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/dhaka-rain-2026-05.png",
+    "date": "2026-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/dhaka-rain-2026-06.png",
+    "date": "2026-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/dhaka-rain-2026-07.png",
+    "date": "2026-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/dhaka-rain-2026-08.png",
+    "date": "2026-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/dhaka-rain-2026-09.png",
+    "date": "2026-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/dhaka-rain-2026-10.png",
+    "date": "2026-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.10.15.png"
+   }
+  },
+  "sylhet-rain-2026": {
+   "0": {
+    "file": "data/maps/sylhet-rain-2026-01.png",
+    "date": "2026-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/sylhet-rain-2026-02.png",
+    "date": "2026-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/sylhet-rain-2026-03.png",
+    "date": "2026-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/sylhet-rain-2026-04.png",
+    "date": "2026-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/sylhet-rain-2026-05.png",
+    "date": "2026-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/sylhet-rain-2026-06.png",
+    "date": "2026-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/sylhet-rain-2026-07.png",
+    "date": "2026-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/sylhet-rain-2026-08.png",
+    "date": "2026-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/sylhet-rain-2026-09.png",
+    "date": "2026-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/sylhet-rain-2026-10.png",
+    "date": "2026-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.10.15.png"
+   }
+  },
+  "tonle-sap-rain-2026": {
+   "0": {
+    "file": "data/maps/tonle-sap-rain-2026-01.png",
+    "date": "2026-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/tonle-sap-rain-2026-02.png",
+    "date": "2026-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/tonle-sap-rain-2026-03.png",
+    "date": "2026-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/tonle-sap-rain-2026-04.png",
+    "date": "2026-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/tonle-sap-rain-2026-05.png",
+    "date": "2026-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/tonle-sap-rain-2026-06.png",
+    "date": "2026-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/tonle-sap-rain-2026-07.png",
+    "date": "2026-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/tonle-sap-rain-2026-08.png",
+    "date": "2026-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/tonle-sap-rain-2026-09.png",
+    "date": "2026-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/tonle-sap-rain-2026-10.png",
+    "date": "2026-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.10.15.png"
+   }
+  },
+  "hue-rain-2026": {
+   "0": {
+    "file": "data/maps/hue-rain-2026-01.png",
+    "date": "2026-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/hue-rain-2026-02.png",
+    "date": "2026-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/hue-rain-2026-03.png",
+    "date": "2026-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/hue-rain-2026-04.png",
+    "date": "2026-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/hue-rain-2026-05.png",
+    "date": "2026-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/hue-rain-2026-06.png",
+    "date": "2026-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/hue-rain-2026-07.png",
+    "date": "2026-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/hue-rain-2026-08.png",
+    "date": "2026-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/hue-rain-2026-09.png",
+    "date": "2026-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/hue-rain-2026-10.png",
+    "date": "2026-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.10.15.png"
+   }
+  },
+  "dhaka-ndvi-2024": {
+   "0": {
+    "file": "data/maps/dhaka-ndvi-2024-01.png",
+    "date": "2024-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/dhaka-ndvi-2024-02.png",
+    "date": "2024-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/dhaka-ndvi-2024-03.png",
+    "date": "2024-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/dhaka-ndvi-2024-04.png",
+    "date": "2024-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/dhaka-ndvi-2024-05.png",
+    "date": "2024-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/dhaka-ndvi-2024-06.png",
+    "date": "2024-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/dhaka-ndvi-2024-07.png",
+    "date": "2024-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/dhaka-ndvi-2024-08.png",
+    "date": "2024-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/dhaka-ndvi-2024-09.png",
+    "date": "2024-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/dhaka-ndvi-2024-10.png",
+    "date": "2024-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/dhaka-ndvi-2024-11.png",
+    "date": "2024-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/dhaka-ndvi-2024-12.png",
+    "date": "2024-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "sylhet-ndvi-2024": {
+   "0": {
+    "file": "data/maps/sylhet-ndvi-2024-01.png",
+    "date": "2024-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/sylhet-ndvi-2024-02.png",
+    "date": "2024-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/sylhet-ndvi-2024-03.png",
+    "date": "2024-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/sylhet-ndvi-2024-04.png",
+    "date": "2024-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/sylhet-ndvi-2024-05.png",
+    "date": "2024-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/sylhet-ndvi-2024-06.png",
+    "date": "2024-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/sylhet-ndvi-2024-07.png",
+    "date": "2024-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/sylhet-ndvi-2024-08.png",
+    "date": "2024-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/sylhet-ndvi-2024-09.png",
+    "date": "2024-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/sylhet-ndvi-2024-10.png",
+    "date": "2024-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/sylhet-ndvi-2024-11.png",
+    "date": "2024-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/sylhet-ndvi-2024-12.png",
+    "date": "2024-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "tonle-sap-ndvi-2024": {
+   "0": {
+    "file": "data/maps/tonle-sap-ndvi-2024-01.png",
+    "date": "2024-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/tonle-sap-ndvi-2024-02.png",
+    "date": "2024-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/tonle-sap-ndvi-2024-03.png",
+    "date": "2024-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/tonle-sap-ndvi-2024-04.png",
+    "date": "2024-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/tonle-sap-ndvi-2024-05.png",
+    "date": "2024-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/tonle-sap-ndvi-2024-06.png",
+    "date": "2024-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/tonle-sap-ndvi-2024-07.png",
+    "date": "2024-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/tonle-sap-ndvi-2024-08.png",
+    "date": "2024-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/tonle-sap-ndvi-2024-09.png",
+    "date": "2024-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/tonle-sap-ndvi-2024-10.png",
+    "date": "2024-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/tonle-sap-ndvi-2024-11.png",
+    "date": "2024-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/tonle-sap-ndvi-2024-12.png",
+    "date": "2024-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "hue-ndvi-2024": {
+   "0": {
+    "file": "data/maps/hue-ndvi-2024-01.png",
+    "date": "2024-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/hue-ndvi-2024-02.png",
+    "date": "2024-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/hue-ndvi-2024-03.png",
+    "date": "2024-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/hue-ndvi-2024-04.png",
+    "date": "2024-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/hue-ndvi-2024-05.png",
+    "date": "2024-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/hue-ndvi-2024-06.png",
+    "date": "2024-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/hue-ndvi-2024-07.png",
+    "date": "2024-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/hue-ndvi-2024-08.png",
+    "date": "2024-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/hue-ndvi-2024-09.png",
+    "date": "2024-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/hue-ndvi-2024-10.png",
+    "date": "2024-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/hue-ndvi-2024-11.png",
+    "date": "2024-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/hue-ndvi-2024-12.png",
+    "date": "2024-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "dhaka-ndvi-2025": {
+   "0": {
+    "file": "data/maps/dhaka-ndvi-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/dhaka-ndvi-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/dhaka-ndvi-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/dhaka-ndvi-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/dhaka-ndvi-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/dhaka-ndvi-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/dhaka-ndvi-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/dhaka-ndvi-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/dhaka-ndvi-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/dhaka-ndvi-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/dhaka-ndvi-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/dhaka-ndvi-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "sylhet-ndvi-2025": {
+   "0": {
+    "file": "data/maps/sylhet-ndvi-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/sylhet-ndvi-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/sylhet-ndvi-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/sylhet-ndvi-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/sylhet-ndvi-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/sylhet-ndvi-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/sylhet-ndvi-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/sylhet-ndvi-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/sylhet-ndvi-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/sylhet-ndvi-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/sylhet-ndvi-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/sylhet-ndvi-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "tonle-sap-ndvi-2025": {
+   "0": {
+    "file": "data/maps/tonle-sap-ndvi-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/tonle-sap-ndvi-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/tonle-sap-ndvi-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/tonle-sap-ndvi-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/tonle-sap-ndvi-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/tonle-sap-ndvi-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/tonle-sap-ndvi-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/tonle-sap-ndvi-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/tonle-sap-ndvi-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/tonle-sap-ndvi-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/tonle-sap-ndvi-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/tonle-sap-ndvi-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "hue-ndvi-2025": {
+   "0": {
+    "file": "data/maps/hue-ndvi-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/hue-ndvi-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/hue-ndvi-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/hue-ndvi-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/hue-ndvi-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/hue-ndvi-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/hue-ndvi-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/hue-ndvi-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/hue-ndvi-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/hue-ndvi-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/hue-ndvi-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/hue-ndvi-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "amazon-rain-2025": {
+   "0": {
+    "file": "data/maps/amazon-rain-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/amazon-rain-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/amazon-rain-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/amazon-rain-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/amazon-rain-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/amazon-rain-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/amazon-rain-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/amazon-rain-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/amazon-rain-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/amazon-rain-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.10.15.png"
+   },
+   "10": {
+    "file": "data/maps/amazon-rain-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.11.15.png"
+   },
+   "11": {
+    "file": "data/maps/amazon-rain-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.12.15.png"
+   }
+  },
+  "amazon-rain-2026": {
+   "0": {
+    "file": "data/maps/amazon-rain-2026-01.png",
+    "date": "2026-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/amazon-rain-2026-02.png",
+    "date": "2026-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/amazon-rain-2026-03.png",
+    "date": "2026-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/amazon-rain-2026-04.png",
+    "date": "2026-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/amazon-rain-2026-05.png",
+    "date": "2026-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/amazon-rain-2026-06.png",
+    "date": "2026-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/amazon-rain-2026-07.png",
+    "date": "2026-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/amazon-rain-2026-08.png",
+    "date": "2026-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/amazon-rain-2026-09.png",
+    "date": "2026-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/amazon-rain-2026-10.png",
+    "date": "2026-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.10.15.png"
+   }
+  },
+  "amazon-ndvi-2024": {
+   "0": {
+    "file": "data/maps/amazon-ndvi-2024-01.png",
+    "date": "2024-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/amazon-ndvi-2024-02.png",
+    "date": "2024-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/amazon-ndvi-2024-03.png",
+    "date": "2024-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/amazon-ndvi-2024-04.png",
+    "date": "2024-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/amazon-ndvi-2024-05.png",
+    "date": "2024-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/amazon-ndvi-2024-06.png",
+    "date": "2024-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/amazon-ndvi-2024-07.png",
+    "date": "2024-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/amazon-ndvi-2024-08.png",
+    "date": "2024-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/amazon-ndvi-2024-09.png",
+    "date": "2024-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/amazon-ndvi-2024-10.png",
+    "date": "2024-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/amazon-ndvi-2024-11.png",
+    "date": "2024-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/amazon-ndvi-2024-12.png",
+    "date": "2024-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "amazon-ndvi-2025": {
+   "0": {
+    "file": "data/maps/amazon-ndvi-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/amazon-ndvi-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/amazon-ndvi-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/amazon-ndvi-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/amazon-ndvi-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/amazon-ndvi-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/amazon-ndvi-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/amazon-ndvi-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/amazon-ndvi-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/amazon-ndvi-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/amazon-ndvi-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/amazon-ndvi-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "alice-springs-rain-2025": {
+   "0": {
+    "file": "data/maps/alice-springs-rain-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/alice-springs-rain-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/alice-springs-rain-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/alice-springs-rain-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/alice-springs-rain-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/alice-springs-rain-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/alice-springs-rain-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/alice-springs-rain-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/alice-springs-rain-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/alice-springs-rain-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.10.15.png"
+   },
+   "10": {
+    "file": "data/maps/alice-springs-rain-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.11.15.png"
+   },
+   "11": {
+    "file": "data/maps/alice-springs-rain-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.12.15.png"
+   }
+  },
+  "tromso-rain-2025": {
+   "0": {
+    "file": "data/maps/tromso-rain-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/tromso-rain-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/tromso-rain-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/tromso-rain-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/tromso-rain-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/tromso-rain-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/tromso-rain-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/tromso-rain-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/tromso-rain-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/tromso-rain-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.10.15.png"
+   },
+   "10": {
+    "file": "data/maps/tromso-rain-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.11.15.png"
+   },
+   "11": {
+    "file": "data/maps/tromso-rain-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2025.12.15.png"
+   }
+  },
+  "alice-springs-rain-2026": {
+   "0": {
+    "file": "data/maps/alice-springs-rain-2026-01.png",
+    "date": "2026-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/alice-springs-rain-2026-02.png",
+    "date": "2026-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/alice-springs-rain-2026-03.png",
+    "date": "2026-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/alice-springs-rain-2026-04.png",
+    "date": "2026-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/alice-springs-rain-2026-05.png",
+    "date": "2026-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/alice-springs-rain-2026-06.png",
+    "date": "2026-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/alice-springs-rain-2026-07.png",
+    "date": "2026-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/alice-springs-rain-2026-08.png",
+    "date": "2026-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/alice-springs-rain-2026-09.png",
+    "date": "2026-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/alice-springs-rain-2026-10.png",
+    "date": "2026-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.10.15.png"
+   }
+  },
+  "tromso-rain-2026": {
+   "0": {
+    "file": "data/maps/tromso-rain-2026-01.png",
+    "date": "2026-01-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.01.15.png"
+   },
+   "1": {
+    "file": "data/maps/tromso-rain-2026-02.png",
+    "date": "2026-02-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.02.15.png"
+   },
+   "2": {
+    "file": "data/maps/tromso-rain-2026-03.png",
+    "date": "2026-03-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.03.15.png"
+   },
+   "3": {
+    "file": "data/maps/tromso-rain-2026-04.png",
+    "date": "2026-04-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.04.15.png"
+   },
+   "4": {
+    "file": "data/maps/tromso-rain-2026-05.png",
+    "date": "2026-05-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.05.15.png"
+   },
+   "5": {
+    "file": "data/maps/tromso-rain-2026-06.png",
+    "date": "2026-06-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.06.15.png"
+   },
+   "6": {
+    "file": "data/maps/tromso-rain-2026-07.png",
+    "date": "2026-07-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.07.15.png"
+   },
+   "7": {
+    "file": "data/maps/tromso-rain-2026-08.png",
+    "date": "2026-08-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.08.15.png"
+   },
+   "8": {
+    "file": "data/maps/tromso-rain-2026-09.png",
+    "date": "2026-09-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.09.15.png"
+   },
+   "9": {
+    "file": "data/maps/tromso-rain-2026-10.png",
+    "date": "2026-10-15",
+    "source": "NASA SVS 4897",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatcomposite/imergvar_composite.2026.10.15.png"
+   }
+  },
+  "alice-springs-ndvi-2024": {
+   "0": {
+    "file": "data/maps/alice-springs-ndvi-2024-01.png",
+    "date": "2024-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/alice-springs-ndvi-2024-02.png",
+    "date": "2024-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/alice-springs-ndvi-2024-03.png",
+    "date": "2024-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/alice-springs-ndvi-2024-04.png",
+    "date": "2024-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/alice-springs-ndvi-2024-05.png",
+    "date": "2024-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/alice-springs-ndvi-2024-06.png",
+    "date": "2024-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/alice-springs-ndvi-2024-07.png",
+    "date": "2024-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/alice-springs-ndvi-2024-08.png",
+    "date": "2024-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/alice-springs-ndvi-2024-09.png",
+    "date": "2024-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/alice-springs-ndvi-2024-10.png",
+    "date": "2024-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/alice-springs-ndvi-2024-11.png",
+    "date": "2024-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/alice-springs-ndvi-2024-12.png",
+    "date": "2024-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "tromso-ndvi-2024": {
+   "0": {
+    "file": "data/maps/tromso-ndvi-2024-01.png",
+    "date": "2024-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/tromso-ndvi-2024-02.png",
+    "date": "2024-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/tromso-ndvi-2024-03.png",
+    "date": "2024-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/tromso-ndvi-2024-04.png",
+    "date": "2024-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/tromso-ndvi-2024-05.png",
+    "date": "2024-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/tromso-ndvi-2024-06.png",
+    "date": "2024-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/tromso-ndvi-2024-07.png",
+    "date": "2024-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/tromso-ndvi-2024-08.png",
+    "date": "2024-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/tromso-ndvi-2024-09.png",
+    "date": "2024-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20240915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/tromso-ndvi-2024-10.png",
+    "date": "2024-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/tromso-ndvi-2024-11.png",
+    "date": "2024-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/tromso-ndvi-2024-12.png",
+    "date": "2024-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20241215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "alice-springs-ndvi-2025": {
+   "0": {
+    "file": "data/maps/alice-springs-ndvi-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/alice-springs-ndvi-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/alice-springs-ndvi-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/alice-springs-ndvi-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/alice-springs-ndvi-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/alice-springs-ndvi-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/alice-springs-ndvi-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/alice-springs-ndvi-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/alice-springs-ndvi-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/alice-springs-ndvi-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/alice-springs-ndvi-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "11": {
+    "file": "data/maps/alice-springs-ndvi-2025-12.png",
+    "date": "2025-12-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251215.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "tromso-ndvi-2025": {
+   "0": {
+    "file": "data/maps/tromso-ndvi-2025-01.png",
+    "date": "2025-01-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250115.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "1": {
+    "file": "data/maps/tromso-ndvi-2025-02.png",
+    "date": "2025-02-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250215.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "2": {
+    "file": "data/maps/tromso-ndvi-2025-03.png",
+    "date": "2025-03-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250315.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "3": {
+    "file": "data/maps/tromso-ndvi-2025-04.png",
+    "date": "2025-04-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250415.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "4": {
+    "file": "data/maps/tromso-ndvi-2025-05.png",
+    "date": "2025-05-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250515.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "5": {
+    "file": "data/maps/tromso-ndvi-2025-06.png",
+    "date": "2025-06-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250615.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "6": {
+    "file": "data/maps/tromso-ndvi-2025-07.png",
+    "date": "2025-07-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250715.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "7": {
+    "file": "data/maps/tromso-ndvi-2025-08.png",
+    "date": "2025-08-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250815.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "8": {
+    "file": "data/maps/tromso-ndvi-2025-09.png",
+    "date": "2025-09-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20250915.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "9": {
+    "file": "data/maps/tromso-ndvi-2025-10.png",
+    "date": "2025-10-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251015.ndvi_w_snow.oceanblue.annotated.png"
+   },
+   "10": {
+    "file": "data/maps/tromso-ndvi-2025-11.png",
+    "date": "2025-11-15",
+    "source": "NASA SVS 5544",
+    "url": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/SNPP_VIIRS.20251115.ndvi_w_snow.oceanblue.annotated.png"
+   }
+  },
+  "tromso-snow-2025": {
+   "1": {
+    "file": "data/maps/tromso-snow-2025-02.png",
+    "date": "2025-02",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-02-01"
+   },
+   "2": {
+    "file": "data/maps/tromso-snow-2025-03.png",
+    "date": "2025-03",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-03-01"
+   },
+   "3": {
+    "file": "data/maps/tromso-snow-2025-04.png",
+    "date": "2025-04",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-04-01"
+   },
+   "4": {
+    "file": "data/maps/tromso-snow-2025-05.png",
+    "date": "2025-05",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-05-01"
+   },
+   "5": {
+    "file": "data/maps/tromso-snow-2025-06.png",
+    "date": "2025-06",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-06-01"
+   },
+   "6": {
+    "file": "data/maps/tromso-snow-2025-07.png",
+    "date": "2025-07",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-07-01"
+   },
+   "7": {
+    "file": "data/maps/tromso-snow-2025-08.png",
+    "date": "2025-08",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-08-01"
+   },
+   "8": {
+    "file": "data/maps/tromso-snow-2025-09.png",
+    "date": "2025-09",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-09-01"
+   },
+   "9": {
+    "file": "data/maps/tromso-snow-2025-10.png",
+    "date": "2025-10",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-10-01"
+   },
+   "10": {
+    "file": "data/maps/tromso-snow-2025-11.png",
+    "date": "2025-11",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2025-11-01"
+   }
+  },
+  "tromso-snow-2026": {
+   "1": {
+    "file": "data/maps/tromso-snow-2026-02.png",
+    "date": "2026-02",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-02-01"
+   },
+   "2": {
+    "file": "data/maps/tromso-snow-2026-03.png",
+    "date": "2026-03",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-03-01"
+   },
+   "3": {
+    "file": "data/maps/tromso-snow-2026-04.png",
+    "date": "2026-04",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-04-01"
+   },
+   "4": {
+    "file": "data/maps/tromso-snow-2026-05.png",
+    "date": "2026-05",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-05-01"
+   },
+   "5": {
+    "file": "data/maps/tromso-snow-2026-06.png",
+    "date": "2026-06",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-06-01"
+   },
+   "6": {
+    "file": "data/maps/tromso-snow-2026-07.png",
+    "date": "2026-07",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-07-01"
+   },
+   "7": {
+    "file": "data/maps/tromso-snow-2026-08.png",
+    "date": "2026-08",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-08-01"
+   },
+   "8": {
+    "file": "data/maps/tromso-snow-2026-09.png",
+    "date": "2026-09",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-09-01"
+   },
+   "9": {
+    "file": "data/maps/tromso-snow-2026-10.png",
+    "date": "2026-10",
+    "source": "NASA MODIS Terra (GIBS)",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct&CRS=EPSG%3A4326&BBOX=64.10%2C8.20%2C75.30%2C29.80&WIDTH=216&HEIGHT=112&FORMAT=image%2Fpng&TRANSPARENT=TRUE&TIME=2026-10-01"
+   }
+  }
+ }
+}

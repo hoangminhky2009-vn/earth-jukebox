@@ -58,6 +58,8 @@ let position = 0;    // bar to start from when play() is called
 let nextBar = 0;
 let nextTime = 0;
 let pump = null;
+let endFn = () => {};   // called when the record has played its 12 months
+let endScheduled = false;
 const live = new Set();   // { src, t } scheduled sources of this session
 const tickTimers = new Set();
 const barStarts = [];     // [bar, time] of scheduled bars, newest last
@@ -771,10 +773,14 @@ function scheduleBar(b, t0, from = -Infinity) {
 }
 
 function fill() {
-  while (nextTime < ac.currentTime + AHEAD) {
+  while (!endScheduled && nextTime < ac.currentTime + AHEAD) {
     scheduleBar(nextBar, nextTime);
-    nextBar = (nextBar + 1) % 12;   // loops like the stub
     nextTime += BAR;
+    if (nextBar === 11) {   // December was the last bar: the record ends (no loop), a moment after its last note
+      endScheduled = true; const at = nextTime;
+      const id = setTimeout(() => { tickTimers.delete(id); if (playing) endFn(); }, Math.max(0, (at - ac.currentTime) * 1000 + 400));
+      tickTimers.add(id);
+    } else nextBar += 1;
   }
 }
 
@@ -844,7 +850,7 @@ function rebuild() {
 
 function begin(fromBar) {
   ensure();
-  playing = true;
+  playing = true; endScheduled = false;
   nextBar = fromBar;
   nextTime = ac.currentTime + 0.06;
   if (mode === 'music' && styleOf(place) === 'south-asia') startDrone(session.beat ?? session, 48 + TRANSPOSE['south-asia']);
@@ -927,3 +933,6 @@ export function setVolume(v) {
 }
 
 export function onTick(fn) { tickFn = typeof fn === 'function' ? fn : () => {}; }
+
+/** Called once when a record has played to the end of December. */
+export function onEnd(fn) { endFn = typeof fn === 'function' ? fn : () => {}; }

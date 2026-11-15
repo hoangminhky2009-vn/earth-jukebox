@@ -10,6 +10,7 @@ import { createScene } from './scene.js';
 import * as foley from './foley.js';
 import { initRoll } from './roll.js';
 import { initSeasonal } from './seasonal-ui.js';
+import { bindRecordEnd } from './record-end.js';
 
 // Real NASA-derived discs; add ?sample to the address to load the hand-made sample (it has a desert and a snow place).
 const DATA_URL = new URLSearchParams(location.search).has('sample') ? 'data/discs.sample.json' : 'data/discs.json';
@@ -107,6 +108,8 @@ async function main() {
   store.on('mode', ({ mode }) => audio.setMode(mode));
   store.on('settings', (s) => audio.setVolume(s.volume));
   audio.onTick((bar) => store.tick(bar));
+  // End of the year: stop, lift the needle and return the disc unless another action starts.
+  bindRecordEnd(store, audio, { announce });
 
   // 1-second preview: only when nothing is loaded, so it never clobbers the user's disc.
   let previewTimer = null;

@@ -209,6 +209,22 @@ export function createScene(store, opts) {
     im.src = new URL(`../art/places/${pl.id}.png`, import.meta.url).href;
   }
   const shownCards = new Set();   // places whose card was already shown in this visit
+  /* ---------- map screen: while a disc is on the deck the tray becomes a screen showing the real NASA image of the
+     month playing, cut around the place (tools/make_month_maps.py), with the place marked; it crossfades month to month ---------- */
+  const MAP = { x: 24, y: 118, w: 216, h: 112 };
+  let mapIdx = null; const mapImgs = new Map(); let mapCur = null; let mapPrev = null; let mapFade = 1; let mapOnNow = false;
+  fetch(new URL('../data/maps/index.json', import.meta.url)).then((r) => (r.ok ? r.json() : null)).then((j) => { mapIdx = j; }).catch(() => {});
+  const mapEntry = (d, m) => mapIdx?.discs?.[d?.id]?.[m] ?? null;
+  function mapImg(entry) {
+    if (!entry) return null;
+    let im = mapImgs.get(entry.file);
+    if (!im) { im = new Image(); im.src = new URL(`../${entry.file}`, import.meta.url).href; mapImgs.set(entry.file, im); }
+    return im;
+  }
+  const preloadMaps = (d) => { for (let m = 0; m < 12; m++) mapImg(mapEntry(d, m)); };
+  const mapEl = document.createElement('div'); mapEl.className = 'map-label'; mapEl.setAttribute('aria-hidden', 'true'); mapEl.hidden = true;
+  cv.parentElement.append(mapEl);
+  const MONTH_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   let card = null;
   const cardEl = document.createElement('div'); cardEl.className = 'story-card'; cardEl.setAttribute('aria-hidden', 'true');
   cardEl.hidden = true; cv.parentElement.append(cardEl);
@@ -435,6 +451,7 @@ export function createScene(store, opts) {
   function lift() { if (armA > 0.9) foley.play('lift'); }
   function halt() { playing = false; spinning = false; }
   store.on('disc:load', ({ disc }) => {
+    preloadMaps(disc);
     const pg = pages.findIndex((pp) => pp.slots.some((x) => x.discIds.includes(disc.id)));
     if (pg >= 0 && pg !== page) { page = pg; setShelf(); }
     lift(); halt(); touched = false; flipT = 0;
@@ -464,6 +481,7 @@ export function createScene(store, opts) {
   store.on('seek', () => { touched = true; });
   store.on('tick', () => { if (spinning) onMonth(); });
   store.on('flip', (p) => {
+    if (p.changed) preloadMaps(p.disc);
     if (!p.changed) { flipT = RM() ? 0 : 6; return; }
     touched = false; foley.play('flip'); flipT = RM() ? 0 : 12;
     setTimeout(() => { shownId = p.disc.id; setWeather(look(p.disc).weather); syncHits(); }, RM() ? 0 : 200);
@@ -737,6 +755,45 @@ export function createScene(store, opts) {
     }
   }
 
+  function drawMapScreen(d, rm) {
+    const on = Boolean(d) && Boolean(shownId) && !fly;
+    if (on !== mapOnNow) {   // the slots go away under the screen (and come back with the shelf)
+      mapOnNow = on; hits.classList.toggle('map-on', on); mapEl.hidden = !on;
+      if (on) { mapCur = null; mapPrev = null; mapFade = 1; }
+    }
+    if (!on) return;
+    const m = monthNow(); const e = mapEntry(d, m); const im = mapImg(e);
+    const key = e ? e.file : `none-${m}`;
+    if (key !== mapCur?.key) { mapPrev = mapCur; mapCur = { key, im, e }; mapFade = rm || !mapPrev ? 1 : 0; }
+    // bezel
+    P('#1b120f', 20, 114, 224, 136); P('#0b0f14', 22, 116, 220, 132);
+    P('#2a3440', MAP.x - 1, MAP.y - 1, MAP.w + 2, 1); P('#2a3440', MAP.x - 1, MAP.y + MAP.h, MAP.w + 2, 1);
+    const paint = (c, a) => {
+      if (!c) return;
+      ctx.globalAlpha = a;
+      if (c.im && c.im.complete && c.im.naturalWidth) ctx.drawImage(c.im, MAP.x, MAP.y, MAP.w, MAP.h);
+      else {   // no NASA image this month: static
+        for (let y = 0; y < MAP.h; y += 2) for (let x = 0; x < MAP.w; x += 2) if (Math.random() < 0.35) P(Math.random() < 0.5 ? '#3a4752' : '#56677a', MAP.x + x, MAP.y + y, 2, 2);
+      }
+      ctx.globalAlpha = 1;
+    };
+    paint(mapPrev, 1); paint(mapCur, mapFade);
+    // CRT scanlines, faint
+    ctx.globalAlpha = 0.14; for (let y = MAP.y; y < MAP.y + MAP.h; y += 2) P('#000000', MAP.x, y, MAP.w, 1); ctx.globalAlpha = 1;
+    // the place: a crosshair in the middle and a ring that pulses
+    const cx = MAP.x + (MAP.w >> 1); const cy = MAP.y + (MAP.h >> 1); const blink = rm || Math.floor(performance.now() / 400) % 2;
+    for (const [dx, dy] of [[-7, 0], [4, 0], [0, -7], [0, 4]]) P('#1b120f', cx + dx - (dy ? 1 : 0), cy + dy - (dx ? 1 : 0), dx ? 4 : 3, dy ? 4 : 3);
+    for (const [dx, dy] of [[-6, 0], [4, 0], [0, -6], [0, 4]]) P('#f6d27a', cx + dx, cy + dy, dx ? 3 : 1, dy ? 3 : 1);
+    if (blink) P('#ffffff', cx, cy, 1, 1);
+    if (!rm) circle(cx, cy, 6 + (performance.now() / 120) % 8, '#f6d27a', 0.5);
+    // label strip (text is DOM)
+    P('#120b0a', 22, MAP.y + MAP.h + 1, 220, 248 - (MAP.y + MAP.h + 1));
+    const place = placeOf(d); const name = shortName(place).toUpperCase();
+    const when = e ? (e.date.length > 7 ? `${Number(e.date.slice(8, 10))} ${MONTH_ABBR[m]} ${e.date.slice(0, 4)}` : `${MONTH_ABBR[m]} ${e.date.slice(0, 4)}`) : `${MONTH_ABBR[m]} ${d.year}`;
+    const txt = e ? `${name} · ${when} · ${e.source}` : `${name} · ${when} · NO NASA IMAGE THIS MONTH`;
+    if (mapEl.textContent !== txt) { mapEl.textContent = txt; pos(mapEl, 24, MAP.y + MAP.h + 3, 216, 12); }
+  }
+
   /* ---------- main draw ---------- */
   function draw() {
     const rm = RM(); const d = loadedDisc();
@@ -777,6 +834,7 @@ export function createScene(store, opts) {
       if (cond === 'skips') P('#1b120f', sl.x + 6, sl.y + 6, 2, 2);
     });
     // (the story card is painted at the very end of draw())
+    drawMapScreen(d, rm);
     // disc on the platter (or placing: it appears just above the platter, then snaps down)
     if (fly) {
       const t = fly.t; const appear = Math.min(1, t / 0.3); const fall = t < 0.62 ? 0 : (t - 0.62) / 0.38; const e = fall * fall * fall;
@@ -851,6 +909,7 @@ export function createScene(store, opts) {
     rings = rings.map((r) => ({ r: r.r + dt * 16 })).filter((r) => r.r < 30);
     { const d = loadedDisc(); const f = d && spinning ? gaugeFill(d.dataset, d.levels[monthNow()]) : 0; const target = f ?? 0;
       gaugeA += (target - gaugeA) * (rm ? 1 : Math.min(1, dt * 3)); }
+    if (mapFade < 1) mapFade = Math.min(1, mapFade + dt / 0.6);
     if (card && !stepCard(card, dt, { rm, playing })) { card = null; cardEl.hidden = true; }
     draw();
   }, 33);
@@ -861,7 +920,7 @@ export function createScene(store, opts) {
   function boxOf(key) {
     const el = { play: btnEls.play, stop: btnEls.stop, flip: btnEls.flip, sci: btnEls.sci, eject: btnEls.eject, page: pageBtn,
       details: document.getElementById('details-btn'), settings: document.getElementById('settings-btn') }[key];
-    if (el) { const r = el.getBoundingClientRect(); return r.width ? r : null; }
+    if (el) { const r = el.getBoundingClientRect(); return r.width && getComputedStyle(el).visibility !== 'hidden' ? r : null; }
     const a = AREAS[key]; if (!a) return null;
     const c = cv.getBoundingClientRect();
     return { left: c.left + a.x / W * c.width, top: c.top + a.y / H * c.height, width: a.w / W * c.width, height: a.h / H * c.height };
