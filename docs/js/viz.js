@@ -199,7 +199,7 @@ export const newCard = (place) => ({ id: place.id, a: 0, t: 0, fading: false });
 
 /**
  * Advance a card by dt seconds.
- * - appears over 0.3 s and starts fading the moment it is fully there (no hold), so it is gone after about 6 s
+ * - appears over 0.3 s and starts fading the moment it is fully there (no hold), so it is gone after about 4 s
  * - the moment Play is pressed it finishes fading within 1.2 s, about when the needle lands and the record turns
  * - reduced motion: no fading at all, the card is shown for 2.5 s and cut away
  * @returns {boolean} true while the card should still be drawn
@@ -209,6 +209,6 @@ export function stepCard(card, dt, { rm = false, playing = false } = {}) {
   if (rm) { card.a = card.t < 2.5 ? 1 : 0; return card.a > 0; }
   if (!card.fading && card.a >= 1) card.fading = true;
   if (!card.fading) card.a = Math.min(1, card.a + dt / 0.3);
-  else card.a = Math.max(0, card.a - dt / (playing ? 1.2 : 5.7));
+  else card.a = Math.max(0, card.a - dt / (playing ? 1.2 : 3.7));
   return !(card.fading && card.a <= 0.01);
 }

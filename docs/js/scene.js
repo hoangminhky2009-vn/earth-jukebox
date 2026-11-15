@@ -192,14 +192,14 @@ export function createScene(store, opts) {
 
   const P = (c, x, y, w = 1, h = 1, g = ctx) => { g.fillStyle = c; g.fillRect(x | 0, y | 0, w, h); };
 
-  /* ---------- story card: pixel art of the place, shown every time a disc is loaded ---------- */
+  /* ---------- story card: pixel art of the place, shown the first time a place's disc is loaded ---------- */
   const cardImgs = new Map();   // place id -> Image (only places whose picture exists in docs/art/places/)
   for (const pl of store.state.places) {
     const im = new Image();
     im.onload = () => cardImgs.set(pl.id, im);
     im.src = new URL(`../art/places/${pl.id}.png`, import.meta.url).href;
   }
-  const announced = new Set();   // places whose story was already read out to screen readers
+  const shownCards = new Set();   // places whose card was already shown in this visit
   let card = null;
   const cardEl = document.createElement('div'); cardEl.className = 'story-card'; cardEl.setAttribute('aria-hidden', 'true');
   cardEl.hidden = true; cv.parentElement.append(cardEl);
@@ -419,13 +419,14 @@ export function createScene(store, opts) {
     lift(); halt(); touched = false; flipT = 0;
     card = null; cardEl.hidden = true;
     const cardPlace = placeOf(disc);
-    if (cardPlace && cardImgs.has(cardPlace.id)) {
+    if (cardPlace && cardImgs.has(cardPlace.id) && !shownCards.has(cardPlace.id)) {
+      shownCards.add(cardPlace.id);
       card = newCard(cardPlace);
       const nm = document.createElement('b'); nm.textContent = shortName(cardPlace).toUpperCase();
       cardEl.replaceChildren(nm, document.createTextNode(storyText(cardPlace)));
       pos(cardEl, CARD.x + 8, CARD.y + CARD.h - 40, CARD.w - 16, 36);
       cardEl.hidden = false; cardOpacity = -1;
-      if (opts.announce && !announced.has(cardPlace.id)) { announced.add(cardPlace.id); setTimeout(() => opts.announce(`About ${shortName(cardPlace)}: ${storyText(cardPlace)}`), 1400); }
+      if (opts.announce) { setTimeout(() => opts.announce(`About ${shortName(cardPlace)}: ${storyText(cardPlace)}`), 1400); }
     }
     const idx = slotOfDisc(disc.id); const s = SLOT(Math.max(0, idx));
     const from = pendingFrom ?? { x: s.x + s.w / 2, y: s.y + L.cy };

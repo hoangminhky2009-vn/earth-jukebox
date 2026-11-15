@@ -145,7 +145,7 @@ test('story card: the draft marker is dropped from the story', async () => {
   assert.equal(storyText({}), '');
 });
 
-test('story card: fades in, then starts fading at once; gone after about 6 s, or within 1.2 s of Play', async () => {
+test('story card: fades in, then starts fading at once; gone after about 4 s, or within 1.2 s of Play', async () => {
   const { newCard, stepCard } = await import('./viz.js');
   const c = newCard({ id: 'dhaka' });
   for (let i = 0; i < 6; i++) stepCard(c, 0.05);           // 0.3 s: fully in
@@ -154,10 +154,10 @@ test('story card: fades in, then starts fading at once; gone after about 6 s, or
   assert.ok(c.a < 1, 'starts fading right after it appears');
   let n = 0; let prev = c.a;
   while (stepCard(c, 0.05) && n < 400) { assert.ok(c.a <= prev + 1e-9, 'opacity never rises'); prev = c.a; n++; }
-  assert.ok(n > 100 && n < 130, `gone after about 6 s (${n} steps)`);
+  assert.ok(n > 65 && n < 85, `gone after about 4 s (${n} steps)`);
   const p = newCard({ id: 'dhaka' });
   for (let i = 0; i < 20; i++) stepCard(p, 0.05);          // 1 s in, still quite visible
-  assert.ok(p.a > 0.7);
+  assert.ok(p.a > 0.6);
   let m = 0; while (stepCard(p, 0.05, { playing: true }) && m < 200) m++;
   assert.ok(m <= 24, `Play finishes the fade within 1.2 s (${m} steps)`);
 });

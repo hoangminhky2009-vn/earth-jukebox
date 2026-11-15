@@ -37,7 +37,7 @@ Everything we used, including open-source and free resources (required by the su
   - Sylhet: "Boating on Tanguar Haor in Afternoon (28925051087)" by Minhas Kamal, CC0. https://commons.wikimedia.org/wiki/File:Boating_on_Tanguar_Haor_in_Afternoon_(28925051087).jpg
   - Tonle Sap: "Tonle Sap Lake - Tonle1112" by lumoplank, CC0. https://commons.wikimedia.org/wiki/File:Tonle_Sap_Lake_-_Tonle1112.jpg
   - Hue (Lap An lagoon): "Laguna Lap An, Provincia de Thua Thien-Hue, Vietnam" by Edgardo W. Olivera, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Laguna_Lap_An,_Provincia_de_Thua_Thien-Hue,_Vietnam.jpg
-  - Amazon (inside the rainforest, Tena, Ecuador): "Amazon Rainforest in Tena, Ecuador" by Jay, CC BY 2.0. Taken in the Ecuadorian Amazon, the same rainforest. https://commons.wikimedia.org/wiki/File:Amazon_Rainforest_in_Tena,_Ecuador.jpg
+  - Amazon (rainforest near Puerto Maldonado, Peru): "Amazon rainforest near Puerto Maldonado" by Ivan Mlinaric, CC BY 2.0. Taken in the Peruvian Amazon, the same rainforest. https://commons.wikimedia.org/wiki/File:Amazon_rainforest_near_Puerto_Maldonado.jpg
   - Alice Springs: "Inside Simpson's Gap (34634250796)" by Paul Balfe, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Inside_Simpson%27s_Gap_(34634250796).jpg
   - Tromso (Lyngen Alps): "Lyngen Alps, Norway (Unsplash)" by Cem Sagisman cems77, CC0. https://commons.wikimedia.org/wiki/File:Lyngen_Alps,_Norway_(Unsplash).jpg
 - [Only CC0 / CC-BY / MIT / Apache-2.0 / OFL. Add each further font, sound or image here with its link and licence.]
