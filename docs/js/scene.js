@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -192,6 +192,19 @@ export function createScene(store, opts) {
 
   const P = (c, x, y, w = 1, h = 1, g = ctx) => { g.fillStyle = c; g.fillRect(x | 0, y | 0, w, h); };
 
+  /* ---------- story card: pixel art of the place, shown the first time its disc is loaded ---------- */
+  const cardImgs = new Map();   // place id -> Image (only places whose picture exists in docs/art/places/)
+  for (const pl of store.state.places) {
+    const im = new Image();
+    im.onload = () => cardImgs.set(pl.id, im);
+    im.src = new URL(`../art/places/${pl.id}.png`, import.meta.url).href;
+  }
+  const shownCards = new Set();   // places whose card was already shown in this visit
+  let card = null;
+  const cardEl = document.createElement('div'); cardEl.className = 'story-card'; cardEl.setAttribute('aria-hidden', 'true');
+  cardEl.hidden = true; cv.parentElement.append(cardEl);
+  let cardOpacity = -1;
+  const CARD = { x: 24, y: 13, w: 432, h: 244 };
   /* ---------- data ---------- */
   // The tray has pages (rivers and monsoon / forest, desert and ice); one layout for all pages so slots never move.
   const pages = shelfPages(shelfSlots(store.state.discs, store.state.places), store.state.places);
@@ -404,6 +417,17 @@ export function createScene(store, opts) {
     const pg = pages.findIndex((pp) => pp.slots.some((x) => x.discIds.includes(disc.id)));
     if (pg >= 0 && pg !== page) { page = pg; setShelf(); }
     lift(); halt(); touched = false; flipT = 0;
+    card = null; cardEl.hidden = true;
+    const cardPlace = placeOf(disc);
+    if (cardPlace && cardImgs.has(cardPlace.id) && !shownCards.has(cardPlace.id)) {
+      shownCards.add(cardPlace.id);
+      card = newCard(cardPlace);
+      const nm = document.createElement('b'); nm.textContent = shortName(cardPlace).toUpperCase();
+      cardEl.replaceChildren(nm, document.createTextNode(storyText(cardPlace)));
+      pos(cardEl, CARD.x + 8, CARD.y + CARD.h - 40, CARD.w - 16, 36);
+      cardEl.hidden = false; cardOpacity = -1;
+      if (opts.announce) setTimeout(() => opts.announce(`About ${shortName(cardPlace)}: ${storyText(cardPlace)}`), 1400);
+    }
     const idx = slotOfDisc(disc.id); const s = SLOT(Math.max(0, idx));
     const from = pendingFrom ?? { x: s.x + s.w / 2, y: s.y + L.cy };
     pendingFrom = null;
@@ -590,6 +614,7 @@ export function createScene(store, opts) {
       if (cond === 'scratched') P('#1b120f', sl.x + 4, sl.y + 7, 4, 1);
       if (cond === 'skips') P('#1b120f', sl.x + 6, sl.y + 6, 2, 2);
     });
+    // (the story card is painted at the very end of draw())
     // disc on the platter (or placing: it appears just above the platter, then snaps down)
     if (fly) {
       const t = fly.t; const appear = Math.min(1, t / 0.3); const fall = t < 0.62 ? 0 : (t - 0.62) / 0.38; const e = fall * fall * fall;
@@ -619,6 +644,20 @@ export function createScene(store, opts) {
     // a dragged disc on top of everything
     if (drag && drag.on) drawDiscAt(getArt(drag.id, 'big'), drag.x, drag.y, 26, 0);
     if (!rm) drawParticles();
+    // story card: the place's pixel art over most of the picture, with a caption strip; it fades as the record turns
+    const cardOn = Boolean(card) && card.a > 0.01;
+    if (cardOn) {
+      const im = cardImgs.get(card.id);
+      ctx.globalAlpha = card.a;
+      P('#1b120f', CARD.x - 3, CARD.y - 3, CARD.w + 6, CARD.h + 6);
+      P('#e8d9b5', CARD.x - 2, CARD.y - 2, CARD.w + 4, CARD.h + 4);
+      P('#1b120f', CARD.x - 1, CARD.y - 1, CARD.w + 2, CARD.h + 2);
+      ctx.drawImage(im, CARD.x, CARD.y, CARD.w, CARD.h);
+      ctx.globalAlpha = card.a * 0.78; P('#120b0a', CARD.x, CARD.y + CARD.h - 44, CARD.w, 44);
+      ctx.globalAlpha = 1;
+    }
+    const op = cardOn ? Math.round(card.a * 100) / 100 : 0;
+    if (op !== cardOpacity) { cardOpacity = op; cardEl.style.opacity = String(op); screen.classList.toggle('card-on', cardOn); }
     // LCD
     let want;
     if (!d) want = 'INSERT A DISC';
@@ -647,6 +686,7 @@ export function createScene(store, opts) {
     pingR = (pingR + dt * 10) % 14; ringT += dt;
     if (playing && spinning && ringT > 1.1) { ringT = 0; rings.push({ r: 0 }); }
     rings = rings.map((r) => ({ r: r.r + dt * 16 })).filter((r) => r.r < 30);
+    if (card && !stepCard(card, dt, { rm, spinning, speed })) { card = null; cardEl.hidden = true; }
     draw();
   }, 33);
 

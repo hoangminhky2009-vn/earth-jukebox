@@ -137,3 +137,41 @@ test('tray pages: main page = river pair, forest pair, desert greenness over ice
   assert.deepEqual(rivers[0].slots.map((s) => (s ? s.placeId : null)), ['dhaka', 'dhaka', null, null, null, null]);
   assert.equal(rivers[1].slots.length, 2);
 });
+
+test('story card: the draft marker is dropped from the story', async () => {
+  const { storyText } = await import('./viz.js');
+  assert.equal(storyText({ story: 'Draft intro (to be reviewed by Bormey): explore rainfall near Manaus.' }), 'Explore rainfall near Manaus.');
+  assert.equal(storyText({ story: 'Explore which months were wetter.' }), 'Explore which months were wetter.');
+  assert.equal(storyText({}), '');
+});
+
+test('story card: fades in, holds while waiting, fades out as the record speeds up, gone at speed', async () => {
+  const { newCard, stepCard } = await import('./viz.js');
+  const c = newCard({ id: 'dhaka' });
+  for (let i = 0; i < 20; i++) stepCard(c, 0.05);          // 1 s on the deck, not playing
+  assert.equal(c.a, 1);
+  assert.equal(c.fading, false);
+  let alive = true; let prev = 1;
+  for (let i = 0; i < 80 && alive; i++) {                  // the platter eases up to 80 deg/s
+    const speed = Math.min(80, i * 4);
+    alive = stepCard(c, 0.05, { spinning: true, speed });
+    assert.ok(c.a <= prev + 1e-9, 'opacity never rises while the record speeds up');
+    prev = c.a;
+  }
+  assert.equal(alive, false);
+  assert.ok(c.a <= 0.01);
+});
+
+test('story card: still fades after 7 s when nobody presses Play; reduced motion cuts after 3 s with no fade', async () => {
+  const { newCard, stepCard } = await import('./viz.js');
+  const a = newCard({ id: 'hue' });
+  for (let i = 0; i < 140; i++) stepCard(a, 0.05);        // 7 s
+  assert.equal(a.fading, false);
+  let n = 0; while (stepCard(a, 0.05) && n < 400) n++;
+  assert.ok(n > 30 && n < 100, `faded over about 3 s (${n} steps)`);
+  const r = newCard({ id: 'hue' });
+  assert.equal(stepCard(r, 1, { rm: true }), true);
+  assert.equal(r.a, 1);                                     // shown fully, no fade in
+  assert.equal(stepCard(r, 2.5, { rm: true }), false);
+  assert.equal(r.a, 0);
+});

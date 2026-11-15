@@ -80,3 +80,6 @@
 .high-contrast .roll-bed { fill: #fff; opacity: 0.6; }
 .page-btn { writing-mode: vertical-rl; font-size: calc(var(--s, 1) * 5px); letter-spacing: 0.5px; color: #f6e7c4; background: transparent; border: 0; padding: 0; text-align: center; line-height: 1; }
 .page-btn:hover { color: #fff; }
+.story-card { position: absolute; pointer-events: none; z-index: 3; color: #f6e7c4; font-family: var(--font-pixel); font-size: calc(var(--s, 1) * 5.5px); line-height: 1.4; letter-spacing: 0.3px; text-shadow: calc(var(--s, 1) * 0.5px) calc(var(--s, 1) * 0.5px) 0 #120b0a; overflow: hidden; }
+.story-card b { display: block; color: var(--accent); font-size: calc(var(--s, 1) * 7px); letter-spacing: 0.8px; }
+.screen.card-on .logo, .screen.card-on .coords, .screen.card-on .lcd, .screen.card-on .hit .name, .screen.card-on .led-years, .screen.card-on .page-btn { opacity: 0; }   /* text over the picture is hidden while the card shows; the buttons stay usable */

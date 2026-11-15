@@ -185,3 +185,31 @@ export function lcdText(disc, placeName, month, datasets) {
   const glyph = disc.dataset === 'rain' ? (level < 0 ? '▼ ' : level > 0 ? '▲ ' : '• ') : '';
   return `${name} // ${MONTH_ABBR[month]} ${glyph}${lcdLevel(disc, level, datasets?.[disc.dataset])}`;
 }
+
+// ------------------------------------------------------------------ story card (pixel art of the place, first load)
+
+/** The place's story for the card: the draft marker is dropped and the first letter is capitalised. */
+export function storyText(place) {
+  const t = String(place?.story ?? '').replace(/^Draft intro[^:]*:\s*/i, '').trim();
+  return t ? t[0].toUpperCase() + t.slice(1) : '';
+}
+
+/** A new card for a place: it fades in, then fades away as the record starts to turn. */
+export const newCard = (place) => ({ id: place.id, a: 0, t: 0, fading: false });
+
+/**
+ * Advance a card by dt seconds. `speed` is the platter speed in degrees a second (80 when fully up to speed).
+ * - appears over 0.5 s and stays while the disc waits on the deck
+ * - fades as the platter speeds up: opacity follows 1 - speed / 70, so it is gone when the record is at speed
+ * - if nobody presses Play it still fades after 7 s (over 3 s), so it never blocks the console for long
+ * - reduced motion: no fading at all, the card is shown for 3 s and cut away
+ * @returns {boolean} true while the card should still be drawn
+ */
+export function stepCard(card, dt, { rm = false, spinning = false, speed = 0 } = {}) {
+  card.t += dt;
+  if (rm) { card.a = card.t < 3 ? 1 : 0; return card.a > 0; }
+  if (!card.fading && (spinning || card.t > 7)) card.fading = true;
+  if (!card.fading) card.a = Math.min(1, card.a + dt / 0.5);
+  else card.a = Math.max(0, Math.min(card.a, spinning ? 1 - speed / 70 : card.a - dt / 3));
+  return !(card.fading && card.a <= 0.01);
+}
