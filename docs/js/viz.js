@@ -68,7 +68,7 @@ export const PAGE_TITLES = { main: 'River, forest, desert and ice', more: 'More 
 /**
  * Tray pages. The main page has six fixed spots, read as columns (top = rain, bottom = greenness):
  * the featured river place (rain, greenness), a forest place (rain, greenness), then a desert place (greenness)
- * above a snow/ice place (snow cover, or greenness when it has no snow disc): in deserts the rain departure is always about zero, while greenness moves. A spot with no disc in the data stays empty. Every other disc goes to "More places"
+ * above a snow/ice place (greenness; snow cover only when it has no greenness disc): in deserts the rain departure is always about zero, while greenness moves. A spot with no disc in the data stays empty. Every other disc goes to "More places"
  * pages, 6 a page, so nothing is dropped.
  */
 export function shelfPages(slots, places, per = 6) {
@@ -79,7 +79,7 @@ export function shelfPages(slots, places, per = 6) {
   const want = [
     [(id) => id === riverId, 'rain'], [(id) => id === riverId, 'ndvi'],
     [(id) => art(id) === 'forest', 'rain'], [(id) => art(id) === 'forest', 'ndvi'],
-    [(id) => art(id) === 'desert', 'ndvi'], [(id) => art(id) === 'ice', ['snow', 'ndvi']],
+    [(id) => art(id) === 'desert', 'ndvi'], [(id) => art(id) === 'ice', ['ndvi', 'snow']],
   ];
   const main = want.map(([pick, ds]) => [ds].flat().map((d) => slots.find((s) => pick(s.placeId) && s.dataset === d)).find(Boolean) ?? null);
   const rest = slots.filter((s) => !main.includes(s));
