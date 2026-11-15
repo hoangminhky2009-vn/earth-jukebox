@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -137,6 +137,7 @@ const BTN = { play: { x: 412, y: 118, w: 46, h: 40 }, stop: { x: 412, y: 162, w:
 const LCD = { x: 270, y: 240, w: 136, h: 10 };
 const ANT = { x: 462, y: 58 };
 const LEDS = { x: 411, pitch: 4, rowA: 225, rowB: 232 };       // 12 LEDs per row, 3 px wide
+const GAUGE = { x: 260, y: 120, w: 6, h: 118 };   // the glass tube on the left of the deck: a rain gauge (or sap gauge for greenness)
 const LED_BOX = { x: 409, y: 222, w: 50, h: 24 };               // the accessible group over the LED rows and their year labels
 const MAP_Y = 12; const MAP_H = ROOF - 20;
 const toMap = (lat, lon) => [Math.round((lon + 180) / 360 * W), Math.round(MAP_Y + (78 - lat) / 140 * MAP_H)];
@@ -299,7 +300,8 @@ export function createScene(store, opts) {
     p('#1b120f', LCD.x - 2, LCD.y - 2, LCD.w + 4, LCD.h + 4); p('#14251a', LCD.x, LCD.y, LCD.w, LCD.h); p('#0d1912', LCD.x, LCD.y, LCD.w, 1);
     for (let i = 0; i <= 46; i++) { const x = Math.round(452 + (ANT.x - 452) * i / 46); const y = Math.round(ROOF - (ROOF - ANT.y) * i / 46); p('#1b120f', x - 1, y, 3, 1); p('#c2c9cf', x, y, 1, 1); }
     p('#1b120f', 447, ROOF - 4, 10, 4); p('#8e9aa6', 448, ROOF - 3, 8, 3);
-    for (let y = 122; y < 236; y += 3) for (let x = 262; x < 266; x += 3) p('#242c33', x, y, 2, 2);
+    p('#1b120f', GAUGE.x - 1, GAUGE.y - 1, GAUGE.w + 2, GAUGE.h + 2); p('#1a2128', GAUGE.x, GAUGE.y, GAUGE.w, GAUGE.h);
+    for (let i = 1; i < 8; i++) p(i === 4 ? '#6b7a88' : '#3a4752', GAUGE.x + GAUGE.w - (i === 4 ? 3 : 2), Math.round(GAUGE.y + GAUGE.h - GAUGE.h * i / 8), i === 4 ? 3 : 2, 1);   // scale ticks
   }
 
   /* ---------- state of the painting (the store owns the real state) ---------- */
@@ -307,6 +309,7 @@ export function createScene(store, opts) {
   let settle = 0; let fly = null; let drag = null; let flipT = 0; let pressed = null; let pressedT = 0; let glitch = 0;
   let touched = false; let hoverId = null; let pendingFrom = null;
   const snowH = new Float32Array(W); const sandH = new Float32Array(W);
+  let gaugeA = 0;   // shown fill of the gauge, eased toward the month playing
   let sandGap = 0; let leaves = []; let parts = []; let rings = []; let pingR = 0; let ringT = 0;
 
   /* ---------- accessible hit areas over the painting (built once, updated in place so focus is never lost) ---------- */
@@ -414,7 +417,9 @@ export function createScene(store, opts) {
     const pair = pairOf(d); const cmp = pair.length > 1 ? compareSides(pair[0], pair[1]) : null;
     ledYears.textContent = !d ? '' : cmp ? `A ${cmp.a.year} · B ${cmp.b.year}` : `${d.side} ${d.year}`;
     ledNote.textContent = 'Month lights, one per month';
-    ledGroup.setAttribute('aria-label', !d ? 'Month lights, empty' : cmp ? cmp.text : `Side ${d.side} ${d.year}, one light per month`);
+    const pk = d ? peakMonths(d.levels, d.dataset).map((m) => MONTH_ABBR[m]) : [];
+    const pkText = pk.length ? `. ${d.dataset === 'rain' ? 'Wettest' : 'Greenest'} ${d.year}: ${pk.join(', ')}` : '';
+    ledGroup.setAttribute('aria-label', (!d ? 'Month lights, empty' : cmp ? cmp.text : `Side ${d.side} ${d.year}, one light per month`) + pkText);
   }
 
   /* ---------- reactions to the store ---------- */
@@ -664,7 +669,36 @@ export function createScene(store, opts) {
       ctx.globalAlpha = 0.6; P('#fff6e0', x, SC.top - 1, 1, SC.bottom - SC.top + 2); ctx.globalAlpha = 1;
       P('#fff6e0', x - 1, SC.top - 2, 3, 1);
     }
-    if (now !== scNow) { scMonths.forEach((e, i) => e.classList.toggle('now', i === now)); scNow = now; }
+    const pk = peakMonths(d.levels, d.dataset); const ri = set.findIndex((x) => x.id === d.id);
+    for (const m of pk) {
+      const sx = SC.x0 + m * SC.cell + 27; const sy = rowY[ri] + 2; const tw = !RM() && Math.floor(performance.now() / 300) % 2;
+      P('#1b120f', sx - 2, sy - 2, 5, 5); P('#f6d27a', sx - 1, sy, 3, 1); P('#f6d27a', sx, sy - 1, 1, 3); P(tw ? '#ffffff' : '#fff6e0', sx, sy, 1, 1);
+    }
+    const pkKey = `${now}|${pk.join(',')}`;
+    if (pkKey !== scNow) { scMonths.forEach((e, i) => { e.classList.toggle('now', i === now); e.classList.toggle('peak', pk.includes(i)); }); scNow = pkKey; }
+  }
+
+  /* ---------- gauge: water (or sap) rises and falls with the month playing; a gold high-water mark at the year's peak ---------- */
+  function drawGauge(d) {
+    if (!d) return;
+    const rain = d.dataset === 'rain'; const bottom = GAUGE.y + GAUGE.h;
+    const hpx = Math.round(gaugeA * (GAUGE.h - 2));
+    if (hpx > 0) {
+      const top = bottom - hpx; const c = rain ? '#3f8fc4' : '#4fbf6a';
+      P(lit(c, -0.25), GAUGE.x, top, GAUGE.w, hpx); P(c, GAUGE.x + 1, top, GAUGE.w - 3, hpx);
+      const wob = RM() ? 0 : Math.floor(performance.now() / 160) % GAUGE.w;
+      P(lit(c, 0.45), GAUGE.x, top, GAUGE.w, 1); P('#ffffff', GAUGE.x + wob, top, 1, 1);   // the surface and a glint
+      if (!RM() && spinning) for (let i = 0; i < 2; i++) { const by = bottom - ((performance.now() / 40 + i * 37) % Math.max(1, hpx)); P(lit(c, 0.3), GAUGE.x + 2 + i, by, 1, 1); }   // bubbles
+    }
+    P('#9fb0c0', GAUGE.x, GAUGE.y, 1, GAUGE.h);   // glass highlight
+    const pk = peakMonths(d.levels, d.dataset);
+    if (pk.length) {
+      const y = Math.round(bottom - gaugeFill(d.dataset, d.levels[pk[0]]) * (GAUGE.h - 2));
+      const onPeak = spinning && pk.includes(monthNow());
+      const col = onPeak && Math.floor(performance.now() / 250) % 2 ? '#ffffff' : '#f6d27a';
+      P('#1b120f', GAUGE.x - 3, y - 1, GAUGE.w + 6, 3); P(col, GAUGE.x - 2, y, GAUGE.w + 4, 1);   // high-water mark
+      P(col, GAUGE.x - 4, y - 1, 1, 3); P(col, GAUGE.x - 3, y, 1, 1);                                 // little arrow on the wood side
+    }
   }
 
   /* ---------- main draw ---------- */
@@ -734,6 +768,7 @@ export function createScene(store, opts) {
     drawButton('play', playing ? 'pause' : 'play', playing, '#7fd8a8'); drawButton('stop', 'stop', false); drawButton('flip', 'flip', false);
     drawButton('sci', 'sci', store.state.mode === 'science', '#b9a3f0'); drawButton('eject', 'eject', false);
     drawLeds(d);
+    drawGauge(d);
     // a dragged disc on top of everything
     if (drag && drag.on) drawDiscAt(getArt(drag.id, 'big'), drag.x, drag.y, 26, 0);
     if (!rm) drawParticles();
@@ -779,6 +814,8 @@ export function createScene(store, opts) {
     pingR = (pingR + dt * 10) % 14; ringT += dt;
     if (playing && spinning && ringT > 1.1) { ringT = 0; rings.push({ r: 0 }); }
     rings = rings.map((r) => ({ r: r.r + dt * 16 })).filter((r) => r.r < 30);
+    { const d = loadedDisc(); const f = d && spinning ? gaugeFill(d.dataset, d.levels[monthNow()]) : 0; const target = f ?? 0;
+      gaugeA += (target - gaugeA) * (rm ? 1 : Math.min(1, dt * 3)); }
     if (card && !stepCard(card, dt, { rm, playing })) { card = null; cardEl.hidden = true; }
     draw();
   }, 33);

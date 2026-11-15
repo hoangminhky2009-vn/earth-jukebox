@@ -184,3 +184,19 @@ test('sky pictures: the picture and its size follow the level; missing months ha
   assert.equal(panelTitle([{ dataset: 'ndvi', year: 2024 }], {}), 'GREENNESS · 2024');
   assert.equal(panelTitle([], {}), '');
 });
+
+test('gauge: fills with the level (rain half full at normal); peak months are the highest, none for a flat year', async () => {
+  const { gaugeFill, peakMonths } = await import('./viz.js');
+  assert.equal(gaugeFill('rain', 0), 0.5);
+  assert.equal(gaugeFill('rain', 4), 1);
+  assert.equal(gaugeFill('rain', -4), 0);
+  assert.equal(gaugeFill('ndvi', 2), 0.5);
+  assert.equal(gaugeFill('ndvi', null), null);
+  assert.deepEqual(peakMonths([0, 1, 3, 3, -1, 0, 0, 0, 0, 0, 0, 0], 'rain'), [2, 3]);
+  assert.deepEqual(peakMonths([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'rain'), []);
+  assert.deepEqual(peakMonths([0, 0, 0, 0, 0, -1, -1, 0, 0, 0, 0, 0], 'rain'), [], 'a dry year has no wet peak');
+  assert.deepEqual(peakMonths([1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1], 'ndvi'), [], 'four months share the top: no clear peak');
+  assert.deepEqual(peakMonths([null, 1, 2, null, 1, 1, 3, 1, 1, 1, 1, 1], 'ndvi'), [6]);
+  assert.deepEqual(peakMonths(Array(12).fill(null), 'rain'), []);
+});
+

@@ -13,6 +13,7 @@
 .sc-axis { color: #9a8f7a; text-align: right; }
 .sc-axis.on { color: var(--accent); }
 .sc-month { color: #9a8f7a; text-align: center; }
+.sc-month.peak { color: var(--accent); }
 .sc-month.now { color: #fff6e0; }
 .high-contrast .sky-chart > div { color: #fff; background: #000; }
 .lcd {

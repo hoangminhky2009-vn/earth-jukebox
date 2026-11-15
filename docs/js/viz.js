@@ -241,3 +241,26 @@ export function panelTitle(discs, datasets, placeName = '') {
   return `${name ? `${name} · ` : ''}${label} · ${years}${svs ? ` · NASA SVS ${svs}` : ''}`;
 }
 
+// ------------------------------------------------------------------ gauge on the deck (rain gauge / sap gauge) and the year's peak
+
+/** How full the gauge on the deck is for a level, 0..1: rain -4..+4 (half full = normal), greenness 1..4. Missing: null. */
+export function gaugeFill(dataset, level) {
+  if (isMissing(level)) return null;
+  if (dataset === 'rain') return (Math.max(-4, Math.min(4, level)) + 4) / 8;
+  return Math.max(1, Math.min(4, level)) / 4;
+}
+
+/**
+ * The months with the year's highest level (the wettest or the greenest), to mark as the peak.
+ * None when every month with data is the same, when more than 3 months share the top (no clear peak),
+ * or for rain when even the top month is not wetter than normal.
+ */
+export function peakMonths(levels, dataset = 'ndvi') {
+  const have = levels.map((v, m) => [v, m]).filter(([v]) => !isMissing(v));
+  if (have.length === 0) return [];
+  const top = Math.max(...have.map(([v]) => v)); const low = Math.min(...have.map(([v]) => v));
+  if (top === low || (dataset === 'rain' && top <= 0)) return [];
+  const pk = have.filter(([v]) => v === top).map(([, m]) => m);
+  return pk.length > 3 ? [] : pk;
+}
+
