@@ -512,7 +512,7 @@ export function createScene(store, opts) {
         p.t += p.f; p.x += p.vx + Math.sin(p.t) * p.sw; p.y += p.vy;
         const s = surface(p.x); if (!p.near && p.y >= ROOF) continue;
         if (p.y >= s) {
-          if (s < GROUND && p.x >= X0 - 2 && p.x < X1 + 2) { const xi = p.x | 0; pileSnow(xi, 1.6); pileSnow(xi + 1, 0.6); pileSnow(xi - 1, 0.6); }
+          if (s < GROUND && p.x >= X0 - 2 && p.x < X1 + 2) { const xi = p.x | 0; pileSnow(xi, 2.6); pileSnow(xi + 1, 1); pileSnow(xi - 1, 1); }   // each flake that lands adds more (it piles faster; the fall speed is unchanged)
           continue;
         }
       } else if (p.k === 'rain') {
