@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- Written by Ky with help from Claude (SI). See AI_USE.md. -->
+<!-- Cover art for the project page, made the way Delphi's itch cover was: a screenshot of a title screen built from code (pixel
+     sprites drawn on a canvas, scanlines, ticker strips top and bottom), taken at 630 x 500 at 2x by tools/make_cover.mjs. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DeltaBeat cover</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap">
+<style>
+  :root { --u: min(100vw / 63, 100vh / 50); --gold: #f6d27a; --cream: #f4ead2; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 100vw; height: 100vh; overflow: hidden; background: #0d0b18; font-family: 'Pixelify Sans', monospace; image-rendering: pixelated; }
+  .stage { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+  /* the NASA map of Hue in November 2025, blown up and dimmed, like Delphi's blurred chart behind its title */
+  .bg { position: absolute; inset: 0; background: url('../docs/data/maps/hue-rain-2025-11.png') center / cover no-repeat; image-rendering: pixelated; filter: saturate(1.4) brightness(0.95); }
+  .tint { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(20,12,40,0.05), rgba(10,6,24,0.7) 80%), linear-gradient(180deg, rgba(40,20,80,0.35), rgba(8,40,60,0.2)); }
+  .scan { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(0,0,0,0.28) 0 calc(var(--u) * 0.1), transparent calc(var(--u) * 0.1) calc(var(--u) * 0.2)); }
+  canvas { position: absolute; image-rendering: pixelated; }
+  #top { left: 0; top: calc(var(--u) * 2.2); width: 100%; }
+  #bot { left: 0; bottom: calc(var(--u) * 6.4); width: 100%; }
+  .strip { position: absolute; left: 0; width: 100%; background: rgba(8,6,20,0.82); border-top: calc(var(--u) * 0.18) solid #2a2342; border-bottom: calc(var(--u) * 0.18) solid #2a2342; }
+  #stripTop { top: calc(var(--u) * 1.4); height: calc(var(--u) * 4.4); }
+  #stripBot { bottom: calc(var(--u) * 5.6); height: calc(var(--u) * 4.4); }
+  .season { position: absolute; width: 100%; top: calc(var(--u) * 10.4); text-align: center; color: #b9a3f0; letter-spacing: calc(var(--u) * 0.9); font-size: calc(var(--u) * 1.5); }
+  .title { position: absolute; width: 100%; top: calc(var(--u) * 12.6); text-align: center; line-height: 1; white-space: nowrap; }
+  .title span { display: inline-block; font-weight: 700; font-size: calc(var(--u) * 9.4); letter-spacing: calc(var(--u) * 0.25); margin: 0 calc(var(--u) * 0.1);
+    text-shadow: calc(var(--u) * 0.45) calc(var(--u) * 0.45) 0 #120b0a, calc(var(--u) * -0.18) 0 0 #120b0a, calc(var(--u) * 0.18) calc(var(--u) * -0.18) 0 #120b0a; }
+  .sub { position: absolute; width: 100%; top: calc(var(--u) * 23.8); text-align: center; color: var(--cream); font-size: calc(var(--u) * 3.1); font-weight: 600; letter-spacing: calc(var(--u) * 0.35); text-shadow: calc(var(--u) * 0.3) calc(var(--u) * 0.3) 0 #120b0a; }
+  .tag { position: absolute; width: 100%; top: calc(var(--u) * 28.6); text-align: center; color: #9fd3b0; font-size: calc(var(--u) * 1.75); letter-spacing: calc(var(--u) * 0.3); }
+  .start { position: absolute; width: 100%; top: calc(var(--u) * 33); text-align: center; color: #fff; font-size: calc(var(--u) * 2.4); letter-spacing: calc(var(--u) * 0.6); text-shadow: calc(var(--u) * 0.25) calc(var(--u) * 0.25) 0 #120b0a; }
+  .team { position: absolute; width: 100%; bottom: calc(var(--u) * 1.5); text-align: center; color: var(--gold); font-size: calc(var(--u) * 1.9); letter-spacing: calc(var(--u) * 0.35); }
+  .team b { color: #fff; font-weight: 700; }
+  .names { position: absolute; width: 100%; bottom: calc(var(--u) * 3.6); text-align: center; color: #c9b98f; font-size: calc(var(--u) * 1.25); letter-spacing: calc(var(--u) * 0.15); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="bg"></div><div class="tint"></div>
+  <div class="strip" id="stripTop"></div><canvas id="top"></canvas>
+  <div class="season">NASA SPACE APPS 2026</div>
+  <div class="title" id="title"></div>
+  <div class="sub">EARTH'S MUSIC BOX</div>
+  <div class="tag">A YEAR OF NASA DATA · ONE RECORD AT A TIME</div>
+  <div class="start">&#9654; PRESS PLAY TO HEAR A YEAR</div>
+  <div class="strip" id="stripBot"></div><canvas id="bot"></canvas>
+  <div class="names" id="names"></div>
+  <div class="team">MADE BY <b>THE DELTA FORCE</b></div>
+  <div class="scan"></div>
+</div>
+<script>
+// Pixel sprites (1 = body, 2 = light, 3 = dark), 12 x 12, drawn in code: the same month pictures as the sky calendar of the app.
+const SPR = {
+  cloud: ['............','....2222....','...211112...','..21111112..','.2111111112.','.1111111111.','111111111111','111111111111','.3333333333.','............','............','............'],
+  rain: ['....2222....','...211112...','..21111112..','.2111111112.','111111111111','.3333333333.','............','..2...2...2.','............','.2...2...2..','............','..2...2...2.'],
+  sun: ['....2..2....','..2..22..2..','...211112...','2.21111112.2','.211111112..','2211111111.2','.211111111..','2.21111112.2','...211112...','..2..22..2..','....2..2....','............'],
+  tree: ['....2222....','...211112...','..21111112..','.2111111112.','.1111111111.','..11111111..','....3553....','.....55.....','.....55.....','.....55.....','..333553333.','............'],
+  sprout: ['............','............','............','...22..22...','..2112.2112.','..1111.111..','...11..11...','....1111....','.....11.....','.....33.....','.3333333333.','............'],
+  flake: ['.....22.....','..2..22..2..','...2.22.2...','....2222....','2222222222222'.slice(0,12),'....2222....','...2.22.2...','..2..22..2..','.....22.....','............','............','............'],
+};
+const PAL = { cloud: ['#aebfd3', '#e6edf5', '#6c7b90'], rain: ['#6c9fd0', '#bfe3ff', '#40608a'], sun: ['#f2a93b', '#ffe08a', '#a8743f'], tree: ['#3fbf6a', '#8be59a', '#2a7a45'], sprout: ['#7cd17a', '#c3f0a0', '#6a4a2a'], flake: ['#dcecff', '#ffffff', '#9ab0c8'] };
+const WOOD = '#7a5535';
+function sprite(ctx, name, x, y, s) {
+  const rows = SPR[name]; const [c1, c2, c3] = PAL[name];
+  rows.forEach((row, j) => [...row].forEach((ch, i) => { if (ch === '.') return; ctx.fillStyle = ch === '1' ? c1 : ch === '2' ? c2 : ch === '3' ? c3 : ch === '5' ? WOOD : c1; ctx.fillRect(x + i * s, y + j * s, s, s); }));
+}
+const SEQ = ['cloud', 'cloud', 'rain', 'rain', 'sun', 'sprout', 'tree', 'tree', 'tree', 'sun', 'rain', 'flake'];
+function strip(id, offset) {
+  const c = document.getElementById(id); const W = innerWidth; const U = Math.min(innerWidth / 63, innerHeight / 50); const s = Math.max(2, Math.round(U * 0.3));
+  c.width = W; c.height = 12 * s; c.style.height = `${12 * s}px`; const ctx = c.getContext('2d');
+  const step = 15 * s; for (let k = -1, x = -offset * s; x < W; k++, x += step) sprite(ctx, SEQ[((k + 12) % 12 + offset) % 12], x, 0, s);
+}
+const words = 'DELTABEAT'; const cols = ['#e86a6a', '#f6a94a', '#f6d27a', '#7cd17a', '#4fd6e0', '#7fa8e8', '#b08ae8', '#f08ac0', '#f4ead2'];
+document.getElementById('title').innerHTML = [...words].map((ch, i) => `<span style="color:${cols[i]}">${ch}</span>`).join('');
+document.getElementById('names').textContent = 'HOANG YEN DUONG · KORNGBORMEY VUTHOEUN · HOÀNG MINH KỲ · SABIK BIN SULTAN';
+function layout() {
+  const U = Math.min(innerWidth / 63, innerHeight / 50);
+  for (const [id, off] of [['top', 0], ['bot', 6]]) { strip(id, off); }
+  const t = document.getElementById('top'); const b = document.getElementById('bot');
+  const sTop = document.getElementById('stripTop'); const sBot = document.getElementById('stripBot');
+  t.style.top = `${sTop.offsetTop + (sTop.offsetHeight - t.height) / 2}px`; b.style.bottom = ''; b.style.top = `${sBot.offsetTop + (sBot.offsetHeight - b.height) / 2}px`;
+}
+document.fonts.ready.then(() => { layout(); document.body.dataset.ready = '1'; }); addEventListener('resize', layout);
+</script>
+</body>
+</html>
