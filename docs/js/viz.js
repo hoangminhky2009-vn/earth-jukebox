@@ -216,22 +216,26 @@ export function stepCard(card, dt, { rm = false, playing = false } = {}) {
 // ------------------------------------------------------------------ data panel (12-month bar chart on the main screen)
 
 /**
- * Bar for one month of the sky chart, in pixels from the chart's baseline (`px` pixels a level).
- * Rain: a bar up (wetter) or down (drier); "near normal" is a 1 px tick on the line. Greenness: a bar up, 1 to 4 levels.
- * @returns {{kind: 'missing'|'bar', up: number, down: number}}
+ * Picture for one month in the sky: the size of each picture follows the level, so it can be read without sound.
+ * Rain wetter: a cloud (wider) with more drops and a puddle. Rain drier: a sun (bigger) over cracked ground.
+ * Near normal: a small white cloud. Greenness 1-4: sprout, bush, tree, big tree. Missing: an empty grey outline.
+ * @returns {{kind: 'missing'|'rain'|'calm'|'sun'|'plant', size: number}}
  */
-export function barSpec(dataset, level, px = 3) {
-  if (isMissing(level)) return { kind: 'missing', up: 0, down: 0 };
-  if (dataset === 'rain') return level === 0 ? { kind: 'bar', up: 1, down: 0 }
-    : level > 0 ? { kind: 'bar', up: Math.min(4, level) * px, down: 0 } : { kind: 'bar', up: 0, down: Math.min(4, -level) * px };
-  return { kind: 'bar', up: Math.max(1, Math.min(4, level)) * px, down: 0 };
+export function monthIcon(dataset, level) {
+  if (isMissing(level)) return { kind: 'missing', size: 0 };
+  if (dataset === 'rain') {
+    if (level > 0) return { kind: 'rain', size: Math.min(4, level) };
+    if (level < 0) return { kind: 'sun', size: Math.min(4, -level) };
+    return { kind: 'calm', size: 0 };
+  }
+  return { kind: 'plant', size: Math.max(1, Math.min(4, level)) };
 }
 
 /** Title line of the sky chart: place, what is shown, which year is which bar, and the NASA SVS page it comes from. */
 export function panelTitle(discs, datasets, placeName = '') {
   const d = discs[0]; if (!d) return '';
   const label = d.dataset === 'rain' ? 'RAIN VS NORMAL' : 'GREENNESS';
-  const years = discs.length > 1 ? `LEFT ${discs[0].year}, RIGHT ${discs[1].year}` : String(d.year);
+  const years = discs.length > 1 ? `TOP ${discs[0].year}, BOTTOM ${discs[1].year}` : String(d.year);
   const svs = datasets?.[d.dataset]?.svs;
   const name = String(placeName).split(',')[0].replace(/\s+(and surroundings|near .*)$/i, '').toUpperCase();
   return `${name ? `${name} · ` : ''}${label} · ${years}${svs ? ` · NASA SVS ${svs}` : ''}`;

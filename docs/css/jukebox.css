@@ -10,7 +10,8 @@
 .sky-chart { position: absolute; inset: 0; pointer-events: none; }
 .sky-chart > div { position: absolute; white-space: nowrap; overflow: hidden; font-size: calc(var(--s, 1) * 5px); line-height: 1.2; }
 .sc-title { color: var(--accent); letter-spacing: 0.5px; }
-.sc-axis { color: #c9b98f; text-align: right; }
+.sc-axis { color: #9a8f7a; text-align: right; }
+.sc-axis.on { color: var(--accent); }
 .sc-month { color: #9a8f7a; text-align: center; }
 .sc-month.now { color: #fff6e0; }
 .high-contrast .sky-chart > div { color: #fff; background: #000; }

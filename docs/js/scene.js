@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, barSpec, panelTitle, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -205,8 +205,8 @@ export function createScene(store, opts) {
   cardEl.hidden = true; cv.parentElement.append(cardEl);
   let cardOpacity = -1;
   const CARD = { x: 24, y: 13, w: 432, h: 244 };
-  /* ---------- sky chart: the 12 months of the disc on the deck drawn over the world map, the playing month lit ---------- */
-  // So the data can be read without sound: one bar a month (side A and side B side by side), a playhead, labels.
+  /* ---------- sky calendar: the 12 months of the disc on the deck as little pixel scenes over the world map ---------- */
+  // So the data can be read without sound: one picture a month (a row per year), sized by the level, a playhead, labels.
   const SC = { x0: 44, cell: 31, top: 27, bottom: 87 };
   const scEl = document.createElement('div'); scEl.className = 'sky-chart'; scEl.setAttribute('aria-hidden', 'true'); scEl.hidden = true;
   const scTitle = document.createElement('div'); scTitle.className = 'sc-title'; pos(scTitle, SC.x0, 19, 380, 7);
@@ -582,41 +582,86 @@ export function createScene(store, opts) {
     });
   }
 
+  const disc = (cx, cy, r, c) => { for (let y = -r; y <= r; y++) { const w = Math.round(Math.sqrt(r * r - y * y)); P(c, cx - w, cy + y, w * 2 + 1, 1); } };
+  function cloud(cx, cy, w, c) {
+    const r = 3; P(c, cx - (w >> 1), cy, w, 3);
+    disc(cx - (w >> 2), cy, r, c); disc(cx + (w >> 2), cy, r, c); disc(cx, cy - 2, r + 1, c);
+    P(lit(c, -0.25), cx - (w >> 1), cy + 3, w, 1); P(lit(c, 0.3), cx - 2, cy - 6, 4, 1);
+  }
+  /** One month's picture in a cell 31 x 29 px: x0, y0 = top left of the cell; t = time (0 when motion is reduced). */
+  function drawMonth(ic, x0, y0, t, cur) {
+    const cx = x0 + 15; const gy = y0 + 25;   // centre, ground line
+    if (ic.kind === 'missing') {
+      for (let x = x0 + 4; x < x0 + 27; x += 2) P('#8d8a99', x, gy, 1, 1);
+      for (let a = 0; a < 6.28; a += 0.5) P('#8d8a99', cx + Math.round(Math.cos(a) * 6), y0 + 10 + Math.round(Math.sin(a) * 4));
+      return;
+    }
+    if (ic.kind === 'plant') {
+      const g = GREEN_SCALE[ic.size]; const sway = cur && t ? Math.round(Math.sin(t * 3)) : 0;
+      P('#5a3d27', x0 + 2, gy, 27, 4); P('#7a5535', x0 + 2, gy, 27, 1);
+      for (let i = 0; i < ic.size * 2; i++) P(lit(g, -0.2), x0 + 4 + ((i * 7) % 23), gy - 1, 1, 1);   // grass tufts
+      if (ic.size === 1) { P('#6a8a3a', cx, gy - 4, 1, 4); P(g, cx - 2 + sway, gy - 5, 2, 1); P(g, cx + 1 + sway, gy - 6, 2, 1); }
+      else if (ic.size === 2) { disc(cx + sway, gy - 4, 4, lit(g, -0.15)); disc(cx - 1 + sway, gy - 5, 2, g); P(lit(g, -0.3), cx - 4, gy - 1, 9, 1); }
+      else {
+        const big = ic.size === 4; const h = big ? 9 : 6; const r = big ? 8 : 6;
+        P('#5a3d27', cx - 1, gy - h, 3, h); P('#7a5535', cx - 1, gy - h, 1, h);
+        disc(cx + sway, gy - h - r + 2, r, lit(g, -0.2)); disc(cx - 2 + sway, gy - h - r + 1, r - 2, g);
+        if (big) { disc(cx - 6 + sway, gy - h - 2, 4, lit(g, -0.1)); disc(cx + 6 + sway, gy - h - 3, 4, lit(g, -0.25)); P(lit(g, 0.35), cx - 4 + sway, gy - h - r - 2, 3, 1); }
+      }
+      return;
+    }
+    if (ic.kind === 'sun') {
+      const r = 2 + ic.size; const sy = y0 + 9; const tw = t ? Math.floor(t * 2) % 2 : 0;
+      for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; const d = r + 2 + ((i + tw) % 2); P('#f6c552', cx + Math.round(Math.cos(a) * d), sy + Math.round(Math.sin(a) * d)); }
+      disc(cx, sy, r, '#f2a93b'); disc(cx - 1, sy - 1, Math.max(1, r - 2), '#f8cf62');
+      P('#a8743f', x0 + 2, gy, 27, 4); P('#c99a5c', x0 + 2, gy, 27, 1);
+      for (let i = 0; i < ic.size * 3; i++) { const x = x0 + 4 + ((i * 9) % 22); P('#6b4426', x, gy + 1 + (i % 2), 2, 1); P('#6b4426', x + 1, gy + 2 + (i % 2), 1, 1); }   // cracks
+      if (t && ic.size >= 3) for (let i = 0; i < 3; i++) { const y = gy - 3 - ((Math.floor(t * 6) + i * 2) % 6); ctx.globalAlpha = 0.35; P('#f6c552', x0 + 7 + i * 7, y, 3, 1); ctx.globalAlpha = 1; }   // heat shimmer
+      return;
+    }
+    // rain or calm
+    const k = ic.kind === 'rain' ? ic.size : 0;
+    const w = 10 + k * 3; const cy = y0 + 6;
+    const col = k === 0 ? '#e9edf2' : ['#c7d0dc', '#a9b6c6', '#8796aa', '#6c7b90'][k - 1];
+    P('#4f6a3a', x0 + 2, gy, 27, 4); P('#6f8a4a', x0 + 2, gy, 27, 1);
+    if (k) {
+      const n = k * 3;
+      for (let i = 0; i < n; i++) {
+        const dx = cx - (w >> 1) + 1 + Math.round((i + 0.5) * (w - 2) / n);
+        const fall = t ? (t * (10 + k * 3) + (i * 7) % 13) % 14 : (i * 5) % 14;
+        P('#9cc9ea', dx, cy + 5 + Math.round(fall), 1, 2);
+      }
+      P('#5b93c4', cx - 2 - k * 2, gy, 4 + k * 4, 1); P('#7fb3dc', cx - 1 - k * 2, gy, 2 + k * 3, 1);   // puddle
+    }
+    cloud(cx, cy, w, col);
+  }
+
   function drawSkyChart(d) {
     if (!d || card) { if (!scEl.hidden) scEl.hidden = true; return; }
-    const rows = pairOf(d).slice(0, 2); const set = rows.length > 1 ? rows : [d];
-    const rain = d.dataset === 'rain'; const px = rain ? 7 : 13; const base = rain ? 57 : SC.bottom - 2;
+    const pair = pairOf(d).slice(0, 2); const set = pair.length > 1 ? pair : [d];
+    const rowY = set.length > 1 ? [28, 58] : [43];
     const key = set.map((x) => x.id).join('+');
     if (key !== scKey || scEl.hidden) {
       scKey = key; scTitle.textContent = panelTitle(set, datasets, placeOf(d)?.name);
-      const labels = rain ? [['WETTER', SC.top + 1], ['NORMAL', base - 3], ['DRIER', SC.bottom - 7]] : [['GREENER', SC.top + 4], ['', 0], ['LESS GREEN', SC.bottom - 7]];
-      labels.forEach(([t, y], i) => { scAxis[i].textContent = t; pos(scAxis[i], 4, y, SC.x0 - 7, 7); });
+      scAxis.forEach((e, i) => { const rd = set[i]; e.textContent = rd ? `${rd.year}` : ''; e.classList.toggle('on', Boolean(rd && rd.id === d.id)); if (rd) pos(e, 4, rowY[i] + 12, SC.x0 - 7, 7); });
       scEl.hidden = false;
     }
-    // the map steps back behind the chart
+    if (scAxis.some((e, i) => set[i] && e.classList.contains('on') !== (set[i].id === d.id))) scKey = '';   // side flipped: refresh labels next frame
+    // the map steps back behind the pictures
     ctx.globalAlpha = 0.5; P('#0b0d1a', 0, 17, W, ROOF - 17); ctx.globalAlpha = 1;
-    const x1 = SC.x0 + SC.cell * 12;
-    ctx.globalAlpha = 0.6; P('#c9b98f', SC.x0, rain ? base : base + 1, x1 - SC.x0, 1); ctx.globalAlpha = 1;
-    const now = spinning ? monthNow() : -1;
+    const now = spinning ? monthNow() : -1; const t = RM() ? 0 : performance.now() / 1000;
     for (let m = 0; m < 12; m++) {
-      const cx = SC.x0 + m * SC.cell; const cur = m === now;
-      if (cur) { ctx.globalAlpha = 0.13; P('#ffffff', cx, SC.top, SC.cell - 1, SC.bottom - SC.top); ctx.globalAlpha = 1; }
-      else if (m % 2) { ctx.globalAlpha = 0.05; P('#ffffff', cx, SC.top, SC.cell - 1, SC.bottom - SC.top); ctx.globalAlpha = 1; }
+      const cx = SC.x0 + m * SC.cell;
+      if (m === now) { ctx.globalAlpha = 0.12; P('#ffffff', cx, SC.top, SC.cell - 1, SC.bottom - SC.top); ctx.globalAlpha = 1; }
       set.forEach((rd, i) => {
-        const bw = set.length > 1 ? 12 : 20; const bx = cx + (set.length > 1 ? 3 + i * 13 : 5);
-        const b = barSpec(rd.dataset, rd.levels[m], px);
-        if (b.kind === 'missing') { for (let x = 0; x < bw; x += 2) P('#8d8a99', bx + x, base - 1, 1, 1); return; }
-        let c = levelColor(rd.dataset, rd.levels[m]);
-        c = cur ? lit(c, 0.25) : rd.id === d.id ? c : lit(c, -0.3);
-        if (b.up) P(c, bx, base - b.up, bw, b.up);
-        if (b.down) P(c, bx, base + 1, bw, b.down);
-        if (b.up > 1) P(lit(c, 0.4), bx, base - b.up, bw, 1);
-        if (b.down) P(lit(c, -0.35), bx, base + b.down, bw, 1);
+        ctx.globalAlpha = rd.id === d.id ? 1 : 0.55;
+        drawMonth(monthIcon(rd.dataset, rd.levels[m]), cx, rowY[i], m === now || !spinning ? t : 0, m === now);
+        ctx.globalAlpha = 1;
       });
     }
     if (spinning) {   // playhead: moves through the year with the music
       const x = Math.round(SC.x0 + Math.min(12, Math.max(0, store.state.position)) * SC.cell);
-      ctx.globalAlpha = 0.75; P('#fff6e0', x, SC.top - 1, 1, SC.bottom - SC.top + 2); ctx.globalAlpha = 1;
+      ctx.globalAlpha = 0.6; P('#fff6e0', x, SC.top - 1, 1, SC.bottom - SC.top + 2); ctx.globalAlpha = 1;
       P('#fff6e0', x - 1, SC.top - 2, 3, 1);
     }
     if (now !== scNow) { scMonths.forEach((e, i) => e.classList.toggle('now', i === now)); scNow = now; }
