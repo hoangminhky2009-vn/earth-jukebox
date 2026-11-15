@@ -5,14 +5,13 @@
 
 export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds', 'snow-wind', 'snow-howl'];
 
-/** Recordings of birds from each place's own region (CREDITS.md); the "birds" layer plays the one for the place. */
-export const BIRD_FILES = ['birds', 'birds-mekong', 'birds-bengal', 'birds-outback'];
+/** Birds: the Tonle Sap / Hue region has its own CC0 recording (Siem Reap); every other place plays the CC0 park birds
+ * (the team uses only CC0 / CC BY material, so the CC BY-SA regional recordings were taken out). */
+export const BIRD_FILES = ['birds', 'birds-mekong'];
 export function birdsFile(place) {
   const biome = String(place?.biome ?? ''); const region = String(place?.region ?? '');
   // snow places keep the gentle park birds (the Tromso diver recording was loud and harsh)
-  if (/desert|arid/i.test(biome)) return 'birds-outback';                  // arid Australia
   // the Amazon keeps the gentle park birds: the Amazon recording we found (screaming toucans) sounded frightening
-  if (region === 'south-asia') return 'birds-bengal';                      // Bengal delta
   if (region === 'sea' || /southeast/i.test(region)) return 'birds-mekong';   // Siem Reap, Cambodia
   return 'birds';                                                          // a park (any other place)
 }
@@ -57,7 +56,7 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
     }
   } else if (disc.dataset === 'snow') {
     // snow cover: the hill wind grows with the snow, the howl comes in when nearly all the land is white;
-    // a month with little snow has the summer birds of the place (its own Arctic recording)
+    // a month with little snow has gentle park birds
     const snow = (level - 1) / 3;
     mix['snow-wind'] = 0.3 + 0.5 * snow;
     mix['snow-howl'] = level >= 4 ? 0.35 : 0;

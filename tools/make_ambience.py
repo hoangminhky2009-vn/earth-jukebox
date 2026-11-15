@@ -2,8 +2,8 @@
 """Turn the CC0 field recordings (see CREDITS.md) into short seamless loops for the page.
 
 Usage: python tools/make_ambience.py <folder with the source recordings> [--only name ...]
-Sources: rain_2.ogg rain_4.ogg birds.wav wind.wav hill.ogg howl.ogg, and the regional bird recordings
-mekong.ogg bengal.mp3 outback.mp3 (each place hears birds recorded in its own region).
+Sources: rain_2.ogg rain_4.ogg birds.wav wind.wav hill.ogg howl.ogg, and the regional bird recording
+mekong.ogg (Siem Reap birds for Tonle Sap and Hue; park birds elsewhere).
 Writes docs/audio/ambience/<name>.mp3 (stereo, 44.1 kHz, 96 kbps); a job whose source is missing is skipped.
 Each loop: cut a segment, blend its tail into its head over 2 s (so it repeats without a click),
 and set the loudness to the same RMS so audio.js can mix them with plain gains. Needs ffmpeg and numpy.
@@ -29,8 +29,6 @@ JOBS = {
     "snow-howl": ("howl.ogg", 20.0, 30.0),    # howling wind (skips the silent start)
     # regional birds (CREDITS.md)
     "birds-mekong": ("mekong.ogg", 1.0, 30.0),      # Siem Reap, Cambodia (near Tonle Sap)
-    "birds-bengal": ("bengal.mp3", 2.0, 30.0),      # Narendrapur, West Bengal (the Bengal delta)
-    "birds-outback": ("outback.mp3", 2.0, 30.0),    # Cooya Pooya, Pilbara, Western Australia (arid outback)
 }
 
 
