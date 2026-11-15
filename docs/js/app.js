@@ -5,6 +5,7 @@ import { validate } from './validate.js';
 import { createStore } from './store.js';
 import { initA11y, announce } from './a11y.js';
 import { initDialogs } from './ui-jukebox.js';
+import { initCoach } from './coach.js';
 import { createScene } from './scene.js';
 import * as foley from './foley.js';
 import { initRoll } from './roll.js';
@@ -122,7 +123,7 @@ async function main() {
   };
 
   initA11y(store, { datasets: data.datasets, duck: audio.duck, isStarted: () => started, preview });
-  createScene(store, { datasets: data.datasets, announce, onNeedleDown: () => { if (store.state.playing) audio.play(); } });
+  const scene = createScene(store, { datasets: data.datasets, announce, onNeedleDown: () => { if (store.state.playing) audio.play(); } });
   // After a disc lands on the deck, say so (a11y.js joins it to a "Recorded: ..." sentence spoken a moment before).
   store.on('disc:load', ({ disc }) => {
     const p = place(disc);
@@ -132,6 +133,17 @@ async function main() {
   initRoll(store, { container: document.getElementById('roll-box'), svgHost: document.getElementById('roll'), getSchedule: () => schedule });
   initDialogs(store, { datasets: data.datasets, announce });
   initSeasonal(store, data);
+
+  // How to use: a guided tour with a spotlight (button, H key, and once on the first visit)
+  const coach = initCoach(store, { boxOf: scene.boxOf, announce, reducedMotion: () => Boolean(store.state.settings.reducedMotion) });
+  document.getElementById('help-btn').addEventListener('click', () => coach.start());
+  document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() !== 'h' || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(t?.tagName) || t?.isContentEditable || document.querySelector('dialog[open]')) return;
+    e.preventDefault(); coach.start();
+  });
+  if (coach.firstVisit()) setTimeout(() => coach.start(), 900);
 
   // Settings toggles (persisted per browser).
   function bindToggle(inputId, key, fallback, apply) {

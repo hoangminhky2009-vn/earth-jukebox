@@ -3,10 +3,10 @@ html, body { height: auto; min-height: 100%; overflow: visible; }
 html { scroll-behavior: smooth; scroll-padding-top: 20px; }
 body { display: block; }
 main { display: block; width: min(1160px,100%); margin: auto; padding: 0 20px; }
-.intro { max-width: 1120px; margin: 0 auto; padding: 30px 20px 22px; }
+.intro { max-width: 1120px; margin: 0 auto; padding: 14px 20px 12px; }
 .eyebrow { color: var(--accent); letter-spacing: 1.6px; font-size: 12px; margin: 0 0 9px; }
-.intro h1 { font-size: clamp(29px,4.6vw,55px); line-height: 1.07; margin: 0; font-weight: 600; }
-.intro > p:not(.eyebrow) { color: var(--text-muted); font: 17px/1.5 system-ui,sans-serif; margin: 12px 0; }
+.intro h1 { font-size: clamp(27px,3.2vw,38px); line-height: 1.07; margin: 0; font-weight: 600; }
+.intro > p:not(.eyebrow) { color: var(--text-muted); font: 15px/1.4 system-ui,sans-serif; margin: 6px 0; }
 .intro nav { display: flex; gap: 24px; font-size: 16px; }
 .console-section { margin: 0 auto 42px; width: 100%; min-width: 0; }
 .screen { margin: auto; }

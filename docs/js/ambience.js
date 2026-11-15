@@ -6,10 +6,10 @@
 export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds', 'snow-wind', 'snow-howl'];
 
 /** Recordings of birds from each place's own region (CREDITS.md); the "birds" layer plays the one for the place. */
-export const BIRD_FILES = ['birds', 'birds-mekong', 'birds-bengal', 'birds-outback', 'birds-arctic'];
+export const BIRD_FILES = ['birds', 'birds-mekong', 'birds-bengal', 'birds-outback'];
 export function birdsFile(place) {
   const biome = String(place?.biome ?? ''); const region = String(place?.region ?? '');
-  if (/snow|ice|polar|glacier/i.test(biome)) return 'birds-arctic';      // Tromso, Norway
+  // snow places keep the gentle park birds (the Tromso diver recording was loud and harsh)
   if (/desert|arid/i.test(biome)) return 'birds-outback';                  // arid Australia
   // the Amazon keeps the gentle park birds: the Amazon recording we found (screaming toucans) sounded frightening
   if (region === 'south-asia') return 'birds-bengal';                      // Bengal delta
@@ -61,12 +61,12 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
     const snow = (level - 1) / 3;
     mix['snow-wind'] = 0.3 + 0.5 * snow;
     mix['snow-howl'] = level >= 4 ? 0.35 : 0;
-    mix.birds = 0.7 * (1 - snow);
+    mix.birds = 0.5 * (1 - snow);
   } else {
     const green = (level - 1) / 3;                     // q = 1..4 -> 0..1
     if (/snow|ice|polar|glacier/i.test(biome)) {       // snow places: hill wind, Arctic birds when it greens up
       mix['snow-wind'] = 0.3 + 0.4 * (1 - green);
-      mix.birds = 0.7 * green;
+      mix.birds = 0.5 * green;
       for (const k of LAYERS) mix[k] = Math.round(mix[k] * 1000) / 1000;
       return mix;
     }

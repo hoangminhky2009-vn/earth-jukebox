@@ -184,13 +184,19 @@ export function createScene(store, opts) {
   const screen = $('screen'); const hits = $('hits'); const lcdEl = $('lcd'); const coordsEl = $('coords');
   const RM = () => Boolean(store.state.settings.reducedMotion);
 
-  function fit() {   // Fits its section; the readable controls and comparisons remain in document flow.
+  function fit() {   // Show the whole console above the fold; the labelled controls stay in document flow.
     const width = screen.parentElement.clientWidth;
-    screen.style.setProperty('--s', String(Math.max(0.2, Math.min(width / W, 620 / H))));
+    // Use document coordinates so resizing while scrolled does not change the height budget.
+    const top = screen.getBoundingClientRect().top + window.scrollY;
+    const height = window.innerHeight - top - 16;
+    screen.style.setProperty('--s', String(Math.max(0.2, Math.min(width / W, 620 / H, height / H))));
   }
   fit(); addEventListener('resize', fit);
-  // The app also lives in resizable side panels; observe the actual container width.
-  new ResizeObserver(fit).observe(screen.parentElement);
+  // Header wrapping and font loading can change the available height without a window resize.
+  const fitObserver = new ResizeObserver(fit);
+  fitObserver.observe(screen.parentElement);
+  const intro = document.querySelector('.intro');
+  if (intro) fitObserver.observe(intro);
   const pos = (el, x, y, w, h) => Object.assign(el.style, { left: `${x / W * 100}%`, top: `${y / H * 100}%`, width: `${w / W * 100}%`, height: `${h / H * 100}%` });
 
   const P = (c, x, y, w = 1, h = 1, g = ctx) => { g.fillStyle = c; g.fillRect(x | 0, y | 0, w, h); };
@@ -849,5 +855,16 @@ export function createScene(store, opts) {
     draw();
   }, 33);
 
-  return { slotButtons: slotEls.map((s) => s.b), months: MONTH_ABBR };
+  /** Screen box of a part of the console, for the How to use spotlight (coach.js). */
+  const AREAS = { tray: { x: 20, y: 114, w: 224, h: 136 }, deck: { x: 256, y: 112, w: 206, h: 142 }, sky: { x: 0, y: 17, w: W, h: ROOF - 17 },
+    gauge: { x: GAUGE.x - 2, y: GAUGE.y - 2, w: GAUGE.w + 4, h: GAUGE.h + 4 }, lcd: LCD };
+  function boxOf(key) {
+    const el = { play: btnEls.play, stop: btnEls.stop, flip: btnEls.flip, sci: btnEls.sci, eject: btnEls.eject, page: pageBtn,
+      details: document.getElementById('details-btn'), settings: document.getElementById('settings-btn') }[key];
+    if (el) { const r = el.getBoundingClientRect(); return r.width ? r : null; }
+    const a = AREAS[key]; if (!a) return null;
+    const c = cv.getBoundingClientRect();
+    return { left: c.left + a.x / W * c.width, top: c.top + a.y / H * c.height, width: a.w / W * c.width, height: a.h / H * c.height };
+  }
+  return { slotButtons: slotEls.map((s) => s.b), months: MONTH_ABBR, boxOf };
 }
