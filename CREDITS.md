@@ -36,8 +36,8 @@ Everything we used, including open-source and free resources (required by the su
   - Dhaka: "Landscape of Bangladesh.বাংলাদেশের প্রাকৃতিক দৃশ্য" by Ashikul Islam Anik, CC BY 4.0. https://commons.wikimedia.org/wiki/File:Landscape_of_Bangladesh.%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6%E0%A7%87%E0%A6%B0_%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%95%E0%A7%83%E0%A6%A4%E0%A6%BF%E0%A6%95_%E0%A6%A6%E0%A7%83%E0%A6%B6%E0%A7%8D%E0%A6%AF.jpg
   - Sylhet: "Boating on Tanguar Haor in Afternoon (28925051087)" by Minhas Kamal, CC0. https://commons.wikimedia.org/wiki/File:Boating_on_Tanguar_Haor_in_Afternoon_(28925051087).jpg
   - Tonle Sap: "Tonle Sap Lake - Tonle1112" by lumoplank, CC0. https://commons.wikimedia.org/wiki/File:Tonle_Sap_Lake_-_Tonle1112.jpg
-  - Hue: "Hai Van Pass, Vietnam, View northwards" by Vyacheslav Argenberg, CC BY 4.0. https://commons.wikimedia.org/wiki/File:Hai_Van_Pass,_Vietnam,_View_northwards.jpg
-  - Amazon (Rio Negro, Anavilhanas, near Manaus): "ARQUIPÉLAGO DE ANAVILHANAS RIO NEGRO MANAUS - panoramio" by James Martins, CC BY 3.0. https://commons.wikimedia.org/wiki/File:ARQUIP%C3%89LAGO_DE_ANAVILHANAS_RIO_NEGRO_MANAUS_-_panoramio.jpg
+  - Hue (Lap An lagoon): "Laguna Lap An, Provincia de Thua Thien-Hue, Vietnam" by Edgardo W. Olivera, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Laguna_Lap_An,_Provincia_de_Thua_Thien-Hue,_Vietnam.jpg
+  - Amazon (inside the rainforest, Tena, Ecuador): "Amazon Rainforest in Tena, Ecuador" by Jay, CC BY 2.0. Taken in the Ecuadorian Amazon, the same rainforest. https://commons.wikimedia.org/wiki/File:Amazon_Rainforest_in_Tena,_Ecuador.jpg
   - Alice Springs: "Inside Simpson's Gap (34634250796)" by Paul Balfe, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Inside_Simpson%27s_Gap_(34634250796).jpg
   - Tromso (Lyngen Alps): "Lyngen Alps, Norway (Unsplash)" by Cem Sagisman cems77, CC0. https://commons.wikimedia.org/wiki/File:Lyngen_Alps,_Norway_(Unsplash).jpg
 - [Only CC0 / CC-BY / MIT / Apache-2.0 / OFL. Add each further font, sound or image here with its link and licence.]

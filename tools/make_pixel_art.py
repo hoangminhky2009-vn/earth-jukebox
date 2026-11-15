@@ -22,14 +22,14 @@ JOBS = {
     "dhaka": ("dhaka.jpg", 0.5, 0.5, 1.0),
     "sylhet": ("sylhet.jpg", 0.5, 0.55, 1.0),
     "tonle-sap": ("tonle-sap.jpg", 0.5, 0.5, 1.0),
-    "hue": ("hue.jpg", 0.5, 0.5, 1.0),
+    "hue": ("hue.jpg", 0.3, 0.62, 0.58),            # the hills over the Lap An lagoon (the small far boat is cropped out)
     "amazon": ("amazon.jpg", 0.5, 0.5, 1.0),
     "alice-springs": ("alice-springs.jpg", 0.5, 0.2, 1.0),   # top of the gorge only (small walkers at the bottom are cropped out)
     "tromso": ("tromso.jpg", 0.215, 0.6, 0.43),               # the snowy mountain and the fjord (the hut is cropped out)
 }
 
 # optional colour tweaks (brightness, red gain, blue gain) for photos that came out dark or too cool
-TWEAK = {"hue": (1.18, 1.0, 1.0)}
+TWEAK = {}
 
 BAYER4 = np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]], dtype=np.float32)
 
