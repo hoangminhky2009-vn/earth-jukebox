@@ -5,6 +5,18 @@
 
 export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds', 'snow-wind', 'snow-howl'];
 
+/** Recordings of birds from each place's own region (CREDITS.md); the "birds" layer plays the one for the place. */
+export const BIRD_FILES = ['birds', 'birds-amazon', 'birds-mekong', 'birds-bengal', 'birds-outback', 'birds-arctic'];
+export function birdsFile(place) {
+  const biome = String(place?.biome ?? ''); const region = String(place?.region ?? '');
+  if (/snow|ice|polar|glacier/i.test(biome)) return 'birds-arctic';      // Tromso, Norway
+  if (/desert|arid/i.test(biome)) return 'birds-outback';                  // arid Australia
+  if (/rainforest|forest/i.test(biome)) return 'birds-amazon';             // Amazon, Brazil
+  if (region === 'south-asia') return 'birds-bengal';                      // Bengal delta
+  if (region === 'sea' || /southeast/i.test(region)) return 'birds-mekong';   // Siem Reap, Cambodia
+  return 'birds';                                                          // a park (any other place)
+}
+
 /**
  * @param {object} disc full disc object
  * @param {number} bar 0-11
@@ -44,15 +56,17 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
       mix['snow-howl'] = level > 0 ? Math.min(1, 0.25 * level) : 0;
     }
   } else if (disc.dataset === 'snow') {
-    // snow cover: only wind (no birds in the Arctic bed); the hill wind grows with the snow, the howl comes in
-    // when nearly all the land is white
+    // snow cover: the hill wind grows with the snow, the howl comes in when nearly all the land is white;
+    // a month with little snow has the summer birds of the place (its own Arctic recording)
     const snow = (level - 1) / 3;
     mix['snow-wind'] = 0.3 + 0.5 * snow;
     mix['snow-howl'] = level >= 4 ? 0.35 : 0;
+    mix.birds = 0.7 * (1 - snow);
   } else {
     const green = (level - 1) / 3;                     // q = 1..4 -> 0..1
-    if (/snow|ice|polar|glacier/i.test(biome)) {       // snow places: wind, never birds
+    if (/snow|ice|polar|glacier/i.test(biome)) {       // snow places: hill wind, Arctic birds when it greens up
       mix['snow-wind'] = 0.3 + 0.4 * (1 - green);
+      mix.birds = 0.7 * green;
       for (const k of LAYERS) mix[k] = Math.round(mix[k] * 1000) / 1000;
       return mix;
     }

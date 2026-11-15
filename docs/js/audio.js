@@ -14,7 +14,7 @@
 // Claude cannot listen: levels are kept low and a compressor sits on the output.
 
 import { schedule, styleOf } from './schedule.js';
-import { ambienceMix, LAYERS } from './ambience.js';
+import { ambienceMix, LAYERS, BIRD_FILES, birdsFile } from './ambience.js';
 import { sharedContext } from './foley.js';
 
 const BAR = 2;
@@ -665,7 +665,7 @@ function sound(n, t, out) {
 
 function loadAmbience() {
   if (ambLoading) return ambLoading;
-  ambLoading = Promise.all(LAYERS.map(async (name) => {
+  ambLoading = Promise.all([...new Set([...LAYERS, ...BIRD_FILES])].map(async (name) => {
     const res = await fetch(new URL(`../audio/ambience/${name}.mp3`, import.meta.url));
     if (!res.ok) throw new Error(`${name}.mp3: HTTP ${res.status}`);
     ambBufs[name] = await ac.decodeAudioData(await res.arrayBuffer());
@@ -679,13 +679,14 @@ function startAmbience() {
   amb = {};
   const now = ac.currentTime;
   for (const name of LAYERS) {
+    const buf = name === 'birds' ? ambBufs[birdsFile(place)] ?? ambBufs.birds : ambBufs[name];   // the place's own birds
     const src = ac.createBufferSource();
-    src.buffer = ambBufs[name];
+    src.buffer = buf;
     src.loop = true;
     const g = gainNode(0);
     src.connect(g); g.connect(ambCut);
-    src.start(now, Math.random() * ambBufs[name].duration);
-    amb[name] = { src, g };
+    src.start(now, Math.random() * buf.duration);
+    amb[name] = { src, g, buf };
   }
   const cur = currentBar();
   setAmbience(cur ? cur[0] : nextBar, now);
@@ -693,6 +694,14 @@ function startAmbience() {
 
 function setAmbience(b, t) {
   if (!amb) return;
+  // another place on the deck: swap the birds recording for its region (same gain, so the mix carries on)
+  const want = ambBufs[birdsFile(place)] ?? ambBufs.birds;
+  if (amb.birds && want && amb.birds.buf !== want) {
+    const now = ac.currentTime; const old = amb.birds.src;
+    const src = ac.createBufferSource(); src.buffer = want; src.loop = true; src.connect(amb.birds.g);
+    src.start(now, Math.random() * want.duration); old.stop(now + 0.05);
+    amb.birds = { ...amb.birds, src, buf: want };
+  }
   const mix = ambienceMix(disc, b, mode, place);
   for (const name of LAYERS) amb[name].g.gain.setTargetAtTime(mix[name] * AMB_TRIM[name], Math.max(t, ac.currentTime), 0.4);
 }
