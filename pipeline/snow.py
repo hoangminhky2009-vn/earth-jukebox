@@ -7,13 +7,14 @@ GIBS colour map gives every whole percent (1-100) its own colour, so each pixel 
 
 Method, per month:
   1. Get the map for a small box around the place at the layer's own grid (0.05 degree, 20 x 10 pixels).
-  2. Decode each pixel's colour to percent snow. A transparent pixel is "no snow or no data".
-  3. Land pixels = pixels that show a colour in at least one month (the sea never does).
-  4. Value = mean percent over the land pixels / 100 (transparent land pixels count as 0).
-     A month where no pixel shows a colour has no data: the sun does not rise in December and January at 69.7 N,
-     so MODIS sees nothing; later months of 2026 are not published yet.
-  5. Level = quarter of the value (1: under 25 % of the land under snow ... 4: 75 % or more), like greenness.
-Limits: a land pixel that is transparent in an observed month (cloud all month) counts as snow-free.
+  2. Decode only fully opaque, recognised colours to percent snow.
+  3. Withhold the monthly value if ANY cell is unresolved. GIBS renders both zero snow and missing observations,
+     cloud, night, water and fill transparently. A PNG alone cannot distinguish those categories, establish the land
+     denominator, or establish that an uncoloured cell is snow-free. Observations in other months do not resolve it.
+  4. Only a fully decoded grid can yield its mean snow percentage / 100 and a quarter-scale level.
+The current coastal Tromso crop contains unresolved cells in every month, so quantitative snow playback is withheld.
+To restore it, use raw MOD10CM Snow_Cover_Monthly_CMG with its land/water and quality flags, retaining real 0% values
+and excluding unavailable categories. Do not use an average over coloured pixels alone: that excludes valid zeros.
 
 Usage: python -m pipeline.snow            (writes docs/data/discs.json, docs/data/frames/, pipeline/evidence/snow.json)
 """
@@ -43,6 +44,10 @@ LAYER = 'MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct'
 WMS = 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi'
 COLORMAP = 'https://gibs.earthdata.nasa.gov/colormaps/v1.0/MODIS_NDSI_Snow_Cover.xml'
 PRODUCT_URL = 'https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61'
+USER_GUIDE = 'https://nsidc.org/sites/default/files/mod10cm-v061-userguide_0.pdf'
+LIMITATION = ('GIBS transparency cannot distinguish zero snow from missing observations or water; '
+              'quantitative values are withheld wherever any sampling cell is unresolved, pending raw '
+              'MOD10CM values and quality flags.')
 WORLDVIEW = 'https://worldview.earthdata.nasa.gov/?l=' + LAYER
 PLACE = 'tromso'
 BOX = (69.45, 18.5, 69.95, 19.5)          # south, west, north, east (degrees); on the 0.05 degree grid
@@ -60,7 +65,7 @@ def dataset_metadata():
     return {'label': 'Snow cover: share of the land under snow',
             'unit': 'share of land pixels under snow in the monthly MODIS Terra map (0 = none, 1 = all)',
             'source_name': 'NASA MODIS Terra snow cover (GIBS)', 'source_url': WORLDVIEW,
-            'gibs_layer': LAYER, 'product_url': PRODUCT_URL, 'levels': LEVELS}
+            'gibs_layer': LAYER, 'product_url': PRODUCT_URL, 'levels': LEVELS, 'limitation': LIMITATION}
 
 
 def fetch(url, name):
@@ -101,13 +106,16 @@ def wms_url(date, box=BOX, size=GRID, layer=LAYER):
 
 
 def decode(png, table):
-    """Percent snow per pixel (None = transparent) and how many coloured pixels the colour map did not know."""
+    """Percent snow per pixel (-1 = unresolved); count unrecognised or partially transparent pixels."""
     a = np.asarray(Image.open(io.BytesIO(png)).convert('RGBA'))
     out = np.full(a.shape[:2], -1, dtype=int); unknown = 0
     for y in range(a.shape[0]):
         for x in range(a.shape[1]):
             r, g, b, al = (int(v) for v in a[y, x])
             if al == 0:
+                continue
+            if al != 255:
+                unknown += 1
                 continue
             v = table.get((r, g, b))
             if v is None:
@@ -118,19 +126,20 @@ def decode(png, table):
 
 
 def month_values(grids):
-    """Monthly values from the decoded grids of every month (keys 'YYYY-MM'). Returns {key: (value or None, info)}."""
-    land = np.zeros_like(next(iter(grids.values())), dtype=bool)
-    for g in grids.values():
-        land |= g >= 0
-    n_land = int(land.sum())
+    """Return {month: (mean or None, evidence)} without inventing zeros or a land mask from PNG transparency."""
     out = {}
     for key, g in grids.items():
+        g = np.asarray(g)
+        if (g.ndim != 2 or g.size == 0 or not np.isfinite(g).all()
+                or not np.all((g == -1) | ((g >= 0) & (g <= 100)))):
+            raise ValueError('Expected a nonempty 2D grid of percent snow or -1 for unresolved cells')
         seen = int((g >= 0).sum())
-        if seen == 0 or n_land == 0:
-            out[key] = (None, {'land_pixels': n_land, 'coloured_pixels': 0})
-            continue
-        pct = np.where(g[land] >= 0, g[land], 0)
-        out[key] = (round(float(pct.mean()) / 100, 2), {'land_pixels': n_land, 'coloured_pixels': seen})
+        unresolved = int(g.size) - seen
+        info = {'grid_pixels': int(g.size), 'coloured_pixels': seen, 'unresolved_pixels': unresolved,
+                'status': 'withheld' if unresolved else 'available'}
+        if unresolved:
+            info['reason'] = LIMITATION
+        out[key] = (None if unresolved else round(float(g.mean()) / 100, 2), info)
     return out
 
 
@@ -176,6 +185,9 @@ def build():
                       'condition': 'scratched' if None in levels else 'mint', 'breaks': [],
                       'frame': f'data/frames/{ident}.png',
                       'source': {'gibs_layer': LAYER, 'wms': WMS, 'colormap': COLORMAP, 'product_url': PRODUCT_URL,
+                                 'user_guide': USER_GUIDE, 'status': 'withheld' if all(v is None for v in vals) else 'available',
+                                 'limitation': LIMITATION,
+                                 'method': 'Only fully decoded grids yield quantitative values; no inferred land mask or zero filling.',
                                  'box_south_west_north_east': list(BOX), 'grid': list(GRID), 'time': 'first day of each month (monthly map)'},
                       'description': '', 'check': None})
         make_frame(year, table)
@@ -185,7 +197,8 @@ def build():
     data['datasets']['snow'] = dataset_metadata()
     data['generated'] = datetime.now(timezone.utc).isoformat()
     write_validated(data, DATA)
-    EVIDENCE.write_text(json.dumps({'layer': LAYER, 'colormap': COLORMAP, 'box': BOX, 'grid': GRID,
+    EVIDENCE.write_text(json.dumps({'layer': LAYER, 'colormap': COLORMAP, 'user_guide': USER_GUIDE,
+                                    'limitation': LIMITATION, 'box': BOX, 'grid': GRID,
                                     'months': {k: {'value': v, **info, 'unknown_colours': unknown[k], 'sha256': hashes[k]}
                                                for k, (v, info) in values.items()}}, indent=1) + '\n', encoding='utf-8')
     return discs

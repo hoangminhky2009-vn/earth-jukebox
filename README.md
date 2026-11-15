@@ -11,7 +11,8 @@ or how green the land was. Play it, listen, then open **Details** to see the num
 ## How to use it
 
 1. Choose a place, variable and year using the labelled controls, then **Put on the deck**. You can also choose a
-   disc from the pixel tray. There are 34 records across eight places, including the Ferlo grasslands in Senegal.
+   disc from the pixel tray. There are 32 rain/greenness records across eight places, including the Ferlo grasslands
+   in Senegal, plus two snow records whose numerical values are withheld (see below).
 2. Press **Play record**. Twelve lights follow the calendar and the readout explains each month's category.
 3. **Flip** switches years while keeping the same calendar position. **Science mode** plays a plain data note;
    **See the evidence** opens the original chart, table and source image.
@@ -50,8 +51,11 @@ read back to the same categories (`node --test`: 408 of 408 stored monthly slots
 Comparisons count only usable pairs. Category differences are not exact rainfall or calibrated NDVI differences;
 rain and greenness playing together does not establish a causal relationship.
 
-Tromso also has snow-cover records for 2025 and 2026 from NASA's monthly MODIS Terra map via GIBS.
-They remain available in the main player; seasonal auditions currently cover rain and greenness.
+Tromso's snow records retain NASA MODIS Terra images for visual context, but all numerical snow values are
+**withheld**. GIBS transparency does not distinguish zero snow from cloud, night, water or other unavailable data.
+It must not be converted to zero. The player explains this limitation; the missing-value cue is not a snow
+measurement. Raw MOD10CM data and quality flags are needed before quantitative snow playback can return.
+Seasonal auditions cover rain and greenness.
 
 ## Run it yourself
 
@@ -61,6 +65,7 @@ node --test                               # JavaScript tests (Node 20 or newer)
 python -m pytest pipeline/tests -q        # data pipeline tests
 python -m pipeline.run --all --variant light   # rebuild docs/data/discs.json (downloads NASA frames)
 node tools/build_seasonal_evidence.mjs    # refresh the browser's frame evidence after a data rebuild
+python tools/make_month_maps.py --place ferlo  # rebuild Ferlo's dated monthly map crops
 ```
 
 Add `?sample` to the address to load the hand-made sample data. `HOW_IT_WORKS.md` explains the parts; the file

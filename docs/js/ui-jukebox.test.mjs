@@ -14,6 +14,18 @@ test('rain readout follows the agreed pattern', () => {
 test('missing month says crackle', () => {
   assert.equal(readoutText(disc('dhaka-rain-2026'), 10, data.datasets), 'November 2026: missing data (crackle)');
 });
+
+test('withheld snow values are distinguished from zero snow and ordinary missing data', async () => {
+  const { frameFigure } = await import('./ui-jukebox.js');
+  const snow = { ...disc('dhaka-rain-2025'), dataset: 'snow', levels: Array(12).fill(null),
+    values: Array(12).fill(null), source: { status: 'withheld', limitation: 'Transparent pixels are ambiguous.' } };
+  assert.match(readoutText(snow, 0, data.datasets), /percentage withheld/);
+  assert.equal(levelInfo(snow, 0, data.datasets).text, '— withheld');
+  const rows = detailRows(snow, data.datasets).rows;
+  assert.match(rows.find(([key]) => key === 'Data status')[1], /Transparent pixels are ambiguous/);
+  assert.match(rows.find(([key]) => key === 'Limits')[1], /never counted as snow-free/);
+  assert.match(frameFigure(snow, { name: 'Tromso' }).caption, /Visual context only/);
+});
 test('ndvi readout shows the colour-scale position', () => {
   assert.equal(readoutText(disc('mekong-ndvi-2024'), 0, data.datasets),
     'Greenness · January 2024: medium to high greenness (0.62 on the colour scale)');
