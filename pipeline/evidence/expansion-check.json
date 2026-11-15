@@ -336,9 +336,9 @@
   ],
   "tests": {
     "python_pass": 67,
-    "javascript_pass": 85,
-    "real_score_months_matched": 384,
-    "real_score_months_total": 384,
+    "javascript_pass": 87,
+    "real_score_months_matched": 408,
+    "real_score_months_total": 408,
     "science_ndvi_max_error": 0.02
   },
   "browser": {

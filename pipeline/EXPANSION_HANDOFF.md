@@ -16,7 +16,7 @@ Merge after reviewing the data and the Ferlo story. No web, music or top-level d
 
 ## Checked
 
-- Python: **67 tests pass**. JavaScript: **85 tests pass**.
+- Python: **67 tests pass**. JavaScript: **87 tests pass**.
 - Real-data score round trip: **408/408 monthly entries match**; missing entries remain missing. Science-mode greenness error is at most **0.0200**, within the 1/48 test tolerance.
 - All 32 rain/vegetation discs match their monthly evidence and have valid 256 × 256 image files, using **184 distinct dated source URLs**. Ky's two snow records and images were preserved exactly; their raw GIBS decoding was not independently rerun in this task.
 - Local browser: Ferlo selection by keyboard, playback state, Stop, A/B flip, Details, image loading and missing months; no console warnings/errors during the check. Switching to Tonle Sap updates the piano-roll description correctly with the current populated tray. Dhaka's new description appears as image alternative text and in Details.
