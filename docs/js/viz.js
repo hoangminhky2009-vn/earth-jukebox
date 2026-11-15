@@ -199,17 +199,17 @@ export const newCard = (place) => ({ id: place.id, a: 0, t: 0, fading: false });
 
 /**
  * Advance a card by dt seconds. `speed` is the platter speed in degrees a second (80 when fully up to speed).
- * - appears over 0.5 s and stays while the disc waits on the deck
- * - fades as the platter speeds up: opacity follows 1 - speed / 70, so it is gone when the record is at speed
- * - if nobody presses Play it still fades after 7 s (over 3 s), so it never blocks the console for long
- * - reduced motion: no fading at all, the card is shown for 3 s and cut away
+ * - appears over 0.3 s and stays while the disc waits on the deck
+ * - fades as the platter speeds up: opacity follows 1 - speed / 50, so it is gone before the record is at full speed
+ * - if nobody presses Play it still fades after 5 s (over 2 s), so it never blocks the console for long
+ * - reduced motion: no fading at all, the card is shown for 2.5 s and cut away
  * @returns {boolean} true while the card should still be drawn
  */
 export function stepCard(card, dt, { rm = false, spinning = false, speed = 0 } = {}) {
   card.t += dt;
-  if (rm) { card.a = card.t < 3 ? 1 : 0; return card.a > 0; }
-  if (!card.fading && (spinning || card.t > 7)) card.fading = true;
-  if (!card.fading) card.a = Math.min(1, card.a + dt / 0.5);
-  else card.a = Math.max(0, Math.min(card.a, spinning ? 1 - speed / 70 : card.a - dt / 3));
+  if (rm) { card.a = card.t < 2.5 ? 1 : 0; return card.a > 0; }
+  if (!card.fading && (spinning || card.t > 5)) card.fading = true;
+  if (!card.fading) card.a = Math.min(1, card.a + dt / 0.3);
+  else card.a = Math.max(0, Math.min(card.a, spinning ? 1 - speed / 50 : card.a - dt / 2));
   return !(card.fading && card.a <= 0.01);
 }

@@ -162,16 +162,16 @@ test('story card: fades in, holds while waiting, fades out as the record speeds 
   assert.ok(c.a <= 0.01);
 });
 
-test('story card: still fades after 7 s when nobody presses Play; reduced motion cuts after 3 s with no fade', async () => {
+test('story card: still fades after 5 s when nobody presses Play; reduced motion cuts after 2.5 s with no fade', async () => {
   const { newCard, stepCard } = await import('./viz.js');
   const a = newCard({ id: 'hue' });
-  for (let i = 0; i < 140; i++) stepCard(a, 0.05);        // 7 s
+  for (let i = 0; i < 100; i++) stepCard(a, 0.05);        // 5 s
   assert.equal(a.fading, false);
   let n = 0; while (stepCard(a, 0.05) && n < 400) n++;
-  assert.ok(n > 30 && n < 100, `faded over about 3 s (${n} steps)`);
+  assert.ok(n > 20 && n < 70, `faded over about 2 s (${n} steps)`);
   const r = newCard({ id: 'hue' });
   assert.equal(stepCard(r, 1, { rm: true }), true);
   assert.equal(r.a, 1);                                     // shown fully, no fade in
-  assert.equal(stepCard(r, 2.5, { rm: true }), false);
+  assert.equal(stepCard(r, 2.5, { rm: true }), false);   // 3.5 s in total, past the 2.5 s
   assert.equal(r.a, 0);
 });
