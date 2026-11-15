@@ -717,13 +717,15 @@ function scheduleBirds(b, t0) {
   if (dens > prev + 0.1) n += 2;
   for (let i = 0; i < n; i++) {
     const at = Math.max(ac.currentTime + 0.02, t0 + Math.random() * BAR);
-    const dur = 0.9 + Math.random() * 2.2;
+    const dur = 2.5 + Math.random() * 2.5;   // long enough for a gentle swell in and out
     const off = Math.random() * Math.max(0.1, buf.duration - dur - 0.1);
     const vol = AMB_TRIM.birds * (0.45 + 0.5 * dens) * (0.7 + Math.random() * 0.3);
     const src = ac.createBufferSource(); src.buffer = buf; src.playbackRate.value = 0.95 + Math.random() * 0.1;
     const g = ac.createGain(); const pan = ac.createStereoPanner(); pan.pan.value = (Math.random() - 0.5) * 1.4;
-    g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(vol, at + 0.15);
-    g.gain.setValueAtTime(vol, at + dur - 0.35); g.gain.linearRampToValueAtTime(0, at + dur);
+    // swell in over ~0.9 s and fade out over ~1.2 s (equal-power-like curve), so a call never starts or stops abruptly
+    const curve = (a, b, n = 16) => Float32Array.from({ length: n }, (_, i) => a + (b - a) * Math.sin((i / (n - 1)) * Math.PI / 2) ** 2);
+    g.gain.value = 0; g.gain.setValueCurveAtTime(curve(0, vol), at, 0.9);   // (no other event inside a curve's span: Web Audio forbids it)
+    g.gain.setValueCurveAtTime(curve(vol, 0), at + dur - 1.2, 1.2);
     src.connect(g); g.connect(pan); pan.connect(birdBus);
     src.start(at, off, dur + 0.05);
   }
