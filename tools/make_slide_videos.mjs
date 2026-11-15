@@ -1,10 +1,11 @@
 // Written by Ky with help from Claude (SI). See AI_USE.md.
-// Records short silent screen clips of the running page for the demo (it never changes the page): a disc is put on the deck and played
+// Records short screen clips (with sound) of the running page for the demo (it never changes the page): a disc is put on the deck and played
 // for its full year (24 s), through to the disc going back on the shelf. Clips are .webm, then ffmpeg makes .mp4 (H.264).
-// No sound is recorded (the music is made live in the browser): record the sound with a screen recorder if the demo needs it.
+// The sound is captured from the page itself: everything the page sends to the speakers is also sent to a MediaRecorder (the music
+// is made live in the browser), then ffmpeg puts that sound under the picture, lined up by the time the recorder started.
 // Usage: node tools/make_slide_videos.mjs [base url] [out folder] [clip name prefixes to record...]
 import { createRequire } from 'node:module';
-import { mkdirSync, renameSync, readdirSync, rmSync } from 'node:fs';
+import { mkdirSync, renameSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 const require = createRequire(import.meta.url);
@@ -24,6 +25,36 @@ async function clip(name, label, seconds = 27) {
   const tmp = `${OUT}/_tmp`; rmSync(tmp, { recursive: true, force: true }); mkdirSync(tmp, { recursive: true });
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 720 }, recordVideo: { dir: tmp, size: { width: 1280, height: 720 } } });
   await ctx.addInitScript(() => { try { localStorage.setItem('ej-tour-done', '1'); } catch { /* ignore */ } });
+  // capture the page's sound: anything connected to a speaker (AudioDestinationNode) is also connected to a MediaStreamDestination
+  await ctx.addInitScript(() => {
+    window.__recs = [];
+    const orig = AudioNode.prototype.connect;
+    AudioNode.prototype.connect = function (dest, ...rest) {
+      const r = orig.call(this, dest, ...rest);
+      if (dest instanceof AudioDestinationNode) {
+        const ac = dest.context;
+        if (!ac.__rec) {
+          const md = ac.createMediaStreamDestination(); ac.__rec = md;
+          const mr = new MediaRecorder(md.stream, { mimeType: 'audio/webm;codecs=opus' }); const chunks = [];
+          mr.ondataavailable = (e) => chunks.push(e.data); mr.start(250);
+          window.__recs.push({ mr, chunks, t0: Date.now() });
+        }
+        orig.call(this, ac.__rec);
+      }
+      return r;
+    };
+    window.__stopRec = async () => {
+      const out = [];
+      for (const r of window.__recs) {
+        await new Promise((res) => { r.mr.onstop = res; r.mr.stop(); });
+        const blob = new Blob(r.chunks, { type: 'audio/webm' }); const buf = new Uint8Array(await blob.arrayBuffer());
+        let bin = ''; for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+        out.push({ t0: r.t0, b64: btoa(bin) });
+      }
+      return out;
+    };
+  });
+  const tVideo = Date.now();
   const page = await ctx.newPage();
   await page.goto(BASE); await page.waitForSelector('.slot'); await sleep(1800);
   if (label) {
@@ -38,11 +69,19 @@ async function clip(name, label, seconds = 27) {
     await page.click('#sample-btn');
   }
   await sleep(seconds * 1000);
+  const recs = await page.evaluate(() => window.__stopRec());
   await ctx.close();   // flushes the video
   const f = readdirSync(tmp).find((x) => x.endsWith('.webm'));
   renameSync(`${tmp}/${f}`, `${OUT}/${name}.webm`); rmSync(tmp, { recursive: true, force: true });
-  const r = spawnSync('ffmpeg', ['-v', 'error', '-y', '-ss', '1.0', '-i', `${OUT}/${name}.webm`, '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', `${OUT}/${name}.mp4`]);
-  console.log('saved', name, r.status === 0 ? '(mp4 ok)' : `(ffmpeg failed: ${r.stderr})`);
+  const args = ['-v', 'error', '-y', '-i', `${OUT}/${name}.webm`];
+  let filter = '';
+  recs.forEach((rc, i) => { writeFileSync(`${OUT}/${name}.audio${i}.webm`, Buffer.from(rc.b64, 'base64')); args.push('-i', `${OUT}/${name}.audio${i}.webm`);
+    const delay = Math.max(0, rc.t0 - tVideo); filter += `[${i + 1}:a]adelay=${delay}|${delay}[a${i}];`; });
+  if (recs.length) { filter += recs.map((_, i) => `[a${i}]`).join('') + `amix=inputs=${recs.length}:normalize=0[aout]`; args.push('-filter_complex', filter, '-map', '0:v', '-map', '[aout]', '-c:a', 'aac', '-b:a', '160k'); }
+  args.push('-ss', '1.0', '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', `${OUT}/${name}.mp4`);
+  const r = spawnSync('ffmpeg', args);
+  for (let i = 0; i < recs.length; i++) rmSync(`${OUT}/${name}.audio${i}.webm`, { force: true });
+  console.log('saved', name, `sound tracks: ${recs.length}`, r.status === 0 ? '(mp4 ok)' : `(ffmpeg failed: ${r.stderr})`);
 }
 
 await clip('01-sample-year-hue-floods', null, 28);
