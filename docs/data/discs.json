@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-11-15T08:04:04.525872+00:00",
+  "generated": "2026-11-15T08:13:39.051344+00:00",
   "provenance": {
     "source": "Colours read from NASA SVS frames (Earth Information Center). Rain values are colour-bin representatives, not exact measurements; NDVI values are colourbar positions, not measured NDVI.",
     "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md"
@@ -85,7 +85,7 @@
       "levels": [
         {
           "level": 1,
-          "min": 0.0,
+          "min": 0,
           "max": 0.25,
           "label": "low greenness"
         },
@@ -104,8 +104,42 @@
         {
           "level": 4,
           "min": 0.75,
-          "max": 1.0,
+          "max": 1,
           "label": "high greenness"
+        }
+      ]
+    },
+    "snow": {
+      "label": "Snow cover: share of the land under snow",
+      "unit": "share of land pixels under snow in the monthly MODIS Terra map (0 = none, 1 = all)",
+      "source_name": "NASA MODIS Terra snow cover (GIBS)",
+      "source_url": "https://worldview.earthdata.nasa.gov/?l=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+      "gibs_layer": "MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+      "product_url": "https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61",
+      "levels": [
+        {
+          "level": 1,
+          "min": 0,
+          "max": 0.25,
+          "label": "under 25% snow"
+        },
+        {
+          "level": 2,
+          "min": 0.25,
+          "max": 0.5,
+          "label": "25-50% snow"
+        },
+        {
+          "level": 3,
+          "min": 0.5,
+          "max": 0.75,
+          "label": "50-75% snow"
+        },
+        {
+          "level": 4,
+          "min": 0.75,
+          "max": 1,
+          "label": "75-100% snow"
         }
       ]
     }
@@ -169,7 +203,7 @@
       "id": "tromso",
       "name": "Tromso, Norway",
       "lat": 69.7,
-      "lon": 19.0,
+      "lon": 19,
       "biome": "snow-coast",
       "region": "other",
       "story": "Draft intro (to be reviewed by Bormey): explore rainfall differences from normal and vegetation greenness at Tromso, north of the Arctic Circle, where winter is dark and snowy and the plants only turn green in a short summer."
@@ -247,7 +281,7 @@
         5,
         5
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 4.9447,
       "condition": "mint",
       "breaks": [],
@@ -263,7 +297,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "Here’s Dhaka (Bangladesh), at the centre of NASA’s map from 15 July 2025. Brown shows drier conditions than usual; green and turquoise show wetter ones. Recent rainfall differences build up and fade over about three months.",
       "check": null
@@ -330,7 +364,7 @@
         5,
         5
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 4.9447,
       "condition": "mint",
       "breaks": [],
@@ -346,7 +380,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "Here’s Sylhet (Bangladesh) at the centre of NASA’s map from 15 July 2025. Brown near the centre shows drier conditions than usual; green and turquoise show wetter areas. Recent rainfall differences build up and fade over about three months.",
       "check": null
@@ -413,8 +447,8 @@
         5,
         5
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "mint",
       "breaks": [],
       "frame": "data/frames/tonle-sap-rain-2025.png",
@@ -429,7 +463,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "Here’s Tonle Sap (Cambodia) on NASA’s map from 15 July 2025. Grey background shows through near the centre, indicating rainfall close to usual; green and turquoise show wetter areas. Recent rainfall differences build up and fade over about three months.",
       "check": null
@@ -496,8 +530,8 @@
         5,
         5
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "mint",
       "breaks": [],
       "frame": "data/frames/hue-rain-2025.png",
@@ -512,7 +546,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "Here’s Huế (Vietnam) at the centre of NASA’s map from 15 July 2025. Green near the centre shows wetter conditions than usual; brown shows drier areas. Recent rainfall differences build up and fade over about three months.",
       "check": null
@@ -579,7 +613,7 @@
         2,
         0
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 4.9447,
       "condition": "scratched",
       "breaks": [],
@@ -595,7 +629,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -662,8 +696,8 @@
         2,
         0
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "scratched",
       "breaks": [],
       "frame": "data/frames/sylhet-rain-2026.png",
@@ -678,7 +712,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -745,7 +779,7 @@
         2,
         0
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 4.9447,
       "condition": "scratched",
       "breaks": [],
@@ -761,7 +795,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -828,8 +862,8 @@
         2,
         0
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "scratched",
       "breaks": [],
       "frame": "data/frames/hue-rain-2026.png",
@@ -844,7 +878,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -911,7 +945,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 9.4129,
       "condition": "mint",
       "breaks": [],
@@ -925,7 +959,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -961,8 +995,8 @@
         0.25,
         0.56,
         0.51,
-        1.0,
-        1.0
+        1,
+        1
       ],
       "saturated": [
         false,
@@ -992,7 +1026,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 8.466,
       "condition": "mint",
       "breaks": [],
@@ -1006,7 +1040,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1032,9 +1066,9 @@
         4
       ],
       "values": [
-        1.0,
-        1.0,
-        1.0,
+        1,
+        1,
+        1,
         0.77,
         0.71,
         0.61,
@@ -1087,7 +1121,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1154,7 +1188,7 @@
         3,
         3
       ],
-      "match_pct": 84.0,
+      "match_pct": 84,
       "median_de": 9.4454,
       "condition": "mint",
       "breaks": [],
@@ -1168,7 +1202,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1235,7 +1269,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 9.4453,
       "condition": "mint",
       "breaks": [],
@@ -1249,7 +1283,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1285,8 +1319,8 @@
         0.33,
         0.57,
         0.73,
-        1.0,
-        1.0
+        1,
+        1
       ],
       "saturated": [
         false,
@@ -1316,7 +1350,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 9.1223,
       "condition": "mint",
       "breaks": [],
@@ -1330,7 +1364,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1356,9 +1390,9 @@
         3
       ],
       "values": [
-        1.0,
-        1.0,
-        1.0,
+        1,
+        1,
+        1,
         0.8,
         0.83,
         0.67,
@@ -1411,7 +1445,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1492,7 +1526,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1559,7 +1593,7 @@
         5,
         5
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 4.9447,
       "condition": "mint",
       "breaks": [],
@@ -1575,7 +1609,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -1642,7 +1676,7 @@
         2,
         0
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 4.9447,
       "condition": "scratched",
       "breaks": [],
@@ -1658,7 +1692,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -1690,9 +1724,9 @@
         0.6,
         0.61,
         0.57,
-        1.0,
-        1.0,
-        1.0,
+        1,
+        1,
+        1,
         0.74,
         0.71,
         0.46
@@ -1739,7 +1773,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1771,9 +1805,9 @@
         0.5,
         0.61,
         0.72,
-        1.0,
-        1.0,
-        1.0,
+        1,
+        1,
+        1,
         0.61,
         0.72,
         0.65
@@ -1820,7 +1854,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -1887,7 +1921,7 @@
         5,
         5
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 0,
       "condition": "mint",
       "breaks": [],
@@ -1903,7 +1937,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -1970,8 +2004,8 @@
         5,
         5
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "mint",
       "breaks": [],
       "frame": "data/frames/tromso-rain-2025.png",
@@ -1986,7 +2020,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -2053,7 +2087,7 @@
         2,
         0
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 0,
       "condition": "scratched",
       "breaks": [],
@@ -2069,7 +2103,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -2136,8 +2170,8 @@
         2,
         0
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "scratched",
       "breaks": [],
       "frame": "data/frames/tromso-rain-2026.png",
@@ -2152,7 +2186,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -2219,7 +2253,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 9.8291,
       "condition": "mint",
       "breaks": [],
@@ -2233,7 +2267,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -2314,7 +2348,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -2381,7 +2415,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 9.7796,
       "condition": "mint",
       "breaks": [],
@@ -2395,7 +2429,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -2476,7 +2510,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -2543,8 +2577,8 @@
         5,
         5
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "mint",
       "breaks": [],
       "frame": "data/frames/ferlo-rain-2025.png",
@@ -2559,7 +2593,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -2626,8 +2660,8 @@
         2,
         0
       ],
-      "match_pct": 100.0,
-      "median_de": 0.0,
+      "match_pct": 100,
+      "median_de": 0,
       "condition": "scratched",
       "breaks": [],
       "frame": "data/frames/ferlo-rain-2026.png",
@@ -2642,7 +2676,7 @@
           22,
           28
         ],
-        "west_lon": 20.0
+        "west_lon": 20
       },
       "description": "",
       "check": null
@@ -2709,7 +2743,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 9.7165,
       "condition": "mint",
       "breaks": [],
@@ -2723,7 +2757,7 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
       },
       "description": "",
       "check": null
@@ -2790,7 +2824,7 @@
         3,
         3
       ],
-      "match_pct": 100.0,
+      "match_pct": 100,
       "median_de": 9.7387,
       "condition": "mint",
       "breaks": [],
@@ -2804,7 +2838,181 @@
           15,
           25
         ],
-        "west_lon": -180.0
+        "west_lon": -180
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "tromso-snow-2025",
+      "place": "tromso",
+      "dataset": "snow",
+      "year": 2025,
+      "side": "A",
+      "levels": [
+        null,
+        4,
+        4,
+        4,
+        4,
+        2,
+        1,
+        1,
+        1,
+        3,
+        4,
+        null
+      ],
+      "values": [
+        null,
+        0.96,
+        0.99,
+        0.97,
+        0.92,
+        0.39,
+        0.01,
+        0.01,
+        0.07,
+        0.51,
+        0.99,
+        null
+      ],
+      "saturated": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false
+      ],
+      "frames_used": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "match_pct": 100,
+      "median_de": 0,
+      "condition": "scratched",
+      "breaks": [],
+      "frame": "data/frames/tromso-snow-2025.png",
+      "source": {
+        "gibs_layer": "MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+        "wms": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+        "colormap": "https://gibs.earthdata.nasa.gov/colormaps/v1.0/MODIS_NDSI_Snow_Cover.xml",
+        "product_url": "https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61",
+        "box_south_west_north_east": [
+          69.45,
+          18.5,
+          69.95,
+          19.5
+        ],
+        "grid": [
+          20,
+          10
+        ],
+        "time": "first day of each month (monthly map)"
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "tromso-snow-2026",
+      "place": "tromso",
+      "dataset": "snow",
+      "year": 2026,
+      "side": "B",
+      "levels": [
+        null,
+        4,
+        4,
+        4,
+        3,
+        1,
+        1,
+        1,
+        1,
+        3,
+        null,
+        null
+      ],
+      "values": [
+        null,
+        0.99,
+        0.94,
+        0.97,
+        0.55,
+        0.13,
+        0.02,
+        0.07,
+        0.12,
+        0.55,
+        null,
+        null
+      ],
+      "saturated": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "frames_used": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "match_pct": 100,
+      "median_de": 0,
+      "condition": "scratched",
+      "breaks": [],
+      "frame": "data/frames/tromso-snow-2026.png",
+      "source": {
+        "gibs_layer": "MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+        "wms": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+        "colormap": "https://gibs.earthdata.nasa.gov/colormaps/v1.0/MODIS_NDSI_Snow_Cover.xml",
+        "product_url": "https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61",
+        "box_south_west_north_east": [
+          69.45,
+          18.5,
+          69.95,
+          19.5
+        ],
+        "grid": [
+          20,
+          10
+        ],
+        "time": "first day of each month (monthly map)"
       },
       "description": "",
       "check": null

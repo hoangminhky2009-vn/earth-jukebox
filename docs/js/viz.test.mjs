@@ -200,3 +200,17 @@ test('gauge: fills with the level (rain half full at normal); peak months are th
   assert.deepEqual(peakMonths(Array(12).fill(null), 'rain'), []);
 });
 
+test('snow cover: its own colours, pictures, title and tray spot', async () => {
+  const { levelColor, SNOW_COLORS, monthIcon, panelTitle, shelfPages, compareSides } = await import('./viz.js');
+  assert.equal(levelColor('snow', 4), SNOW_COLORS[4]);
+  assert.deepEqual(monthIcon('snow', 3), { kind: 'snow', size: 3 });
+  assert.equal(panelTitle([{ dataset: 'snow', year: 2025 }], { snow: { gibs_layer: 'X' } }, 'Tromso, Norway'), 'TROMSO · SNOW COVER · 2025 · NASA MODIS');
+  const places = [{ id: 'tromso', biome: 'snow-coast', lon: 19 }];
+  const slots = [{ placeId: 'tromso', dataset: 'ndvi' }, { placeId: 'tromso', dataset: 'snow' }];
+  assert.equal(shelfPages(slots, places)[0].slots[5].dataset, 'snow', 'the ice spot prefers snow cover');
+  assert.equal(shelfPages(slots.slice(0, 1), places)[0].slots[5].dataset, 'ndvi', 'and falls back to greenness');
+  const c = compareSides({ id: 'a', place: 't', dataset: 'snow', side: 'A', year: 2025, levels: Array(12).fill(2) },
+    { id: 'b', place: 't', dataset: 'snow', side: 'B', year: 2026, levels: Array(12).fill(3) });
+  assert.equal(c.word, 'snowier');
+});
+

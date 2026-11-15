@@ -23,13 +23,19 @@ export function initSeasonal(store, data) {
   options($('record-place'),places,'dhaka');
   options($('compare-place'),places,'dhaka');
   let quickDisc = null, lastQuickDiscId = null;
+  function quickDatasets(chosen = $('record-dataset').value) {
+    const names = {...DATASET_NAMES,snow:'Snow cover'};
+    const available = [...new Set(data.discs.filter(d=>d.place === $('record-place').value).map(d=>d.dataset))];
+    options($('record-dataset'),available.map(value=>({value,label:names[value] ?? value})),chosen);
+    quickYears();
+  }
   function quickYears() {
     const ys = availableYears(data.discs,$('record-place').value,$('record-dataset').value);
     options($('record-year'),ys,$('record-year').value || 2025);
     $('record-load').disabled = !ys.length;
   }
-  quickYears();
-  $('record-place').addEventListener('change',quickYears);
+  quickDatasets();
+  $('record-place').addEventListener('change',() => quickDatasets());
   $('record-dataset').addEventListener('change',quickYears);
   $('record-load').addEventListener('click',() => {
     const d = findDisc($('record-place').value,$('record-dataset').value,$('record-year').value);
@@ -48,7 +54,7 @@ export function initSeasonal(store, data) {
     if (!quickDisc) { lastQuickDiscId = null; $('record-status').textContent = 'Choose a place above, or pick a disc from the shelf.'; return; }
     // Playback ticks update the readout without replacing a selection being prepared for the next record.
     if (quickDisc.id !== lastQuickDiscId) {
-      $('record-place').value = quickDisc.place; $('record-dataset').value = quickDisc.dataset; quickYears(); $('record-year').value = quickDisc.year;
+      $('record-place').value = quickDisc.place; quickDatasets(quickDisc.dataset); $('record-year').value = quickDisc.year;
       lastQuickDiscId = quickDisc.id;
     }
     const other = data.discs.find(d => d.place === quickDisc.place && d.dataset === quickDisc.dataset && d.side !== quickDisc.side);
@@ -232,7 +238,11 @@ export function initSeasonal(store, data) {
   $('compare-volume').addEventListener('input',() => store.updateSettings({volume:Number($('compare-volume').value)}));
   $('duet-rain').addEventListener('change',applyMute); $('duet-green').addEventListener('change',applyMute);
   $('month-evidence').addEventListener('toggle',() => { if ($('month-evidence').open) renderEvidence(); });
-  const preset = (next,place,ds) => { kind=next; $('compare-place').value=place; $('compare-dataset').value=ds; $('changes-only').checked=false; configure(); $('seasonal-title').scrollIntoView({block:'start',behavior:store.state.settings.reducedMotion ? 'instant' : 'smooth'}); };
+  const preset = (next,place,ds) => {
+    kind=next; $('compare-place').value=place; $('compare-dataset').value=ds; $('changes-only').checked=false;
+    const years=availableYears(data.discs,place,ds); options($('compare-year'),years,years[0]);
+    configure(); $('seasonal-title').scrollIntoView({block:'start',behavior:store.state.settings.reducedMotion ? 'instant' : 'smooth'});
+  };
   $('preset-years').addEventListener('click',() => preset('years',data.places.some(p=>p.id==='dhaka') ? 'dhaka' : data.places[0].id,'rain'));
   $('preset-places').addEventListener('click',() => { $('compare-place-b').value='sylhet'; preset('places','dhaka','rain'); });
   $('preset-ferlo').hidden = !data.places.some(p=>p.id==='ferlo');

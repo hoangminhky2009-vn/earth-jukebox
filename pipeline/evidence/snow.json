@@ -1,0 +1,184 @@
+{
+ "layer": "MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+ "colormap": "https://gibs.earthdata.nasa.gov/colormaps/v1.0/MODIS_NDSI_Snow_Cover.xml",
+ "box": [
+  69.45,
+  18.5,
+  69.95,
+  19.5
+ ],
+ "grid": [
+  20,
+  10
+ ],
+ "months": {
+  "2025-01": {
+   "value": null,
+   "land_pixels": 171,
+   "coloured_pixels": 0,
+   "unknown_colours": 0,
+   "sha256": "3575f3ba86a99587b31f55e799971726ada5be8a7fb0a54d2930de97abae4805"
+  },
+  "2025-02": {
+   "value": 0.96,
+   "land_pixels": 171,
+   "coloured_pixels": 165,
+   "unknown_colours": 0,
+   "sha256": "075a68426fa58eb99973c84d52d407caa42822c3d42ea1a98bdfa3dc82a03db3"
+  },
+  "2025-03": {
+   "value": 0.99,
+   "land_pixels": 171,
+   "coloured_pixels": 170,
+   "unknown_colours": 0,
+   "sha256": "17a7af6c1a847f8e6526a0f77cd927a15bc0c8387060a8ac52248d82f2681ccc"
+  },
+  "2025-04": {
+   "value": 0.97,
+   "land_pixels": 171,
+   "coloured_pixels": 166,
+   "unknown_colours": 0,
+   "sha256": "88967c591fb0ab20ccffddde5297c798f290ca80cb81c3e9de184ed01f80f9da"
+  },
+  "2025-05": {
+   "value": 0.92,
+   "land_pixels": 171,
+   "coloured_pixels": 169,
+   "unknown_colours": 0,
+   "sha256": "a51131f3958eec8e051068ac88823336d862b72098f4210808d05efe35cdb9e6"
+  },
+  "2025-06": {
+   "value": 0.39,
+   "land_pixels": 171,
+   "coloured_pixels": 102,
+   "unknown_colours": 0,
+   "sha256": "fa36d1843f829b766733ffb2c3f3487e5dde2ec91873bc6e396434f32214756a"
+  },
+  "2025-07": {
+   "value": 0.01,
+   "land_pixels": 171,
+   "coloured_pixels": 22,
+   "unknown_colours": 0,
+   "sha256": "c040d01bcda336d8ec4ca8778662197f3db27ed7531571780bb7619a8e6bee9d"
+  },
+  "2025-08": {
+   "value": 0.01,
+   "land_pixels": 171,
+   "coloured_pixels": 39,
+   "unknown_colours": 0,
+   "sha256": "9befa852b84c840277a4edf1f25b043969da78bb4f255ddfa9beada30d765335"
+  },
+  "2025-09": {
+   "value": 0.07,
+   "land_pixels": 171,
+   "coloured_pixels": 112,
+   "unknown_colours": 0,
+   "sha256": "80b9816ae046dd30208fdb775915dc6bc80f515843fc1b54a37509949443988f"
+  },
+  "2025-10": {
+   "value": 0.51,
+   "land_pixels": 171,
+   "coloured_pixels": 170,
+   "unknown_colours": 0,
+   "sha256": "b5452e862c5e8d847aef3c5e14e566478b4a15ac63a2345ec276b35df060742c"
+  },
+  "2025-11": {
+   "value": 0.99,
+   "land_pixels": 171,
+   "coloured_pixels": 169,
+   "unknown_colours": 0,
+   "sha256": "13890236dfbac6be1f827cb6247aa5fedba0401debabc7d1c5959fc8c2eeb104"
+  },
+  "2025-12": {
+   "value": null,
+   "land_pixels": 171,
+   "coloured_pixels": 0,
+   "unknown_colours": 0,
+   "sha256": "3575f3ba86a99587b31f55e799971726ada5be8a7fb0a54d2930de97abae4805"
+  },
+  "2026-01": {
+   "value": null,
+   "land_pixels": 171,
+   "coloured_pixels": 0,
+   "unknown_colours": 0,
+   "sha256": "3575f3ba86a99587b31f55e799971726ada5be8a7fb0a54d2930de97abae4805"
+  },
+  "2026-02": {
+   "value": 0.99,
+   "land_pixels": 171,
+   "coloured_pixels": 170,
+   "unknown_colours": 0,
+   "sha256": "47dcd7aea73c136bc953c2e8c6f511490edbc266eead3dded3d6d04a30c10191"
+  },
+  "2026-03": {
+   "value": 0.94,
+   "land_pixels": 171,
+   "coloured_pixels": 160,
+   "unknown_colours": 0,
+   "sha256": "48e36e962a9df786b3b995b2bbfdca13ac897d88107469cba2bde7c64c832e35"
+  },
+  "2026-04": {
+   "value": 0.97,
+   "land_pixels": 171,
+   "coloured_pixels": 171,
+   "unknown_colours": 0,
+   "sha256": "74ebbc7fb131093a21020ffb8c742a301ddb674d3e904d55262584cb66df3388"
+  },
+  "2026-05": {
+   "value": 0.55,
+   "land_pixels": 171,
+   "coloured_pixels": 150,
+   "unknown_colours": 0,
+   "sha256": "3158f99f2af9628ab04c6b0a68dd8ec17bff6afdcc9cb65c96bc89ec4d11ce48"
+  },
+  "2026-06": {
+   "value": 0.13,
+   "land_pixels": 171,
+   "coloured_pixels": 92,
+   "unknown_colours": 0,
+   "sha256": "8ade86f86c38247ddd578a5911ead46a8acfe45a824d57ea4ec676e8a08a5bab"
+  },
+  "2026-07": {
+   "value": 0.02,
+   "land_pixels": 171,
+   "coloured_pixels": 34,
+   "unknown_colours": 0,
+   "sha256": "885ba1bedfbe8f93813022b09cb342065de35067c4e0a73d9b742bf63e341f89"
+  },
+  "2026-08": {
+   "value": 0.07,
+   "land_pixels": 171,
+   "coloured_pixels": 140,
+   "unknown_colours": 0,
+   "sha256": "ecc26dc5b63ccd0d602b99ebeb79a932f0610729c8ed9df82222a0a7e23793d9"
+  },
+  "2026-09": {
+   "value": 0.12,
+   "land_pixels": 171,
+   "coloured_pixels": 110,
+   "unknown_colours": 0,
+   "sha256": "69a3b63ea28c5f85c502b607375acb5d1b9193ef3762cf948e0c63d4403d5a5b"
+  },
+  "2026-10": {
+   "value": 0.55,
+   "land_pixels": 171,
+   "coloured_pixels": 170,
+   "unknown_colours": 0,
+   "sha256": "2e7a48c17dd3341c6a0c50460a00d3201b50c6f85eba737202a4046c32e8c9ca"
+  },
+  "2026-11": {
+   "value": null,
+   "land_pixels": 171,
+   "coloured_pixels": 0,
+   "unknown_colours": 0,
+   "sha256": "3575f3ba86a99587b31f55e799971726ada5be8a7fb0a54d2930de97abae4805"
+  },
+  "2026-12": {
+   "value": null,
+   "land_pixels": 171,
+   "coloured_pixels": 0,
+   "unknown_colours": 0,
+   "sha256": "3575f3ba86a99587b31f55e799971726ada5be8a7fb0a54d2930de97abae4805"
+  }
+ }
+}

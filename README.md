@@ -11,7 +11,7 @@ or how green the land was. Play it, listen, then open **Details** to see the num
 ## How to use it
 
 1. Choose a place, variable and year using the labelled controls, then **Put on the deck**. You can also choose a
-   disc from the pixel tray. There are 32 records across eight places, including the Ferlo grasslands in Senegal.
+   disc from the pixel tray. There are 34 records across eight places, including the Ferlo grasslands in Senegal.
 2. Press **Play record**. Twelve lights follow the calendar and the readout explains each month's category.
 3. **Flip** switches years while keeping the same calendar position. **Science mode** plays a plain data note;
    **See the evidence** opens the original chart, table and source image.
@@ -46,9 +46,12 @@ Every number comes from NASA Scientific Visualization Studio frames read by our 
 of a small area around each place is matched to the colour key of the image. These are categories ("2 to 5 mm/day
 drier than normal"), not measured rainfall. The rain images show a departure from normal that fades over about three
 months. Limits and checks are listed in `pipeline/HANDOFF.md`. We never invent, smooth or fix values; the music can be
-read back to the same categories (`node --test`: 384 of 384 stored monthly slots match, including missing slots).
+read back to the same categories (`node --test`: 408 of 408 stored monthly slots match, including missing slots).
 Comparisons count only usable pairs. Category differences are not exact rainfall or calibrated NDVI differences;
 rain and greenness playing together does not establish a causal relationship.
+
+Tromso also has snow-cover records for 2025 and 2026 from NASA's monthly MODIS Terra map via GIBS.
+They remain available in the main player; seasonal auditions currently cover rain and greenness.
 
 ## Run it yourself
 

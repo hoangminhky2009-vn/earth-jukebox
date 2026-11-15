@@ -15,6 +15,13 @@ def finite(value):
 
 def source_sampling(source, dataset, bad):
     """Check provenance and return the valid-frame minimum and maximum."""
+    if dataset == 'snow':
+        # One monthly map per month from NASA GIBS (pipeline/snow.py).
+        if not isinstance(source, dict) or source.get('gibs_layer') != 'MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct':
+            bad('source.gibs_layer must be MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct')
+        elif not str(source.get('wms', '')).startswith('https://gibs.earthdata.nasa.gov/'):
+            bad('source.wms must be a NASA GIBS address')
+        return 1, 1
     minimum, maximum = (3, 5) if dataset == 'rain' else (2, 3)
     if not isinstance(source, dict):
         bad('source metadata is required')
@@ -88,7 +95,7 @@ def validate(data):
         valid_place_id=isinstance(place_id,str) and bool(place_id.strip())
         if not valid_place_id or place_id not in places:bad('unknown place')
         dataset=disc.get('dataset')
-        if dataset not in ('rain','ndvi'):bad('unknown dataset');continue
+        if dataset not in ('rain','ndvi','snow'):bad('unknown dataset');continue
         if valid_place_id and type(disc.get('year')) is int:
             pair=(place_id,dataset,disc['year'])
             if pair in pairs:bad('duplicate place/dataset/year')
@@ -117,7 +124,7 @@ def validate(data):
                 if value!=RAIN_VALUES[level]:bad(f'month {i}: value does not match rain level')
                 if sat!=(abs(level)==4):bad(f'month {i}: incorrect saturation')
             else:
-                if not 0<=value<=1:bad(f'month {i}: NDVI position outside 0..1');continue
+                if not 0<=value<=1:bad(f'month {i}: {dataset} value outside 0..1');continue
                 if type(level) is not int or level!=ndvi_level(value):bad(f'month {i}: incorrect NDVI quarter')
                 if sat!=(value<=.02 or value>=.98):bad(f'month {i}: incorrect saturation')
         for field in ['match_pct','median_de']:

@@ -5,6 +5,8 @@ const data = JSON.parse(await readFile(new URL('docs/data/discs.json',root),'utf
 const result = { meaning:'Colour-decoding evidence from NASA rendered frames, not an independent physical measurement validation.', discs:{} };
 const cache = new Map();
 for (const disc of data.discs) {
+  // The seasonal inspector covers SVS rain and greenness; snow keeps its GIBS evidence in the main player.
+  if (!['rain','ndvi'].includes(disc.dataset)) continue;
   const key = `${disc.dataset}-${disc.year}`;
   if (!cache.has(key)) cache.set(key,JSON.parse(await readFile(new URL(`pipeline/evidence/${key}.json`,root),'utf8')));
   const e = cache.get(key).places[disc.place];

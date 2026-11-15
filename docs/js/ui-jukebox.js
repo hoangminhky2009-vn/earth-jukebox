@@ -6,12 +6,13 @@ import { monthBars } from './viz.js';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
-const READOUT_NAME = { rain: 'Rain', ndvi: 'Greenness' };
+const READOUT_NAME = { rain: 'Rain', ndvi: 'Greenness', snow: 'Snow cover' };
 const CREDITS_URL = 'https://github.com/hoangminhky2009-vn/earth-jukebox/blob/main/CREDITS.md';
 // Honest limits of each dataset, shown in the Details dialog.
 const LIMITS = {
   rain: 'Rain is smoothed over about 3 months and saturates beyond ±15 mm/day: stronger rain or drought still reads as 15+.',
   ndvi: 'Greenness is a position on the image’s colour scale (low to high). It is not an NDVI number: the scale carries no NDVI values.',
+  snow: 'Snow cover is the share of land pixels under snow in a 0.05° box around the place. MODIS needs daylight: there is no data in the polar night (December, January), and a pixel hidden by cloud all month counts as snow-free.',
 };
 const CONDITION = {
   mint: { icon: '✓', text: 'Mint', note: 'every month has data' },
@@ -34,9 +35,9 @@ export function readoutText(disc, month, datasets) {
   const found = datasets?.[disc.dataset]?.levels.find((l) => l.level === level);
   const label = found ? found.label : `level ${level}`;
   const name = READOUT_NAME[disc.dataset] ?? disc.dataset;
-  if (disc.dataset === 'ndvi') {
+  if (disc.dataset !== 'rain') {
     const v = disc.values?.[m];
-    const pos = typeof v === 'number' ? ` (${v} on the colour scale)` : '';
+    const pos = typeof v !== 'number' ? '' : disc.dataset === 'snow' ? ` (${Math.round(v * 100)}% of the land)` : ` (${v} on the colour scale)`;
     return `${name} · ${when}: ${label}${pos}`;
   }
   return `${name} · ${when}: ${label} · colour match ${Math.round(disc.match_pct)}%`;
@@ -46,7 +47,8 @@ export function readoutText(disc, month, datasets) {
 export function metaText(disc, datasets) {
   if (!disc) return '>_ no disc loaded · pick a place';
   const svs = datasets?.[disc.dataset]?.svs ?? disc.source?.svs;
-  return `>_ disc/${disc.id} · ${disc.dataset} · source: NASA SVS${svs ? ` ${svs}` : ''} · side ${disc.side}`;
+  const src = svs || !datasets?.[disc.dataset]?.source_name ? `NASA SVS${svs ? ` ${svs}` : ''}` : 'NASA MODIS (GIBS)';
+  return `>_ disc/${disc.id} · ${disc.dataset} · source: ${src} · side ${disc.side}`;
 }
 
 /**
@@ -99,8 +101,9 @@ export function detailRows(disc, datasets) {
       ['Limits', LIMITS[disc.dataset] ?? 'See the unit above.'],
       ['Description', disc.description ?? ''],
     ].filter(([, value]) => String(value).trim() !== ''),   // no empty rows (descriptions are still being written)
-    svsUrl: ds.svs_url ?? disc.source?.svs_url ?? null,
+    svsUrl: ds.svs_url ?? disc.source?.svs_url ?? ds.source_url ?? null,
     svsId: ds.svs ?? disc.source?.svs ?? null,
+    sourceName: ds.svs || disc.source?.svs ? null : ds.source_name ?? null,
     creditsUrl: CREDITS_URL,
   };
 }
@@ -112,12 +115,16 @@ export function detailRows(disc, datasets) {
 export function frameFigure(disc, place) {
   if (!disc?.frame) return null;
   const where = String(place?.name ?? disc.place).split(',')[0].replace(/\s+(and surroundings|near .*)$/i, '');
-  const date = `15 July ${disc.year}`;
+  const snow = disc.dataset === 'snow';
+  const date = snow ? `March ${disc.year}` : `15 July ${disc.year}`;
   const what = disc.dataset === 'rain'
     ? 'rain compared with normal (brown = drier, green and turquoise = wetter)'
+    : snow ? 'snow cover (pale yellow = a little snow, red = all snow; the orange cross is the place)'
     : 'vegetation greenness (pale = bare, deep green = dense plants)';
   const alt = String(disc.description ?? '').trim() || `NASA map of ${what}, ${date}, centred on ${where}.`;
-  const caption = `NASA Scientific Visualization Studio frame, ${date}, centred on ${where}: ${what}. One day's picture for this disc; the music uses all 12 months.`;
+  const caption = snow
+    ? `NASA MODIS Terra monthly snow map (from NASA GIBS), ${date}, northern Norway around ${where}: ${what}. One month's picture for this disc; the music uses all 12 months.`
+    : `NASA Scientific Visualization Studio frame, ${date}, centred on ${where}: ${what}. One day's picture for this disc; the music uses all 12 months.`;
   return { src: disc.frame, alt, caption };
 }
 
@@ -233,6 +240,7 @@ export function initDialogs(store, opts) {
     body.append(el('div', { className: 'chart' }, renderMonthChart(bars, disc.dataset)));
     body.append(el('p', { className: 'chart-note' }, disc.dataset === 'rain'
       ? 'Bars up (▲) are wetter than normal, bars down (▼) are drier, in mm/day. Each number is the middle of its band. A grey checker cell means no data.'
+      : disc.dataset === 'snow' ? 'Four blocks = the share of the land under snow, in quarters. A grey checker cell means no data (polar night, or not published yet).'
       : 'Four blocks = the greenness scale split in quarters (low to high). A grey checker cell means no data.'));
     body.append(renderMonthTable(bars, disc));
     const fig = frameFigure(disc, store.getPlace(disc.place));
@@ -247,7 +255,7 @@ export function initDialogs(store, opts) {
     for (const [term, value] of d.rows) dl.append(el('dt', {}, term), el('dd', {}, value));
     body.append(dl);
     const links = el('p', { className: 'details-links' });
-    if (d.svsUrl) links.append(el('a', { href: d.svsUrl, target: '_blank', rel: 'noopener' }, `NASA SVS ${d.svsId ?? ''} page (opens in a new tab)`));
+    if (d.svsUrl) links.append(el('a', { href: d.svsUrl, target: '_blank', rel: 'noopener' }, d.sourceName ? `${d.sourceName} in NASA Worldview (opens in a new tab)` : `NASA SVS ${d.svsId ?? ''} page (opens in a new tab)`));
     links.append(el('a', { href: d.creditsUrl, target: '_blank', rel: 'noopener' }, 'CREDITS.md (opens in a new tab)'));
     body.append(links);
   }

@@ -43,8 +43,19 @@ export function ambienceMix(disc, bar, mode = 'music', place = null) {
       mix['snow-wind'] = 0.45 + 0.35 * (Math.abs(level) / 4);
       mix['snow-howl'] = level > 0 ? Math.min(1, 0.25 * level) : 0;
     }
+  } else if (disc.dataset === 'snow') {
+    // snow cover: only wind (no birds in the Arctic bed); the hill wind grows with the snow, the howl comes in
+    // when nearly all the land is white
+    const snow = (level - 1) / 3;
+    mix['snow-wind'] = 0.3 + 0.5 * snow;
+    mix['snow-howl'] = level >= 4 ? 0.35 : 0;
   } else {
     const green = (level - 1) / 3;                     // q = 1..4 -> 0..1
+    if (/snow|ice|polar|glacier/i.test(biome)) {       // snow places: wind, never birds
+      mix['snow-wind'] = 0.3 + 0.4 * (1 - green);
+      for (const k of LAYERS) mix[k] = Math.round(mix[k] * 1000) / 1000;
+      return mix;
+    }
     mix.birds = desert ? 0.6 * green : 0.15 + 0.85 * green;   // bare desert: no birds until it greens up
     if (desert) mix['snow-wind'] = 0.25 + 0.6 * (1 - green); else mix.wind = (1 - green) * 0.6;
   }

@@ -9,9 +9,11 @@ export const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'Jun
 /** Disc ring colours by level (same palette for the disc, the LEDs and the chart). */
 export const RAIN_COLORS = { '-4': '#e8834a', '-3': '#dd8f57', '-2': '#c99a6e', '-1': '#b59f86', '0': '#8d8a99', '1': '#7fa8b8', '2': '#6fb4cf', '3': '#62c3e3', '4': '#7fd8f2' };
 export const NDVI_COLORS = { 1: '#9c8a5c', 2: '#a8b05a', 3: '#7cbf5f', 4: '#5fd17a' };
+/** Snow cover: bare ground (1) to white (4). */
+export const SNOW_COLORS = { 1: '#8a8f6e', 2: '#a9b8c4', 3: '#cfdbe6', 4: '#f4f8fc' };
 export const MISSING_COLOR = '#6b6577';
 export const levelColor = (dataset, level) => (level === null || level === undefined ? MISSING_COLOR
-  : (dataset === 'rain' ? RAIN_COLORS[String(level)] : NDVI_COLORS[level]) ?? MISSING_COLOR);
+  : (dataset === 'rain' ? RAIN_COLORS[String(level)] : dataset === 'snow' ? SNOW_COLORS[level] : NDVI_COLORS[level]) ?? MISSING_COLOR);
 
 const signed = (v) => (v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0');
 const isMissing = (v) => v === null || v === undefined;
@@ -66,7 +68,7 @@ export const PAGE_TITLES = { main: 'River, forest, desert and ice', more: 'More 
 /**
  * Tray pages. The main page has six fixed spots, read as columns (top = rain, bottom = greenness):
  * the featured river place (rain, greenness), a forest place (rain, greenness), then a desert place (greenness)
- * above a snow/ice place (greenness): in deserts the rain departure is always about zero, while greenness moves. A spot with no disc in the data stays empty. Every other disc goes to "More places"
+ * above a snow/ice place (snow cover, or greenness when it has no snow disc): in deserts the rain departure is always about zero, while greenness moves. A spot with no disc in the data stays empty. Every other disc goes to "More places"
  * pages, 6 a page, so nothing is dropped.
  */
 export function shelfPages(slots, places, per = 6) {
@@ -77,9 +79,9 @@ export function shelfPages(slots, places, per = 6) {
   const want = [
     [(id) => id === riverId, 'rain'], [(id) => id === riverId, 'ndvi'],
     [(id) => art(id) === 'forest', 'rain'], [(id) => art(id) === 'forest', 'ndvi'],
-    [(id) => art(id) === 'desert', 'ndvi'], [(id) => art(id) === 'ice', 'ndvi'],
+    [(id) => art(id) === 'desert', 'ndvi'], [(id) => art(id) === 'ice', ['snow', 'ndvi']],
   ];
-  const main = want.map(([pick, ds]) => slots.find((s) => pick(s.placeId) && s.dataset === ds) ?? null);
+  const main = want.map(([pick, ds]) => [ds].flat().map((d) => slots.find((s) => pick(s.placeId) && s.dataset === d)).find(Boolean) ?? null);
   const rest = slots.filter((s) => !main.includes(s));
   const pages = [{ key: 'main', title: PAGE_TITLES.main, slots: main }];
   for (let i = 0; i < rest.length; i += per) pages.push({ key: 'more', title: PAGE_TITLES.more, slots: rest.slice(i, i + per) });
@@ -122,7 +124,7 @@ export function monthBars(disc, datasets) {
     const v = disc.values?.[m];
     const pos = typeof v === 'number' ? ` (${v} on the colour scale)` : '';
     return { ...base, kind: 'green', dir: 'flat', steps: level, of: top, short: `${level}/${top}`,
-      levelText: `${level} of ${top}`, text: `${label}${pos}`, color: levelColor('ndvi', level) };
+      levelText: `${level} of ${top}`, text: `${label}${pos}`, color: levelColor(disc.dataset, level) };
   });
 }
 
@@ -142,7 +144,7 @@ export function compareSides(x, y) {
     compared++;
     if (lb > la) up++; else if (lb < la) down++; else same++;
   }
-  const word = a.dataset === 'rain' ? 'wetter' : 'greener';
+  const word = a.dataset === 'rain' ? 'wetter' : a.dataset === 'snow' ? 'snowier' : 'greener';
   const tail = compared < 12 ? ` (${12 - compared} months unavailable)` : '';
   return { a: { side: a.side, year: a.year }, b: { side: b.side, year: b.year }, up, down, same, compared, word,
     text: `Side ${a.side} ${a.year} vs side ${b.side} ${b.year}: ${up} of ${compared} comparable months ${word} in ${b.year}${tail}` };
@@ -160,6 +162,7 @@ export function pingColor(disc, month) {
   const level = disc?.levels?.[month];
   if (isMissing(level)) return disc ? PING.missing : PING.idle;
   if (disc.dataset === 'ndvi') return GREEN_SCALE[level] ?? PING.missing;
+  if (disc.dataset === 'snow') return SNOW_COLORS[level] ?? PING.missing;
   if (level === 0) return PING.normal;
   return mixHex(PING.normal, level < 0 ? PING.drier : PING.wetter, Math.min(1, 0.45 + 0.1375 * Math.abs(level)));
 }
@@ -228,17 +231,18 @@ export function monthIcon(dataset, level) {
     if (level < 0) return { kind: 'sun', size: Math.min(4, -level) };
     return { kind: 'calm', size: 0 };
   }
+  if (dataset === 'snow') return { kind: 'snow', size: Math.max(1, Math.min(4, level)) };
   return { kind: 'plant', size: Math.max(1, Math.min(4, level)) };
 }
 
 /** Title line of the sky chart: place, what is shown, which year is which bar, and the NASA SVS page it comes from. */
 export function panelTitle(discs, datasets, placeName = '') {
   const d = discs[0]; if (!d) return '';
-  const label = d.dataset === 'rain' ? 'RAIN VS NORMAL' : 'GREENNESS';
+  const label = { rain: 'RAIN VS NORMAL', snow: 'SNOW COVER' }[d.dataset] ?? 'GREENNESS';
   const years = discs.length > 1 ? `TOP ${discs[0].year}, BOTTOM ${discs[1].year}` : String(d.year);
-  const svs = datasets?.[d.dataset]?.svs;
+  const svs = datasets?.[d.dataset]?.svs; const modis = datasets?.[d.dataset]?.gibs_layer;
   const name = String(placeName).split(',')[0].replace(/\s+(and surroundings|near .*)$/i, '').toUpperCase();
-  return `${name ? `${name} · ` : ''}${label} · ${years}${svs ? ` · NASA SVS ${svs}` : ''}`;
+  return `${name ? `${name} · ` : ''}${label} · ${years}${svs ? ` · NASA SVS ${svs}` : modis ? ' · NASA MODIS' : ''}`;
 }
 
 // ------------------------------------------------------------------ gauge on the deck (rain gauge / sap gauge) and the year's peak
