@@ -147,6 +147,16 @@ async function main() {
     if (['INPUT', 'SELECT', 'TEXTAREA'].includes(t?.tagName) || t?.isContentEditable || document.querySelector('dialog[open]')) return;
     e.preventDefault(); coach.start();
   });
+  // "Hear a sample year": one press puts a striking disc on the deck and plays it (Hue's 2025 rain: the autumn floods)
+  document.getElementById('sample-btn').addEventListener('click', () => {
+    coach.stop();
+    const id = store.getDisc('hue-rain-2025') ? 'hue-rain-2025' : store.state.discs[0]?.id;
+    if (!id) return;
+    if (!store.state.collected.has(id)) store.record(id);
+    if (store.state.loadedDisc !== id) { store.selectPlace(store.getDisc(id).place); store.load(id); }
+    store.seek(0);
+    const r = store.play(); if (!r.ok) announce(r.error);
+  });
   if (coach.firstVisit()) setTimeout(() => coach.start(), 900);
 
   // Settings toggles (persisted per browser).

@@ -268,3 +268,24 @@ export function peakMonths(levels, dataset = 'ndvi') {
   return pk.length > 3 ? [] : pk;
 }
 
+// ------------------------------------------------------------------ weather behind the console follows the month
+
+/**
+ * How strong the weather in the sky is for a month, 0..1 (the scene draws rain, snow or sand with this):
+ * - rain: a wetter month rains harder (level -4 is dry, +4 is a downpour)
+ * - snow: a snowier month snows thicker; with greenness, a greener month has less snow (it melts), level 4 = none
+ * - sand (deserts): a drier month blows more sand; a greener month less
+ * A month with no data is a middling 0.4 (nothing is claimed).
+ */
+export function weatherIntensity(disc, month, weather = 'rain') {
+  const level = disc?.levels?.[month];
+  if (isMissing(level)) return 0.4;
+  if (disc.dataset === 'rain') {
+    const wet = (Math.max(-4, Math.min(4, level)) + 4) / 8;
+    return weather === 'sand' ? 1 - wet : wet;
+  }
+  const q = (Math.max(1, Math.min(4, level)) - 1) / 3;   // 0..1
+  if (disc.dataset === 'snow') return weather === 'snow' ? q : 1 - q;
+  return 1 - q;   // greenness: the greener, the less snow and the less sand; rain places keep a gentle shower
+}
+

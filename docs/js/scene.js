@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -510,20 +510,24 @@ export function createScene(store, opts) {
   const snowCap = (x) => (edgeDist(x) < -2 ? 0 : edgeDist(x) < 1 ? 5 : 8);   // snow lies flat across the whole lid (only the very corners are a little lower)
   const sandCap = (x) => Math.max(0, Math.min(4, edgeDist(x) * 0.2));
   const pileSnow = (x, h) => { if (x >= 0 && x < W && snowH[x] < snowCap(x)) snowH[x] = Math.min(snowCap(x), snowH[x] + h); };
+  // The weather follows the month playing: it eases toward the month's intensity, so a downpour builds and a snowfall thins
+  // out gradually (and the snow on the lid melts when the month is green).
+  let wxNow = 0.5;
+  const wxTarget = () => { const d = loadedDisc(); return d && spinning ? weatherIntensity(d, monthNow(), weather) : 0.5; };
   function spawnWeather() {
-    const r = Math.random;
+    const r = Math.random; const wx = wxNow;
     if (weather === 'snow') {
-      const n = parts.filter((p) => p.k === 'snow').length;
-      for (let i = 0; i < (n < 50 ? 6 : 1) && n + i < 130; i++) {
+      const n = parts.filter((p) => p.k === 'snow').length; const cap = Math.round(10 + wx * 125);
+      for (let i = 0; i < (n < 50 && wx > 0.5 ? 6 : r() < Math.max(0.02, wx) ? 1 : 0) && n + i < cap; i++) {
         const near = r() < 0.45;
         parts.push({ k: 'snow', near, sz: near ? (r() < 0.3 ? 3 : 2) : 1, x: r() * W, y: n < 50 ? r() * ROOF : -3, vx: (r() - 0.5) * 0.12, vy: near ? 0.22 + r() * 0.12 : 0.1 + r() * 0.08, t: r() * 6, sw: near ? 0.22 : 0.1, f: 0.02 + r() * 0.03 });
       }
     }
     if (weather === 'rain') {
-      const d = loadedDisc(); const k = d && d.dataset === 'rain' ? d.levels[monthNow()] : 0; const n = 2 + Math.max(0, (k ?? 0) + 1) * 2;
-      for (let i = 0; i < n; i++) parts.push({ k: 'rain', x: r() * (W + 120), y: -4, vx: -1.6, vy: 2.6 + r() * 0.8 });
+      const n = Math.round(wx * 14) + (wx > 0.15 ? 1 : 0);   // a dry month drizzles at most; a wet one pours
+      for (let i = 0; i < n; i++) parts.push({ k: 'rain', x: r() * (W + 120), y: -4, vx: -1.2 - wx * 1.2, vy: 2.4 + wx * 0.8 + r() * 0.8 });
     }
-    if (weather === 'sand' && parts.filter((p) => p.k === 'sand').length < 90) parts.push({ k: 'sand', x: -4, y: r() * (ROOF + 20), vx: 1 + r() * 1.4, vy: 0.05 + r() * 0.15, c: r() > 0.5 ? '#d9a066' : '#b9824a' });
+    if (weather === 'sand' && parts.filter((p) => p.k === 'sand').length < 8 + wx * 110 && r() < 0.3 + wx * 0.7) parts.push({ k: 'sand', x: -4, y: r() * (ROOF + 20), vx: 1 + r() * 1.4, vy: 0.05 + r() * 0.15, c: r() > 0.5 ? '#d9a066' : '#b9824a' });
     if (weather === 'forest') {
       if (r() < 0.04) parts.push({ k: 'leaf', x: r() * W, y: -3, vx: 0, vy: 0.35, t: r() * 6, c: ['#6aa84f', '#d98c3a', '#b5532e', '#9ac46a'][(r() * 4) | 0] });
       if (parts.filter((p) => p.k === 'fly').length < 9) parts.push({ k: 'fly', x: r() * W, y: 20 + r() * (ROOF - 30), vx: (r() - 0.5) * 0.3, vy: (r() - 0.5) * 0.3, t: r() * 6, perch: null });
@@ -570,7 +574,8 @@ export function createScene(store, opts) {
     parts = out;
     for (let x = X0 - 2; x < X1 + 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 0.6) { snowH[x] -= d * 0.3; snowH[x + 1] += d * 0.3; } }   // snow settles level
     for (let x = X0 - 2; x < X1 + 2; x++) { snowH[x] = Math.min(snowH[x], snowCap(x)); sandH[x] = Math.min(sandH[x], sandCap(x)); }
-    if (weather !== 'snow') for (let x = X0 - 2; x < X1 + 2; x++) if (snowH[x] > 0) { snowH[x] = Math.max(0, snowH[x] - 0.012); if (Math.random() < 0.0015 * snowH[x]) parts.push({ k: 'drip', x, y: ROOF + 8, vy: 0.2 }); }
+    const melt = weather !== 'snow' ? 0.012 : wxNow < 0.35 ? 0.05 * (0.35 - wxNow) / 0.35 : 0;   // a green month melts the snow on the lid
+    if (melt > 0) for (let x = X0 - 2; x < X1 + 2; x++) if (snowH[x] > 0) { snowH[x] = Math.max(0, snowH[x] - melt); if (Math.random() < 0.0015 * snowH[x]) parts.push({ k: 'drip', x, y: ROOF + 8, vy: 0.2 }); }
     if (weather !== 'sand') { for (let x = X0 - 2; x < X1 + 2; x++) sandH[x] = Math.max(0, sandH[x] - 0.006); }
     if (weather !== 'forest' && leaves.length && Math.random() < 0.01) { const l = leaves.shift(); parts.push({ k: 'leaf', x: l.x, y: l.y, vx: 1, vy: 0.3, t: 0, c: l.c, falling: true }); }
   }
@@ -902,6 +907,7 @@ export function createScene(store, opts) {
     { const d = loadedDisc(); const f = d && spinning ? gaugeFill(d.dataset, d.levels[monthNow()]) : 0; const target = f ?? 0;
       gaugeA += (target - gaugeA) * (rm ? 1 : Math.min(1, dt * 3)); }
     if (mapFade < 1) mapFade = Math.min(1, mapFade + dt / 0.6);
+    wxNow += (wxTarget() - wxNow) * Math.min(1, dt * 0.8);
     if (card && !stepCard(card, dt, { rm, playing })) { card = null; cardEl.hidden = true; }
     draw();
   }, 33);

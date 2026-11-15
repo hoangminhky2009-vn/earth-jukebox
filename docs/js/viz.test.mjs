@@ -214,3 +214,19 @@ test('snow cover: its own colours, pictures, title and tray spot', async () => {
   assert.equal(c.word, 'snowier');
 });
 
+test('weather intensity: harder rain when wetter, thicker snow when snowier, less snow when greener, more sand when drier', async () => {
+  const { weatherIntensity } = await import('./viz.js');
+  const rain = { dataset: 'rain', levels: [-4, 0, 4, null] };
+  assert.equal(weatherIntensity(rain, 0, 'rain'), 0);
+  assert.equal(weatherIntensity(rain, 1, 'rain'), 0.5);
+  assert.equal(weatherIntensity(rain, 2, 'rain'), 1);
+  assert.equal(weatherIntensity(rain, 0, 'sand'), 1);
+  assert.equal(weatherIntensity(rain, 3, 'rain'), 0.4, 'no data: nothing is claimed');
+  const green = { dataset: 'ndvi', levels: [1, 4] };
+  assert.equal(weatherIntensity(green, 0, 'snow'), 1);
+  assert.equal(weatherIntensity(green, 1, 'snow'), 0, 'fully green: the snow has melted');
+  const snow = { dataset: 'snow', levels: [4, 1] };
+  assert.equal(weatherIntensity(snow, 0, 'snow'), 1);
+  assert.equal(weatherIntensity(snow, 1, 'snow'), 0);
+});
+

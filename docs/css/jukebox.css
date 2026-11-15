@@ -132,4 +132,5 @@
 .map-label { position: absolute; font-size: calc(var(--s, 1) * 4.5px); color: #9fd3b0; letter-spacing: 0.4px; white-space: nowrap; overflow: hidden; text-align: center; pointer-events: none; }
 .high-contrast .map-label { color: #fff; background: #000; }
 .screen.card-on .map-label { opacity: 0; }
-
+.tbtn-hot { background: var(--accent); color: #1b120f; }
+.tbtn-hot:hover, .tbtn-hot:focus-visible { background: var(--accent-bright); }
