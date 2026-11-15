@@ -847,5 +847,15 @@ export function createScene(store, opts) {
     draw();
   }, 33);
 
-  return { slotButtons: slotEls.map((s) => s.b), months: MONTH_ABBR };
+  /** Screen box of a part of the console, for the How to use spotlight (coach.js). */
+  const AREAS = { tray: { x: 20, y: 114, w: 224, h: 136 }, deck: { x: 256, y: 112, w: 206, h: 142 }, sky: { x: 0, y: 17, w: W, h: ROOF - 17 },
+    gauge: { x: GAUGE.x - 2, y: GAUGE.y - 2, w: GAUGE.w + 4, h: GAUGE.h + 4 }, lcd: LCD };
+  function boxOf(key) {
+    const el = { play: btnEls.play, flip: btnEls.flip, page: pageBtn, details: document.getElementById('details-btn') }[key];
+    if (el) { const r = el.getBoundingClientRect(); return r.width ? r : null; }
+    const a = AREAS[key]; if (!a) return null;
+    const c = cv.getBoundingClientRect();
+    return { left: c.left + a.x / W * c.width, top: c.top + a.y / H * c.height, width: a.w / W * c.width, height: a.h / H * c.height };
+  }
+  return { slotButtons: slotEls.map((s) => s.b), months: MONTH_ABBR, boxOf };
 }
