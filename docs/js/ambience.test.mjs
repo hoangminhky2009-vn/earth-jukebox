@@ -67,9 +67,9 @@ test('desert: a gusting open wind every month, a howl when driest, no rain unles
 test('birds come from the region of the place; snow places hear them only when there is little snow', async () => {
   const { ambienceMix, birdsFile } = await import('./ambience.js');
   assert.equal(birdsFile({ biome: 'snow-coast' }), 'birds');
-  assert.equal(birdsFile({ biome: 'desert' }), 'birds');
+  assert.equal(birdsFile({ biome: 'desert' }), 'birds-outback');
   assert.equal(birdsFile({ biome: 'rainforest' }), 'birds');
-  assert.equal(birdsFile({ biome: 'monsoon-delta', region: 'south-asia' }), 'birds');
+  assert.equal(birdsFile({ biome: 'monsoon-delta', region: 'south-asia' }), 'birds-bengal');
   assert.equal(birdsFile({ biome: 'monsoon-delta', region: 'sea' }), 'birds-mekong');
   assert.equal(birdsFile({}), 'birds');
   const place = { biome: 'snow-coast' };

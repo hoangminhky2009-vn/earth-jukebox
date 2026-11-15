@@ -5,13 +5,14 @@
 
 export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds', 'snow-wind', 'snow-howl'];
 
-/** Birds: the Tonle Sap / Hue region has its own CC0 recording (Siem Reap); every other place plays the CC0 park birds
- * (the team uses only CC0 / CC BY material, so the CC BY-SA regional recordings were taken out). */
-export const BIRD_FILES = ['birds', 'birds-mekong'];
+/** Recordings of birds from each place's own region (CREDITS.md); the "birds" layer plays the one for the place. */
+export const BIRD_FILES = ['birds', 'birds-mekong', 'birds-bengal', 'birds-outback'];
 export function birdsFile(place) {
   const biome = String(place?.biome ?? ''); const region = String(place?.region ?? '');
   // snow places keep the gentle park birds (the Tromso diver recording was loud and harsh)
+  if (/desert|arid/i.test(biome)) return 'birds-outback';                  // arid Australia
   // the Amazon keeps the gentle park birds: the Amazon recording we found (screaming toucans) sounded frightening
+  if (region === 'south-asia') return 'birds-bengal';                      // Bengal delta
   if (region === 'sea' || /southeast/i.test(region)) return 'birds-mekong';   // Siem Reap, Cambodia
   return 'birds';                                                          // a park (any other place)
 }
