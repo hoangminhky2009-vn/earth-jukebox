@@ -307,3 +307,22 @@ export function bladeHeight(growth, seed, max = 8) {
   return Math.max(1, Math.round((0.35 + 0.65 * seed) * max * Math.min(1, growth + 0.15)));
 }
 
+// ------------------------------------------------------------------ tropical forest growing behind the lid (rainforest places)
+
+/** What grows at a spot (seed 0..1): ferns, palms, broadleaf trees, and now and then a giant emergent tree. */
+export const plantKind = (seed) => (seed < 0.34 ? 'fern' : seed < 0.58 ? 'palm' : seed < 0.9 ? 'tree' : 'giant');
+const KIND_HEIGHT = { fern: 0.22, palm: 0.6, tree: 0.78, giant: 1 };
+const KIND_START = { fern: 0.05, palm: 0.2, tree: 0.3, giant: 0.55 };   // growth at which this kind first shows
+
+/**
+ * Height in pixels of the plant at a spot for a growth 0..1 (no fixed ceiling: `max` is the tallest, a giant at full growth).
+ * Ferns come up first and stay low; trees follow; the giants only rise in a lush month. 0 = not up yet.
+ */
+export function plantHeight(growth, seed, max = 56) {
+  const kind = plantKind(seed); const start = KIND_START[kind] + 0.25 * ((seed * 7) % 1);
+  if (growth <= start) return 0;
+  const k = Math.min(1, (growth - start) / (1 - start));
+  const eased = k * k * (3 - 2 * k);
+  return Math.max(2, Math.round(max * KIND_HEIGHT[kind] * (0.45 + 0.55 * ((seed * 13) % 1)) * (0.25 + 0.75 * eased)));
+}
+

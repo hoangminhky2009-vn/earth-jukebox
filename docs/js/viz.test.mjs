@@ -245,3 +245,14 @@ test('grass on the lid: grows with greenness, none for other data, a missing mon
   assert.ok(tall > few && few > 0 && tall <= 100, 'more columns sprout as it greens');
 });
 
+test('tropical forest: ferns first, trees later, giants only when lush; no ceiling on the tallest', async () => {
+  const { plantKind, plantHeight } = await import('./viz.js');
+  assert.equal(plantKind(0.1), 'fern'); assert.equal(plantKind(0.4), 'palm'); assert.equal(plantKind(0.7), 'tree'); assert.equal(plantKind(0.95), 'giant');
+  assert.equal(plantHeight(0, 0.5), 0);
+  assert.ok(plantHeight(0.3, 0.1) > 0, 'a fern is up early');
+  assert.equal(plantHeight(0.3, 0.95), 0, 'a giant is not up yet');
+  assert.ok(plantHeight(1, 0.95) > plantHeight(1, 0.1), 'a giant is taller than a fern');
+  assert.ok(plantHeight(1, 0.95, 200) > 100, 'there is no fixed ceiling (the maximum is a parameter)');
+  assert.ok(plantHeight(1, 0.7) > plantHeight(0.5, 0.7), 'it grows with the greenness');
+});
+

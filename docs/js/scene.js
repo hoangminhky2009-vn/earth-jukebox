@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, plantKind, plantHeight, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -513,6 +513,48 @@ export function createScene(store, opts) {
   // The weather follows the month playing: it eases toward the month's intensity, so a downpour builds and a snowfall thins
   // out gradually (and the snow on the lid melts when the month is green).
   let wxNow = 0.5;
+  /* ---------- tropical forest (rainforest places): ferns, palms, broadleaf trees and a few giants rise behind the lid as the
+     months green up, as tall as the sky allows; the sky calendar still shows through (they are drawn a little see-through) ---------- */
+  const isJungle = (d) => /rainforest|jungle|tropical/i.test(String(placeOf(d)?.biome ?? ''));
+  const JUNGLE_X = Array.from({ length: 34 }, (_, i) => 20 + i * 13 + Math.round((h2(i, 3, 17) - 0.5) * 9));
+  function drawJungle(d, rm) {
+    if (!d || growNow <= 0.03 || !isJungle(d) || card) return;
+    const t = rm ? 0 : performance.now() / 1000; const lush = GREEN_SCALE[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
+    const leaf = (k) => lit(lush, k); const wood = '#5a3d27'; const woodHi = '#7a5535';
+    const order = JUNGLE_X.map((x, i) => [x, h2(i, 5, 23), i]).sort((a, b) => a[1] - b[1]);   // far to near is random
+    ctx.globalAlpha = 0.7;
+    for (const [x0, seed, i] of order) {
+      const h = plantHeight(growNow, seed, 58); if (!h) continue;
+      const kind = plantKind(seed); const sway = rm ? 0 : Math.sin(t * 1.4 + i) * (kind === 'fern' ? 0.9 : 1.6);
+      const topX = x0 + Math.round(sway * (h / 40)); const base = ROOF;
+      const trunk = (w) => { for (let y = 0; y < h; y++) { const f = y / h; const cx = Math.round(x0 + (topX - x0) * f * f); P(wood, cx, base - y, w, 1); P(woodHi, cx, base - y, 1, 1); } };
+      if (kind === 'fern') {
+        for (let a = -3; a <= 3; a++) { const len = Math.round(h * (0.9 - Math.abs(a) * 0.12) + 2);
+          for (let s2 = 0; s2 <= len; s2++) { const f = s2 / len; const px = x0 + Math.round(a * f * (h * 0.55) / 3 + sway * f); const py = base - Math.round(h * 0.9 * Math.sin(f * Math.PI * 0.55) - f * f * h * 0.45);
+            P(leaf(-0.2 + 0.3 * f), px, py); if (s2 % 2 === 0) P(leaf(-0.35), px, py + 1); } }
+      } else if (kind === 'palm') {
+        trunk(1);
+        const crown = Math.max(5, Math.round(h * 0.38)); const topY = base - h;
+        for (let a = 0; a < 7; a++) { const ang = (a / 6) * Math.PI - Math.PI;   // fronds fan out and droop
+          for (let s2 = 0; s2 <= crown; s2++) { const f = s2 / crown; const px = topX + Math.round(Math.cos(ang) * s2 * 0.95); const py = topY + Math.round(Math.sin(ang) * s2 * 0.5 + f * f * crown * 0.55);
+            P(leaf(f > 0.6 ? -0.3 : 0.05), px, py); if (s2 % 3 === 1) P(leaf(-0.4), px, py + 1); } }
+        P(leaf(0.3), topX, topY - 1, 1, 1);
+      } else if (kind === 'tree') {
+        trunk(2);
+        const r = Math.max(4, Math.round(h * 0.3)); const cy = base - h;
+        for (let dy = -r; dy <= r; dy++) { const w = Math.round(Math.sqrt(r * r - dy * dy) * 1.25); P(leaf(dy < -r * 0.3 ? 0.12 : dy > r * 0.4 ? -0.35 : -0.1), topX - w, cy + dy, w * 2 + 1, 1); }
+        for (let k = 0; k < 7; k++) P(leaf(0.4), topX - r + Math.round(h2(i, k, 41) * r * 2.2), cy - r + 1 + Math.round(h2(i, k, 43) * r * 0.9), 2, 1);
+        const vine = 3 + Math.round(h2(i, 9, 47) * 4); for (let k = 0; k < 2; k++) P(leaf(-0.2), topX - r + 1 + k * (r * 2 - 2), cy + r - 1, 1, vine);   // lianas hang from the canopy
+      } else {   // giant emergent tree: straight trunk with buttress roots, a wide flat crown high above the rest
+        trunk(3);
+        for (let k = 1; k <= 5; k++) { P(wood, x0 - k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); P(wood, x0 + 2 + k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); }   // buttress roots
+        const cw = Math.max(10, Math.round(h * 0.55)); const cy = base - h; const ch = Math.max(3, Math.round(h * 0.13));
+        for (let dy = -ch; dy <= ch; dy++) { const w = Math.round(cw * Math.sqrt(1 - (dy / ch) ** 2)); P(leaf(dy < 0 ? 0.15 : -0.3), topX + 1 - w, cy + dy, w * 2 + 1, 1); }
+        for (let k = 0; k < 6; k++) P(leaf(0.45), topX + 1 - cw + Math.round(h2(i, k, 51) * cw * 2), cy - ch + Math.round(h2(i, k, 53) * ch), 3, 1);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
   // Grass on the lid: it grows with the greenness of the month playing and withers back when the disc comes off.
   const growA = new Float32Array(W); const growSeed = Float32Array.from({ length: W }, (_, x) => h2(x, 7, 31)); let growNow = 0;
   const wxTarget = () => { const d = loadedDisc(); return d && spinning ? weatherIntensity(d, monthNow(), weather) : 0.5; };
@@ -814,6 +856,7 @@ export function createScene(store, opts) {
     } else if (coordsEl.textContent) coordsEl.textContent = '';
     for (const r of rings) circle(ANT.x, ANT.y, r.r, '#f6d27a', Math.max(0, 0.8 - r.r / 30));
     P(playing && spinning ? '#f6d27a' : '#8e9aa6', ANT.x - 1, ANT.y - 2, 3, 3);
+    drawJungle(d, rm);   // behind the lid
     ctx.drawImage(conC, 0, 0);
     // grass on the lid (greenness discs): blades with a darker root and a bright tip, a few flowers when it is lush; snow lies over it
     if (growNow > 0.02) {
