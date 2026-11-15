@@ -11,7 +11,7 @@
 ## Player and dialogs
 - The console shows a condition mark on each disc (colour and shape), five real buttons and a green LCD line that reads out the month being played.
 - The Details dialog (button or the I key) lists the 12-month chart and table, the NASA image of the disc, the piano roll, the dataset label and unit, its limits, colour match, frames used, the NASA SVS link and CREDITS.md; Esc closes it and focus goes back to where it was.
-- How to use (button, the H key, and once by itself on the first visit) is a guided tour in the style of the team's Delphi game: the page dims, a gold-edged spotlight shows one part at a time and a small card types one sentence about it (`docs/js/coach.js`). Two steps wait for the visitor to do it (put a disc on the deck, press Play); clicks go through the spotlight to the real control. SKIP ends it.
+- How to use (button, the H key, and once by itself on the first visit) is a guided tour in the style of the team's Delphi game: the page dims, a gold-edged spotlight shows one button at a time (disc tray, Play, Stop, Flip, Mode, Eject, tray pages, Details, Settings) and a small card types one sentence about it (`docs/js/coach.js`). Two steps wait for the visitor to do it (put a disc on the deck, press Play); clicks go through the spotlight to the real control. SKIP ends it.
 - Settings (High contrast, Reduce motion, Preview on focus, Volume) live in a dialog and are saved in this browser; contrast ratios of the colour pairs are checked by `node --test`.
 
 ## Pixel console

@@ -851,7 +851,8 @@ export function createScene(store, opts) {
   const AREAS = { tray: { x: 20, y: 114, w: 224, h: 136 }, deck: { x: 256, y: 112, w: 206, h: 142 }, sky: { x: 0, y: 17, w: W, h: ROOF - 17 },
     gauge: { x: GAUGE.x - 2, y: GAUGE.y - 2, w: GAUGE.w + 4, h: GAUGE.h + 4 }, lcd: LCD };
   function boxOf(key) {
-    const el = { play: btnEls.play, flip: btnEls.flip, page: pageBtn, details: document.getElementById('details-btn') }[key];
+    const el = { play: btnEls.play, stop: btnEls.stop, flip: btnEls.flip, sci: btnEls.sci, eject: btnEls.eject, page: pageBtn,
+      details: document.getElementById('details-btn'), settings: document.getElementById('settings-btn') }[key];
     if (el) { const r = el.getBoundingClientRect(); return r.width ? r : null; }
     const a = AREAS[key]; if (!a) return null;
     const c = cv.getBoundingClientRect();
