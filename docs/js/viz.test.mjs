@@ -145,28 +145,28 @@ test('story card: the draft marker is dropped from the story', async () => {
   assert.equal(storyText({}), '');
 });
 
-test('story card: fades in, holds while waiting, fades out over about 0.9 s once Play is pressed', async () => {
+test('story card: fades in, then starts fading at once; gone after about 6 s, or within 1.2 s of Play', async () => {
   const { newCard, stepCard } = await import('./viz.js');
   const c = newCard({ id: 'dhaka' });
-  for (let i = 0; i < 20; i++) stepCard(c, 0.05);          // 1 s on the deck, not playing
+  for (let i = 0; i < 6; i++) stepCard(c, 0.05);           // 0.3 s: fully in
   assert.equal(c.a, 1);
-  assert.equal(c.fading, false);
-  let n = 0; let prev = 1;
-  while (stepCard(c, 0.05, { playing: true }) && n < 200) { assert.ok(c.a <= prev + 1e-9, 'opacity never rises'); prev = c.a; n++; }
-  assert.ok(n >= 15 && n <= 21, `gone after about 0.9 s (${n} steps)`);
-  assert.ok(c.a <= 0.01);
+  stepCard(c, 0.05);
+  assert.ok(c.a < 1, 'starts fading right after it appears');
+  let n = 0; let prev = c.a;
+  while (stepCard(c, 0.05) && n < 400) { assert.ok(c.a <= prev + 1e-9, 'opacity never rises'); prev = c.a; n++; }
+  assert.ok(n > 100 && n < 130, `gone after about 6 s (${n} steps)`);
+  const p = newCard({ id: 'dhaka' });
+  for (let i = 0; i < 20; i++) stepCard(p, 0.05);          // 1 s in, still quite visible
+  assert.ok(p.a > 0.7);
+  let m = 0; while (stepCard(p, 0.05, { playing: true }) && m < 200) m++;
+  assert.ok(m <= 24, `Play finishes the fade within 1.2 s (${m} steps)`);
 });
 
-test('story card: still fades after 2.5 s when nobody presses Play; reduced motion cuts after 2 s with no fade', async () => {
+test('story card: reduced motion shows it fully for 2.5 s and cuts it, no fade', async () => {
   const { newCard, stepCard } = await import('./viz.js');
-  const a = newCard({ id: 'hue' });
-  for (let i = 0; i < 50; i++) stepCard(a, 0.05);         // 2.5 s
-  assert.equal(a.fading, false);
-  let n = 0; while (stepCard(a, 0.05) && n < 400) n++;
-  assert.ok(n > 22 && n < 38, `faded over about 1.5 s (${n} steps)`);
   const r = newCard({ id: 'hue' });
   assert.equal(stepCard(r, 1, { rm: true }), true);
-  assert.equal(r.a, 1);                                     // shown fully, no fade in
+  assert.equal(r.a, 1);
   assert.equal(stepCard(r, 2, { rm: true }), false);
   assert.equal(r.a, 0);
 });
