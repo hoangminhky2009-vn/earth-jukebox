@@ -3,13 +3,13 @@
   "made_with": "Sabik with help from OpenAI Codex (SI)",
   "base_commit": "9219e55641f1f83b6ebca9a70b11fb74403368f1",
   "place_count": 8,
-  "disc_count": 32,
+  "disc_count": 34,
   "source_frame_count": 184,
-  "unchanged_existing_scientific_records": 28,
-  "unchanged_existing_crop_files": 28,
+  "unchanged_existing_scientific_records": 30,
+  "unchanged_existing_crop_files": 30,
   "ferlo_2025_matches_preliminary_independent_reader": true,
   "reviewed_descriptions": 4,
-  "data_sha256": "77d0818f0da575653f93365fd8446ed993b35d8c1e52db5e38a810f21022f8cf",
+  "data_sha256": "6a70ff6bc8ae3745dcd8928e5e70577a092e21c156bab744b3303da5be2e57f8",
   "discs": [
     {
       "id": "dhaka-rain-2025",
@@ -331,7 +331,8 @@
     "Preliminary Ferlo check uses the same NASA images and palette rules, not an independent satellite dataset.",
     "Historical cached frames were re-read with their saved SHA256; rain-2026 listing refreshed on 2026-11-15.",
     "Archived evidence can contain unused candidate places; this audit checks only exported discs.",
-    "Existing evidence retains original source-version hashes; regenerated monthly values and crop bytes match. One fresh NASA NDVI download has a different PNG hash from the cache but identical decoded pixels."
+    "Existing evidence retains original source-version hashes; regenerated monthly values and crop bytes match. One fresh NASA NDVI download has a different PNG hash from the cache but identical decoded pixels.",
+    "Ky added two snow discs during this task. Their upstream scientific records and image bytes are preserved, but their raw NASA GIBS decoding was not independently rerun here."
   ],
   "tests": {
     "python_pass": 67,
@@ -350,5 +351,11 @@
     "console_warnings_errors": 0,
     "subjective_listening_test": false,
     "nvda_test": false
-  }
+  },
+  "latest_integrated_main": "d9cea0e9382bc43e2a889eee88c462196e2db6f5",
+  "source_frame_count_scope": "32 rain/vegetation discs; excludes Ky's two newly integrated snow discs",
+  "upstream_snow_discs_preserved": [
+    "tromso-snow-2025",
+    "tromso-snow-2026"
+  ]
 }

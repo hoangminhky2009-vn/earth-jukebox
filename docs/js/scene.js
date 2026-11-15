@@ -167,8 +167,8 @@ const GLYPH = {
 const LOCK = ['..###...', '.#...#..', '.#...#..', '#######.', '###.###.', '###.###.', '#######.'];
 const COND_TEXT = { mint: 'mint', scratched: 'scratched, some months missing', skips: 'skips, a break in the source' };
 const COND_COLOR = { mint: '#7fd8a8', scratched: '#e8834a', skips: '#f6d27a' };
-const DS_SHORT = { rain: 'RAIN', ndvi: 'GREEN' };
-const DS_LONG = { rain: 'Rain', ndvi: 'Greenness' };
+const DS_SHORT = { rain: 'RAIN', ndvi: 'GREEN', snow: 'SNOW' };
+const DS_LONG = { rain: 'Rain', ndvi: 'Greenness', snow: 'Snow cover' };
 // Tray / LCD label: the place without its country and without "and surroundings" ("Sylhet and surroundings, Bangladesh" -> "Sylhet").
 const shortName = (place) => String(place?.name ?? '').split(',')[0].replace(/\s+(and surroundings|near .*)$/i, '');
 
@@ -616,6 +616,31 @@ export function createScene(store, opts) {
       }
       return;
     }
+    if (ic.kind === 'snow') {
+      // a snowflake: bigger and brighter the more of the land is under snow; snow on the ground in the same share
+      const k = ic.size; const arm = 2 + k * 2; const cy = y0 + 12;
+      const col = ['#7f93a8', '#a9bccf', '#d6e2ee', '#ffffff'][k - 1];
+      const turn = cur && t ? Math.floor(t * 2) % 2 : 0;   // the playing month's flake twinkles between two poses
+      const dirs = turn ? [[1, 0], [0, 1], [1, 1], [1, -1]] : [[1, 0], [0, 1], [1, 1], [1, -1]];
+      for (const [dx, dy] of dirs) {
+        const diag = dx && dy; const len = diag ? Math.round(arm * 0.72) : arm;
+        for (let i = 1; i <= len; i++) { P(col, cx + dx * i, cy + dy * i); P(col, cx - dx * i, cy - dy * i); }
+        if (k >= 2 && !diag) {   // little branches near the tips
+          const b = Math.round(len * 0.6);
+          for (const sgn of [1, -1]) {
+            const bx = cx + dx * b * sgn; const by = cy + dy * b * sgn;
+            P(col, bx + dy - (dx ? dx * sgn : 0) * 0, by + dx, 1, 1); P(col, bx - dy, by - dx, 1, 1);
+            if (k >= 4) { P(col, bx + 2 * dy, by + 2 * dx); P(col, bx - 2 * dy, by - 2 * dx); }
+          }
+        }
+      }
+      P(turn ? '#ffffff' : lit(col, 0.3), cx - 1, cy - 1, 3, 3); P(lit(col, -0.35), cx, cy, 1, 1);
+      // ground: white for the share under snow, the rest bare
+      const white = Math.round(27 * [0.1, 0.35, 0.65, 1][k - 1]);
+      P('#6f7d4a', x0 + 2, gy, 27, 4); P('#5a3d27', x0 + 2, gy + 2, 27, 2);
+      P('#e8eef6', x0 + 2 + ((27 - white) >> 1), gy, white, 2); P('#ffffff', x0 + 2 + ((27 - white) >> 1), gy, white, 1);
+      return;
+    }
     if (ic.kind === 'sun') {
       const r = 2 + ic.size; const sy = y0 + 9; const tw = t ? Math.floor(t * 2) % 2 : 0;
       for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; const d = r + 2 + ((i + tw) % 2); P('#f6c552', cx + Math.round(Math.cos(a) * d), sy + Math.round(Math.sin(a) * d)); }
@@ -642,8 +667,10 @@ export function createScene(store, opts) {
     cloud(cx, cy, w, col);
   }
 
+  // The weather calendar shows only while the music plays (needle down); otherwise the sky is the plain map.
+  const skyChartOn = (d) => Boolean(d) && !card && spinning;
   function drawSkyChart(d) {
-    if (!d || card) { if (!scEl.hidden) scEl.hidden = true; return; }
+    if (!skyChartOn(d)) { if (!scEl.hidden) scEl.hidden = true; return; }
     const pair = pairOf(d).slice(0, 2); const set = pair.length > 1 ? pair : [d];
     const rowY = set.length > 1 ? [28, 58] : [43];
     const key = set.map((x) => x.id).join('+');
@@ -685,7 +712,7 @@ export function createScene(store, opts) {
     const rain = d.dataset === 'rain'; const bottom = GAUGE.y + GAUGE.h;
     const hpx = Math.round(gaugeA * (GAUGE.h - 2));
     if (hpx > 0) {
-      const top = bottom - hpx; const c = rain ? '#3f8fc4' : '#4fbf6a';
+      const top = bottom - hpx; const c = rain ? '#3f8fc4' : d.dataset === 'snow' ? '#dfe9f7' : '#4fbf6a';
       P(lit(c, -0.25), GAUGE.x, top, GAUGE.w, hpx); P(c, GAUGE.x + 1, top, GAUGE.w - 3, hpx);
       const wob = RM() ? 0 : Math.floor(performance.now() / 160) % GAUGE.w;
       P(lit(c, 0.45), GAUGE.x, top, GAUGE.w, 1); P('#ffffff', GAUGE.x + wob, top, 1, 1);   // the surface and a glint
@@ -715,7 +742,7 @@ export function createScene(store, opts) {
         const [mx, my] = toMap(lat, lon);
         const col = d && focusDisc.id === d.id ? pingColor(d, monthNow()) : PING.idle;   // C: the ping takes the colour of the month playing
         P(col, mx - 1, my - 1, 3, 3); circle(mx, my, rm ? 5 : pingR, col, rm ? 0.6 : Math.max(0, 1 - pingR / 14));
-        const txt = d && !card ? '' : `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? 'E' : 'W'}`;
+        const txt = skyChartOn(d) ? '' : `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? 'E' : 'W'}`;
         if (coordsEl.textContent !== txt) { coordsEl.textContent = txt; pos(coordsEl, mx + 6, my - 4, 120, 8); coordsEl.style.width = 'auto'; coordsEl.style.height = 'auto'; }
       }
     } else if (coordsEl.textContent) coordsEl.textContent = '';

@@ -6,6 +6,7 @@ Everything we used, including open-source and free resources (required by the su
 - NASA Scientific Visualization Studio (SVS), "Seasonal Global Precipitation Variation from the Global Precipitation Measurement Constellation", SVS 4897 — IMERG rain-anomaly frames. https://svs.gsfc.nasa.gov/4897
   Credits on the page: Horace Mitchell, Alex Kekesi, George Huffman, Gail Skofronick Jackson, Dalia B Kirschbaum, Ryan Fitzgibbons.
 - NASA SVS, "Near Real-Time Normalized Difference Vegetation Index (NDVI)", SVS 5544 — VIIRS (Suomi NPP) NDVI frames, Earth Information Center. https://svs.gsfc.nasa.gov/5544 — data visualizer: Alex Kekesi.
+- NASA MODIS Terra snow cover, monthly average percent (product MOD10CM), served by NASA GIBS as the layer MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct, with the GIBS colour map MODIS_NDSI_Snow_Cover and the Coastlines_15m layer for the Details picture. https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61 — viewed in NASA Worldview: https://worldview.earthdata.nasa.gov/?l=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct . We acknowledge the use of imagery from NASA Worldview / GIBS, part of NASA's Earth Science Data and Information System (ESDIS).
 - NASA Earth Information Center content database. https://svs.gsfc.nasa.gov/gallery/earth-information-center/
 - Inspiration for sonification: NASA SVS, "Data Sonification: Caldwell 73". https://svs.gsfc.nasa.gov/13786/
 - NASA Space Apps Challenge 2026, challenge statement "The Earth Information Jukebox".

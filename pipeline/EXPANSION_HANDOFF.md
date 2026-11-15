@@ -4,11 +4,11 @@ Prepared by Sabik with help from OpenAI Codex (SI).
 
 ## Ready for Ky
 
-This branch adds northern Ferlo, Senegal, to the seven existing places. It contains **8 places, 32 real-data discs**, and four new 256-pixel reference images. It uses the existing rain and vegetation datasets and music rules; no new dataset or app interface is required.
+This branch adds northern Ferlo, Senegal, to the seven existing places. It contains **8 places, 34 real-data discs**, and four new 256-pixel reference images. The Ferlo addition uses the existing rain and vegetation datasets and music rules. Ky added two Tromso snow-cover discs while this branch was being prepared; those discs and his latest app changes are preserved. The combined project now has three datasets.
 
 - Ferlo centre: **15.6035 N, 15.2857 W**. The point is published site C2L4 in [Brandt et al. (2014), Table 1](https://www.mdpi.com/2072-4292/6/3/2408), an open tree/shrub savanna landscape with pasture and small-scale cropping.
 - Rain: 2025 side A and 2026 side B. Vegetation: 2024 side A and 2025 side B.
-- All **28 existing discs retain their scientific fields and identical reference-image bytes**. Four existing rain-2025 discs now include Bormey's checked descriptions, preserved word for word from the shared document. Their source snapshot is in `reviewed_descriptions.json`.
+- All **30 existing discs retain their scientific fields and identical reference-image bytes**. Four existing rain-2025 discs now include Bormey's checked descriptions, preserved word for word from the shared document. Their source snapshot is in `reviewed_descriptions.json`.
 - Corrected three draft introductions to say “rainfall differences from normal and vegetation greenness”: greenness is not an anomaly from normal.
 - Existing places were reprocessed from the cached NASA images. Existing evidence records are retained; Ferlo's new readings, actual source hashes and crops are appended to each dataset/year evidence file. Cached PNG bytes can differ from later downloads without pixel changes: one historical NDVI source was downloaded again and its decoded pixels matched exactly despite different SHA256 hashes.
 
@@ -17,8 +17,8 @@ Merge after reviewing the data and the Ferlo story. No web, music or top-level d
 ## Checked
 
 - Python: **67 tests pass**. JavaScript: **85 tests pass**.
-- Real-data score round trip: **384/384 monthly entries match**; missing entries remain missing. Science-mode greenness error is at most **0.0200**, within the 1/48 test tolerance.
-- All 32 discs match their monthly evidence and have valid 256 × 256 image files. The export uses **184 distinct dated source URLs**.
+- Real-data score round trip: **408/408 monthly entries match**; missing entries remain missing. Science-mode greenness error is at most **0.0200**, within the 1/48 test tolerance.
+- All 32 rain/vegetation discs match their monthly evidence and have valid 256 × 256 image files, using **184 distinct dated source URLs**. Ky's two snow records and images were preserved exactly; their raw GIBS decoding was not independently rerun in this task.
 - Local browser: Ferlo selection by keyboard, playback state, Stop, A/B flip, Details, image loading and missing months; no console warnings/errors during the check. Switching to Tonle Sap updates the piano-roll description correctly with the current populated tray. Dhaka's new description appears as image alternative text and in Details.
 - This was not an NVDA test or a subjective listening assessment. Those remain with the team. The current application already fixes the previously reported one-month gap-marker error. Its null-slot guard is still absent, but the current main tray has no empty slots, so the earlier switching exception did not recur.
 
@@ -30,7 +30,7 @@ This is a comparison of two sampled years, not evidence of a long-term climate t
 
 ## For Bormey
 
-Use [the Ferlo review sheet](FERLO_REVIEW.md) for the images, dates, monthly values, caption drafts and sources. Its four new caption drafts are not inserted into the app as reviewed text. The four completed Bangladesh/Cambodia/Vietnam rain-2025 descriptions are now included; **28 of the 32 discs still use the app's factual fallback image description** while reviewed text is completed.
+Use [the Ferlo review sheet](FERLO_REVIEW.md) for the images, dates, monthly values, caption drafts and sources. Its four new caption drafts are not inserted into the app as reviewed text. The four completed Bangladesh/Cambodia/Vietnam rain-2025 descriptions are now included; **30 of the 34 discs still use the app's factual fallback image description** while reviewed text is completed.
 
 ## Important limits
 

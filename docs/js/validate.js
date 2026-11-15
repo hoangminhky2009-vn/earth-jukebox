@@ -43,7 +43,7 @@ export function validate(data) {
 
     if (!placeIds.has(disc.place)) errors.push(`${id}: place "${disc.place}" does not exist`);
 
-    if (disc.dataset !== 'rain' && disc.dataset !== 'ndvi') {
+    if (!['rain', 'ndvi', 'snow'].includes(disc.dataset)) {
       errors.push(`${id}: unknown dataset "${disc.dataset}"`);
       continue;
     }
@@ -84,7 +84,7 @@ export function validate(data) {
         if (sat !== (Math.abs(level) === 4)) errors.push(`${id}, ${m}: saturated must be ${Math.abs(level) === 4}`);
       } else {
         if (typeof value !== 'number' || value < 0 || value > 1) {
-          errors.push(`${id}, ${m}: NDVI value ${value} is outside 0–1`);
+          errors.push(`${id}, ${m}: ${disc.dataset} value ${value} is outside 0–1`);
           continue;
         }
         if (level !== ndviLevel(value)) errors.push(`${id}, ${m}: level ${level} does not match value ${value} (expected ${ndviLevel(value)})`);

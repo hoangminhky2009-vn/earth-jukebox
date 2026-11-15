@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-11-15T08:04:04.525872+00:00",
+  "generated": "2026-11-15T08:17:10.255640+00:00",
   "provenance": {
     "source": "Colours read from NASA SVS frames (Earth Information Center). Rain values are colour-bin representatives, not exact measurements; NDVI values are colourbar positions, not measured NDVI.",
     "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md"
@@ -106,6 +106,40 @@
           "min": 0.75,
           "max": 1.0,
           "label": "high greenness"
+        }
+      ]
+    },
+    "snow": {
+      "label": "Snow cover: share of the land under snow",
+      "unit": "share of land pixels under snow in the monthly MODIS Terra map (0 = none, 1 = all)",
+      "source_name": "NASA MODIS Terra snow cover (GIBS)",
+      "source_url": "https://worldview.earthdata.nasa.gov/?l=MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+      "gibs_layer": "MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+      "product_url": "https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61",
+      "levels": [
+        {
+          "level": 1,
+          "min": 0.0,
+          "max": 0.25,
+          "label": "under 25% snow"
+        },
+        {
+          "level": 2,
+          "min": 0.25,
+          "max": 0.5,
+          "label": "25-50% snow"
+        },
+        {
+          "level": 3,
+          "min": 0.5,
+          "max": 0.75,
+          "label": "50-75% snow"
+        },
+        {
+          "level": 4,
+          "min": 0.75,
+          "max": 1.0,
+          "label": "75-100% snow"
         }
       ]
     }
@@ -2477,6 +2511,180 @@
           25
         ],
         "west_lon": -180.0
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "tromso-snow-2025",
+      "place": "tromso",
+      "dataset": "snow",
+      "year": 2025,
+      "side": "A",
+      "levels": [
+        null,
+        4,
+        4,
+        4,
+        4,
+        2,
+        1,
+        1,
+        1,
+        3,
+        4,
+        null
+      ],
+      "values": [
+        null,
+        0.96,
+        0.99,
+        0.97,
+        0.92,
+        0.39,
+        0.01,
+        0.01,
+        0.07,
+        0.51,
+        0.99,
+        null
+      ],
+      "saturated": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false
+      ],
+      "frames_used": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "match_pct": 100.0,
+      "median_de": 0,
+      "condition": "scratched",
+      "breaks": [],
+      "frame": "data/frames/tromso-snow-2025.png",
+      "source": {
+        "gibs_layer": "MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+        "wms": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+        "colormap": "https://gibs.earthdata.nasa.gov/colormaps/v1.0/MODIS_NDSI_Snow_Cover.xml",
+        "product_url": "https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61",
+        "box_south_west_north_east": [
+          69.45,
+          18.5,
+          69.95,
+          19.5
+        ],
+        "grid": [
+          20,
+          10
+        ],
+        "time": "first day of each month (monthly map)"
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "tromso-snow-2026",
+      "place": "tromso",
+      "dataset": "snow",
+      "year": 2026,
+      "side": "B",
+      "levels": [
+        null,
+        4,
+        4,
+        4,
+        3,
+        1,
+        1,
+        1,
+        1,
+        3,
+        null,
+        null
+      ],
+      "values": [
+        null,
+        0.99,
+        0.94,
+        0.97,
+        0.55,
+        0.13,
+        0.02,
+        0.07,
+        0.12,
+        0.55,
+        null,
+        null
+      ],
+      "saturated": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "frames_used": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "match_pct": 100.0,
+      "median_de": 0,
+      "condition": "scratched",
+      "breaks": [],
+      "frame": "data/frames/tromso-snow-2026.png",
+      "source": {
+        "gibs_layer": "MODIS_Terra_L3_Snow_Cover_Monthly_Average_Pct",
+        "wms": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+        "colormap": "https://gibs.earthdata.nasa.gov/colormaps/v1.0/MODIS_NDSI_Snow_Cover.xml",
+        "product_url": "https://www.earthdata.nasa.gov/data/catalog/nsidc-cprd-mod10cm-61",
+        "box_south_west_north_east": [
+          69.45,
+          18.5,
+          69.95,
+          19.5
+        ],
+        "grid": [
+          20,
+          10
+        ],
+        "time": "first day of each month (monthly map)"
       },
       "description": "",
       "check": null

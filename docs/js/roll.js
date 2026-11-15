@@ -36,13 +36,14 @@ export function rollLabel(disc) {
   const tail = missing.length ? ` Missing: ${missing.join(', ')}.` : '';
   if (missing.length === levels.length) return '12 months. No data in any month.';
 
-  if (disc.dataset === 'ndvi') {
+  if (disc.dataset !== 'rain') {
+    const [most, least, what] = disc.dataset === 'snow' ? ['Snowiest', 'Least snow', 'snow cover'] : ['Greenest', 'Least green', 'greenness'];
     const hasValues = Array.isArray(disc.values) && disc.values.some((v) => typeof v === 'number');
     const vals = hasValues ? disc.values.map((v, i) => (isMissing(levels[i]) ? null : v)) : levels;
     const hi = extreme(vals, 'max');
     const lo = extreme(vals, 'min');
-    if (vals[hi] === vals[lo]) return `12 months. Same greenness in every month with data.${tail}`;
-    return `12 months. Greenest: ${MONTHS[hi]}. Least green: ${MONTHS[lo]}.${tail}`;
+    if (vals[hi] === vals[lo]) return `12 months. Same ${what} in every month with data.${tail}`;
+    return `12 months. ${most}: ${MONTHS[hi]}. ${least}: ${MONTHS[lo]}.${tail}`;
   }
   const hi = extreme(levels, 'max');
   const lo = extreme(levels, 'min');
