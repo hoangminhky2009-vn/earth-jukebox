@@ -19,14 +19,17 @@ OUT = Path(__file__).resolve().parent.parent / "docs" / "art" / "places"
 
 # place id: (photo file, crop centre x, crop centre y as fractions of the photo)
 JOBS = {
-    "dhaka": ("dhaka.jpg", 0.5, 0.55),
+    "dhaka": ("dhaka.jpg", 0.5, 0.35),
     "sylhet": ("sylhet.jpg", 0.5, 0.55),
-    "tonle-sap": ("tonle-sap.jpg", 0.5, 0.55),
+    "tonle-sap": ("tonle-sap.jpg", 0.45, 0.5),
     "hue": ("hue.jpg", 0.5, 0.55),
     "amazon": ("amazon.jpg", 0.5, 0.5),
     "alice-springs": ("alice-springs.jpg", 0.5, 0.5),
-    "tromso": ("tromso.jpg", 0.5, 0.5),
+    "tromso": ("tromso.jpg", 0.68, 0.5),
 }
+
+# optional colour tweaks (brightness, red gain, blue gain) for photos that came out dark or too cool
+TWEAK = {"alice-springs": (1.35, 1.18, 0.82), "dhaka": (1.2, 1.0, 1.0)}
 
 BAYER4 = np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]], dtype=np.float32)
 
@@ -39,10 +42,13 @@ def crop_16_9(im: Image.Image, fx: float, fy: float) -> Image.Image:
     return im.crop((x0, y0, x0 + cw, y0 + ch))
 
 
-def pixelate(path: Path, fx: float, fy: float) -> Image.Image:
+def pixelate(path: Path, fx: float, fy: float, tweak=(1.0, 1.0, 1.0)) -> Image.Image:
     im = Image.open(path).convert("RGB")
     im = crop_16_9(im, fx, fy)
     im = im.resize((W, H), Image.Resampling.LANCZOS)
+    if tweak != (1.0, 1.0, 1.0):
+        a = np.asarray(im, dtype=np.float32) * np.array([tweak[0] * tweak[1], tweak[0], tweak[0] * tweak[2]], dtype=np.float32)
+        im = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
     im = ImageEnhance.Color(im).enhance(1.25)
     im = ImageEnhance.Contrast(im).enhance(1.12)
     palette = im.quantize(colors=COLOURS, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
@@ -66,7 +72,7 @@ def main() -> None:
             print(f"{place}: no photo {name}, skipped")
             continue
         out = OUT / f"{place}.png"
-        pixelate(src, fx, fy).save(out, optimize=True)
+        pixelate(src, fx, fy, TWEAK.get(place, (1.0, 1.0, 1.0))).save(out, optimize=True)
         print(f"{place}: {name} -> {out.name} ({out.stat().st_size // 1024} KB)")
 
 

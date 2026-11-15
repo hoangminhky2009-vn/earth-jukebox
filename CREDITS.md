@@ -32,6 +32,14 @@ Everything we used, including open-source and free resources (required by the su
   - `birds.mp3`, `wind.mp3`: "Park ambiences" by Thimras, CC0. https://opengameart.org/content/park-ambiences (first 30 s of park_ambience_birds.wav and park_ambience_wind.wav)
   - `snow-wind.mp3`: "Killiney Hill Storm Floris 20250804 1537" by Karlunun, CC0 (Wikimedia Commons). https://commons.wikimedia.org/wiki/File:Killiney_Hill_Storm_Floris_20250804_1537.ogg (30 s from 0:12)
   - `snow-howl.mp3`: "Howling wind" by Tvabutzku1234, CC0 (Wikimedia Commons). https://commons.wikimedia.org/wiki/File:Howling_wind.ogg (30 s from 0:20)
+- Story-card pictures (`docs/art/places/`): pixel art we made ourselves from these free photographs on Wikimedia Commons (cropped, shrunk to 216 x 122 pixels and reduced to 32 colours with `tools/make_pixel_art.py`, so they are changed from the originals):
+  - Dhaka: "Dhaka (24500378763)" by ASaber91, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Dhaka_(24500378763).jpg
+  - Sylhet: "Boating on Tanguar Haor in Afternoon (28925051087)" by Minhas Kamal, CC0. https://commons.wikimedia.org/wiki/File:Boating_on_Tanguar_Haor_in_Afternoon_(28925051087).jpg
+  - Tonle Sap: "Cambodia - Tonle Sap - 019 House (8584703642)" by Photo Dharma from Penang, Malaysia, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Cambodia_-_Tonle_Sap_-_019_House_(8584703642).jpg
+  - Hue: "Huế - Vietnamese dragon boat operating as a tourist vessel on the Perfume River" by P. Hughes, CC BY 4.0. https://commons.wikimedia.org/wiki/File:Hu%E1%BA%BF_-_Vietnamese_dragon_boat_operating_as_a_tourist_vessel_on_the_Perfume_River.jpg
+  - Amazon (Meeting of Waters, Manaus): "Meeting of Waters (Manaus)" by Ana Claudia Jatahy - MTUR, CC0. https://commons.wikimedia.org/wiki/File:Meeting_of_Waters_(Manaus).jpg
+  - Alice Springs: "CSIRO ScienceImage 1584 Landscape" by Malcolm Paterson, CSIRO, CC BY 3.0. https://commons.wikimedia.org/wiki/File:CSIRO_ScienceImage_1584_Landscape.jpg
+  - Tromso: "Panorama (stitch) from Tromsø -2" by Ivar Husevåg Døskeland from Oslo, Norway, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Panorama_(stitch)_from_Troms%C3%B8_-2.jpg
 - [Only CC0 / CC-BY / MIT / Apache-2.0 / OFL. Add each further font, sound or image here with its link and licence.]
 
 NASA imagery is generally free of copyright; we credit "NASA's Scientific Visualization Studio" and link each page. We do not use NASA logos.

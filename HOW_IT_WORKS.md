@@ -17,6 +17,7 @@
 - The page is one 480x270 pixel canvas scaled to the window: a night sky with a dot-matrix world map (the ping sits on the place and takes the colour of the month playing), weather that follows the landscape (rain, sand, falling snow that piles on the lid), and a wooden console with a tray of discs and a slate deck. `docs/js/scene.js` paints it; every button is a real HTML button laid over the painting, and all state changes go through the store.
 - The tray reads in columns: rain on top, greenness below. The main page holds a river place, the Amazon, a desert place and a snow place; the **More places** tab on the left of the box shows the other pages. The centre of each disc is painted for its landscape (river delta, city, wetland, lake, coast, forest, desert, ice).
 - Enter or a click records a disc and puts it on the deck. The 12 lights on the deck are one row, or two (side A above side B) with a spoken comparison such as "7 of 12 months wetter in 2026".
+- The first time a disc of a place is loaded, a story card covers most of the picture: pixel art of the place (made from a free photograph with `tools/make_pixel_art.py`, credited in CREDITS.md) with its name and story. It fades away as the record starts to turn (with Reduce motion it just shows for a moment and goes). A place without a picture has no card.
 - The first click or key press starts audio (no start button). Turntable sounds are synthesized in `docs/js/foley.js`, separate from the music engine.
 
 ## Music
