@@ -6,12 +6,12 @@
 export const LAYERS = ['wind', 'rain-light', 'rain-heavy', 'birds', 'snow-wind', 'snow-howl'];
 
 /** Recordings of birds from each place's own region (CREDITS.md); the "birds" layer plays the one for the place. */
-export const BIRD_FILES = ['birds', 'birds-amazon', 'birds-mekong', 'birds-bengal', 'birds-outback', 'birds-arctic'];
+export const BIRD_FILES = ['birds', 'birds-mekong', 'birds-bengal', 'birds-outback', 'birds-arctic'];
 export function birdsFile(place) {
   const biome = String(place?.biome ?? ''); const region = String(place?.region ?? '');
   if (/snow|ice|polar|glacier/i.test(biome)) return 'birds-arctic';      // Tromso, Norway
   if (/desert|arid/i.test(biome)) return 'birds-outback';                  // arid Australia
-  if (/rainforest|forest/i.test(biome)) return 'birds-amazon';             // Amazon, Brazil
+  // the Amazon keeps the gentle park birds: the Amazon recording we found (screaming toucans) sounded frightening
   if (region === 'south-asia') return 'birds-bengal';                      // Bengal delta
   if (region === 'sea' || /southeast/i.test(region)) return 'birds-mekong';   // Siem Reap, Cambodia
   return 'birds';                                                          // a park (any other place)
