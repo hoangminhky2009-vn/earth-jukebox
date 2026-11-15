@@ -772,12 +772,12 @@ export function createScene(store, opts) {
     paint(mapPrev, 1); paint(mapCur, mapFade);
     // CRT scanlines, faint
     ctx.globalAlpha = 0.14; for (let y = MAP.y; y < MAP.y + MAP.h; y += 2) P('#000000', MAP.x, y, MAP.w, 1); ctx.globalAlpha = 1;
-    // the place: a crosshair in the middle and a ring that pulses
-    const cx = MAP.x + (MAP.w >> 1); const cy = MAP.y + (MAP.h >> 1); const blink = rm || Math.floor(performance.now() / 400) % 2;
-    for (const [dx, dy] of [[-7, 0], [4, 0], [0, -7], [0, 4]]) P('#1b120f', cx + dx - (dy ? 1 : 0), cy + dy - (dx ? 1 : 0), dx ? 4 : 3, dy ? 4 : 3);
-    for (const [dx, dy] of [[-6, 0], [4, 0], [0, -6], [0, 4]]) P('#f6d27a', cx + dx, cy + dy, dx ? 3 : 1, dy ? 3 : 1);
-    if (blink) P('#ffffff', cx, cy, 1, 1);
-    if (!rm) circle(cx, cy, 6 + (performance.now() / 120) % 8, '#f6d27a', 0.5);
+    // the place: a small gold square the size of the area the music reads (about half a degree), with a ring that pulses
+    const cx = MAP.x + (MAP.w >> 1); const cy = MAP.y + (MAP.h >> 1); const bl = rm || Math.floor(performance.now() / 500) % 2;
+    P('#1b120f', cx - 3, cy - 3, 7, 1); P('#1b120f', cx - 3, cy + 3, 7, 1); P('#1b120f', cx - 3, cy - 3, 1, 7); P('#1b120f', cx + 3, cy - 3, 1, 7);
+    const sq = bl ? '#ffe39a' : '#f6d27a';
+    P(sq, cx - 2, cy - 2, 5, 1); P(sq, cx - 2, cy + 2, 5, 1); P(sq, cx - 2, cy - 2, 1, 5); P(sq, cx + 2, cy - 2, 1, 5);
+    if (!rm) circle(cx, cy, 5 + (performance.now() / 150) % 7, '#f6d27a', 0.35);
     // label strip (text is DOM)
     P('#120b0a', 22, MAP.y + MAP.h + 1, 220, 248 - (MAP.y + MAP.h + 1));
     const place = placeOf(d); const name = shortName(place).toUpperCase();
