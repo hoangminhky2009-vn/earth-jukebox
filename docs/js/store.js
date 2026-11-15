@@ -123,7 +123,6 @@ export function createStore(data) {
       }
       state.loadedDisc = other.id;
       state.side = other.side;
-      state.position = 0;
       emit('flip', { changed: true, side: other.side, disc: other, place: getPlace(other.place) });
       return { ok: true, disc: other };
     },

@@ -138,14 +138,14 @@ export function compareSides(x, y) {
   let up = 0; let down = 0; let same = 0; let compared = 0;
   for (let m = 0; m < 12; m++) {
     const la = a.levels[m]; const lb = b.levels[m];
-    if (isMissing(la) || isMissing(lb)) continue;
+    if (isMissing(la) || isMissing(lb) || a.breaks?.includes(m + 1) || b.breaks?.includes(m + 1)) continue;
     compared++;
     if (lb > la) up++; else if (lb < la) down++; else same++;
   }
   const word = a.dataset === 'rain' ? 'wetter' : 'greener';
-  const tail = compared < 12 ? ` (${compared} months have data on both sides)` : '';
+  const tail = compared < 12 ? ` (${12 - compared} months unavailable)` : '';
   return { a: { side: a.side, year: a.year }, b: { side: b.side, year: b.year }, up, down, same, compared, word,
-    text: `Side ${a.side} ${a.year} vs side ${b.side} ${b.year}: ${up} of 12 months ${word} in ${b.year}${tail}` };
+    text: `Side ${a.side} ${a.year} vs side ${b.side} ${b.year}: ${up} of ${compared} comparable months ${word} in ${b.year}${tail}` };
 }
 
 // ------------------------------------------------------------------ C: ping colour

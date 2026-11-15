@@ -5,7 +5,7 @@
   colours to the image's colour key. Each disc is 12 monthly levels (rain: −4…+4 compared with normal; greenness: 1…4),
   a note on missing months, and the source frames used. Source hashes, frame counts and colour-match rates are kept in
   `pipeline/evidence/`; limits are in `pipeline/HANDOFF.md`.
-- `docs/data/discs.json` holds the 28 real discs (7 places × rain and greenness × two years). `discs.sample.json` is
+- `docs/data/discs.json` holds the 32 real discs (8 places × rain and greenness × two years). `discs.sample.json` is
   hand-made test data with a desert and a snow place (`?sample` in the address).
 
 ## Player and dialogs
@@ -14,11 +14,11 @@
 - Settings (High contrast, Reduce motion, Preview on focus, Volume) live in a dialog and are saved in this browser; contrast ratios of the colour pairs are checked by `node --test`.
 
 ## Pixel console
-- The page is one 480x270 pixel canvas scaled to the window: a night sky with a dot-matrix world map (the ping sits on the place and takes the colour of the month playing), weather that follows the landscape (rain, sand, falling snow that piles on the lid), and a wooden console with a tray of discs and a slate deck. `docs/js/scene.js` paints it; every button is a real HTML button laid over the painting, and all state changes go through the store.
+- The record player is a 480x270 pixel canvas scaled inside a scrollable page, with labelled controls below it: a night sky with a dot-matrix world map (the ping sits on the place and takes the colour of the month playing), weather that follows the landscape (rain, sand, falling snow that piles on the lid), and a wooden console with a tray of discs and a slate deck. `docs/js/scene.js` paints it; every button is a real HTML button laid over the painting, and all state changes go through the store.
 - The tray reads in columns: rain on top, greenness below. The main page holds a river place, the Amazon, a desert place and a snow place; the small page button in the bottom-right corner of the tray (1/3 ▶) shows the other pages. The centre of each disc is painted for its landscape (river delta, city, wetland, lake, coast, forest, desert, ice).
 - While the music plays, the sky over the world map becomes a little pixel calendar of its 12 months, so the data can be read without sound. Rain: a wetter month is a rain cloud (bigger and with more drops and a puddle the wetter it is), a drier month a sun over cracked ground (bigger the drier), a near-normal month a small white cloud. Greenness: a sprout, bush, tree or big tree. The two years of a place are two rows (named in the title with the NASA SVS page); the disc on the deck is the bright row. A playhead moves with the music and the playing month is lit. The year's peak month (the wettest, or the greenest) has a gold star and a gold name; for rain it is only marked when the peak is wetter than normal, and not when more than 3 months share the top.
 - The glass tube in the slot between the tray and the deck is a rain gauge (blue) or a sap gauge (green): it fills and empties with the month playing (half full is a normal month for rain), and a gold high-water mark, like a flood mark on a wall, shows the year's peak; it flashes when the music reaches it.
-- Enter or a click records a disc and puts it on the deck. The 12 lights on the deck are one row, or two (side A above side B) with a spoken comparison such as "7 of 12 months wetter in 2026".
+- Enter or a click records a disc and puts it on the deck. The 12 lights on the deck are one row, or two (side A above side B) with a comparison that counts only usable pairs, such as "7 of 10 comparable months wetter in 2026 (2 months unavailable)". Flipping years preserves the calendar position.
 - The first time a disc of a place is loaded, a story card covers most of the picture: pixel art of the place's landscape (made from a free nature photograph with `tools/make_pixel_art.py`, credited in CREDITS.md) with its name and story. It starts fading as soon as it appears (gone after about 4 seconds, or within about a second of pressing Play) (with Reduce motion it just shows for a moment and goes). A place without a picture has no card.
 - The first click or key press starts audio (no start button). Turntable sounds are synthesized in `docs/js/foley.js`, separate from the music engine.
 
@@ -28,4 +28,14 @@
 - Dry months sit lower and wet months higher, with fewer or more drops, and the background sound changes with the month too, so the state is heard in several ways at once.
 - `docs/js/audio.js` plays the notes with the Web Audio API (no library) in a lofi style, with its own key, instruments and groove per landscape: Southeast Asia (plucked string, harp-like chords, hand drums), South Asia (flute, harmonium, tabla-like cycle over a continuous drone), desert (ney, oud, frame drum), snow and ice (bells, airy pad, almost no beat), elsewhere (electric piano, lofi kit).
 - Under the music runs a quiet bed of real CC0 field recordings that follows the month (`docs/js/ambience.js`): wind, light and heavy rain, birds; in a desert a gusting open wind, and in snow places a hill wind with a howl in snowier months. It is faint in a normal month and swells the further a month is from normal.
-- Round trip: reading the levels back from the notes gives back every month exactly (336 of 336 on the real discs); in science mode NDVI comes back within 0.020 (limit 1/48). `node --test` checks this.
+- Round trip: reading the levels back from the notes gives back all 384 stored monthly slots, including missing slots; in science mode NDVI comes back within 0.020 (limit 1/48). `node --test` checks this.
+
+## Seasonal comparisons
+- `seasonal.js` aligns January to December for two years or two places. A then B takes two seconds per month; changes-only keeps unequal usable pairs. Nulls and flagged breaks never become a zero or count as comparable.
+- Rain uses MIDI 60 + 2 × category and greenness uses MIDI 60 + 4 × (category − 1), consistently across every place and year. Duets require one place and a shared year, and play rain and greenness together with independent switches.
+- `seasonal-audio.js` schedules notes on a shared Web Audio clock and renders the same plan to WAV. Starting either player stops the other. Month cards, keyboard navigation and text explanations work without sound and on portrait phones.
+
+## Monthly evidence and Ferlo
+- `tools/build_seasonal_evidence.mjs` checks monthly levels and frame counts against the pipeline evidence, then publishes dated source URLs, hashes and colour-decoding checks for all 32 records. Re-run it after rebuilding the data.
+- Ferlo is sampled at 15.6035° N, 15.2857° W; all twelve 2025 greenness months are usable. It is an image-region sample, not an address-level measurement. Missing rain months remain missing, and transparent rain pixels can represent near normal.
+- The inspector shows sources for the selected month; the July crop is explicitly labelled as context, not a monthly aggregate. Downloaded JSON contains the audition plan, track switches, volume, stored data and available evidence. Colour-match percentages describe decoding quality, not physical accuracy.

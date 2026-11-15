@@ -184,9 +184,9 @@ export function createScene(store, opts) {
   const screen = $('screen'); const hits = $('hits'); const lcdEl = $('lcd'); const coordsEl = $('coords');
   const RM = () => Boolean(store.state.settings.reducedMotion);
 
-  function fit() {   // fills the window above the footer line, never scrolls
-    const foot = document.querySelector('.foot')?.offsetHeight ?? 30;
-    screen.style.setProperty('--s', String(Math.max(0.2, Math.min(innerWidth / W, (innerHeight - foot - 4) / H))));
+  function fit() {   // Fits its section; the readable controls and comparisons remain in document flow.
+    const width = screen.parentElement.clientWidth;
+    screen.style.setProperty('--s', String(Math.max(0.2, Math.min(width / W, 620 / H))));
   }
   fit(); addEventListener('resize', fit);
   const pos = (el, x, y, w, h) => Object.assign(el.style, { left: `${x / W * 100}%`, top: `${y / H * 100}%`, width: `${w / W * 100}%`, height: `${h / H * 100}%` });

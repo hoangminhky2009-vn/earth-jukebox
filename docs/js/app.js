@@ -8,6 +8,7 @@ import { initDialogs } from './ui-jukebox.js';
 import { createScene } from './scene.js';
 import * as foley from './foley.js';
 import { initRoll } from './roll.js';
+import { initSeasonal } from './seasonal-ui.js';
 
 // Real NASA-derived discs; add ?sample to the address to load the hand-made sample (it has a desert and a snow place).
 const DATA_URL = new URLSearchParams(location.search).has('sample') ? 'data/discs.sample.json' : 'data/discs.json';
@@ -99,6 +100,7 @@ async function main() {
   store.on('flip', (p) => {
     if (!p.changed) return;
     audio.load(p.disc, p.place);
+    audio.seek(Math.floor(store.state.position));
     if (store.state.playing) audio.play();
   });
   store.on('mode', ({ mode }) => audio.setMode(mode));
@@ -129,6 +131,7 @@ async function main() {
 
   initRoll(store, { container: document.getElementById('roll-box'), svgHost: document.getElementById('roll'), getSchedule: () => schedule });
   initDialogs(store, { datasets: data.datasets, announce });
+  initSeasonal(store, data);
 
   // Settings toggles (persisted per browser).
   function bindToggle(inputId, key, fallback, apply) {

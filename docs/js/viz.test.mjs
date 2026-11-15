@@ -78,13 +78,13 @@ test('A/B comparison counts wetter months and names the sides', () => {
   const c = compareSides(disc('dhaka-rain-2026'), disc('dhaka-rain-2025')); // argument order does not matter
   assert.deepEqual([c.up, c.down, c.same, c.compared], [7, 2, 1, 10]);
   assert.equal(c.word, 'wetter');
-  assert.equal(c.text, 'Side A 2025 vs side B 2026: 7 of 12 months wetter in 2026 (10 months have data on both sides)');
+  assert.equal(c.text, 'Side A 2025 vs side B 2026: 7 of 10 comparable months wetter in 2026 (2 months unavailable)');
 });
 
 test('A/B comparison: greenness says greener; no pair gives null', () => {
   const c = compareSides(disc('mekong-ndvi-2024'), disc('mekong-ndvi-2025'));
   assert.deepEqual([c.up, c.down, c.compared], [0, 1, 12]);
-  assert.equal(c.text, 'Side A 2024 vs side B 2025: 0 of 12 months greener in 2025');
+  assert.equal(c.text, 'Side A 2024 vs side B 2025: 0 of 12 comparable months greener in 2025');
   assert.equal(compareSides(disc('sahara-rain-2025'), null), null);
   assert.equal(compareSides(disc('sahara-rain-2025'), disc('dhaka-rain-2025')), null);
   assert.equal(compareSides(disc('sahara-rain-2025'), disc('sahara-rain-2025')), null);
