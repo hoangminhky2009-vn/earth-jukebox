@@ -260,11 +260,22 @@ test('plants of each landscape: its own kinds, all grow with the greenness', asy
   const { FLORA, plantKind, plantHeight } = await import('./viz.js');
   assert.equal(plantKind(0.1, 'city'), 'bamboo'); assert.equal(plantKind(0.9, 'city'), 'banana');
   assert.equal(plantKind(0.1, 'ice'), 'spruce'); assert.equal(plantKind(0.9, 'ice'), 'birch');
-  assert.equal(plantKind(0.9, 'desert'), 'gum'); assert.equal(plantKind(0.9, 'coast'), 'casuarina');
+  assert.equal(plantKind(0.1, 'desert'), 'saguaro'); assert.equal(plantKind(0.4, 'desert'), 'joshua'); assert.equal(plantKind(0.9, 'coast'), 'casuarina');
+  assert.equal(plantKind(0.9, 'lake'), 'mangrove');
   assert.equal(plantKind(0.9, 'nowhere'), 'giant', 'an unknown landscape falls back to the rainforest');
   for (const [art, f] of Object.entries(FLORA)) {
     assert.ok(f.kinds.at(-1)[1] === 1 && f.count > 0 && f.max > 0, art);
     for (const seed of [0.05, 0.3, 0.6, 0.95]) assert.ok(plantHeight(1, seed, f.max, art) >= plantHeight(0.4, seed, f.max, art), `${art} ${seed}`);
   }
+});
+
+test('plant life cycle: stages step up from seedling to lush, and the height follows the stage', async () => {
+  const { plantStage, plantHeight } = await import('./viz.js');
+  assert.equal(plantStage(0, 0.5), 0);
+  const stages = [0.1, 0.3, 0.5, 0.7, 0.9, 1].map((g) => plantStage(g, 0.7));   // a tree
+  for (let i = 1; i < stages.length; i++) assert.ok(stages[i] >= stages[i - 1], 'stages never go back as it greens');
+  assert.equal(stages.at(-1), 5);
+  assert.ok(stages[0] < stages.at(-1));
+  assert.ok(plantHeight(1, 0.7) > plantHeight(0.5, 0.7));
 });
 

@@ -317,20 +317,23 @@ export function bladeHeight(growth, seed, max = 8) {
 
 /**
  * What grows behind the lid in each landscape (the disc art of the place, see biomeLook): [kind, upper seed bound] pairs,
- * the tallest plant in pixels, and how many specimens stand along the lid. Rainforest: ferns, palms, trees, giant trees.
+ * the tallest plant in pixels, and how many specimens stand along the lid.
  */
 export const FLORA = {
   forest: { max: 70, count: 34, kinds: [['fern', 0.34], ['palm', 0.58], ['tree', 0.9], ['giant', 1]] },
-  lake: { max: 34, count: 30, kinds: [['reed', 0.45], ['stilt', 1]] },                       // flooded forest: reeds and trees on stilt roots
-  wetland: { max: 30, count: 34, kinds: [['reed', 0.75], ['willow', 1]] },                   // reeds and willows
-  city: { max: 54, count: 26, kinds: [['bamboo', 0.55], ['banana', 1]] },                    // river delta: bamboo clumps and banana plants
-  coast: { max: 48, count: 26, kinds: [['coconut', 0.5], ['casuarina', 1]] },                // coconut palms and casuarina
-  desert: { max: 36, count: 24, kinds: [['spinifex', 0.6], ['gum', 1]] },                    // spinifex tufts and ghost gums
-  ice: { max: 38, count: 26, kinds: [['spruce', 0.6], ['birch', 1]] },                       // spruce and birch
+  lake: { max: 46, count: 24, kinds: [['reed', 0.4], ['mangrove', 1]] },                       // flooded forest: reeds and mangroves on prop roots
+  wetland: { max: 30, count: 34, kinds: [['reed', 0.75], ['willow', 1]] },
+  city: { max: 54, count: 26, kinds: [['bamboo', 0.55], ['banana', 1]] },
+  coast: { max: 48, count: 26, kinds: [['coconut', 0.5], ['casuarina', 1]] },
+  desert: { max: 40, count: 22, kinds: [['saguaro', 0.26], ['joshua', 0.48], ['pear', 0.66], ['agave', 0.82], ['spinifex', 1]] },
+  ice: { max: 38, count: 26, kinds: [['spruce', 0.6], ['birch', 1]] },
   delta: { max: 32, count: 22, kinds: [['reed', 0.6], ['willow', 1]] },
 };
-const KIND_HEIGHT = { fern: 0.22, palm: 0.6, tree: 0.78, giant: 1, reed: 0.5, stilt: 0.8, willow: 0.75, bamboo: 1, banana: 0.4, coconut: 1, casuarina: 0.75, spinifex: 0.18, gum: 1, spruce: 1, birch: 0.75 };
-const KIND_START = { fern: 0.05, palm: 0.2, tree: 0.3, giant: 0.55, reed: 0.05, stilt: 0.12, willow: 0.25, bamboo: 0.2, banana: 0.1, coconut: 0.2, casuarina: 0.1, spinifex: 0.05, gum: 0.35, spruce: 0.1, birch: 0.3 };
+const KIND_HEIGHT = { fern: 0.22, palm: 0.6, tree: 0.78, giant: 1, reed: 0.5, mangrove: 0.85, willow: 0.75, bamboo: 1, banana: 0.4, coconut: 1, casuarina: 0.75,
+  saguaro: 1, joshua: 0.75, pear: 0.3, agave: 0.25, spinifex: 0.18, gum: 1, spruce: 1, birch: 0.75 };
+const KIND_START = { fern: 0.05, palm: 0.2, tree: 0.3, giant: 0.55, reed: 0.05, mangrove: 0.12, willow: 0.25, bamboo: 0.2, banana: 0.1, coconut: 0.2, casuarina: 0.1,
+  saguaro: 0.1, joshua: 0.2, pear: 0.05, agave: 0.05, spinifex: 0.05, gum: 0.35, spruce: 0.1, birch: 0.3 };
+const STAGE_HEIGHT = [0.1, 0.26, 0.5, 0.78, 1];   // seedling, sapling, young, mature, lush: each stage is a different shape, not a bigger copy
 
 /** What grows at a spot (seed 0..1) in a landscape (default: the rainforest). */
 export function plantKind(seed, art = 'forest') {
@@ -339,14 +342,24 @@ export function plantKind(seed, art = 'forest') {
 }
 
 /**
- * Height in pixels of the plant at a spot for a growth 0..1 (no fixed ceiling: `max` is the tallest, at full growth).
- * Low plants come up first and stay low; trees follow; the tallest only rise in a lush month. 0 = not up yet.
+ * Life-cycle stage of the plant at a spot for a growth 0..1: 0 not up yet, 1 seedling, 2 sapling, 3 young, 4 mature, 5 lush.
+ * The drawing changes shape with the stage (a seedling is two leaves, a sapling a thin stem, a young plant its first branches,
+ * a mature one its full form, a lush one the fullest), so greenness is read as a plant growing up, not as a picture scaling.
  */
-export function plantHeight(growth, seed, max = 56, art = 'forest') {
+export function plantStage(growth, seed, art = 'forest') {
   const kind = plantKind(seed, art); const start = KIND_START[kind] + 0.25 * ((seed * 7) % 1);
   if (growth <= start) return 0;
   const k = Math.min(1, (growth - start) / (1 - start));
-  const eased = k * k * (3 - 2 * k);
-  return Math.max(2, Math.round(max * KIND_HEIGHT[kind] * (0.45 + 0.55 * ((seed * 13) % 1)) * (0.25 + 0.75 * eased)));
+  return Math.min(5, 1 + Math.floor(k * 4.999));
+}
+
+/** Height in pixels at a spot: it steps up the stages (a little smoothing inside each stage); `max` is the tallest at full growth. */
+export function plantHeight(growth, seed, max = 56, art = 'forest') {
+  const stage = plantStage(growth, seed, art); if (!stage) return 0;
+  const kind = plantKind(seed, art); const start = KIND_START[kind] + 0.25 * ((seed * 7) % 1);
+  const k = Math.min(1, (growth - start) / (1 - start)); const within = k * 4.999 - Math.floor(k * 4.999);
+  const lo = STAGE_HEIGHT[stage - 1]; const hi = STAGE_HEIGHT[Math.min(4, stage)];
+  const frac = lo + (hi - lo) * within * 0.6;
+  return Math.max(2, Math.round(max * KIND_HEIGHT[kind] * (0.45 + 0.55 * ((seed * 13) % 1)) * frac));
 }
 

@@ -4,7 +4,7 @@
 // painting. It reads and changes state only through the store, and reacts to the store's events.
 // Ported from the owner-approved sample (art_samples.html, v12); data now comes from the loaded discs.
 
-import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, plantKind, plantHeight, FLORA, FLORA_COLOURS, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
+import { biomeLook, shelfSlots, shelfPages, slotLayout, storyText, newCard, stepCard, monthIcon, panelTitle, GREEN_SCALE, gaugeFill, peakMonths, weatherIntensity, greenGrowth, bladeHeight, plantKind, plantHeight, plantStage, FLORA, FLORA_COLOURS, compareSides, pingColor, lcdText, levelColor, PING, MONTH_ABBR } from './viz.js';
 import * as foley from './foley.js';
 
 const W = 480; const H = 270;
@@ -508,81 +508,113 @@ export function createScene(store, opts) {
   // Snow lies level along the whole lid; sand piles are highest in the middle and taper to nothing at the ends.
   const edgeDist = (x) => Math.min(x - X0, X1 - 1 - x);
   const snowCap = (x) => (edgeDist(x) < -2 ? 0 : edgeDist(x) < 1 ? 5 : 8);   // snow lies flat across the whole lid (only the very corners are a little lower)
-  const sandCap = (x) => Math.max(0, Math.min(4, edgeDist(x) * 0.2));
+  const sandCap = (x) => Math.max(0, Math.min(7, edgeDist(x) * 0.4));
   const pileSnow = (x, h) => { if (x >= 0 && x < W && snowH[x] < snowCap(x)) snowH[x] = Math.min(snowCap(x), snowH[x] + h); };
   // The weather follows the month playing: it eases toward the month's intensity, so a downpour builds and a snowfall thins
   // out gradually (and the snow on the lid melts when the month is green).
   let wxNow = 0.5;
-  /* ---------- plants behind the lid: each landscape grows its own (FLORA in viz.js) as the months green up, as tall as the sky
-     allows (drawn a little see-through so the sky calendar still shows): rainforest trees and giants, reeds and stilt-root trees
-     on the lake, bamboo and banana in the delta, coconut palms and casuarina on the coast, spinifex and ghost gums in the
-     desert, spruce and birch in the north ---------- */
+  /* ---------- plants behind the lid: each landscape grows its own (FLORA in viz.js) through a life cycle as the months green up
+     (seedling, sapling, young plant, mature, lush: a different shape at each stage, not a scaled copy), as tall as the sky
+     allows and drawn a little see-through so the sky calendar still shows ---------- */
   const FLORA_X = (count) => Array.from({ length: count }, (_, i) => 20 + Math.round(i * 440 / count) + Math.round((h2(i, 3, 17) - 0.5) * 9));
   const floraSpots = {};
   function drawFlora(d, rm) {
     if (!d || growNow <= 0.03 || card) return;
     const art = look(d).art; const spec = FLORA[art] ?? FLORA.delta;
-    const gDesert = art === 'desert' ? 0.75 : 1;   // a desert never gets as lush as the data's top level suggests
+    const gDesert = art === 'desert' ? 1.5 : 1;   // a desert's greenness is low on this scale even when it is at its best: its plants (cacti, in dry colours) are judged against that
     const xs = floraSpots[art] ?? (floraSpots[art] = FLORA_X(spec.count));
     const t = rm ? 0 : performance.now() / 1000; const lush = (art === 'desert' ? FLORA_COLOURS.desert : FLORA_COLOURS.green)[Math.max(1, Math.min(4, Math.round(1 + growNow * 3)))];
-    const leaf = (k) => lit(lush, k); const wood = '#5a3d27'; const woodHi = '#7a5535'; const white = '#e8e0d0';
+    const leaf = (k) => lit(lush, k); const wood = '#5a3d27'; const woodHi = '#7a5535'; const white = '#e8e0d0'; const sage = '#6f8f55'; const sageHi = '#8fae72';
     const order = xs.map((x, i) => [x, h2(i, 5, 23), i]).sort((a2, b2) => a2[1] - b2[1]);
-    ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.72;
     for (const [x0, seed, i] of order) {
-      const h = plantHeight(growNow * gDesert, seed, spec.max, art); if (!h) continue;
-      const kind = plantKind(seed, art); const sway = rm ? 0 : Math.sin(t * 1.4 + i) * (kind === 'fern' || kind === 'reed' ? 0.9 : 1.5);
-      const topX = x0 + Math.round(sway * (h / 40)); const base = ROOF;
+      const g = Math.min(1, growNow * gDesert); const stage = plantStage(g, seed, art); if (!stage) continue;
+      const h = plantHeight(g, seed, spec.max, art); const kind = plantKind(seed, art);
+      const sway = rm ? 0 : Math.sin(t * 1.4 + i) * (kind === 'fern' || kind === 'reed' ? 0.9 : 1.4);
+      const topX = x0 + Math.round(sway * (h / 40)); const base = ROOF; const cs = [0.3, 0.45, 0.65, 0.85, 1][stage - 1];
       const trunk = (w, col = wood, hi = woodHi) => { for (let y = 0; y < h; y++) { const f = y / h; const cx = Math.round(x0 + (topX - x0) * f * f); P(col, cx, base - y, w, 1); P(hi, cx, base - y, 1, 1); } };
       const dome = (cx, cy, r, wide = 1.25) => { for (let dy = -r; dy <= r; dy++) { const w = Math.round(Math.sqrt(r * r - dy * dy) * wide); P(leaf(dy < -r * 0.3 ? 0.12 : dy > r * 0.4 ? -0.35 : -0.1), cx - w, cy + dy, w * 2 + 1, 1); } };
+      // young plants are a sprout or a thin stem with a few leaves; a young tree is branches with leaf clusters at the tips;
+      // only mature and lush trees get a full crown
+      const sprout = () => { P(leaf(-0.1), x0, base - 1, 1, 2 + (stage > 1 ? 1 : 0)); P(leaf(0.2), x0 - 1, base - 2 - (stage > 1 ? 1 : 0), 1, 1); P(leaf(0.2), x0 + 1, base - 3, 1, 1); };
+      const branches = (cx, cy, r, tips) => { for (const side of [-1, 0, 1]) { const len = Math.max(2, Math.round(r * (side === 0 ? 0.8 : 1)));
+          for (let k = 0; k <= len; k++) P(wood, cx + Math.round(side * k * 0.9), cy + Math.round(len * 0.4) - Math.round(k * (side === 0 ? 1 : 0.5)));
+          if (tips) { const tx = cx + Math.round(side * len * 0.9); const ty = cy + Math.round(len * 0.4) - Math.round(len * (side === 0 ? 1 : 0.5)); P(leaf(0.1), tx - 1, ty - 1, 3, 2); P(leaf(0.35), tx, ty - 2, 1, 1); } } };
+      const crown = (cx, cy, r, wide = 1.25) => { if (stage <= 3) branches(cx, cy, Math.max(2, Math.round(r * cs)), true); else dome(cx, cy, Math.max(3, Math.round(r * cs)), wide); if (stage === 3) P(leaf(0.2), cx - 1, cy - 1, 3, 2); };
       const fan = (cx, cy, len, n, droop) => { for (let a = 0; a < n; a++) { const ang = (a / (n - 1)) * Math.PI - Math.PI;
         for (let s2 = 0; s2 <= len; s2++) { const f = s2 / len; const px = cx + Math.round(Math.cos(ang) * s2 * 0.95); const py = cy + Math.round(Math.sin(ang) * s2 * 0.5 + f * f * len * droop);
           P(leaf(f > 0.6 ? -0.3 : 0.05), px, py); if (s2 % 3 === 1) P(leaf(-0.4), px, py + 1); } } };
+      const spikes = (cx, cy, n, len, col, hi) => { for (let a = 0; a < n; a++) { const ang = -Math.PI / 2 + (a - (n - 1) / 2) * (Math.PI * 0.8 / Math.max(1, n - 1)); for (let s2 = 0; s2 <= len; s2++) P(s2 > len * 0.7 ? hi : col, cx + Math.round(Math.cos(ang) * s2), cy + Math.round(Math.sin(ang) * s2)); } };
+      const treeLike = ['tree', 'willow', 'birch', 'casuarina', 'gum', 'mangrove', 'giant', 'palm', 'coconut', 'bamboo', 'banana'].includes(kind);
+      if (stage === 1 && treeLike) { sprout(); continue; }
+      if (stage === 2 && treeLike && kind !== 'bamboo' && kind !== 'banana') { P(kind === 'birch' || kind === 'gum' ? white : wood, x0, base - Math.max(3, h), 1, Math.max(3, h)); sprout(); P(leaf(0.1), x0 - 1, base - Math.max(3, h) - 1, 3, 1); continue; }
       if (kind === 'fern') {
-        for (let a = -3; a <= 3; a++) { const len = Math.round(h * (0.9 - Math.abs(a) * 0.12) + 2);
+        for (let a = -3; a <= 3; a++) { const len = Math.round(h * (0.9 - Math.abs(a) * 0.12) * (stage < 3 ? 0.7 : 1) + 2);
           for (let s2 = 0; s2 <= len; s2++) { const f = s2 / len; const px = x0 + Math.round(a * f * (h * 0.55) / 3 + sway * f); const py = base - Math.round(h * 0.9 * Math.sin(f * Math.PI * 0.55) - f * f * h * 0.45);
             P(leaf(-0.2 + 0.3 * f), px, py); if (s2 % 2 === 0) P(leaf(-0.35), px, py + 1); } }
       } else if (kind === 'palm') {
-        trunk(1); fan(topX, base - h, Math.max(5, Math.round(h * 0.38)), 7, 0.55); P(leaf(0.3), topX, base - h - 1, 1, 1);
+        trunk(1); fan(topX, base - h, Math.max(4, Math.round(h * 0.38 * cs)), stage < 4 ? 5 : 7, 0.55); P(leaf(0.3), topX, base - h - 1, 1, 1);
       } else if (kind === 'tree') {
-        trunk(2); const r = Math.max(4, Math.round(h * 0.3)); const cy = base - h; dome(topX, cy, r);
-        for (let k = 0; k < 7; k++) P(leaf(0.4), topX - r + Math.round(h2(i, k, 41) * r * 2.2), cy - r + 1 + Math.round(h2(i, k, 43) * r * 0.9), 2, 1);
-        const vine = 3 + Math.round(h2(i, 9, 47) * 4); for (let k = 0; k < 2; k++) P(leaf(-0.2), topX - r + 1 + k * (r * 2 - 2), cy + r - 1, 1, vine);
+        trunk(stage > 3 ? 2 : 1); crown(topX, base - h, Math.max(4, Math.round(h * 0.3)));
+        if (stage >= 5) { const vine = 3 + Math.round(h2(i, 9, 47) * 4); const r = Math.max(4, Math.round(h * 0.3)); for (let k = 0; k < 2; k++) P(leaf(-0.2), topX - r + 1 + k * (r * 2 - 2), base - h + r - 1, 1, vine); }
       } else if (kind === 'giant') {
-        trunk(3);
-        for (let k = 1; k <= 5; k++) { P(wood, x0 - k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); P(wood, x0 + 2 + k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); }
-        const cw = Math.max(10, Math.round(h * 0.55)); const cy = base - h; const ch = Math.max(3, Math.round(h * 0.13));
-        for (let dy = -ch; dy <= ch; dy++) { const w = Math.round(cw * Math.sqrt(1 - (dy / ch) ** 2)); P(leaf(dy < 0 ? 0.15 : -0.3), topX + 1 - w, cy + dy, w * 2 + 1, 1); }
-        for (let k = 0; k < 6; k++) P(leaf(0.45), topX + 1 - cw + Math.round(h2(i, k, 51) * cw * 2), cy - ch + Math.round(h2(i, k, 53) * ch), 3, 1);
-      } else if (kind === 'reed') {   // a tuft of reeds with brown seed heads
-        for (let k = -1; k <= 1; k++) { const hh = Math.max(2, h - Math.abs(k) * 2); for (let y = 0; y < hh; y++) P(leaf(-0.15 + 0.3 * y / hh), x0 + k * 2 + Math.round(sway * y / hh), base - y); P('#8a6a3a', x0 + k * 2 + Math.round(sway), base - hh, 1, Math.min(3, hh)); }
-      } else if (kind === 'stilt') {   // flooded-forest tree: a round crown held up on thin stilt roots
-        const r = Math.max(3, Math.round(h * 0.28)); const cy = base - Math.round(h * 0.7);
-        for (const dx of [-r + 1, -1, 1, r - 1]) for (let y = 0; y < base - cy; y++) P(wood, x0 + Math.round(dx * (1 - y / (base - cy) * 0.5)), base - y);
-        dome(topX, cy, r, 1.4);
-      } else if (kind === 'willow') {   // rounded crown, long drooping branches
-        trunk(1); const r = Math.max(3, Math.round(h * 0.26)); const cy = base - h; dome(topX, cy, r, 1.3);
-        for (let k = -r; k <= r; k += 2) P(leaf(-0.15), topX + k, cy + Math.round(r * 0.5), 1, Math.round(r * 0.9 + 1 + h2(i, k + 9, 57) * 3));
-      } else if (kind === 'bamboo') {   // jointed culms with leafy tops
-        for (const k of [-2, 0, 2]) { const hh = Math.round(h * (k === 0 ? 1 : 0.8)); for (let y = 0; y < hh; y++) P(y % 5 === 4 ? '#c9d98a' : '#7fa84a', x0 + k + Math.round(sway * y / hh), base - y);
-          for (let l = 0; l < 4; l++) { P(leaf(0.1), x0 + k + Math.round(sway) - 2 + l, base - hh + (l % 2), 1, 1); P(leaf(-0.2), x0 + k + Math.round(sway) + 1 + l, base - hh + 1 + (l % 2), 1, 1); } }
-      } else if (kind === 'banana') {   // short stem, big drooping leaves
-        trunk(2, '#8fa85a', '#b5c97a'); for (let a = 0; a < 5; a++) { const ang = (a / 4) * Math.PI - Math.PI; for (let s2 = 0; s2 <= Math.max(5, h * 0.7); s2++) { const f = s2 / Math.max(5, h * 0.7); P(leaf(0.1 - 0.3 * f), topX + Math.round(Math.cos(ang) * s2), base - h + Math.round(Math.sin(ang) * s2 * 0.5 + f * f * h * 0.5), 1, 2); } }
-      } else if (kind === 'coconut') {   // tall leaning palm with coconuts
+        trunk(stage > 3 ? 3 : 2);
+        if (stage >= 4) for (let k = 1; k <= 5; k++) { P(wood, x0 - k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); P(wood, x0 + 2 + k, base - Math.max(0, 5 - k) - 1, 1, Math.max(1, 6 - k)); }
+        if (stage <= 3) crown(topX, base - h, Math.max(5, Math.round(h * 0.3)));
+        else { const cw = Math.max(10, Math.round(h * 0.55 * cs)); const cy = base - h; const ch = Math.max(3, Math.round(h * 0.13));
+          for (let dy = -ch; dy <= ch; dy++) { const w = Math.round(cw * Math.sqrt(1 - (dy / ch) ** 2)); P(leaf(dy < 0 ? 0.15 : -0.3), topX + 1 - w, cy + dy, w * 2 + 1, 1); }
+          for (let k = 0; k < 6; k++) P(leaf(0.45), topX + 1 - cw + Math.round(h2(i, k, 51) * cw * 2), cy - ch + Math.round(h2(i, k, 53) * ch), 3, 1); }
+      } else if (kind === 'reed') {
+        for (let k = -1; k <= 1; k++) { const hh = Math.max(2, h - Math.abs(k) * 2); for (let y = 0; y < hh; y++) P(leaf(-0.15 + 0.3 * y / hh), x0 + k * 2 + Math.round(sway * y / hh), base - y); if (stage > 2) P('#8a6a3a', x0 + k * 2 + Math.round(sway), base - hh, 1, Math.min(3, hh)); }
+      } else if (kind === 'mangrove') {   // gnarled trunk on arching prop roots standing in the water, branches and hanging moss
+        const top = base - h; const spread = Math.max(4, Math.round(h * 0.45 * (0.6 + cs * 0.4)));
+        for (const side of [-1, 1]) for (const k of [0, 1, 2]) { const reach = spread * (0.55 + k * 0.3); const hgt = Math.max(3, Math.round(h * (0.55 - k * 0.12)));
+          for (let u = 0; u <= 1; u += 1 / Math.max(6, Math.round(reach + hgt))) { const px = x0 + side * (2 + Math.round(reach * u)); const py = base - Math.round(hgt * (1 - u) * (1 - u) * 1.3 + hgt * 0.15 * (1 - u)); P(wood, px, Math.min(base - 1, py)); if (u > 0.9) P(woodHi, px, base - 1); } }
+        for (let y = Math.round(h * 0.45); y < h; y++) P(wood, x0 + Math.round(Math.sin(y * 0.8) * 0.6), base - y, 2, 1);
+        crown(x0, top, Math.max(4, Math.round(h * 0.28)), 1.5);
+        if (stage >= 4) for (let k = 0; k < 4; k++) P(leaf(-0.3), x0 - spread + Math.round(h2(i, k, 71) * spread * 2), top + 3, 1, 3 + Math.round(h2(i, k, 73) * 4));
+      } else if (kind === 'willow') {
+        trunk(1); const r = Math.max(3, Math.round(h * 0.26)); crown(topX, base - h, r, 1.3);
+        if (stage >= 4) for (let k = -r; k <= r; k += 2) P(leaf(-0.15), topX + k, base - h + Math.round(r * 0.5), 1, Math.round(r * 0.9 + 1 + h2(i, k + 9, 57) * 3));
+      } else if (kind === 'bamboo') {
+        const culms = stage < 3 ? [0] : stage < 4 ? [-2, 0] : [-2, 0, 2];
+        for (const k of culms) { const hh = Math.round(h * (k === 0 ? 1 : 0.8)); for (let y = 0; y < hh; y++) P(y % 5 === 4 ? '#c9d98a' : '#7fa84a', x0 + k + Math.round(sway * y / hh), base - y);
+          if (stage >= 3) for (let l = 0; l < 4; l++) { P(leaf(0.1), x0 + k + Math.round(sway) - 2 + l, base - hh + (l % 2), 1, 1); P(leaf(-0.2), x0 + k + Math.round(sway) + 1 + l, base - hh + 1 + (l % 2), 1, 1); } }
+      } else if (kind === 'banana') {
+        trunk(stage > 2 ? 2 : 1, '#8fa85a', '#b5c97a'); const nl = stage < 3 ? 2 : stage < 4 ? 3 : 5;
+        for (let a = 0; a < nl; a++) { const ang = (a / Math.max(1, nl - 1)) * Math.PI - Math.PI; const L = Math.max(4, h * 0.7); for (let s2 = 0; s2 <= L; s2++) { const f = s2 / L; P(leaf(0.1 - 0.3 * f), topX + Math.round(Math.cos(ang) * s2), base - h + Math.round(Math.sin(ang) * s2 * 0.5 + f * f * h * 0.5), 1, 2); } }
+      } else if (kind === 'coconut') {
         for (let y = 0; y < h; y++) { const f = y / h; P(wood, x0 + Math.round(f * f * 5 - 2), base - y); } const cx = x0 + 3;
-        fan(cx, base - h, Math.max(6, Math.round(h * 0.34)), 7, 0.6); P('#7a4a2a', cx, base - h + 2, 2, 2); P('#7a4a2a', cx - 2, base - h + 3, 2, 2);
-      } else if (kind === 'casuarina') {   // feathery, drooping needles in a narrow crown
-        trunk(1); for (let k = 1; k <= Math.round(h * 0.55); k++) { const w = Math.round(1 + (1 - k / (h * 0.55)) * -1 + k * 0.22); const y = base - h + k * 2 - 4; if (y > base - 3) break; P(leaf(-0.3 + 0.2 * ((k + i) % 2)), topX - w, y, w * 2 + 1, 1); P(leaf(-0.45), topX - w, y + 1, 1, 2); P(leaf(-0.45), topX + w, y + 1, 1, 2); }
-      } else if (kind === 'spinifex') {   // a spiky round tuft
+        fan(cx, base - h, Math.max(4, Math.round(h * 0.34 * cs)), stage < 4 ? 5 : 7, 0.6); if (stage >= 4) { P('#7a4a2a', cx, base - h + 2, 2, 2); P('#7a4a2a', cx - 2, base - h + 3, 2, 2); }
+      } else if (kind === 'casuarina') {
+        trunk(1); const n = Math.round(h * 0.55 * cs); for (let k = 1; k <= n; k++) { const w = Math.round(k * 0.22 * (0.6 + cs * 0.4)); const y = base - h + k * 2 - 4; if (y > base - 3) break; P(leaf(-0.3 + 0.2 * ((k + i) % 2)), topX - w, y, w * 2 + 1, 1); P(leaf(-0.45), topX - w, y + 1, 1, 2); P(leaf(-0.45), topX + w, y + 1, 1, 2); }
+      } else if (kind === 'saguaro') {   // ribbed column; arms grow out and up as it matures; a flower on top when lush
+        const w = stage < 3 ? 2 : 3; for (let y = 0; y < h; y++) { P(sage, x0, base - y, w, 1); P(sageHi, x0 + (w > 2 ? 1 : 0), base - y, 1, 1); } P(sage, x0, base - h - 1, w, 1);
+        if (stage >= 3) { const a1 = Math.round(h * 0.5); P(sage, x0 - 4, base - a1, 4, 2); P(sage, x0 - 4, base - a1 - Math.round(h * 0.28), 2, Math.round(h * 0.28) + 2); P(sageHi, x0 - 4, base - a1 - Math.round(h * 0.28), 1, Math.round(h * 0.28)); }
+        if (stage >= 4) { const a2 = Math.round(h * 0.38); P(sage, x0 + w, base - a2, 4, 2); P(sage, x0 + w + 2, base - a2 - Math.round(h * 0.22), 2, Math.round(h * 0.22) + 2); P(sageHi, x0 + w + 2, base - a2 - Math.round(h * 0.22), 1, Math.round(h * 0.22)); }
+        if (stage >= 5) { P('#f4e9d8', x0, base - h - 2, 2, 1); P('#e8a0b0', x0 + 1, base - h - 3, 1, 1); }
+      } else if (kind === 'joshua') {   // joshua tree: a thick forking trunk ending in spiky clusters
+        const t1 = Math.round(h * 0.5); for (let y = 0; y < t1; y++) P('#7a6a50', x0, base - y, stage > 2 ? 2 : 1, 1);
+        const forks = stage < 3 ? [0] : stage < 4 ? [-1, 1] : [-2, 0, 2];
+        for (const f of forks) { const bx = x0 + 1 + f * 3; for (let k = 0; k < Math.max(2, h - t1); k++) P('#7a6a50', x0 + Math.round(f * k * 0.9), base - t1 - k); spikes(x0 + Math.round(f * Math.max(2, h - t1) * 0.9), base - h, stage < 3 ? 3 : 6, Math.max(2, Math.round(2 + stage * 0.8)), '#5d6a42', '#a9b07a'); }
+      } else if (kind === 'pear') {   // prickly pear: stacked flat pads, red fruit when lush
+        const pad = (cx, cy, rw, rh) => { for (let dy = -rh; dy <= rh; dy++) { const ww = Math.round(rw * Math.sqrt(1 - (dy / rh) ** 2)); P(dy < 0 ? sageHi : sage, cx - ww, cy + dy, ww * 2 + 1, 1); } };
+        const r = Math.max(2, Math.round(h * 0.4)); pad(x0, base - r, r, r);
+        if (stage >= 3) { pad(x0 - r, base - 2 * r - 1, Math.max(2, r - 1), r); } if (stage >= 4) pad(x0 + r, base - 2 * r - 2, Math.max(2, r - 1), r);
+        if (stage >= 5) { P('#c0392b', x0 - r, base - 3 * r - 1, 1, 1); P('#c0392b', x0 + r, base - 3 * r - 2, 1, 1); }
+      } else if (kind === 'agave') {   // rosette of upright spiky leaves; a tall flower stalk when lush
+        spikes(x0, base - 1, stage < 3 ? 3 : stage < 4 ? 5 : 7, Math.max(3, h), '#6f8f6a', '#9ab58a');
+        if (stage >= 5) { for (let y = 0; y < h * 1.6; y++) P('#8a7a55', x0, base - y); P('#e8d28a', x0, base - Math.round(h * 1.6) - 1, 1, 2); }
+      } else if (kind === 'spinifex') {
         for (let a = -5; a <= 5; a++) { const len = Math.max(2, Math.round(h * (1 - Math.abs(a) * 0.1))); for (let s2 = 0; s2 <= len; s2++) P(s2 > len * 0.6 ? '#c9b46a' : '#9a8a4a', x0 + Math.round(a * s2 * 0.45), base - s2); }
-      } else if (kind === 'gum') {   // ghost gum: pale trunk, sparse crown
-        trunk(2, white, '#ffffff'); P('#b9ae98', x0, base - Math.round(h * 0.4), 1, 2); const r = Math.max(3, Math.round(h * 0.18));
-        for (const [dx, dy] of [[-r, 2], [0, 0], [r, 3]]) dome(topX + dx, base - h + dy, Math.max(2, Math.round(r * 0.8)), 1.3);
-      } else if (kind === 'spruce') {   // layered conifer
-        const w0 = Math.max(3, Math.round(h * 0.28)); P(wood, topX, base - 3, 1, 3);
-        for (let tier = 0; tier < 4; tier++) { const y = base - 3 - tier * Math.round((h - 3) / 4); const w = Math.max(1, Math.round(w0 * (1 - tier * 0.22))); for (let dy = 0; dy <= Math.round((h - 3) / 4) + 1; dy++) { const ww = Math.round(w * (1 - dy / (Math.round((h - 3) / 4) + 2))) + 1; P(leaf(-0.45 + 0.1 * tier), topX - ww, y - dy, ww * 2 + 1, 1); } }
-      } else if (kind === 'birch') {   // white trunk with dark marks, light small crown
+      } else if (kind === 'gum') {
+        trunk(2, white, '#ffffff'); crown(topX, base - h, Math.max(3, Math.round(h * 0.2)), 1.3);
+      } else if (kind === 'spruce') {
+        const w0 = Math.max(3, Math.round(h * 0.28)); P(wood, topX, base - 3, 1, 3); const tiers = stage < 3 ? 2 : stage < 4 ? 3 : 4; const th = Math.round((h - 3) / tiers);
+        for (let tier = 0; tier < tiers; tier++) { const y = base - 3 - tier * th; const w = Math.max(1, Math.round(w0 * (1 - tier * 0.7 / tiers))); for (let dy = 0; dy <= th + 1; dy++) { const ww = Math.round(w * (1 - dy / (th + 2))) + 1; P(leaf(-0.45 + 0.1 * tier), topX - ww, y - dy, ww * 2 + 1, 1); } }
+      } else if (kind === 'birch') {
         trunk(1, white, '#ffffff'); for (let y = 3; y < h - 3; y += 4) P('#3a3a3a', x0, base - y, 1, 1);
-        const r = Math.max(3, Math.round(h * 0.26)); dome(topX, base - h + 1, r, 1.1); for (let k = 0; k < 6; k++) P(leaf(0.45), topX - r + Math.round(h2(i, k, 61) * r * 2), base - h - r + 2 + Math.round(h2(i, k, 63) * r), 1, 1);
+        const r = Math.max(3, Math.round(h * 0.26)); crown(topX, base - h + 1, r, 1.1);
       }
     }
     ctx.globalAlpha = 1;
@@ -633,7 +665,7 @@ export function createScene(store, opts) {
         if (p.y >= GROUND) { out.push({ k: 'splash', x: p.x, y: GROUND - 1, vx: (Math.random() - 0.5), vy: -0.6, life: 6 }); continue; }
       } else if (p.k === 'sand') {
         p.x += p.vx; p.y += p.vy + Math.sin(p.x * 0.1) * 0.05; const s = surface(p.x);
-        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; if (sandH[xi] < sandCap(xi)) sandH[xi] = Math.min(sandCap(xi), sandH[xi] + 0.5); continue; } p.y = s - 1; }
+        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; if (sandH[xi] < sandCap(xi)) sandH[xi] = Math.min(sandCap(xi), sandH[xi] + 1.2 + 3 * wxNow); continue; } p.y = s - 1; }
         if (p.x > W + 4) continue;
       } else if (p.k === 'leaf') {
         p.t += 0.06; p.x += Math.sin(p.t) * 0.5 + (p.vx || 0) * 0.2; p.y += p.vy;
