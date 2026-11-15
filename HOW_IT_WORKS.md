@@ -11,6 +11,7 @@
 ## Player and dialogs
 - The console shows a condition mark on each disc (colour and shape), five real buttons and a green LCD line that reads out the month being played.
 - The Details dialog (button or the I key) lists the 12-month chart and table, the NASA image of the disc, the piano roll, the dataset label and unit, its limits, colour match, frames used, the NASA SVS link and CREDITS.md; Esc closes it and focus goes back to where it was.
+- How to use (button or the H key) is a short six-step guide: pick a disc, play, listen, watch the sky calendar and the gauge, compare two years, look closer.
 - Settings (High contrast, Reduce motion, Preview on focus, Volume) live in a dialog and are saved in this browser; contrast ratios of the colour pairs are checked by `node --test`.
 
 ## Pixel console

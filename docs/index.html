@@ -24,6 +24,7 @@
       <div class="lcd" id="lcd" aria-hidden="true"></div>
       <div id="hits" role="group" aria-label="Jukebox console: disc shelf and player controls"></div>
       <div class="top-btns">
+        <button type="button" class="tbtn" id="help-btn" aria-haspopup="dialog">How to use</button>
         <button type="button" class="tbtn" id="details-btn" aria-haspopup="dialog">Details</button>
         <button type="button" class="tbtn" id="settings-btn" aria-haspopup="dialog">Settings</button>
       </div>
@@ -51,6 +52,23 @@
     </div>
   </dialog>
 
+  <dialog id="help-dialog" class="dlg" aria-labelledby="help-h">
+    <div class="dialog-inner">
+      <h2 id="help-h" tabindex="-1">How to use</h2>
+      <p>Each disc is one real place and one year of NASA data, turned into music and pictures. The first click turns the sound on.</p>
+      <ol class="howto">
+        <li><b>Pick a disc.</b> <b>RAIN</b>: wetter or drier than normal. <b>GREEN</b>: how green the land is. <b>SNOW</b>: how much of the land is under snow. Click a disc, drag it onto the turntable, or Tab to it and press Enter. The <b>1/3 &#9654;</b> button in the corner of the tray shows more places.</li>
+        <li><b>Press Play &#9654;</b> (or Space). Each month lasts 2 seconds, so a disc is a year in 24 seconds.</li>
+        <li><b>Listen.</b> A wetter month has more and higher notes and raindrops; a drier month fewer, lower notes and wind. A greener month has fuller chords and more birds. A crackle means there is no data for that month.</li>
+        <li><b>Watch.</b> While it plays, the sky turns into a calendar of the year: a rain cloud or a sun, a sprout growing into a big tree, a snowflake. The bigger the picture, the stronger the month. The line moves with the music. The tube between the tray and the deck rises and falls with each month, and its gold mark is the year's peak. The green screen says the month in words.</li>
+        <li><b>Compare two years.</b> Each place has two years (side A and side B). Press the flip button to hear the other one; the two rows of lights on the deck show both years.</li>
+        <li><b>Look closer.</b> <b>Details</b> has the 12 numbers, a chart, the NASA image and the limits of the data. <b>Settings</b> has high contrast, reduce motion and volume.</li>
+      </ol>
+      <p class="hint">Keys: Space play or pause &middot; left and right arrows change month &middot; F flip &middot; M music or science mode (science plays the plain number) &middot; I details &middot; H this guide &middot; Esc stop, or close a window.</p>
+      <button type="button" class="btn" id="help-close">Got it</button>
+    </div>
+  </dialog>
+
   <dialog id="settings-dialog" class="dlg" aria-labelledby="settings-h">
     <div class="dialog-inner">
       <h2 id="settings-h" tabindex="-1">Settings</h2>
@@ -60,7 +78,7 @@
         <label><input type="checkbox" id="opt-preview"> Preview on focus</label>
         <label>Volume <input type="range" id="opt-volume" min="0" max="1" step="0.05"></label>
       </div>
-      <p class="hint">Keys: Tab to a disc slot and press Enter to put it on the deck. Space play or pause, left and right arrows change month, F flip, M mode, I details, Esc stop.</p>
+      <p class="hint">Keys: Tab to a disc slot and press Enter to put it on the deck. Space play or pause, left and right arrows change month, F flip, M mode, I details, H how to use, Esc stop.</p>
       <button type="button" class="btn" id="settings-close">Close</button>
     </div>
   </dialog>

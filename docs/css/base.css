@@ -45,6 +45,8 @@ a { color: var(--accent-bright); text-underline-offset: 3px; }
 .dlg .btn { margin-top: 18px; }
 
 .settings { display: grid; gap: 12px; margin-top: 12px; }
+.howto { margin: 12px 0 0; padding-left: 1.4em; display: grid; gap: 10px; line-height: 1.55; }
+.howto b { color: var(--accent); }
 .settings label { display: flex; align-items: center; gap: 10px; }
 .settings input { accent-color: var(--accent); width: 20px; height: 20px; }
 .settings input[type="range"] { width: 200px; }

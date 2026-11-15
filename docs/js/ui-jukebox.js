@@ -280,4 +280,18 @@ export function initDialogs(store, opts) {
   const settingsBtn = $('settings-btn');
   const openSettings = wireDialog($('settings-dialog'), settingsBtn, $('settings-close'));
   settingsBtn.addEventListener('click', () => openSettings(settingsBtn));
+
+  // --- how to use (button or H key)
+  const helpBtn = $('help-btn');
+  const openHelp = wireDialog($('help-dialog'), helpBtn, $('help-close'));
+  helpBtn.addEventListener('click', () => openHelp(helpBtn));
+  document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() !== 'h' || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(t?.tagName) || t?.isContentEditable) return;
+    if (document.querySelector('dialog[open]')) return;
+    e.preventDefault();
+    const a = document.activeElement;
+    openHelp(a instanceof HTMLElement && a !== document.body ? a : helpBtn);
+  });
 }
