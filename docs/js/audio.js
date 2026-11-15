@@ -679,7 +679,7 @@ function startAmbience() {
   if (amb || !LAYERS.every((n) => ambBufs[n])) return;
   amb = {};
   const now = ac.currentTime;
-  birdBus = gainNode(1); birdBus.connect(ambCut);
+  birdBus = gainNode(0); birdBus.connect(ambCut); nextGrainAt = 0;
   for (const name of LAYERS) {
     if (name === 'birds') continue;   // birds are single calls, not a loop (scheduleBirds)
     const buf = ambBufs[name];
@@ -702,32 +702,35 @@ function setAmbience(b, t) {
 }
 
 /**
- * Birds as single calls, never a loop: each bar picks a few short stretches of the place's own recording at random
- * (random start, length, left-right place and a slight change of speed), so nothing repeats. The busier the month
- * (greener, or less snow), the more calls; when a month is livelier than the one before, a few extra calls greet it:
- * life coming back.
+ * Birds as an endless bed that never repeats (the way audio editors crossfade and game engines scatter ambience):
+ * long stretches ("grains", 8 s) of the place's own recording, each from a random spot not next to the last one,
+ * overlap by half and fade with sine / cosine windows. At 50 % overlap sin^2 + cos^2 = 1, so the loudness stays
+ * constant with no seams and no sudden starts (an equal-power crossfade, as in DAW crossfades). Each grain gets a
+ * slight random change of speed and level. How loud the bed is follows the month (greener, or less snow = more
+ * birds) through one gain that glides with a 2 s time constant, so life comes back gradually, never in steps.
  */
+const GRAIN = 8; const HOP = GRAIN / 2; const BIRD_MAX = 0.45;   // the busiest month is still only a moderate bed
+const sineWin = (peak) => Float32Array.from({ length: 64 }, (_, i) => peak * Math.sin(Math.PI * i / 63));
+let nextGrainAt = 0; let lastOffset = -1e9;
 function scheduleBirds(b, t0) {
-  if (!amb || !birdBus || mode !== 'music') return;
+  if (!amb || !birdBus) return;
+  const dens = mode === 'music' ? ambienceMix(disc, b, mode, place).birds ?? 0 : 0;
+  birdBus.gain.setTargetAtTime(dens * BIRD_MAX * AMB_TRIM.birds, Math.max(t0, ac.currentTime), 2);
   const buf = ambBufs[birdsFile(place)] ?? ambBufs.birds; if (!buf) return;
-  const dens = ambienceMix(disc, b, mode, place).birds ?? 0;
-  if (dens <= 0.02) return;
-  const prev = b > 0 ? ambienceMix(disc, b - 1, mode, place).birds ?? 0 : dens;
-  let n = Math.floor(dens * 2.5 + Math.random() * (0.5 + dens * 1.5));
-  if (dens > prev + 0.1) n += 2;
-  for (let i = 0; i < n; i++) {
-    const at = Math.max(ac.currentTime + 0.02, t0 + Math.random() * BAR);
-    const dur = 2.5 + Math.random() * 2.5;   // long enough for a gentle swell in and out
-    const off = Math.random() * Math.max(0.1, buf.duration - dur - 0.1);
-    const vol = AMB_TRIM.birds * (0.45 + 0.5 * dens) * (0.7 + Math.random() * 0.3);
-    const src = ac.createBufferSource(); src.buffer = buf; src.playbackRate.value = 0.95 + Math.random() * 0.1;
-    const g = ac.createGain(); const pan = ac.createStereoPanner(); pan.pan.value = (Math.random() - 0.5) * 1.4;
-    // swell in over ~0.9 s and fade out over ~1.2 s (equal-power-like curve), so a call never starts or stops abruptly
-    const curve = (a, b, n = 16) => Float32Array.from({ length: n }, (_, i) => a + (b - a) * Math.sin((i / (n - 1)) * Math.PI / 2) ** 2);
-    g.gain.value = 0; g.gain.setValueCurveAtTime(curve(0, vol), at, 0.9);   // (no other event inside a curve's span: Web Audio forbids it)
-    g.gain.setValueCurveAtTime(curve(vol, 0), at + dur - 1.2, 1.2);
-    src.connect(g); g.connect(pan); pan.connect(birdBus);
-    src.start(at, off, dur + 0.05);
+  if (nextGrainAt < ac.currentTime) nextGrainAt = Math.max(t0, ac.currentTime + 0.02);
+  while (nextGrainAt < t0 + BAR) {
+    const at = nextGrainAt; nextGrainAt += HOP;
+    let off = 0;
+    for (let k = 0; k < 6; k++) {   // a random spot, not overlapping the one just played
+      off = Math.random() * Math.max(0, buf.duration - GRAIN - 0.1);
+      if (Math.abs(off - lastOffset) > GRAIN || buf.duration < GRAIN * 3) break;
+    }
+    lastOffset = off;
+    const src = ac.createBufferSource(); src.buffer = buf; src.playbackRate.value = 0.97 + Math.random() * 0.06;
+    const g = ac.createGain(); g.gain.value = 0;
+    g.gain.setValueCurveAtTime(sineWin(0.85 + Math.random() * 0.15), at, GRAIN);
+    src.connect(g); g.connect(birdBus);
+    src.start(at, off, GRAIN + 0.05);
   }
 }
 
