@@ -2,7 +2,7 @@
 // Page wiring: loads data, creates the store, connects audio, the pixel scene, announcements and settings.
 
 import { validate } from './validate.js';
-import { createStore } from './store.js';
+import { createStore, playableCatalog } from './store.js';
 import { initA11y, announce } from './a11y.js';
 import { initDialogs } from './ui-jukebox.js';
 import { initCoach } from './coach.js';
@@ -84,6 +84,8 @@ async function main() {
     return;
   }
 
+  // Validate the full archive first, then give the tray, shortcuts and labelled selectors the same catalog.
+  data = playableCatalog(data);
   const audio = await loadAudio();
   audioEngine = audio;
   const schedule = await loadSchedule();

@@ -4,9 +4,36 @@ import { readFileSync } from 'node:fs';
 import { schedule } from './schedule.js';
 import { frameFigure } from './ui-jukebox.js';
 import { validate } from './validate.js';
+import { createStore, playableCatalog } from './store.js';
+import { shelfSlots, shelfPages } from './viz.js';
 
 const data = JSON.parse(readFileSync(new URL('../data/discs.json', import.meta.url), 'utf8'));
 const maps = JSON.parse(readFileSync(new URL('../data/maps/index.json', import.meta.url), 'utf8'));
+
+test('the playable catalog hides withheld snow on every tray page without changing the source archive', () => {
+  const before = JSON.stringify(data);
+  const catalog = playableCatalog(data);
+  assert.equal(catalog.discs.length, 32);
+  assert.ok(catalog.discs.every(d => d.dataset !== 'snow'));
+  const store = createStore(catalog);
+  assert.equal(store.getDisc('tromso-snow-2025'), null);
+  assert.equal(store.record('tromso-snow-2026').ok, false);
+  const slots = shelfSlots(catalog.discs, catalog.places);
+  assert.equal(slots.length, 16);
+  const pages = shelfPages(slots, catalog.places);
+  assert.ok(pages.flatMap(page => page.slots).filter(Boolean).every(slot => slot.dataset !== 'snow'));
+  assert.equal(pages[0].slots.find(slot => slot?.placeId === 'tromso').dataset, 'ndvi');
+  assert.deepEqual(catalog.discs.filter(d => d.place === 'tromso').map(d => d.dataset).sort(), ['ndvi', 'ndvi', 'rain', 'rain']);
+  assert.equal(JSON.stringify(data), before);
+  assert.equal(data.discs.reduce((count, d) => count + d.levels.length, 0), 408);
+});
+
+test('missing months alone do not hide a record from the catalog', () => {
+  const ordinary = { id: 'partial-rain', levels: [0, null] };
+  const empty = { id: 'empty-test', levels: [null, null] };
+  const withheld = { id: 'withheld', source: { status: 'withheld' }, levels: [null, null] };
+  assert.deepEqual(playableCatalog({ discs: [ordinary, empty, withheld] }).discs, [ordinary, empty]);
+});
 
 test('every usable rain/greenness month has a dated NASA map with the declared dimensions', () => {
   for (const disc of data.discs.filter(d => ['rain', 'ndvi'].includes(d.dataset))) {

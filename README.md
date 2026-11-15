@@ -12,7 +12,7 @@ or how green the land was. Play it, listen, then open **Details** to see the num
 
 1. Choose a place, variable and year using the labelled controls, then **Put on the deck**. You can also choose a
    disc from the pixel tray. There are 32 rain/greenness records across eight places, including the Ferlo grasslands
-   in Senegal, plus two snow records whose numerical values are withheld (see below).
+   in Senegal. Two withheld snow records remain in the source archive and are hidden from the playable choices.
 2. Press **Play record**. Twelve lights follow the calendar and the readout explains each month's category.
 3. **Flip** switches years while keeping the same calendar position. **Science mode** plays a plain data note;
    **See the evidence** opens the original chart, table and source image.
@@ -53,8 +53,9 @@ rain and greenness playing together does not establish a causal relationship.
 
 Tromso's snow records retain NASA MODIS Terra images for visual context, but all numerical snow values are
 **withheld**. GIBS transparency does not distinguish zero snow from cloud, night, water or other unavailable data.
-It must not be converted to zero. The player explains this limitation; the missing-value cue is not a snow
-measurement. Raw MOD10CM data and quality flags are needed before quantitative snow playback can return.
+It must not be converted to zero. Both snow discs are hidden from the tray and labelled controls so visitors do not
+load an empty record. Source metadata, images and evidence are retained for review. Raw MOD10CM data and quality
+flags are needed before quantitative snow playback can return.
 Seasonal auditions cover rain and greenness.
 
 ## Run it yourself
