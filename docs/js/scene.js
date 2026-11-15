@@ -513,9 +513,9 @@ export function createScene(store, opts) {
 
   /* ---------- weather particles ---------- */
   const surface = (x) => ((x >= X0 - 2 && x < X1 + 2) ? ROOF - snowH[x | 0] - sandH[x | 0] : GROUND);
-  // Piles are highest along the middle of the lip and taper to nothing at the ends (nothing builds up on the overhang).
+  // Snow lies level along the whole lid; sand piles are highest in the middle and taper to nothing at the ends.
   const edgeDist = (x) => Math.min(x - X0, X1 - 1 - x);
-  const snowCap = (x) => Math.max(0, Math.min(8, edgeDist(x) * 0.4));
+  const snowCap = (x) => (edgeDist(x) < -2 ? 0 : edgeDist(x) < 1 ? 5 : 8);   // snow lies flat across the whole lid (only the very corners are a little lower)
   const sandCap = (x) => Math.max(0, Math.min(4, edgeDist(x) * 0.2));
   const pileSnow = (x, h) => { if (x >= 0 && x < W && snowH[x] < snowCap(x)) snowH[x] = Math.min(snowCap(x), snowH[x] + h); };
   function spawnWeather() {
@@ -576,7 +576,7 @@ export function createScene(store, opts) {
       if (p.y < H + 5 && p.x > -140 && p.x < W + 140) out.push(p);
     }
     parts = out;
-    for (let x = X0 - 2; x < X1 + 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 1.5) { snowH[x] -= d * 0.25; snowH[x + 1] += d * 0.25; } }
+    for (let x = X0 - 2; x < X1 + 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 0.6) { snowH[x] -= d * 0.3; snowH[x + 1] += d * 0.3; } }   // snow settles level
     for (let x = X0 - 2; x < X1 + 2; x++) { snowH[x] = Math.min(snowH[x], snowCap(x)); sandH[x] = Math.min(sandH[x], sandCap(x)); }
     if (weather !== 'snow') for (let x = X0 - 2; x < X1 + 2; x++) if (snowH[x] > 0) { snowH[x] = Math.max(0, snowH[x] - 0.012); if (Math.random() < 0.0015 * snowH[x]) parts.push({ k: 'drip', x, y: ROOF + 8, vy: 0.2 }); }
     if (weather !== 'sand') { for (let x = X0 - 2; x < X1 + 2; x++) sandH[x] = Math.max(0, sandH[x] - 0.006); }
