@@ -137,7 +137,7 @@ const BTN = { play: { x: 412, y: 118, w: 46, h: 40 }, stop: { x: 412, y: 162, w:
 const LCD = { x: 270, y: 240, w: 136, h: 10 };
 const ANT = { x: 462, y: 58 };
 const LEDS = { x: 411, pitch: 4, rowA: 225, rowB: 232 };       // 12 LEDs per row, 3 px wide
-const GAUGE = { x: 260, y: 120, w: 6, h: 118 };   // the glass tube on the left of the deck: a rain gauge (or sap gauge for greenness)
+const GAUGE = { x: 247, y: 117, w: 6, h: 130 };   // the glass tube in the slot between the tray and the deck: a rain gauge (or sap gauge for greenness)
 const LED_BOX = { x: 409, y: 222, w: 50, h: 24 };               // the accessible group over the LED rows and their year labels
 const MAP_Y = 12; const MAP_H = ROOF - 20;
 const toMap = (lat, lon) => [Math.round((lon + 180) / 360 * W), Math.round(MAP_Y + (78 - lat) / 140 * MAP_H)];
@@ -286,6 +286,8 @@ export function createScene(store, opts) {
     p('#1b120f', 20, 114, 224, 136); p('#2a1c1b', 22, 116, 220, 132); p('#140d0c', 22, 116, 220, 2); p('#4a3029', 22, 246, 220, 2);
     for (let i = 0; i < L.count; i++) { const s = SLOT(i); p('#33221f', s.x, s.y, s.w, s.h - 2); p('#1b120f', s.x, s.y + s.h - 2, s.w, 1); p('#5a3a30', s.x, s.y + s.h - 1, s.w, 1); }
     p('#120b0a', 246, 114, 8, 136);
+    p('#1b120f', GAUGE.x - 1, GAUGE.y - 1, GAUGE.w + 2, GAUGE.h + 2); p('#1a2128', GAUGE.x, GAUGE.y, GAUGE.w, GAUGE.h);   // the gauge tube in the slot
+    for (let i = 1; i < 8; i++) p(i === 4 ? '#6b7a88' : '#3a4752', GAUGE.x + GAUGE.w - (i === 4 ? 3 : 2), Math.round(GAUGE.y + GAUGE.h - GAUGE.h * i / 8), i === 4 ? 3 : 2, 1);   // scale ticks
     p('#1b120f', 256, 112, 206, 142); p('#3a4752', 258, 114, 202, 138); p('#56677a', 258, 114, 202, 1); p('#56677a', 258, 114, 1, 138); p('#242c33', 258, 251, 202, 1);
     for (let y = 116; y < 250; y += 3) for (let x = 260; x < 458; x += 1) if (h2(x >> 4, y, 8) > 0.7) p('#3f4d59', x, y, 1, 1);
     for (const [x, y] of [[261, 117], [456, 117], [261, 248], [456, 248]]) { p('#8e9aa6', x, y, 2, 2); p('#e8d9b5', x, y, 1, 1); }
@@ -300,8 +302,7 @@ export function createScene(store, opts) {
     p('#1b120f', LCD.x - 2, LCD.y - 2, LCD.w + 4, LCD.h + 4); p('#14251a', LCD.x, LCD.y, LCD.w, LCD.h); p('#0d1912', LCD.x, LCD.y, LCD.w, 1);
     for (let i = 0; i <= 46; i++) { const x = Math.round(452 + (ANT.x - 452) * i / 46); const y = Math.round(ROOF - (ROOF - ANT.y) * i / 46); p('#1b120f', x - 1, y, 3, 1); p('#c2c9cf', x, y, 1, 1); }
     p('#1b120f', 447, ROOF - 4, 10, 4); p('#8e9aa6', 448, ROOF - 3, 8, 3);
-    p('#1b120f', GAUGE.x - 1, GAUGE.y - 1, GAUGE.w + 2, GAUGE.h + 2); p('#1a2128', GAUGE.x, GAUGE.y, GAUGE.w, GAUGE.h);
-    for (let i = 1; i < 8; i++) p(i === 4 ? '#6b7a88' : '#3a4752', GAUGE.x + GAUGE.w - (i === 4 ? 3 : 2), Math.round(GAUGE.y + GAUGE.h - GAUGE.h * i / 8), i === 4 ? 3 : 2, 1);   // scale ticks
+    for (let y = 122; y < 236; y += 3) for (let x = 262; x < 266; x += 3) p('#242c33', x, y, 2, 2);
   }
 
   /* ---------- state of the painting (the store owns the real state) ---------- */
@@ -310,7 +311,7 @@ export function createScene(store, opts) {
   let touched = false; let hoverId = null; let pendingFrom = null;
   const snowH = new Float32Array(W); const sandH = new Float32Array(W);
   let gaugeA = 0;   // shown fill of the gauge, eased toward the month playing
-  let sandGap = 0; let leaves = []; let parts = []; let rings = []; let pingR = 0; let ringT = 0;
+  let leaves = []; let parts = []; let rings = []; let pingR = 0; let ringT = 0;
 
   /* ---------- accessible hit areas over the painting (built once, updated in place so focus is never lost) ---------- */
   const slotEls = []; const btnEls = {};
@@ -533,7 +534,7 @@ export function createScene(store, opts) {
         if (p.y >= GROUND) { out.push({ k: 'splash', x: p.x, y: GROUND - 1, vx: (Math.random() - 0.5), vy: -0.6, life: 6 }); continue; }
       } else if (p.k === 'sand') {
         p.x += p.vx; p.y += p.vy + Math.sin(p.x * 0.1) * 0.05; const s = surface(p.x);
-        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; if (sandH[xi] < sandCap(xi)) sandH[xi] = Math.min(sandCap(xi), sandH[xi] + 0.5); if (sandGap < 9) sandGap += 0.03; continue; } p.y = s - 1; }
+        if (p.y >= s && s < GROUND) { if (Math.random() < 0.35) { const xi = p.x | 0; if (sandH[xi] < sandCap(xi)) sandH[xi] = Math.min(sandCap(xi), sandH[xi] + 0.5); continue; } p.y = s - 1; }
         if (p.x > W + 4) continue;
       } else if (p.k === 'leaf') {
         p.t += 0.06; p.x += Math.sin(p.t) * 0.5 + (p.vx || 0) * 0.2; p.y += p.vy;
@@ -552,7 +553,7 @@ export function createScene(store, opts) {
     for (let x = X0 - 2; x < X1 + 1; x++) { const d = snowH[x] - snowH[x + 1]; if (Math.abs(d) > 1.5) { snowH[x] -= d * 0.25; snowH[x + 1] += d * 0.25; } }
     for (let x = X0 - 2; x < X1 + 2; x++) { snowH[x] = Math.min(snowH[x], snowCap(x)); sandH[x] = Math.min(sandH[x], sandCap(x)); }
     if (weather !== 'snow') for (let x = X0 - 2; x < X1 + 2; x++) if (snowH[x] > 0) { snowH[x] = Math.max(0, snowH[x] - 0.012); if (Math.random() < 0.0015 * snowH[x]) parts.push({ k: 'drip', x, y: ROOF + 8, vy: 0.2 }); }
-    if (weather !== 'sand') { for (let x = X0 - 2; x < X1 + 2; x++) sandH[x] = Math.max(0, sandH[x] - 0.006); sandGap = Math.max(0, sandGap - 0.01); }
+    if (weather !== 'sand') { for (let x = X0 - 2; x < X1 + 2; x++) sandH[x] = Math.max(0, sandH[x] - 0.006); }
     if (weather !== 'forest' && leaves.length && Math.random() < 0.01) { const l = leaves.shift(); parts.push({ k: 'leaf', x: l.x, y: l.y, vx: 1, vy: 0.3, t: 0, c: l.c, falling: true }); }
   }
   function drawParticles() {
@@ -727,7 +728,6 @@ export function createScene(store, opts) {
       if (a > 0) { P('#c9925a', x, ROOF - a, 1, a); P('#e3b47c', x, ROOF - a, 1, 1); }
       if (s > 0) { P('#dfe9f7', x, ROOF - a - s, 1, s); P('#ffffff', x, ROOF - a - s, 1, 1); }
     }
-    if (sandGap > 0.5) for (let x = 246; x < 254; x++) { const h = Math.round(sandGap * (1 - Math.abs(x - 250) / 5)); if (h > 0) { P('#b9824a', x, 249 - h, 1, h); P('#d9a066', x, 249 - h, 1, 1); } }
     for (const l of leaves) { P(l.c, l.x, l.y, 2, 1); P(lit(l.c, -0.3), l.x + 1, l.y + 1); }
     // shelf discs (side A of each pair), status mark = condition by colour AND shape
     shelf.forEach((s, i) => {
