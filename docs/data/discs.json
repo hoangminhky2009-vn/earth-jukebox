@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-11-15T08:13:39.051344+00:00",
+  "generated": "2026-11-15T08:17:10.255640+00:00",
   "provenance": {
     "source": "Colours read from NASA SVS frames (Earth Information Center). Rain values are colour-bin representatives, not exact measurements; NDVI values are colourbar positions, not measured NDVI.",
     "made_with": "Python pipeline written by Sabik with help from OpenAI Codex (SI); see pipeline/HANDOFF.md and AI_USE.md"
@@ -188,7 +188,7 @@
       "lon": -60.02,
       "biome": "rainforest",
       "region": "other",
-      "story": "Draft intro (to be reviewed by Bormey): explore rainfall and greenness differences from normal near Manaus, in the Amazon rainforest, where the rivers fell to record lows in the droughts of 2023 and 2024."
+      "story": "Draft intro (to be reviewed by Bormey): explore rainfall differences from normal and vegetation greenness near Manaus, in the Amazon rainforest, where the rivers fell to record lows in the droughts of 2023 and 2024."
     },
     {
       "id": "alice-springs",
@@ -197,7 +197,7 @@
       "lon": 133.9,
       "biome": "desert",
       "region": "other",
-      "story": "Draft intro (to be reviewed by Bormey): explore rainfall and greenness differences from normal at Alice Springs, in the middle of the Australian desert, where a rare heavy rain can turn the red centre green."
+      "story": "Draft intro (to be reviewed by Bormey): explore rainfall differences from normal and vegetation greenness at Alice Springs, in the middle of the Australian desert, where a rare heavy rain can turn the red centre green."
     },
     {
       "id": "tromso",
@@ -206,7 +206,16 @@
       "lon": 19.0,
       "biome": "snow-coast",
       "region": "other",
-      "story": "Draft intro (to be reviewed by Bormey): explore rainfall and greenness differences from normal at Tromso, north of the Arctic Circle, where winter is dark and snowy and the plants only turn green in a short summer."
+      "story": "Draft intro (to be reviewed by Bormey): explore rainfall differences from normal and vegetation greenness at Tromso, north of the Arctic Circle, where winter is dark and snowy and the plants only turn green in a short summer."
+    },
+    {
+      "id": "ferlo",
+      "name": "Northern Ferlo near Linguere, Senegal",
+      "lat": 15.6035,
+      "lon": -15.2857,
+      "biome": "savanna-grassland",
+      "region": "other",
+      "story": "Explore seasonal vegetation greenness and rainfall differences from normal around northern Ferlo, Senegal. This savanna landscape supports herding communities whose livestock depend on seasonal pasture and water."
     }
   ],
   "discs": [
@@ -290,7 +299,7 @@
         ],
         "west_lon": 20.0
       },
-      "description": "",
+      "description": "Here’s Dhaka (Bangladesh), at the centre of NASA’s map from 15 July 2025. Brown shows drier conditions than usual; green and turquoise show wetter ones. Recent rainfall differences build up and fade over about three months.",
       "check": null
     },
     {
@@ -373,7 +382,7 @@
         ],
         "west_lon": 20.0
       },
-      "description": "",
+      "description": "Here’s Sylhet (Bangladesh) at the centre of NASA’s map from 15 July 2025. Brown near the centre shows drier conditions than usual; green and turquoise show wetter areas. Recent rainfall differences build up and fade over about three months.",
       "check": null
     },
     {
@@ -456,7 +465,7 @@
         ],
         "west_lon": 20.0
       },
-      "description": "",
+      "description": "Here’s Tonle Sap (Cambodia) on NASA’s map from 15 July 2025. Grey background shows through near the centre, indicating rainfall close to usual; green and turquoise show wetter areas. Recent rainfall differences build up and fade over about three months.",
       "check": null
     },
     {
@@ -539,7 +548,7 @@
         ],
         "west_lon": 20.0
       },
-      "description": "",
+      "description": "Here’s Huế (Vietnam) at the centre of NASA’s map from 15 July 2025. Green near the centre shows wetter conditions than usual; brown shows drier areas. Recent rainfall differences build up and fade over about three months.",
       "check": null
     },
     {
@@ -2676,6 +2685,334 @@
           10
         ],
         "time": "first day of each month (monthly map)"
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "ferlo-rain-2025",
+      "place": "ferlo",
+      "dataset": "rain",
+      "year": 2025,
+      "side": "A",
+      "levels": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "saturated": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "frames_used": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "match_pct": 100.0,
+      "median_de": 0.0,
+      "condition": "mint",
+      "breaks": [],
+      "frame": "data/frames/ferlo-rain-2025.png",
+      "source": {
+        "svs": "4897",
+        "svs_url": "https://svs.gsfc.nasa.gov/4897",
+        "frames": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatalpha/",
+        "sample_days": [
+          1,
+          8,
+          15,
+          22,
+          28
+        ],
+        "west_lon": 20.0
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "ferlo-rain-2026",
+      "place": "ferlo",
+      "dataset": "rain",
+      "year": 2026,
+      "side": "B",
+      "levels": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
+        null
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
+        null
+      ],
+      "saturated": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "frames_used": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        2,
+        0
+      ],
+      "match_pct": 100.0,
+      "median_de": 0.0,
+      "condition": "scratched",
+      "breaks": [],
+      "frame": "data/frames/ferlo-rain-2026.png",
+      "source": {
+        "svs": "4897",
+        "svs_url": "https://svs.gsfc.nasa.gov/4897",
+        "frames": "https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004897/frames/3600x1800_2x1_15p/flatalpha/",
+        "sample_days": [
+          1,
+          8,
+          15,
+          22,
+          28
+        ],
+        "west_lon": 20.0
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "ferlo-ndvi-2024",
+      "place": "ferlo",
+      "dataset": "ndvi",
+      "year": 2024,
+      "side": "A",
+      "levels": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        3,
+        3,
+        3,
+        2,
+        2
+      ],
+      "values": [
+        0.25,
+        0.23,
+        0.23,
+        0.23,
+        0.23,
+        0.21,
+        0.19,
+        0.51,
+        0.56,
+        0.51,
+        0.46,
+        0.27
+      ],
+      "saturated": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "frames_used": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "match_pct": 100.0,
+      "median_de": 9.7165,
+      "condition": "mint",
+      "breaks": [],
+      "frame": "data/frames/ferlo-ndvi-2024.png",
+      "source": {
+        "svs": "5544",
+        "svs_url": "https://svs.gsfc.nasa.gov/5544",
+        "frames": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/",
+        "sample_days": [
+          5,
+          15,
+          25
+        ],
+        "west_lon": -180.0
+      },
+      "description": "",
+      "check": null
+    },
+    {
+      "id": "ferlo-ndvi-2025",
+      "place": "ferlo",
+      "dataset": "ndvi",
+      "year": 2025,
+      "side": "B",
+      "levels": [
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        2,
+        3,
+        3,
+        3,
+        2
+      ],
+      "values": [
+        0.27,
+        0.25,
+        0.25,
+        0.25,
+        0.21,
+        0.21,
+        0.23,
+        0.25,
+        0.61,
+        0.74,
+        0.54,
+        0.25
+      ],
+      "saturated": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "frames_used": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "match_pct": 100.0,
+      "median_de": 9.7387,
+      "condition": "mint",
+      "breaks": [],
+      "frame": "data/frames/ferlo-ndvi-2025.png",
+      "source": {
+        "svs": "5544",
+        "svs_url": "https://svs.gsfc.nasa.gov/5544",
+        "frames": "https://svs.gsfc.nasa.gov/vis/a000000/a005500/a005544/frames/4096x2048_2x1_30p/equirectangular_w_dates/",
+        "sample_days": [
+          5,
+          15,
+          25
+        ],
+        "west_lon": -180.0
       },
       "description": "",
       "check": null

@@ -1,0 +1,361 @@
+{
+  "checked_at": "2026-11-15T08:09:42.142811+00:00",
+  "made_with": "Sabik with help from OpenAI Codex (SI)",
+  "base_commit": "9219e55641f1f83b6ebca9a70b11fb74403368f1",
+  "place_count": 8,
+  "disc_count": 34,
+  "source_frame_count": 184,
+  "unchanged_existing_scientific_records": 30,
+  "unchanged_existing_crop_files": 30,
+  "ferlo_2025_matches_preliminary_independent_reader": true,
+  "reviewed_descriptions": 4,
+  "data_sha256": "6a70ff6bc8ae3745dcd8928e5e70577a092e21c156bab744b3303da5be2e57f8",
+  "discs": [
+    {
+      "id": "dhaka-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "sylhet-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tonle-sap-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "hue-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "dhaka-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "sylhet-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tonle-sap-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "hue-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "dhaka-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "sylhet-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tonle-sap-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 64.22,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "hue-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 84.0,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "dhaka-ndvi-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "sylhet-ndvi-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tonle-sap-ndvi-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 62.67,
+      "frames": 36,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "hue-ndvi-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 83.89,
+      "frames": 36,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "amazon-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "amazon-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "amazon-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 99.56,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "amazon-ndvi-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 99.11,
+      "frames": 36,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "alice-springs-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tromso-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "alice-springs-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tromso-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "alice-springs-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tromso-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 85.11,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "alice-springs-ndvi-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "tromso-ndvi-2025",
+      "condition": "scratched",
+      "missing_months": [
+        12
+      ],
+      "match_pct": 77.22,
+      "frames": 31,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "ferlo-rain-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 60,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "ferlo-rain-2026",
+      "condition": "scratched",
+      "missing_months": [
+        11,
+        12
+      ],
+      "match_pct": 100.0,
+      "frames": 52,
+      "crop_date": "2026-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "ferlo-ndvi-2024",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2024-07-15",
+      "evidence_matches": true
+    },
+    {
+      "id": "ferlo-ndvi-2025",
+      "condition": "mint",
+      "missing_months": [],
+      "match_pct": 100.0,
+      "frames": 36,
+      "crop_date": "2025-07-15",
+      "evidence_matches": true
+    }
+  ],
+  "limits": [
+    "Colour-scale agreement is not independent physical-data validation.",
+    "Preliminary Ferlo check uses the same NASA images and palette rules, not an independent satellite dataset.",
+    "Historical cached frames were re-read with their saved SHA256; rain-2026 listing refreshed on 2026-11-15.",
+    "Archived evidence can contain unused candidate places; this audit checks only exported discs.",
+    "Existing evidence retains original source-version hashes; regenerated monthly values and crop bytes match. One fresh NASA NDVI download has a different PNG hash from the cache but identical decoded pixels.",
+    "Ky added two snow discs during this task. Their upstream scientific records and image bytes are preserved, but their raw NASA GIBS decoding was not independently rerun here."
+  ],
+  "tests": {
+    "python_pass": 67,
+    "javascript_pass": 87,
+    "real_score_months_matched": 408,
+    "real_score_months_total": 408,
+    "science_ndvi_max_error": 0.02
+  },
+  "browser": {
+    "ferlo_keyboard_selection": true,
+    "play_stop_and_flip": true,
+    "both_year_details_and_images": true,
+    "missing_rain_months": true,
+    "dhaka_reviewed_description_visible": true,
+    "tonle_sap_switch_updates_roll": true,
+    "console_warnings_errors": 0,
+    "subjective_listening_test": false,
+    "nvda_test": false
+  },
+  "latest_integrated_main": "d9cea0e9382bc43e2a889eee88c462196e2db6f5",
+  "source_frame_count_scope": "32 rain/vegetation discs; excludes Ky's two newly integrated snow discs",
+  "upstream_snow_discs_preserved": [
+    "tromso-snow-2025",
+    "tromso-snow-2026"
+  ]
+}
